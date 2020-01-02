@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, withRouter } from "react-router-dom";
-import api from "../../services/api";
+// import api from "../../services/api";
 import { login } from "../../services/auth";
 import "./styles.css";
 

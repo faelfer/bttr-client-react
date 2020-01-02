@@ -1,0 +1,30 @@
+.card {
+    background-color: cornflowerblue;
+    width: 360px;
+    height: 200px;
+    margin: 15px;
+    border-radius: 8px;
+}
+
+.task-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    height: 60%;
+    width: 100%;
+  }
+
+  .progress {
+    height: 15px;
+    width: 90%;
+    background-color: #bfbfbf;
+    border-radius: 50px;
+  }
+  
+  .bar {
+    width: 85%;
+    height: 15px;
+    background-color: #00A9A5;
+    border-radius: 50px;
+  }
