@@ -1,51 +1,51 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import './styles.css';
 import { Link, withRouter } from "react-router-dom";
 import api from "../../services/api";
 
-class SignUp extends Component {
-  state = {
-    username: "",
-    email: "",
-    password: "",
-    error: ""
-  };
+function SignUp({ history }) {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  handleSignUp = async e => {
+
+  async function handleSignUp(e) {
     e.preventDefault();
-    const { username, email, password } = this.state;
     if (!username || !email || !password) {
-      this.setState({ error: "Preencha todos os dados para se cadastrar" });
+      setError("Preencha todos os dados para se cadastrar");
     } else {
       try {
         await api.post("/users", { username, email, password });
-        this.props.history.push("/");
+        history.push("/");
       } catch (err) {
         console.log(err);
-        this.setState({ error: "Ocorreu um erro ao registrar sua conta. T.T" });
+        setError("Ocorreu um erro ao registrar sua conta. T.T");
       }
     }
   };
 
-  render() {
     return (
       <div className="sign-up">
-        <form onSubmit={this.handleSignUp}>
-          {this.state.error && <p>{this.state.error}</p>}
+        <form onSubmit={handleSignUp}>
+          {error && <p>{error}</p>}
           <input
             type="text"
             placeholder="Nome de usuário"
-            onChange={e => this.setState({ username: e.target.value })}
+            value={username}
+            onChange={event => setUsername(event.target.value)}
           />
           <input
             type="email"
             placeholder="Endereço de e-mail"
-            onChange={e => this.setState({ email: e.target.value })}
+            value={email}
+            onChange={event => setEmail(event.target.value)}
           />
           <input
             type="password"
             placeholder="Senha"
-            onChange={e => this.setState({ password: e.target.value })}
+            value={password}
+            onChange={event => setPassword(event.target.value)}
           />
           <button type="submit">Cadastrar grátis</button>
           <hr />
@@ -53,7 +53,6 @@ class SignUp extends Component {
         </form>
       </div>
     );
-  }
 }
 
 export default withRouter(SignUp);
