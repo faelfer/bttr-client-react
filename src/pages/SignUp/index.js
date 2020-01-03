@@ -10,8 +10,8 @@ function SignUp({ history }) {
   const [error, setError] = useState("");
 
 
-  async function handleSignUp(e) {
-    e.preventDefault();
+  async function handleSignUp(event) {
+    event.preventDefault();
     if (!username || !email || !password) {
       setError("Preencha todos os dados para se cadastrar");
     } else {
