@@ -57,83 +57,60 @@ function App({ item }) {
 
     async function renderItem() {
         const {goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining} = await calculateProgress(item.goalPerDay, item.goalDone);
-        console.log(goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining)
+        // console.log(goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining);
 
         if ( item.goalDone >= goalMonth ){
-            console.log("Parabéns, você concluiu a meta estabelecida!");
+            console.log("renderItem | if: Parabéns, você concluiu a meta estabelecida!");
             let percentage = parseInt(currentPercentage) + "%";
-            console.log(percentage)
-
-            let suggestionTitleText = 'Success, goal completed!';
-            console.log(suggestionTitleText);
+                console.log("renderItem | percentage: ", percentage)
+            let lackText = 'Success, goal completed!';
+                console.log(suggestionTitleText);
 
             setPercentage(percentage); 
             setLackText(lackText);
-            setLackTitleText(lackTitleText);
-            setSuggestionText(suggestionText);
-            setSuggestionText(suggestionTitleText);
+            // setLackTitleText(lackTitleText);
+            // setSuggestionText(suggestionText);
+            // setSuggestionText(suggestionTitleText);
             console.log("================================================================");
-        
         }else if ( item.goalDone === idealSituation ){
-            console.log("Você está de acordo com a meta estabelecida.");
-
+            console.log("renderItem | else if: Você está de acordo com a meta estabelecida.");
             let percentage = parseInt(currentPercentage) + "%";
-            console.log(percentage);
-
-            let lackTitleText = 'Ideal goal achieved';
-            console.log(lackTitleText);
-
-            let suggestionText = (convertToHours(goalRemaining)).toString();
-            console.log(suggestionText);
-            let suggestionTitleText = 'Remaining to goal';
-            console.log(suggestionTitleText);
+                console.log("renderItem | percentage: ", percentage);
+            let lackText = 'Ideal goal achieved';
+                console.log("renderItem | lackText: ", lackText);
+            let suggestionText = ( (convertToHours(goalRemaining)).toString() + ' Remaining to goal');
+                console.log("renderItem | suggestionText: ", suggestionText);
 
             setPercentage(percentage); 
             setLackText(lackText);
-            setLackTitleText(lackTitleText);
             setSuggestionText(suggestionText);
-            setSuggestionText(suggestionTitleText);
             console.log("================================================================");
-        
         }else if ( item.goalDone > idealSituation ){
-            console.log("Você ultrapassou a meta estabelecida.");
-
+            console.log("renderItem | else if: Você ultrapassou a meta estabelecida.");
             let percentage = parseInt(currentPercentage) + "%";
-            console.log(percentage);
-
-            let lackText = (convertToHours(item.goalDone-idealSituation)).toString();
-            console.log(lackText);
-            let lackTitleText = 'Ideal goal exceeded';
-            console.log(lackTitleText);
-
-            let suggestionText = (convertToHours(goalRemaining)).toString();
-            console.log(suggestionText);
-            let suggestionTitleText = 'Remaining to goal';
-            console.log(suggestionTitleText);
+                console.log("renderItem | percentage: ", percentage);
+            let lackText = ( (convertToHours(item.goalDone-idealSituation)).toString() + ' Ideal goal exceeded' );
+                console.log("renderItem | lackText: ", lackText);
+            let suggestionText = ( (convertToHours(goalRemaining)).toString() + ' Remaining to goal');
+                console.log("renderItem | suggestionText: ", suggestionText);
 
             setPercentage(percentage); 
             setLackText(lackText);
-            setLackTitleText(lackTitleText);
             setSuggestionText(suggestionText);
-            setSuggestionText(suggestionTitleText);
             console.log("================================================================");
-            
         }else {
-            console.warn("Você está abaixo da meta estabelecida.");
-
+            console.warn("renderItem | else: Você está abaixo da meta estabelecida.");
             let percentage = parseInt(currentPercentage) + "%";
-            console.log(percentage);
-
+                console.log("renderItem | percentage: ", percentage);
             let lackText = ( (convertToHours(idealSituation-item.goalDone)).toString() + ' Missing for the ideal' );
-
+                console.log("renderItem | lackText: ", lackText);
             let suggestionText = ( (convertToHours(goalRemaining / (daysRemaining == 0 ? 1 : daysRemaining))).toString() + ' Daily suggestion');
-            console.log(suggestionText);
+                console.log("renderItem | suggestionText: ", suggestionText);
 
             setPercentage(percentage); 
             setLackText(lackText);
             setSuggestionText(suggestionText);
             console.log("================================================================");
-		
         }
     }
 
@@ -169,15 +146,20 @@ function App({ item }) {
                     />
                     <p>{lackText}</p>
                 </div>
-                <div className="card-suggestion">
-                    <FontAwesomeIcon 
-                        icon={faAngleDoubleUp} 
-                        size="lg" 
-                        color="grey" 
-                        className="icon" 
-                    />
-                    <p>01h13min Daily suggestion</p>
-                </div>
+                {suggestionText ? 
+                    <div className="card-suggestion">
+                        <FontAwesomeIcon 
+                            icon={faAngleDoubleUp} 
+                            size="lg" 
+                            color="grey" 
+                            className="icon" 
+                        />
+                        <p>{suggestionText}</p>
+                    </div>
+                :
+                    null
+                }
+
             </div>
         </div>
     )
