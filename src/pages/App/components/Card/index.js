@@ -5,14 +5,11 @@ import { faCode, faAngleDown, faAngleDoubleUp } from '@fortawesome/free-solid-sv
 // import { faUser, faFileAlt } from '@fortawesome/free-regular-svg-icons';
 import workingDays from "../../../../utils/workingDays";
 import convertToHours from "../../../../utils/convertTime";
-import { render } from "@testing-library/react";
 
 function App({ item }) {
     const [percentage, setPercentage] = useState("");
     const [lackText, setLackText] = useState("");
-    const [lackTitleText, setLackTitleText] = useState("");
     const [suggestionText, setSuggestionText] = useState("");
-    const [suggestionTitleText, setSuggestionTitleText] = useState("");
 
     useEffect(() => {
         console.log("component Card | item:", item);
@@ -35,22 +32,18 @@ function App({ item }) {
         // console.log(`Último Dia do Mês ${lastDayMonth}`);
 
         const businessDays = workingDays(lastDayMonth, currentYear, currentMouth);
-        console.log("businessDays: ", businessDays);
-
+            console.log("businessDays: ", businessDays);
         let goalMonth = (businessDays * goalPerDay);
-        // console.log(`Meta de Minutos: ${goalMonth} | ${convertToHours(goalMonth)}`);
+            // console.log(`Meta de Minutos: ${goalMonth} | ${convertToHours(goalMonth)}`);
         let goalRemaining = (goalMonth - goalDone);
-
         const businessDaysSoFar = workingDays(currentDay, currentYear, currentMouth);
-        console.log("BusinessDaysSoFar: ", businessDaysSoFar);
-
+            console.log("BusinessDaysSoFar: ", businessDaysSoFar);
         let daysRemaining = (businessDays - businessDaysSoFar) + 1;
-        console.log(`Dias Restantes: ${daysRemaining}`);
+            console.log(`Dias Restantes: ${daysRemaining}`);
         let idealSituation = (businessDaysSoFar * goalPerDay);
-        // console.log(`Situação Ideal: ${idealSituation}`);
+            // console.log(`Situação Ideal: ${idealSituation}`);
         let currentPercentage = (( goalDone * 100 ) / goalMonth);
-        
-        console.log(`Ideal percentage so far: ${parseInt((businessDaysSoFar * 100)/businessDays)}%`);
+            console.log(`Ideal percentage so far: ${parseInt((businessDaysSoFar * 100)/businessDays)}%`);
 
         return {goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining};
     }
@@ -64,13 +57,10 @@ function App({ item }) {
             let percentage = parseInt(currentPercentage) + "%";
                 console.log("renderItem | percentage: ", percentage)
             let lackText = 'Success, goal completed!';
-                console.log(suggestionTitleText);
+                console.log("renderItem | lackText: ", lackText);
 
             setPercentage(percentage); 
             setLackText(lackText);
-            // setLackTitleText(lackTitleText);
-            // setSuggestionText(suggestionText);
-            // setSuggestionText(suggestionTitleText);
             console.log("================================================================");
         }else if ( item.goalDone === idealSituation ){
             console.log("renderItem | else if: Você está de acordo com a meta estabelecida.");
@@ -133,7 +123,7 @@ function App({ item }) {
             </div>
             <div className="task-progress">
                 <div className="progress">
-                    <div className="bar"></div>
+                    <div style={{width: (parseInt(percentage) > 100 ?  '100%' : percentage), height: 15, backgroundColor: '#00A9A5', borderRadius: 50}} />
                 </div>
             </div>
             <div>
