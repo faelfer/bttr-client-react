@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCode, faAngleDown, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
+import { 
+    faCode, 
+    faUniversity,
+    faPencilRuler,
+    faBookOpen,
+    faAngleDown, 
+    faAngleDoubleUp 
+} from '@fortawesome/free-solid-svg-icons';
 // import { faUser, faFileAlt } from '@fortawesome/free-regular-svg-icons';
 import workingDays from "../../../../utils/workingDays";
 import convertToHours from "../../../../utils/convertTime";
@@ -104,6 +111,42 @@ function App({ item }) {
         }
     }
 
+    function renderIcon(icon) {
+            switch (icon) {
+            case "fas fa-code":
+                return    <FontAwesomeIcon 
+                                icon={faCode}
+                                size="lg" 
+                                color="grey" 
+                                className="icon" 
+                            />
+            case "fas fa-university":
+                return  <FontAwesomeIcon 
+                                icon={faUniversity}
+                                size="lg" 
+                                color="grey" 
+                                className="icon" 
+                        />
+            case "fas fa-pencil-ruler":
+                return  <FontAwesomeIcon 
+                                icon={faPencilRuler}
+                                size="lg" 
+                                color="grey" 
+                                className="icon" 
+                        />
+            case "fas fa-book-open":
+                return  <FontAwesomeIcon 
+                                icon={faBookOpen}
+                                size="lg" 
+                                color="grey" 
+                                className="icon" 
+                        />
+            default:
+                return null;
+            }
+
+    }
+
     return (
         <div className="card">
             <div className="card-overview">
@@ -113,12 +156,7 @@ function App({ item }) {
                     
                 </div>
                 <div>
-                    <FontAwesomeIcon 
-                        icon={faCode}
-                        size="lg" 
-                        color="grey" 
-                        className="icon" 
-                    />
+                    {renderIcon(item.icon)}
                 </div>
             </div>
             <div className="task-progress">
