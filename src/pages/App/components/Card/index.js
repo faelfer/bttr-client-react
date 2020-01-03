@@ -124,30 +124,26 @@ function App({ item }) {
             case "fas fa-code":
                 return    <FontAwesomeIcon 
                                 icon={faCode}
-                                size="lg" 
-                                color="grey" 
-                                className="icon" 
+                                size="3x"
+                                color="#f4f5f7" 
                             />
             case "fas fa-university":
                 return  <FontAwesomeIcon 
                                 icon={faUniversity}
-                                size="lg" 
-                                color="grey" 
-                                className="icon" 
+                                size="3x"
+                                color="#f4f5f7" 
                         />
             case "fas fa-pencil-ruler":
                 return  <FontAwesomeIcon 
                                 icon={faPencilRuler}
-                                size="lg" 
-                                color="grey" 
-                                className="icon" 
+                                size="3x"
+                                color="#f4f5f7" 
                         />
             case "fas fa-book-open":
                 return  <FontAwesomeIcon 
                                 icon={faBookOpen}
-                                size="lg" 
-                                color="grey" 
-                                className="icon" 
+                                size="3x"
+                                color="#f4f5f7" 
                         />
             default:
                 return null;
@@ -155,38 +151,34 @@ function App({ item }) {
 
     }
 
-// Missing for the ideal = faAngleDown
-// Ideal goal achieved = faCheck
-// Ideal goal exceeded = faAngleUp
-// Success, goal completed! = faCheck
     function renderIconSituation(situation) {
         switch (situation) {
         case " Missing for the ideal":
             return    <FontAwesomeIcon 
                             icon={faAngleDown}
                             size="lg" 
-                            color="grey" 
+                            color="#f4f5f7" 
                             className="icon" 
                         />
         case " Ideal goal exceeded":
             return  <FontAwesomeIcon 
                             icon={faAngleUp}
                             size="lg" 
-                            color="grey" 
+                            color="#f4f5f7" 
                             className="icon" 
                     />
         case "Success, goal completed!":
             return  <FontAwesomeIcon 
                             icon={faTrophy}
                             size="lg" 
-                            color="grey" 
+                            color="#f4f5f7" 
                             className="icon" 
                     />
         case "Ideal goal achieved":
             return  <FontAwesomeIcon 
                             icon={faCheck}
                             size="lg" 
-                            color="grey" 
+                            color="#f4f5f7" 
                             className="icon" 
                     />
         default:
@@ -198,10 +190,9 @@ function App({ item }) {
     return (
         <div className="card">
             <div className="card-overview">
-                <div className="card-info">
+                <div>
                     <p>{item.name}</p>
                     <p>{percentage}</p>
-                    
                 </div>
                 <div>
                     {renderIcon(item.icon)}
@@ -209,7 +200,7 @@ function App({ item }) {
             </div>
             <div className="task-progress">
                 <div className="progress">
-                    <div style={{width: (parseInt(percentage) > 100 ?  '100%' : percentage), height: 15, backgroundColor: '#00A9A5', borderRadius: 50}} />
+                    <div style={{width: (parseInt(percentage) > 100 ?  '100%' : percentage), height: 15, backgroundColor: '#f4f5f7', borderRadius: 50}} />
                 </div>
             </div>
             <div>
@@ -222,7 +213,7 @@ function App({ item }) {
                         <FontAwesomeIcon 
                             icon={faAngleDoubleUp} 
                             size="lg" 
-                            color="grey" 
+                            color="#f4f5f7" 
                             className="icon" 
                         />
                         <p>{suggestionText}</p>

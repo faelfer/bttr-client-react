@@ -4,7 +4,7 @@ width: 100vw;
 margin: 0;
 padding: 0;
 overflow: hidden;
-background-color: #333;
+background-color: transparent;
 }
 
 ul.topnav li {float: left;}
@@ -17,9 +17,9 @@ padding: 14px 16px;
 text-decoration: none;
 }
 
-ul.topnav li a:hover:not(.active) {background-color: #111;}
+ul.topnav li a:hover:not(.active) {color: #5e72e4;}
 
-ul.topnav li a.active {background-color: #4CAF50;}
+ul.topnav li a.active {background-color: #5e72e4;}
 
 ul.topnav li.right {float: right;}
 

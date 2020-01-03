@@ -47,7 +47,7 @@ function SignUp({ history }) {
             value={password}
             onChange={event => setPassword(event.target.value)}
           />
-          <button type="submit">Cadastrar grátis</button>
+          <button type="submit">Cadastrar</button>
           <hr />
           <Link to="/">Fazer login</Link>
         </form>
