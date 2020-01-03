@@ -67,7 +67,7 @@ function App({ item }) {
             console.log("renderItem | if: Parabéns, você concluiu a meta estabelecida!");
             let percentage = parseInt(currentPercentage) + "%";
                 console.log("renderItem | percentage: ", percentage)
-            let lackText = 'Success, goal completed!';
+            let lackText = 'Parabéns, objetivo concluido!';
                 console.log("renderItem | lackText: ", lackText);
 
             setPercentage(percentage); 
@@ -78,9 +78,9 @@ function App({ item }) {
             console.log("renderItem | else if: Você está de acordo com a meta estabelecida.");
             let percentage = parseInt(currentPercentage) + "%";
                 console.log("renderItem | percentage: ", percentage);
-            let lackText = 'Ideal goal achieved';
+            let lackText = 'Progresso ideal alcançado';
                 console.log("renderItem | lackText: ", lackText);
-            let suggestionText = ( (convertToHours(goalRemaining)).toString() + ' Remaining to goal');
+            let suggestionText = ( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo');
                 console.log("renderItem | suggestionText: ", suggestionText);
 
             setPercentage(percentage); 
@@ -92,29 +92,29 @@ function App({ item }) {
             console.log("renderItem | else if: Você ultrapassou a meta estabelecida.");
             let percentage = parseInt(currentPercentage) + "%";
                 console.log("renderItem | percentage: ", percentage);
-            let lackText = ( (convertToHours(item.goalDone-idealSituation)).toString() + ' Ideal goal exceeded' );
+            let lackText = ( (convertToHours(item.goalDone-idealSituation)).toString() + ' acima do ideal' );
                 console.log("renderItem | lackText: ", lackText);
-            let suggestionText = ( (convertToHours(goalRemaining)).toString() + ' Remaining to goal');
+            let suggestionText = ( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo');
                 console.log("renderItem | suggestionText: ", suggestionText);
 
             setPercentage(percentage); 
             setLackText(lackText);
             setSuggestionText(suggestionText);
-            setSituation(' Ideal goal exceeded');
+            setSituation(' acima do ideal');
             console.log("================================================================");
         }else {
             console.warn("renderItem | else: Você está abaixo da meta estabelecida.");
             let percentage = parseInt(currentPercentage) + "%";
                 console.log("renderItem | percentage: ", percentage);
-            let lackText = ( (convertToHours(idealSituation-item.goalDone)).toString() + ' Missing for the ideal' );
+            let lackText = ( (convertToHours(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' );
                 console.log("renderItem | lackText: ", lackText);
-            let suggestionText = ( (convertToHours(goalRemaining / (daysRemaining == 0 ? 1 : daysRemaining))).toString() + ' Daily suggestion');
+            let suggestionText = ( (convertToHours(goalRemaining / (daysRemaining == 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje');
                 console.log("renderItem | suggestionText: ", suggestionText);
 
             setPercentage(percentage); 
             setLackText(lackText);
             setSuggestionText(suggestionText);
-            setSituation(' Missing for the ideal');
+            setSituation(' para o progresso ideal');
             console.log("================================================================");
         }
     }
@@ -153,28 +153,28 @@ function App({ item }) {
 
     function renderIconSituation(situation) {
         switch (situation) {
-        case " Missing for the ideal":
+        case " para o progresso ideal":
             return    <FontAwesomeIcon 
                             icon={faAngleDown}
                             size="lg" 
                             color="#f4f5f7" 
                             className="icon" 
                         />
-        case " Ideal goal exceeded":
+        case " acima do ideal":
             return  <FontAwesomeIcon 
                             icon={faAngleUp}
                             size="lg" 
                             color="#f4f5f7" 
                             className="icon" 
                     />
-        case "Success, goal completed!":
+        case "Parabéns, objetivo concluido!":
             return  <FontAwesomeIcon 
                             icon={faTrophy}
                             size="lg" 
                             color="#f4f5f7" 
                             className="icon" 
                     />
-        case "Ideal goal achieved":
+        case "Progresso ideal alcançado":
             return  <FontAwesomeIcon 
                             icon={faCheck}
                             size="lg" 
