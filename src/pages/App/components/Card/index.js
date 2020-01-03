@@ -6,8 +6,11 @@ import {
     faUniversity,
     faPencilRuler,
     faBookOpen,
+    faAngleUp,
     faAngleDown, 
-    faAngleDoubleUp 
+    faAngleDoubleUp,
+    faTrophy,
+    faCheck 
 } from '@fortawesome/free-solid-svg-icons';
 // import { faUser, faFileAlt } from '@fortawesome/free-regular-svg-icons';
 import workingDays from "../../../../utils/workingDays";
@@ -17,6 +20,7 @@ function App({ item }) {
     const [percentage, setPercentage] = useState("");
     const [lackText, setLackText] = useState("");
     const [suggestionText, setSuggestionText] = useState("");
+    const [situation, setSituation] = useState("");
 
     useEffect(() => {
         console.log("component Card | item:", item);
@@ -68,6 +72,7 @@ function App({ item }) {
 
             setPercentage(percentage); 
             setLackText(lackText);
+            setSituation(lackText);
             console.log("================================================================");
         }else if ( item.goalDone === idealSituation ){
             console.log("renderItem | else if: Você está de acordo com a meta estabelecida.");
@@ -81,6 +86,7 @@ function App({ item }) {
             setPercentage(percentage); 
             setLackText(lackText);
             setSuggestionText(suggestionText);
+            setSituation(lackText);
             console.log("================================================================");
         }else if ( item.goalDone > idealSituation ){
             console.log("renderItem | else if: Você ultrapassou a meta estabelecida.");
@@ -94,6 +100,7 @@ function App({ item }) {
             setPercentage(percentage); 
             setLackText(lackText);
             setSuggestionText(suggestionText);
+            setSituation(' Ideal goal exceeded');
             console.log("================================================================");
         }else {
             console.warn("renderItem | else: Você está abaixo da meta estabelecida.");
@@ -107,6 +114,7 @@ function App({ item }) {
             setPercentage(percentage); 
             setLackText(lackText);
             setSuggestionText(suggestionText);
+            setSituation(' Missing for the ideal');
             console.log("================================================================");
         }
     }
@@ -147,6 +155,46 @@ function App({ item }) {
 
     }
 
+// Missing for the ideal = faAngleDown
+// Ideal goal achieved = faCheck
+// Ideal goal exceeded = faAngleUp
+// Success, goal completed! = faCheck
+    function renderIconSituation(situation) {
+        switch (situation) {
+        case " Missing for the ideal":
+            return    <FontAwesomeIcon 
+                            icon={faAngleDown}
+                            size="lg" 
+                            color="grey" 
+                            className="icon" 
+                        />
+        case " Ideal goal exceeded":
+            return  <FontAwesomeIcon 
+                            icon={faAngleUp}
+                            size="lg" 
+                            color="grey" 
+                            className="icon" 
+                    />
+        case "Success, goal completed!":
+            return  <FontAwesomeIcon 
+                            icon={faTrophy}
+                            size="lg" 
+                            color="grey" 
+                            className="icon" 
+                    />
+        case "Ideal goal achieved":
+            return  <FontAwesomeIcon 
+                            icon={faCheck}
+                            size="lg" 
+                            color="grey" 
+                            className="icon" 
+                    />
+        default:
+            return null;
+        }
+
+    }
+
     return (
         <div className="card">
             <div className="card-overview">
@@ -166,12 +214,7 @@ function App({ item }) {
             </div>
             <div>
                 <div className="card-suggestion">
-                    <FontAwesomeIcon 
-                        icon={faAngleDown} 
-                        size="lg" 
-                        color="grey" 
-                        className="icon" 
-                    />
+                    {renderIconSituation(situation)}
                     <p>{lackText}</p>
                 </div>
                 {suggestionText ? 
