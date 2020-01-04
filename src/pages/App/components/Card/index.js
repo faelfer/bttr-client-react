@@ -12,7 +12,6 @@ import {
     faTrophy,
     faCheck 
 } from '@fortawesome/free-solid-svg-icons';
-// import { faUser, faFileAlt } from '@fortawesome/free-regular-svg-icons';
 import workingDays from "../../../../utils/workingDays";
 import convertToHours from "../../../../utils/convertTime";
 
