@@ -1,0 +1,25 @@
+.Container {
+    height: 100vh;
+    width: 100%;
+    background-color: #172b4d;
+}
+
+.task {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    background-color: #172b4d;
+    height: 94vh;
+}
+
+.task-list {
+    margin-top: 30px;
+    background-color: #5e72e4;
+    height: 80%;
+    width: 95%;
+}
+
+
+.task-list ul {
+    list-style: none;
+}
