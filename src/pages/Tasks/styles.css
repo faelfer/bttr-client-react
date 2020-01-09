@@ -17,9 +17,13 @@
     background-color: #5e72e4;
     height: 80%;
     width: 95%;
+    border-radius: 8px;
 }
 
 
 .task-list ul {
-    list-style: none;
+    list-style-type: none;
+    margin: 5px;
+    padding: 5px;
+    color: #f4f5f7;
 }
