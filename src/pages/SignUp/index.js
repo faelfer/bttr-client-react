@@ -2,31 +2,41 @@ import React, { useState } from "react";
 import './styles.css';
 import { Link, withRouter } from "react-router-dom";
 import api from "../../services/api";
+import Load from "../../components/Load";
 
 function SignUp({ history }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [load, setLoad] = useState(false);
 
 
   async function handleSignUp(event) {
     event.preventDefault();
+    setLoad(true);
     if (!username || !email || !password) {
       setError("Preencha todos os dados para se cadastrar");
     } else {
       try {
-        await api.post("/users", { username, email, password });
+        const response = await api.post("/users", { username, email, password });
+        setLoad(false);
+        console.log("handleSignUp | respnse: ",response);
+        if(!response.data.status === 200) {
+          setError("Ocorreu um erro ao registrar sua conta. ;-;");
+        }
         history.push("/");
-      } catch (err) {
-        console.log(err);
-        setError("Ocorreu um erro ao registrar sua conta. T.T");
+      } catch (error) {
+        setLoad(false);
+        console.log("handleSignUp | error: ",error);
+        setError("Ocorreu um erro ao registrar sua conta. ;-;");
       }
     }
   };
 
     return (
       <div className="sign-up">
+        <Load show={load}/>
         <form onSubmit={handleSignUp}>
           {error && <p>{error}</p>}
           <input
