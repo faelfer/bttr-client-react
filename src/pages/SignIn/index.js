@@ -1,32 +1,36 @@
 import React, { useState } from 'react';
 import { Link, withRouter } from "react-router-dom";
-// import api from "../../services/api";
+import api from "../../services/api";
 import { login } from "../../services/auth";
+import Load from "../../components/Load";
 import "./styles.css";
 
 function SignIn({ history }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [load, setLoad] = useState(false);
 
     async function handleSignIn(event) {
         event.preventDefault();
         if (!email || !password) {
             setError("Preencha e-mail e senha para continuar!");
         } else {
-        try {
-            // const response = await api.post("/sessions", { email, password });
+          try {
+            const response = await api.post("/login", { email, password });
+            console.log("handleSignIn | response", response);
             // login(response.data.token);
-            login("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9");
-            history.push("/app");
-        } catch (err) {
+            // history.push("/app");
+          } catch (error) {
+            console.log("handleSignIn | error", error);
             setError("Houve um problema com o login, verifique suas credenciais. T.T");
-        }
+          }
         }
     };
 
     return (
       <div className="sign-in">
+        <Load show={load}/>
         <form onSubmit={handleSignIn}>
           {error && <p>{error}</p>}
           <input
