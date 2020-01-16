@@ -15,7 +15,7 @@ import {
 import workingDays from "../../../../utils/workingDays";
 import convertToHours from "../../../../utils/convertTime";
 
-function Card({ item }) {
+function Details({ item }) {
     const [percentage, setPercentage] = useState("");
     const [lackText, setLackText] = useState("");
     const [suggestionText, setSuggestionText] = useState("");
@@ -199,7 +199,14 @@ function Card({ item }) {
             </div>
             <div className="task-progress">
                 <div className="progress">
-                    <div style={{width: (parseInt(percentage) > 100 ?  '100%' : percentage), height: 15, backgroundColor: '#f4f5f7', borderRadius: 50}} />
+                    <div 
+                        style={{ 
+                            width: (parseInt(percentage) > 100 ?  '100%' : percentage), 
+                            height: 15,
+                            backgroundColor: '#f4f5f7', 
+                            borderRadius: 50
+                        }} 
+                    />
                 </div>
             </div>
             <div>
@@ -226,4 +233,4 @@ function Card({ item }) {
     )
 };
 
-export default Card;
+export default Details;
