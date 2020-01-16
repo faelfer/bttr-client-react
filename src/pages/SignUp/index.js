@@ -17,6 +17,7 @@ function SignUp({ history }) {
     setLoad(true);
     if (!username || !email || !password) {
       setError("Preencha todos os dados para se cadastrar");
+      setLoad(false);
     } else {
       try {
         const response = await api.post("/users", { username, email, password });
@@ -27,9 +28,9 @@ function SignUp({ history }) {
         }
         history.push("/");
       } catch (error) {
-        setLoad(false);
         console.log("handleSignUp | error: ",error);
         setError("Ocorreu um erro ao registrar sua conta. ;-;");
+        setLoad(false);
       }
     }
   };

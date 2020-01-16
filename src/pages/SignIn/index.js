@@ -13,17 +13,24 @@ function SignIn({ history }) {
 
     async function handleSignIn(event) {
         event.preventDefault();
+        setLoad(true);
         if (!email || !password) {
             setError("Preencha e-mail e senha para continuar!");
+            setLoad(false);
         } else {
           try {
             const response = await api.post("/login", { email, password });
-            console.log("handleSignIn | response", response);
-            // login(response.data.token);
-            // history.push("/app");
+            console.log("handleSignIn | response", response.data);
+            setLoad(false);
+            if(!response.data.status === 200) {
+              setError("Ocorreu um erro ao registrar sua conta. ;-;");
+            }
+            login(response.data.token);
+            history.push("/app");
           } catch (error) {
             console.log("handleSignIn | error", error);
-            setError("Houve um problema com o login, verifique suas credenciais. T.T");
+            setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+            setLoad(false);
           }
         }
     };
