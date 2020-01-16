@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { isAuthenticated } from "./services/auth";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import ForgotPassword from "./pages/ForgotPassword";
 import App from "./pages/App";
 import Tasks from "./pages/Tasks";
 
@@ -24,10 +25,11 @@ const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={SignIn} />
-      <Route path="/signup" component={SignUp} />
+      <Route path="/sign-up" component={SignUp} />
+      <Route path="/forgot-password" component={ForgotPassword} />
       <PrivateRoute path="/app" component={App} />
       <PrivateRoute path="/tasks" component={Tasks} />
-      <Route path="*" component={() => <h1>Page not found</h1>} />
+      <Route path="*" component={() => <h1 style={{color:"#f4f5f7"}}>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
 );
