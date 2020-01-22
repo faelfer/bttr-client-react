@@ -15,7 +15,7 @@ import {
 import workingDays from "../../../../utils/workingDays";
 import convertToHours from "../../../../utils/convertTime";
 
-function Card({ item }) {
+function Card({ item, navigation }) {
     const [percentage, setPercentage] = useState("");
     const [lackText, setLackText] = useState("");
     const [suggestionText, setSuggestionText] = useState("");
@@ -187,7 +187,7 @@ function Card({ item }) {
     }
 
     return (
-        <div className="card">
+        <div className="card" onClick={() => navigation.push("/card-details")}>
             <div className="card-overview">
                 <div>
                     <p>{item.name}</p>
