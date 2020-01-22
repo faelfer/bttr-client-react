@@ -18,14 +18,13 @@ function ForgotPassword({ history }) {
             setLoad(false);
         } else {
           try {
-            const response = await api.post("/login", { email });
+            const response = await api.post("/forgot_password", { email });
             console.log("handleForgotPassword | response", response.data);
             setLoad(false);
             if(!response.data.status === 200) {
               setError("Ocorreu um erro. ;-;");
             }
-            login(response.data.token);
-            history.push("/app");
+            setError(response.data.message);
           } catch (error) {
             console.log("handleForgotPassword | error", error);
             setError("Houve um problema com o esqueci minha senha, verifique seu e-mail. ;-;");
