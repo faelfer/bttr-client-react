@@ -1,4 +1,4 @@
-.card {
+.card-details-details {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,7 +10,7 @@
   color: #f4f5f7;
 }
 
-.card-overview {
+.card-details-overview {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -20,20 +20,20 @@
   font-weight: bold;
 }
 
-.card-overview p {
+.card-details-overview p {
   font-size: 17px;
   font-weight: bold;
   margin: 10px 0px;
 }
 
-.card-suggestion {
+.card-details-suggestion {
   display: flex;
   align-items: center;
   flex-direction: row;
   width: 100%;
 }
 
-.card-suggestion p {
+.card-details-suggestion p {
   margin: 10px 0px;
 }
 

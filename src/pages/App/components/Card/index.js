@@ -27,19 +27,25 @@ function Card({ item, navigation }) {
         renderItem();
     }, []);
 
-    function calculateProgress(goalPerDay, goalDone) {
-        let currentDate = new Date();
+    function datesMonth() {
+        const currentDate = new Date();
         // console.log(`Hoje: ${currentDate.getDate()}/${((currentDate.getMonth())+1)}/${currentDate.getFullYear()}`);
-        let currentYear = currentDate.getFullYear();
+        const currentYear = currentDate.getFullYear();
         // console.log(`Ano Atual: ${currentYear}`);
-        let currentMouth = currentDate.getMonth();
+        const currentMouth = currentDate.getMonth();
         // console.log(`Mês Atual: ${currentMouth}`);
-        let currentDay = currentDate.getDate();
+        const currentDay = currentDate.getDate();
         // console.log(`Hoje: ${currentDay}`);
-        let manipulatedDate = new Date(currentYear, (currentMouth + 1), 0);
+        const manipulatedDate = new Date(currentYear, (currentMouth + 1), 0);
         // console.log(`Data Manipulada: ${manipulatedDate}`);
-        let lastDayMonth = manipulatedDate.getDate();
+        const lastDayMonth = manipulatedDate.getDate();
         // console.log(`Último Dia do Mês ${lastDayMonth}`);
+
+        return { currentYear, currentMouth, currentDay, lastDayMonth }
+    }
+
+    async function calculateProgress(goalPerDay, goalDone) {
+        const { currentYear, currentMouth, currentDay, lastDayMonth } = await datesMonth();
 
         const businessDays = workingDays(lastDayMonth, currentYear, currentMouth);
             console.log("businessDays: ", businessDays);
@@ -55,12 +61,12 @@ function Card({ item, navigation }) {
         let currentPercentage = (( goalDone * 100 ) / goalMonth);
             console.log(`Ideal percentage so far: ${parseInt((businessDaysSoFar * 100)/businessDays)}%`);
 
-        return {goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining};
+        return { goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining };
     }
 
     async function renderItem() {
         const {goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining} = await calculateProgress(item.goalPerDay, item.goalDone);
-        // console.log(goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining);
+        // console.log("renderItem: ", goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining);
 
         if ( item.goalDone >= goalMonth ){
             console.log("renderItem | if: Parabéns, você concluiu a meta estabelecida!");
@@ -187,7 +193,7 @@ function Card({ item, navigation }) {
     }
 
     return (
-        <div className="card" onClick={() => navigation.push("/card-details")}>
+        <div className="card">
             <div className="card-overview">
                 <div>
                     <p>{item.name}</p>
@@ -221,6 +227,9 @@ function Card({ item, navigation }) {
                     null
                 }
 
+            </div>
+            <div className="card-action">
+                <button type="submit" onClick={() => navigation.push("/card-details")} >Detalhes</button>
             </div>
         </div>
     )
