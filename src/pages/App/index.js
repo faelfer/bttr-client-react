@@ -20,10 +20,7 @@ function App({ history }) {
         async function handleProgress() {
             setLoad(true);
               try {
-                const response = await api.post("/progress",
-                {
-                    headers: { "Authorization": token }
-                });
+                const response = await api.get("/progress");
                 console.log("handleProgress | response", response);
                 setLoad(false);
                 if(!response.data.status === 200) {
