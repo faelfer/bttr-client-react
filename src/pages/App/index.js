@@ -8,7 +8,7 @@ import Load from "../../components/Load";
 
 function App({ history }) {
     const [listCards, setListCards] = useState([
-        {"name": "Code", "goalPerDay": 70, "goalDone": (210 + 547 + 94 + 94 + 53 + 76 + 76 + 92), "icon": "fas fa-code"},
+        {"name": "Code", "goalPerDay": 70, "goalDone": (210 + 547 + 94 + 94 + 53 + 76 + 76 + 92 + 73), "icon": "fas fa-code"},
         {"name": "Vest", "goalPerDay": 80, "goalDone": (250 + 104), "icon": "fas fa-university"},
         {"name": "Draw", "goalPerDay": 15, "goalDone": 45, "icon": "fas fa-pencil-ruler"},   
         {"name": "Book", "goalPerDay": 20, "goalDone": 51, "icon": "fas fa-book-open"}
@@ -36,7 +36,7 @@ function App({ history }) {
 
         };
 
-        handleProgress();
+        // handleProgress();
     }, []);
 
     return (
