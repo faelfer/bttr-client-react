@@ -6,6 +6,7 @@ import {
     faUniversity,
     faPencilRuler,
     faBookOpen,
+    faSpa,
     faAngleUp,
     faAngleDown, 
     faAngleDoubleUp,
@@ -25,7 +26,7 @@ function Card({ item, navigation }) {
         console.log("component Card | item:", item);
     
         renderItem();
-    }, []);
+    }, [item]);
 
     function datesMonth() {
         const currentDate = new Date();
@@ -127,28 +128,34 @@ function Card({ item, navigation }) {
     function renderIcon(icon) {
             switch (icon) {
             case "fas fa-code":
-                return    <FontAwesomeIcon 
-                                icon={faCode}
-                                size="3x"
-                                color="#f4f5f7" 
-                            />
+                return  <FontAwesomeIcon 
+                            icon={faCode}
+                            size="3x"
+                            color="#f4f5f7" 
+                        />
             case "fas fa-university":
                 return  <FontAwesomeIcon 
-                                icon={faUniversity}
-                                size="3x"
-                                color="#f4f5f7" 
+                            icon={faUniversity}
+                            size="3x"
+                            color="#f4f5f7" 
                         />
             case "fas fa-pencil-ruler":
                 return  <FontAwesomeIcon 
-                                icon={faPencilRuler}
-                                size="3x"
-                                color="#f4f5f7" 
+                            icon={faPencilRuler}
+                            size="3x"
+                            color="#f4f5f7" 
                         />
             case "fas fa-book-open":
                 return  <FontAwesomeIcon 
-                                icon={faBookOpen}
-                                size="3x"
-                                color="#f4f5f7" 
+                            icon={faBookOpen}
+                            size="3x"
+                            color="#f4f5f7" 
+                        />
+            case "fas fa-spa":
+                return  <FontAwesomeIcon 
+                            icon={faSpa}
+                            size="3x"
+                            color="#f4f5f7" 
                         />
             default:
                 return null;
