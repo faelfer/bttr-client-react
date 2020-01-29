@@ -214,7 +214,7 @@ function Card({ item, navigation }) {
 
             </div>
             <div className="card-action">
-                <button type="submit" onClick={() => navigation.push("/card-details")} >Detalhes</button>
+                <button type="submit" onClick={() => navigation.push(`/card-details/${item._id}`)} >Detalhes</button>
             </div>
         </div>
     )

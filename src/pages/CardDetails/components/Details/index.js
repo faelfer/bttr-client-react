@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -15,11 +15,13 @@ import {
 import workingDays from "../../../../utils/workingDays";
 import convertToHours from "../../../../utils/convertTime";
 
+
 function Details({ item }) {
-    const [name, setName] = useState("Code");
+    const [name, setName] = useState(item.name);
     const [goalPerDay, setGoalPerDay] = useState(70);
     const [goalDone, setGoalDone] = useState(210 + 70 + 88 + 61 + 90 + 84 + 77);
-    const [icon, setIcon] = useState("fas fa-code");
+    const [icon, setIcon] = useState(item.icon);
+
 
     return (
         <div className="card">
