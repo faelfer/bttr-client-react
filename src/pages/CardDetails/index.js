@@ -7,9 +7,7 @@ import api from "../../services/api";
 import Load from "../../components/Load";
 
 function CardDetails({ history }) {
-    const [card, setCard] = useState(
-        {"name": "Code", "goalPerDay": 70, "goalDone": (210 + 70 + 88 + 61 + 90 + 84 + 77), "icon": "fas fa-code"},
-    );
+    const [card, setCard] = useState({});
     const [load, setLoad] = useState(false);
     const { cardId } = useParams();
     
