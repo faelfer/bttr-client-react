@@ -71,55 +71,33 @@ function Card({ item, navigation }) {
 
         if ( item.goalDone >= goalMonth ){
             console.log("renderItem | if: Parabéns, você concluiu a meta estabelecida!");
-            let percentage = parseInt(currentPercentage) + "%";
-                console.log("renderItem | percentage: ", percentage)
-            let lackText = 'Parabéns, objetivo concluido!';
-                console.log("renderItem | lackText: ", lackText);
 
-            setPercentage(percentage); 
-            setLackText(lackText);
-            setSituation(lackText);
+            setPercentage(parseInt(currentPercentage) + "%"); 
+            setLackText('Parabéns, objetivo concluido!');
+            setSituation('Parabéns, objetivo concluido!');
             console.log("================================================================");
         }else if ( item.goalDone === idealSituation ){
             console.log("renderItem | else if: Você está de acordo com a meta estabelecida.");
-            let percentage = parseInt(currentPercentage) + "%";
-                console.log("renderItem | percentage: ", percentage);
-            let lackText = 'Progresso ideal alcançado';
-                console.log("renderItem | lackText: ", lackText);
-            let suggestionText = ( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo');
-                console.log("renderItem | suggestionText: ", suggestionText);
 
-            setPercentage(percentage); 
-            setLackText(lackText);
-            setSuggestionText(suggestionText);
-            setSituation(lackText);
+            setPercentage(parseInt(currentPercentage) + "%"); 
+            setLackText('Progresso ideal alcançado');
+            setSuggestionText(( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo'));
+            setSituation('Progresso ideal alcançado');
             console.log("================================================================");
         }else if ( item.goalDone > idealSituation ){
             console.log("renderItem | else if: Você ultrapassou a meta estabelecida.");
-            let percentage = parseInt(currentPercentage) + "%";
-                console.log("renderItem | percentage: ", percentage);
-            let lackText = ( (convertToHours(item.goalDone-idealSituation)).toString() + ' acima do ideal' );
-                console.log("renderItem | lackText: ", lackText);
-            let suggestionText = ( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo');
-                console.log("renderItem | suggestionText: ", suggestionText);
 
-            setPercentage(percentage); 
-            setLackText(lackText);
-            setSuggestionText(suggestionText);
+            setPercentage(parseInt(currentPercentage) + "%"); 
+            setLackText(( (convertToHours(item.goalDone-idealSituation)).toString() + ' acima do ideal' ));
+            setSuggestionText(( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo'));
             setSituation(' acima do ideal');
             console.log("================================================================");
         }else {
             console.warn("renderItem | else: Você está abaixo da meta estabelecida.");
-            let percentage = parseInt(currentPercentage) + "%";
-                console.log("renderItem | percentage: ", percentage);
-            let lackText = ( (convertToHours(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' );
-                console.log("renderItem | lackText: ", lackText);
-            let suggestionText = ( (convertToHours(goalRemaining / (daysRemaining == 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje');
-                console.log("renderItem | suggestionText: ", suggestionText);
 
-            setPercentage(percentage); 
-            setLackText(lackText);
-            setSuggestionText(suggestionText);
+            setPercentage(parseInt(currentPercentage) + "%"); 
+            setLackText(( (convertToHours(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' ));
+            setSuggestionText(( (convertToHours(goalRemaining / (daysRemaining == 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
             setSituation(' para o progresso ideal');
             console.log("================================================================");
         }
