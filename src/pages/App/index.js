@@ -11,7 +11,7 @@ function App({ history }) {
         {"name": "Code", "goalPerDay": 70, "goalDone": (210 + 547 + 393 + 92 + 73 + 98 + 57), "icon": "fas fa-code"},
         {"name": "Vest", "goalPerDay": 80, "goalDone": (250 + 104), "icon": "fas fa-university"},
         {"name": "Draw", "goalPerDay": 15, "goalDone": 45, "icon": "fas fa-pencil-ruler"},   
-        {"name": "Book", "goalPerDay": 20, "goalDone": (51 + 20 + 20), "icon": "fas fa-book-open"},
+        {"name": "Book", "goalPerDay": 20, "goalDone": (51 + 20 + 20 + 20), "icon": "fas fa-book-open"},
         {"name": "Care", "goalPerDay": 30, "goalDone": 0, "icon": "fas fa-spa"}
     ]);
     const [load, setLoad] = useState(false);
