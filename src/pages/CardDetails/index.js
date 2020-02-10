@@ -38,7 +38,7 @@ function CardDetails({ history }) {
     return (
         <div className="Container">
             <NavBar navigation={history}/>
-            <div className="card-details">
+            <div className="details">
                 <Load show={load}/>
                 <Details item={card}/>
             </div>

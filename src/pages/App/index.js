@@ -8,7 +8,7 @@ import Load from "../../components/Load";
 
 function App({ history }) {
     const [listCards, setListCards] = useState([
-        {"name": "Code", "goalPerDay": 70, "goalDone": (70 + 70 + 74 + 69 + 67), "icon": "fas fa-code"},    
+        {"name": "Code", "goalPerDay": 70, "goalDone": (70 + 70 + 74 + 69 + 67 + 63 + 70), "icon": "fas fa-code"},    
         {"name": "Vest", "goalPerDay": 80, "goalDone": (80 + 80 + 70 + 85), "icon": "fas fa-university"},
         {"name": "Draw", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-pencil-ruler"},   
         {"name": "Book", "goalPerDay": 20, "goalDone": (0), "icon": "fas fa-book-open"},
@@ -18,7 +18,7 @@ function App({ history }) {
     const token = getToken(); 
 
     useEffect(() => {
-        async function progressThisMonth() {
+        async function progressMonth() {
             setLoad(true);
               try {
                 const response = await api.get("/progress", {
@@ -39,7 +39,7 @@ function App({ history }) {
 
         };
 
-        // progressThisMonth();
+        // progressMonth();
     }, []);
 
     return (
