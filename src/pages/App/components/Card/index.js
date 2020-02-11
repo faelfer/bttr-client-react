@@ -7,6 +7,7 @@ import {
     faPencilRuler,
     faBookOpen,
     faSpa,
+    faFireAlt,
     faAngleUp,
     faAngleDown, 
     faAngleDoubleUp,
@@ -132,6 +133,12 @@ function Card({ item, navigation }) {
             case "fas fa-spa":
                 return  <FontAwesomeIcon 
                             icon={faSpa}
+                            size="3x"
+                            color="#f4f5f7" 
+                        />
+            case "fas fa-fire-alt":
+                return  <FontAwesomeIcon 
+                            icon={faFireAlt}
                             size="3x"
                             color="#f4f5f7" 
                         />
