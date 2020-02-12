@@ -8,11 +8,11 @@ import Load from "../../components/Load";
 
 function App({ history }) {
     const [listCards, setListCards] = useState([
-        {"name": "Code", "goalPerDay": 70, "goalDone": (70 + 70 + 74 + 69 + 67 + 63 + 70 + 7), "icon": "fas fa-code"},    
+        {"name": "Code", "goalPerDay": 70, "goalDone": (70 + 70 + 74 + 69 + 67 + 63 + 70 + 7 + 70), "icon": "fas fa-code"},    
         {"name": "Vest", "goalPerDay": 80, "goalDone": (80 + 80 + 70 + 85 + 70 + 30), "icon": "fas fa-university"},
         {"name": "Draw", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-pencil-ruler"},   
         {"name": "Book", "goalPerDay": 20, "goalDone": (0), "icon": "fas fa-book-open"},
-        {"name": "Care", "goalPerDay": 30, "goalDone": (30 + 30 + 30 + 30 + 30 + 30), "icon": "fas fa-spa"},
+        {"name": "Care", "goalPerDay": 30, "goalDone": (30 + 30 + 30 + 30 + 30 + 30 + 30), "icon": "fas fa-spa"},
         {"name": "Burn", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-fire-alt"}
     ]);
     const [load, setLoad] = useState(false);
@@ -40,7 +40,7 @@ function App({ history }) {
 
         };
 
-        progressMonth();
+        // progressMonth();
     }, []);
 
     return (
