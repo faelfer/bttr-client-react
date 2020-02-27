@@ -212,7 +212,7 @@ function Details({ item }) {
                     />
                 </div>
                 <div className="card-action">
-                    <button type="submit" onClick={() => console.log("Hellow")} >Detalhes</button>
+                    <button type="submit" onClick={() => console.log("Hellow")} >Adicionar Tempo</button>
                 </div>
             </div>
         </>
