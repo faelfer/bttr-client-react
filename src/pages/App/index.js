@@ -13,7 +13,7 @@ function App({ history }) {
         {"name": "Draw", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-pencil-ruler"},   
         {"name": "Book", "goalPerDay": 20, "goalDone": (336), "icon": "fas fa-book-open"},
         {"name": "Care", "goalPerDay": 30, "goalDone": (30 + 30 + 30 + 30 + 30 + 30 + 30 + 45 + 45), "icon": "fas fa-spa"},
-        {"name": "Burn", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-fire-alt"}
+        {"name": "Burn", "goalPerDay": 30, "goalDone": (95), "icon": "fas fa-fire-alt"}
     ]);
     const [load, setLoad] = useState(false);
     const token = getToken(); 
