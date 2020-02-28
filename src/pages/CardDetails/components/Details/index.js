@@ -17,17 +17,16 @@ import workingDays from "../../../../utils/workingDays";
 import convertToHours from "../../../../utils/convertTime";
 
 
-function Details({ item }) {
+function Details({ onProgressSum, item }) {
     const [name, setName] = useState("");
     const [goalPerDay, setGoalPerDay] = useState(0);
     const [goalDone, setGoalDone] = useState(0);
     const [icon, setIcon] = useState("");
-    const [action, setAction] = useState("+");
-
     const [percentage, setPercentage] = useState("");
     const [lackText, setLackText] = useState("");
     const [suggestionText, setSuggestionText] = useState("");
     const [situation, setSituation] = useState("");
+    const [time, setTime] = useState(0)
 
     useEffect(() => {
         setName(item.name);
@@ -60,16 +59,16 @@ function Details({ item }) {
 
         const businessDays = workingDays(lastDayMonth, currentYear, currentMouth);
             console.log("businessDays: ", businessDays);
-        let goalMonth = (businessDays * goalPerDay);
+        let goalMonth = (businessDays * item.goalPerDay);
             // console.log(`Meta de Minutos: ${goalMonth} | ${convertToHours(goalMonth)}`);
-        let goalRemaining = (goalMonth - goalDone);
+        let goalRemaining = (goalMonth - item.goalDone);
         const businessDaysSoFar = workingDays(currentDay, currentYear, currentMouth);
             console.log("BusinessDaysSoFar: ", businessDaysSoFar);
         let daysRemaining = (businessDays - businessDaysSoFar) + 1;
             console.log(`Dias Restantes: ${daysRemaining}`);
-        let idealSituation = (businessDaysSoFar * goalPerDay);
+        let idealSituation = (businessDaysSoFar * item.goalPerDay);
             // console.log(`Situação Ideal: ${idealSituation}`);
-        let currentPercentage = (( goalDone * 100 ) / goalMonth);
+        let currentPercentage = (( item.goalDone * 100 ) / goalMonth);
             console.log(`Ideal percentage so far: ${parseInt((businessDaysSoFar * 100)/businessDays)}%`);
 
         return { goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining };
@@ -98,7 +97,7 @@ function Details({ item }) {
             console.log("renderItem | else if: Você ultrapassou a meta estabelecida.");
 
             setPercentage(parseInt(currentPercentage) + "%"); 
-            setLackText(( (convertToHours(item.goalDone-idealSituation)).toString() + ' acima do ideal' ));
+            setLackText(( (convertToHours(item.goalDone - idealSituation)).toString() + ' acima do ideal' ));
             setSuggestionText(( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo'));
             setSituation(' acima do ideal');
             console.log("================================================================");
@@ -106,7 +105,7 @@ function Details({ item }) {
             console.warn("renderItem | else: Você está abaixo da meta estabelecida.");
 
             setPercentage(parseInt(currentPercentage) + "%"); 
-            setLackText(( (convertToHours(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' ));
+            setLackText(( (convertToHours(idealSituation - item.goalDone)).toString() + ' para o progresso ideal' ));
             setSuggestionText(( (convertToHours(goalRemaining / (daysRemaining == 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
             setSituation(' para o progresso ideal');
             console.log("================================================================");
@@ -209,10 +208,17 @@ function Details({ item }) {
                         ame="quantity" 
                         min="1" 
                         max="1440"
+                        onChange={event => setTime(event.target.value)}
+						value={time}
                     />
                 </div>
                 <div className="card-action">
-                    <button type="submit" onClick={() => console.log("Hellow")} >Adicionar Tempo</button>
+                    <button 
+                        type="submit" 
+                        onClick={() => onProgressSum(parseInt(time), item._id)} 
+                    >
+                        Adicionar Tempo
+                    </button>
                 </div>
             </div>
         </>

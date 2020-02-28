@@ -5,42 +5,72 @@ import Details from "./components/Details";
 import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import Load from "../../components/Load";
+import { getToken } from "../../services/auth";
 
 function CardDetails({ history }) {
     const [card, setCard] = useState({});
     const [load, setLoad] = useState(false);
     const { cardId } = useParams();
+    const token = getToken(); 
     
+    async function progress() {
+        setLoad(true);
+          try {
+            const response = await api.get(`/progress/${cardId}`);
+            console.log("progress | response: ", response.data);
+            setLoad(false);
+            if(!response.data.status === 200) {
+            //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
+            }
+
+            setCard(response.data);
+          } catch (error) {
+            console.log("progress | error: ", error);
+            // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+            setLoad(false);
+          }
+
+    };
+
     useEffect(() => {
         console.log("UseEffect | cardId: ",cardId);
-        async function progress() {
-            setLoad(true);
-              try {
-                const response = await api.get(`/progress/${cardId}`);
-                console.log("progress | response: ", response.data);
-                setLoad(false);
-                if(!response.data.status === 200) {
-                //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
-                }
-
-                setCard(response.data);
-              } catch (error) {
-                console.log("progress | error: ", error);
-                // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
-                setLoad(false);
-              }
-
-        };
 
         progress();
     }, []);
+
+    async function progressSum(minutesDone, id) {
+        console.log("progressSum | minutesDone, id: ", minutesDone, id);
+        setLoad(true);
+          try {
+            const response = await api.put("/progress_sum/" + id, 
+            { minutesDone },
+            { headers: { "Authorization": token } }
+            );
+            console.log("progressSum | response: ", response);
+            setLoad(false);
+            if(!response.data.status === 200) {
+            //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
+            }
+
+            // setListCards(response.data)
+            progress()
+          } catch (error) {
+            console.log("progressSum | error", error);
+            // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+            setLoad(false);
+          }
+
+    };
 
     return (
         <div className="Container">
             <NavBar navigation={history}/>
             <div className="details">
                 <Load show={load}/>
-                <Details item={card}/>
+                <Details
+                    onProgressSum={(minutesDone, id) => progressSum(minutesDone, id)}
+                    item={card}
+                />
             </div>
         </div>
     )

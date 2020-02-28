@@ -35,11 +35,11 @@ function Card({ item, navigation }) {
         const currentYear = currentDate.getFullYear();
         // console.log(`Ano Atual: ${currentYear}`);
         const currentMouth = currentDate.getMonth();
-        // console.log(`Mês Atual: ${currentMouth}`);
+        console.log(`Mês Atual: ${currentMouth}`);
         const currentDay = currentDate.getDate();
         // console.log(`Hoje: ${currentDay}`);
         const manipulatedDate = new Date(currentYear, (currentMouth + 1), 0);
-        // console.log(`Data Manipulada: ${manipulatedDate}`);
+        console.log(`Data Manipulada: ${manipulatedDate}`);
         const lastDayMonth = manipulatedDate.getDate();
         // console.log(`Último Dia do Mês ${lastDayMonth}`);
 
@@ -52,7 +52,7 @@ function Card({ item, navigation }) {
         const businessDays = workingDays(lastDayMonth, currentYear, currentMouth);
             console.log("businessDays: ", businessDays);
         let goalMonth = (businessDays * goalPerDay);
-            // console.log(`Meta de Minutos: ${goalMonth} | ${convertToHours(goalMonth)}`);
+            console.log(`Meta de Minutos: ${goalMonth} | ${convertToHours(goalMonth)}`);
         let goalRemaining = (goalMonth - goalDone);
         const businessDaysSoFar = workingDays(currentDay, currentYear, currentMouth);
             console.log("BusinessDaysSoFar: ", businessDaysSoFar);
@@ -221,7 +221,12 @@ function Card({ item, navigation }) {
 
             </div>
             <div className="card-action">
-                <button type="submit" onClick={() => navigation.push(`/card-details/${item._id}`)} >Detalhes</button>
+                <button 
+                    type="submit" 
+                    onClick={() => navigation.push(`/card-details/${item._id}`)} 
+                >
+                    Detalhes
+                </button>
             </div>
         </div>
     )
