@@ -6,7 +6,6 @@ function switchWeek(dayWeek) {
       case 4:
       case 5:
         return 1;
-        break;
       default:
         return 0;
     }

@@ -21,7 +21,7 @@ function Details({ onProgressSum, item }) {
     const [name, setName] = useState("");
     const [goalPerDay, setGoalPerDay] = useState(0);
     const [goalDone, setGoalDone] = useState(0);
-    const [icon, setIcon] = useState("");
+    const [icon, setIcon] = useState("");   
     const [percentage, setPercentage] = useState("");
     const [lackText, setLackText] = useState("");
     const [suggestionText, setSuggestionText] = useState("");
@@ -106,7 +106,7 @@ function Details({ onProgressSum, item }) {
 
             setPercentage(parseInt(currentPercentage) + "%"); 
             setLackText(( (convertToHours(idealSituation - item.goalDone)).toString() + ' para o progresso ideal' ));
-            setSuggestionText(( (convertToHours(goalRemaining / (daysRemaining == 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
+            setSuggestionText(( (convertToHours(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
             setSituation(' para o progresso ideal');
             console.log("================================================================");
         }
@@ -208,14 +208,14 @@ function Details({ onProgressSum, item }) {
                         ame="quantity" 
                         min="1" 
                         max="1440"
-                        onChange={event => setTime(event.target.value)}
+                        onChange={event => setTime(parseInt(event.target.value))}
 						value={time}
                     />
                 </div>
                 <div className="card-action">
                     <button 
                         type="submit" 
-                        onClick={() => onProgressSum(parseInt(time), item._id)} 
+                        onClick={() => onProgressSum(time, item._id)} 
                     >
                         Adicionar Tempo
                     </button>

@@ -98,7 +98,7 @@ function Card({ item, navigation }) {
 
             setPercentage(parseInt(currentPercentage) + "%"); 
             setLackText(( (convertToHours(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' ));
-            setSuggestionText(( (convertToHours(goalRemaining / (daysRemaining == 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
+            setSuggestionText(( (convertToHours(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
             setSituation(' para o progresso ideal');
             console.log("================================================================");
         }
