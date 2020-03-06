@@ -8,7 +8,7 @@ import Load from "../../components/Load";
 
 function App({ history }) {
     const [listCards, setListCards] = useState([
-        {"name": "Code", "goalPerDay": 70, "goalDone": (0), "icon": "fas fa-code"},    
+        {"name": "Code", "goalPerDay": 70, "goalDone": (70), "icon": "fas fa-code"},    
         {"name": "Vest", "goalPerDay": 80, "goalDone": (0), "icon": "fas fa-university"},
         {"name": "Draw", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-pencil-ruler"},   
         {"name": "Book", "goalPerDay": 20, "goalDone": (0), "icon": "fas fa-book-open"},
@@ -22,10 +22,10 @@ function App({ history }) {
         async function progressMonth() {
             setLoad(true);
               try {
-                const response = await api.get("/progress", {
+                const response = await api.get("/progress_month", {
                     headers: { "Authorization": token }
                 });
-                console.log("progressThisMonth | response", response);
+                console.log("progressThisMonth | response: ", response);
                 setLoad(false);
                 if(!response.data.status === 200) {
                 //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
@@ -40,7 +40,7 @@ function App({ history }) {
 
         };
 
-        progressMonth();
+        // progressMonth();
     }, []);
 
     return (
