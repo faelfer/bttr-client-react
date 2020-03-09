@@ -9,7 +9,6 @@ export default function CloseChat({ onLoad, onSubmit, show, onModal, token }) {
     const [icon, setIcon] = useState("fas fa-spa");
 
     async function onSubmit(event) {
-		// event.preventDefault();
         // onLoad();
         try {
           const response = await api.post("/progress",{
@@ -36,22 +35,8 @@ export default function CloseChat({ onLoad, onSubmit, show, onModal, token }) {
 
     return (
       <div className={show ? "model" : "model-none"}>
-            <div style={{  
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                height: '50%',
-                width: '40%',
-                backgroundColor: '#5e72e4',
-                borderRadius: 8,
-                paddingTop: 5
-            }}>
-                <p style={{  
-                        color: "#f4f5f7",
-                        fontSize: 20,
-                        fontWeight: "bold"
-                    }}
-                >
+            <div className="model-container">
+                <p className="model-title">
                     Cadastrar
                 </p>
                 <form onSubmit={() => onSubmit()}>
@@ -90,9 +75,9 @@ export default function CloseChat({ onLoad, onSubmit, show, onModal, token }) {
                         onChange={event => setGoalDone(event.target.value)}  
                     />
                     <button type="submit">Cadastrar</button>
-                    <button onClick={() => {onModal()}}>Cancelar</button>
-                    {/* <hr /> */}
-                    {/* <Link to="/">Fazer login</Link> */}
+                    <button onClick={() => onModal()} >
+                        Cancelar
+                    </button>
                 </form>
             </div>
       </div>
