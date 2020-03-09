@@ -162,7 +162,10 @@ function Details({ onProgressSum, item }) {
                         <p>{percentage}</p>
                     </div>
                     <div>
-                        <select value={icon} onChange={event => {setIcon(event.target.value); console.log(icon)}}>
+                        <select 
+                            value={icon} 
+                            onChange={event => {setIcon(event.target.value)}}
+                        >
                             <option value="fas fa-code">Code</option>
                             <option value="fas fa-university">University</option>
                             <option value="fas fa-pencil-ruler">Draw</option>

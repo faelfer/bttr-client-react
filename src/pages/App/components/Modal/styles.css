@@ -1,0 +1,112 @@
+.model {
+    display: flex;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.model-none {
+    display: none;
+}
+
+.model form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 94%;
+    background-color: #5e72e4;
+    border-radius: 5px;
+}
+
+  .model form input {
+    height: 46px;
+    margin-bottom: 15px;
+    color: #5e72e4;
+    background-color: #f4f5f7;
+    border: 1px solid #f4f5f7;
+    padding: 0 20px;
+    font-size: 15px;
+    width: 94%;
+    border-radius: 5px;
+  }
+  
+  .model form input::placeholder {
+    color: #5e72e4;
+    opacity: 0.4; /* Firefox */
+  }
+
+  .model form select {
+    height: 46px;
+    margin-bottom: 15px;
+    color: #5e72e4;
+    background-color: #f4f5f7;
+    border: 1px solid #f4f5f7;
+    padding: 0 20px;
+    font-size: 15px;
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .model form select::placeholder {
+    color: #5e72e4;
+    opacity: 0.4; /* Firefox */
+  }
+  
+  .model form button {
+    color: #5e72e4;
+    font-size: 16px;
+    background: #f4f5f7;
+    height: 56px;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .model form button:hover {
+    font-size: 16px;
+    height: 56px;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #5e72e4;
+    color: #f4f5f7;
+    border: 1px solid #f4f5f7;
+  }
+  
+  .model form hr {
+    margin: 20px 0;
+    border: none;
+    border-bottom: 1px solid #cdcdcd;
+    width: 100%;
+  }
+
+
+  @media screen and (max-width: 600px) {
+	.sign-up form {
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center; 
+	  width: 95%;
+	  background: transparent;
+	  padding: 20px;
+	  border-radius: 5px;
+	}
+  
+	.sign-up form input { width: 90%; }
+
+	.sign-up form p { width: 94% }
+}
+  
+@media screen and (max-width: 350px) {
+	.sign-up form input { width: 85%; }
+
+	.sign-up form p { width: 92% }
+}

@@ -5,10 +5,11 @@ import { getToken } from "../../services/auth";
 import NavBar from "../../components/NavBar";
 import Card from "./components/Card";
 import Load from "../../components/Load";
+import Modal from "./components/Modal";
 
 function App({ history }) {
     const [listCards, setListCards] = useState([
-        {"name": "Code", "goalPerDay": 70, "goalDone": (70), "icon": "fas fa-code"},    
+        {"name": "Code", "goalPerDay": 70, "goalDone": (70 + 81 + 81), "icon": "fas fa-code"},    
         {"name": "Vest", "goalPerDay": 80, "goalDone": (0), "icon": "fas fa-university"},
         {"name": "Draw", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-pencil-ruler"},   
         {"name": "Book", "goalPerDay": 20, "goalDone": (0), "icon": "fas fa-book-open"},
@@ -16,6 +17,7 @@ function App({ history }) {
         {"name": "Burn", "goalPerDay": 30, "goalDone": (0), "icon": "fas fa-fire-alt"}
     ]);
     const [load, setLoad] = useState(false);
+    const [modal, setModal] = useState(false);
     const token = getToken(); 
 
     useEffect(() => {
@@ -43,11 +45,30 @@ function App({ history }) {
         // progressMonth();
     }, []);
 
+    function onModal() {
+        console.log("onModal !")
+        setModal(!modal);
+    }
+
+    function onLoad() {
+        console.log("onModal !")
+        setLoad(!load);
+    }
+
     return (
         <div className="Container">
             <NavBar navigation={history}/>
             <div className="app">
                 <Load show={load}/>
+                <Modal
+                    show={modal}
+                    onModal={() => onModal()}
+                    token={token}
+                    onLoad={() => onLoad()}
+				/>
+                <button onClick={() => onModal()}>
+                    <p>Adicionar</p>
+                </button>
                 {listCards.map((item, key) => (
                     <Card 
                         item={item} 
