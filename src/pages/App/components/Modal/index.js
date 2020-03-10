@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import './styles.css';
 import api from "../../../../services/api";
 
-export default function CloseChat({ onLoad, onSubmit, onModal, isShow, token }) {
+export default function CloseChat({ onLoad, onModal, isShow, token }) {
     const [name, setName] = useState(""); 
     const [goalPerDay, setGoalPerDay] = useState(0);
     const [goalDone, setGoalDone] = useState(0)
     const [icon, setIcon] = useState("fas fa-spa");
+    const [isLoad, setIsLoad] = useState(false);
+    const [error, setError] = useState("");
 
     async function onSubmit(event) {
-        // onLoad();
+        event.preventDefault();
+        console.log("onSubmit");
+        setIsLoad(true);
         try {
           const response = await api.post("/progress",{
                 name,
@@ -20,16 +24,17 @@ export default function CloseChat({ onLoad, onSubmit, onModal, isShow, token }) 
               headers: { "Authorization": token }
           });
           console.log("onSubmit | response: ", response);
-        //   onLoad();
-        //   if(!response.data.status === 200) {
-          //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
-        //   }
+          setIsLoad(false);
+          onModal()
+          if(!response.data.status === 200) {
+            setError("Ocorreu um erro ao registrar o item. ;-;");
+          }
 
         //   setListCards(response.data)
         } catch (error) {
           console.log("onSubmit | error", error);
-          // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
-        //   onLoad();
+          setError("Houve um problema com o item, verifique os campos. ;-;");
+          setIsLoad(false);
         }      
 	}
 
@@ -39,8 +44,8 @@ export default function CloseChat({ onLoad, onSubmit, onModal, isShow, token }) 
                 <p className="model-title">
                     Cadastrar
                 </p>
-                <form onSubmit={() => onSubmit()}>
-                    {/* {error && <p>{error}</p>} */}
+                <form onSubmit={onSubmit}>
+                    {error && <p>{error}</p>}
                     <input
                         type="text"
                         placeholder="Nome"
@@ -74,7 +79,12 @@ export default function CloseChat({ onLoad, onSubmit, onModal, isShow, token }) 
                         value={goalDone}
                         onChange={event => setGoalDone(event.target.value)}  
                     />
-                    <button type="submit">Cadastrar</button>
+                    <button 
+                        disabled={isLoad} 
+                        type="submit"
+                    >
+                        Cadastrar
+                    </button>
                     <button onClick={() => onModal()} >
                         Cancelar
                     </button>

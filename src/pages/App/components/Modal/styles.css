@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 50%;
+  height: 53.5%;
   width: 40%;
   background-color: #5e72e4;
   border-radius: 8px;
@@ -29,8 +29,9 @@
 
 .model-title {
   color: #f4f5f7;
-  font-size: 20;
-  font-weight: bold
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 0.4;
 }
 
 .model form {
@@ -40,6 +41,16 @@
   width: 90%;
   background-color: #5e72e4;
   border-radius: 5px;
+}
+
+.model form p {
+  color: #f4f5f7;
+  margin-bottom: 15px;
+  margin-top: 0px;
+  border: 1px solid #f4f5f7;
+  padding: 10px;
+  width: 93%;
+  text-align: center;
 }
 
 .model form input {
@@ -87,6 +98,11 @@
   font-weight: bold;
 }
 
+.model form button[disabled] { 
+  opacity: 0.5;
+  cursor: default;
+}
+
 .model form button:hover {
   font-size: 16px;
   height: 56px;
@@ -97,7 +113,11 @@
   color: #f4f5f7;
   border: 1px solid #f4f5f7;
 }
-  
+
+.model form button[disabled]:hover { 
+  opacity: 0.5;
+}
+
 .model form hr {
   margin: 20px 0;
   border: none;
