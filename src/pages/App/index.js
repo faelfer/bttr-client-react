@@ -12,7 +12,7 @@ function App({ history }) {
         {"name": "Code", "goalPerDay": 70, "goalDone": (70 + 81 + 81 + 76 + 72 + 5 + 72 + 33), "icon": "fas fa-code"},    
         {"name": "Vest", "goalPerDay": 80, "goalDone": (103), "icon": "fas fa-university"},
         {"name": "Draw", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-pencil-ruler"},   
-        {"name": "Book", "goalPerDay": 20, "goalDone": (0), "icon": "fas fa-book-open"},
+        {"name": "Book", "goalPerDay": 20, "goalDone": (27 + 25), "icon": "fas fa-book-open"},
         {"name": "Care", "goalPerDay": 30, "goalDone": (0), "icon": "fas fa-spa"},
         {"name": "Burn", "goalPerDay": 30, "goalDone": (14), "icon": "fas fa-fire-alt"}
     ]);
