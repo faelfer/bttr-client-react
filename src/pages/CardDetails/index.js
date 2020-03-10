@@ -9,16 +9,16 @@ import { getToken } from "../../services/auth";
 
 function CardDetails({ history }) {
     const [card, setCard] = useState({});
-    const [load, setLoad] = useState(false);
+    const [isLoad, setIsLoad] = useState(false);
     const { cardId } = useParams();
     const token = getToken(); 
     
     async function progress() {
-        setLoad(true);
+        setIsLoad(true);
           try {
             const response = await api.get(`/progress/${cardId}`);
             console.log("progress | response: ", response.data);
-            setLoad(false);
+            setIsLoad(false);
             if(!response.data.status === 200) {
             //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
             }
@@ -27,7 +27,7 @@ function CardDetails({ history }) {
           } catch (error) {
             console.log("progress | error: ", error);
             // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
-            setLoad(false);
+            setIsLoad(false);
           }
 
     };
@@ -40,14 +40,14 @@ function CardDetails({ history }) {
 
     async function progressSum(minutesDone, id) {
         console.log("progressSum | minutesDone, id: ", minutesDone, id);
-        setLoad(true);
+        setIsLoad(true);
           try {
             const response = await api.put("/progress_sum/" + id, 
             { minutesDone },
             { headers: { "Authorization": token } }
             );
             console.log("progressSum | response: ", response);
-            setLoad(false);
+            setIsLoad(false);
             if(!response.data.status === 200) {
             //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
             }
@@ -57,7 +57,7 @@ function CardDetails({ history }) {
           } catch (error) {
             console.log("progressSum | error", error);
             // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
-            setLoad(false);
+            setIsLoad(false);
           }
 
     };
@@ -66,7 +66,7 @@ function CardDetails({ history }) {
         <div className="Container">
             <NavBar navigation={history}/>
             <div className="details">
-                <Load show={load}/>
+                <Load show={isLoad}/>
                 <Details
                     onProgressSum={(minutesDone, id) => progressSum(minutesDone, id)}
                     item={card}

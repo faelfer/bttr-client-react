@@ -9,26 +9,26 @@ import Modal from "./components/Modal";
 
 function App({ history }) {
     const [listCards, setListCards] = useState([
-        {"name": "Code", "goalPerDay": 70, "goalDone": (70 + 81 + 81 + 76), "icon": "fas fa-code"},    
+        {"name": "Code", "goalPerDay": 70, "goalDone": (70 + 81 + 81 + 76 + 72 + 5), "icon": "fas fa-code"},    
         {"name": "Vest", "goalPerDay": 80, "goalDone": (0), "icon": "fas fa-university"},
         {"name": "Draw", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-pencil-ruler"},   
         {"name": "Book", "goalPerDay": 20, "goalDone": (0), "icon": "fas fa-book-open"},
         {"name": "Care", "goalPerDay": 30, "goalDone": (0), "icon": "fas fa-spa"},
-        {"name": "Burn", "goalPerDay": 30, "goalDone": (0), "icon": "fas fa-fire-alt"}
+        {"name": "Burn", "goalPerDay": 30, "goalDone": (14), "icon": "fas fa-fire-alt"}
     ]);
-    const [load, setLoad] = useState(false);
-    const [modal, setModal] = useState(false);
+    const [isLoad, setIsLoad] = useState(false);
+    const [isModal, setIsModal] = useState(false);
     const token = getToken(); 
 
     useEffect(() => {
         async function progressMonth() {
-            setLoad(true);
+            setIsLoad(true);
               try {
                 const response = await api.get("/progress_month", {
                     headers: { "Authorization": token }
                 });
                 console.log("progressThisMonth | response: ", response);
-                setLoad(false);
+                setIsLoad(false);
                 if(!response.data.status === 200) {
                 //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
                 }
@@ -37,7 +37,7 @@ function App({ history }) {
               } catch (error) {
                 console.log("progressThisMonth | error", error);
                 // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
-                setLoad(false);
+                setIsLoad(false);
               }
 
         };
@@ -47,21 +47,21 @@ function App({ history }) {
 
     function onModal() {
         console.log("onModal !")
-        setModal(!modal);
+        setIsModal(!isModal);
     }
 
     function onLoad() {
         console.log("onModal !")
-        setLoad(!load);
+        setIsLoad(!isLoad);
     }
 
     return (
         <div className="Container">
             <NavBar navigation={history}/>
             <div className="app">
-                <Load show={load}/>
+                <Load isShow={isLoad}/>
                 <Modal
-                    show={modal}
+                    isShow={isModal}
                     onModal={() => onModal()}
                     token={token}
                     onLoad={() => onLoad()}

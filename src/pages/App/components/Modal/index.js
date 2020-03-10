@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './styles.css';
 import api from "../../../../services/api";
 
-export default function CloseChat({ onLoad, onSubmit, show, onModal, token }) {
+export default function CloseChat({ onLoad, onSubmit, onModal, isShow, token }) {
     const [name, setName] = useState(""); 
     const [goalPerDay, setGoalPerDay] = useState(0);
     const [goalDone, setGoalDone] = useState(0)
@@ -34,7 +34,7 @@ export default function CloseChat({ onLoad, onSubmit, show, onModal, token }) {
 	}
 
     return (
-      <div className={show ? "model" : "model-none"}>
+      <div className={isShow ? "model" : "model-none"}>
             <div className="model-container">
                 <p className="model-title">
                     Cadastrar

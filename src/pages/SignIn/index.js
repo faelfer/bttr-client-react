@@ -9,19 +9,19 @@ function SignIn({ history }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [load, setLoad] = useState(false);
+    const [isLoad, setIsLoad] = useState(false);
 
     async function handleSignIn(event) {
         event.preventDefault();
-        setLoad(true);
+        setIsLoad(true);
         if (!email || !password) {
             setError("Preencha e-mail e senha para continuar!");
-            setLoad(false);
+            setIsLoad(false);
         } else {
           try {
             const response = await api.post("/login", { email, password });
             console.log("handleSignIn | response", response.data);
-            setLoad(false);
+            setIsLoad(false);
             if(!response.data.status === 200) {
               setError("Ocorreu um erro ao registrar sua conta. ;-;");
             }
@@ -30,14 +30,14 @@ function SignIn({ history }) {
           } catch (error) {
             console.log("handleSignIn | error", error);
             setError("Houve um problema com o login, verifique suas credenciais. ;-;");
-            setLoad(false);
+            setIsLoad(false);
           }
         }
     };
 
     return (
       <div className="sign-in">
-        <Load show={load}/>
+        <Load isShow={isLoad}/>
         <form onSubmit={handleSignIn}>
           {error && <p>{error}</p>}
           <input

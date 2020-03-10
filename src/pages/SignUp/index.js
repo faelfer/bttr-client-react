@@ -9,19 +9,19 @@ function SignUp({ history }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [load, setLoad] = useState(false);
+  const [isLoad, setIsLoad] = useState(false);
 
 
   async function handleSignUp(event) {
     event.preventDefault();
-    setLoad(true);
+    setIsLoad(true);
     if (!username || !email || !password) {
       setError("Preencha todos os dados para se cadastrar");
-      setLoad(false);
+      setIsLoad(false);
     } else {
       try {
         const response = await api.post("/users", { username, email, password });
-        setLoad(false);
+        setIsLoad(false);
         console.log("handleSignUp | respnse: ",response);
         if(!response.data.status === 200) {
           setError("Ocorreu um erro ao registrar sua conta. ;-;");
@@ -30,14 +30,14 @@ function SignUp({ history }) {
       } catch (error) {
         console.log("handleSignUp | error: ",error);
         setError("Ocorreu um erro ao registrar sua conta. ;-;");
-        setLoad(false);
+        setIsLoad(false);
       }
     }
   };
 
     return (
       <div className="sign-up">
-        <Load show={load}/>
+        <Load isShow={isLoad}/>
         <form onSubmit={handleSignUp}>
           {error && <p>{error}</p>}
           <input

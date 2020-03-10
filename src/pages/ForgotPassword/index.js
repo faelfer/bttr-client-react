@@ -7,19 +7,19 @@ import "./styles.css";
 function ForgotPassword({ history }) {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-    const [load, setLoad] = useState(false);
+    const [isLoad, setIsLoad] = useState(false);
 
     async function handleForgotPassword(event) {
         event.preventDefault();
-        setLoad(true);
+        setIsLoad(true);
         if (!email) {
             setError("Preencha com seu e-mail para continuar!");
-            setLoad(false);
+            setIsLoad(false);
         } else {
           try {
             const response = await api.post("/forgot_password", { email });
             console.log("handleForgotPassword | response", response.data);
-            setLoad(false);
+            setIsLoad(false);
             if(!response.data.status === 200) {
               setError("Ocorreu um erro. ;-;");
             }
@@ -27,14 +27,14 @@ function ForgotPassword({ history }) {
           } catch (error) {
             console.log("handleForgotPassword | error", error);
             setError("Houve um problema com o esqueci minha senha, verifique seu e-mail. ;-;");
-            setLoad(false);
+            setIsLoad(false);
           }
         }
     };
 
     return (
       <div className="forgot-password">
-        <Load show={load}/>
+        <Load isShow={isLoad}/>
         <form onSubmit={handleForgotPassword}>
           {error && <p>{error}</p>}
           <input
