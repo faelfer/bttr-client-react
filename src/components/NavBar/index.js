@@ -18,11 +18,11 @@ function App({ navigation }) {
                         Início
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink to={'/tasks'}>
                         Tarefas
                     </NavLink>
-                </li>
+                </li> */}
                 <li className="right" onClick={(event) => exit(event)}>
                     <a>Sair</a>
                 </li>

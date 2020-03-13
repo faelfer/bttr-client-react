@@ -30,7 +30,7 @@ const Routes = () => (
       <Route path="/forgot-password" component={ForgotPassword} />
       <PrivateRoute path="/app" component={App} />
       <PrivateRoute path="/card-details/:cardId" component={CardDetails} />
-      <PrivateRoute path="/tasks" component={Tasks} />
+      {/* <PrivateRoute path="/tasks" component={Tasks} /> */}
       <Route path="*" component={() => <h1 style={{color:"#f4f5f7"}}>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
