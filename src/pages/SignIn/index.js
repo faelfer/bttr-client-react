@@ -26,7 +26,7 @@ function SignIn({ history }) {
               setError("Ocorreu um erro ao registrar sua conta. ;-;");
             }
             login(response.data.token);
-            history.push("/app");
+            history.push("/progress");
           } catch (error) {
             console.log("handleSignIn | error", error);
             setError("Houve um problema com o login, verifique suas credenciais. ;-;");

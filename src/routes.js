@@ -28,7 +28,7 @@ const Routes = () => (
       <Route exact path="/" component={SignIn} />
       <Route path="/sign-up" component={SignUp} />
       <Route path="/forgot-password" component={ForgotPassword} />
-      <PrivateRoute path="/app" component={App} />
+      <PrivateRoute path="/progress" component={App} />
       <PrivateRoute path="/card-details/:cardId" component={CardDetails} />
       {/* <PrivateRoute path="/tasks" component={Tasks} /> */}
       <Route path="*" component={() => <h1 style={{color:"#f4f5f7"}}>Page not found</h1>} />
