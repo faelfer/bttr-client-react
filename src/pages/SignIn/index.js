@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import api from "../../services/api";
-import { login } from "../../services/auth";
+import { login, isAuthenticated } from "../../services/auth";
 import Load from "../../components/Load";
 import "./styles.css";
 
@@ -10,6 +10,15 @@ function SignIn({ history }) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoad, setIsLoad] = useState(false);
+
+    useEffect(() => {
+      const authenticated = isAuthenticated();
+      // console.log("SignIn | authenticated: ",authenticated);
+      if (authenticated) {
+        history.push("/progress");
+      }
+  
+    }, []);
 
     async function handleSignIn(event) {
         event.preventDefault();
