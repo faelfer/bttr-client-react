@@ -2,20 +2,31 @@ import React, { useState, useEffect } from 'react';
 import './styles.css';
 import api from "../../../../services/api";
 
-export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token }) {
-    const [name, setName] = useState(""); 
-    const [goalPerDay, setGoalPerDay] = useState(0);
-    const [goalDone, setGoalDone] = useState(0)
+export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token, item }) {
+    const [name, setName] = useState(); 
+    const [goalPerDay, setGoalPerDay] = useState();
+    const [goalDone, setGoalDone] = useState()
     const [icon, setIcon] = useState("");
     const [isLoad, setIsLoad] = useState(false);
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        console.log("useEffect | item: ", item)
+        if (item) {
+            setName(item.name)
+            setGoalPerDay(item.goalPerDay)
+            setGoalDone(item.goalDone)
+            setIcon(item.icon)
+            setError("");
+        }
+    }, [item]);
 
     async function onSubmit(event) {
         event.preventDefault();
         console.log("onSubmit");
         setIsLoad(true);
         try {
-          const response = await api.post("/progress",{
+          const response = await api.put(`/progress/${item._id}`,{
                 name,
                 goalPerDay,
                 goalDone,
@@ -24,11 +35,11 @@ export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token })
               headers: { "Authorization": token }
           });
           console.log("onSubmit | response: ", response);
-          setIsLoad(false);
-          onModal()
           if(!response.data.status === 200) {
             setError("Ocorreu um erro ao registrar o item. ;-;");
           }
+          setIsLoad(false);
+          onModal()
           onRefresh()
 
         //   setListCards(response.data)
@@ -43,7 +54,7 @@ export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token })
       <div className={isShow ? "model" : "model-none"}>
             <div className="model-container">
                 <p className="model-title">
-                    Cadastrar
+                    Detalhes
                 </p>
                 <form onSubmit={onSubmit}>
                     {error && <p>{error}</p>}
@@ -57,6 +68,7 @@ export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token })
                         value={icon} 
                         onChange={event => {setIcon(event.target.value)}}
                     >
+                        <option value="" disabled selected hidden>Selecione um ícone</option>
                         <option value="fas fa-code">Code</option>
                         <option value="fas fa-university">University</option>
                         <option value="fas fa-pencil-ruler">Draw</option>
@@ -84,9 +96,9 @@ export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token })
                         disabled={isLoad} 
                         type="submit"
                     >
-                        Cadastrar
+                        Alterar
                     </button>
-                    <button onClick={() => onModal()} >
+                    <button onClick={() => onModal(item)} >
                         Cancelar
                     </button>
                 </form>

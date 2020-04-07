@@ -17,7 +17,7 @@ import {
 import workingDays from "../../../../utils/workingDays";
 import convertToHours from "../../../../utils/convertTime";
 
-function Card({ item, navigation }) {
+function Card({ item, navigation, onModal }) {
     const [percentage, setPercentage] = useState("");
     const [lackText, setLackText] = useState("");
     const [suggestionText, setSuggestionText] = useState("");
@@ -223,7 +223,7 @@ function Card({ item, navigation }) {
             <div className="card-action">
                 <button 
                     type="submit" 
-                    onClick={() => navigation.push(`/card-details/${item._id}`)} 
+                    onClick={() => onModal()} 
                 >
                     Detalhes
                 </button>
