@@ -148,6 +148,20 @@
   }
 
   .model form input {
-    width: 80%;
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .model-container {
+    width: 95%;
+  }
+
+  .model form {
+    width: 100%;
+  }
+
+  .model form input {
+    width: 82%;
   }
 }

@@ -43,7 +43,7 @@ export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token })
       <div className={isShow ? "model" : "model-none"}>
             <div className="model-container">
                 <p className="model-title">
-                    Cadastrar
+                    Cadastro
                 </p>
                 <form onSubmit={onSubmit}>
                     {error && <p>{error}</p>}

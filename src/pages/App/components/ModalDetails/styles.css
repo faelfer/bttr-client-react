@@ -151,3 +151,17 @@
     width: 80%;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .model-details-container {
+    width: 95%;
+  }
+
+  .model-details form {
+    width: 100%;
+  }
+
+  .model-details form input {
+    width: 82%;
+  }
+}
