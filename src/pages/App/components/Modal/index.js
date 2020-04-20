@@ -75,7 +75,7 @@ export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token })
                         type="number"
                         ame="quantity" 
                         min="1" 
-                        max="1440"
+                        max="20000"
                         placeholder="Minutos concluidos"
                         value={goalDone}
                         onChange={event => setGoalDone(event.target.value)}  

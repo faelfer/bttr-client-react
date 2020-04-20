@@ -1,8 +1,9 @@
 import axios from "axios";
 import { getToken } from "./auth";
+import { url } from "../utils/constant";
 
 const api = axios.create({
-  baseURL: "http://192.168.0.102:3001/api"
+  baseURL: url
 });
 
 api.interceptors.request.use(async config => {

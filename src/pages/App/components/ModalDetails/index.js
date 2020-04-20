@@ -78,7 +78,7 @@ export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token, i
                         type="number"
                         ame="quantity" 
                         min="1" 
-                        max="1440"
+                        max="20000"
                         placeholder="Minutos diários"
                         value={goalPerDay}
                         onChange={event => setGoalPerDay(event.target.value)}
@@ -87,7 +87,7 @@ export default function CloseChat({ onLoad, onModal, onRefresh, isShow, token, i
                         type="number"
                         ame="quantity" 
                         min="1" 
-                        max="1440"
+                        max="20000"
                         placeholder="Minutos concluidos"
                         value={goalDone}
                         onChange={event => setGoalDone(event.target.value)}  
