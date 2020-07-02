@@ -145,7 +145,7 @@ function Card({ item, navigation, onModal }) {
                         />
             case "fas fa-business-time":
                 return  <FontAwesomeIcon 
-                            icon={faFireAlt}
+                            icon={faBusinessTime}
                             size="3x"
                             color="#f4f5f7" 
                         />
