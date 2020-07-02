@@ -8,6 +8,7 @@ import {
     faBookOpen,
     faSpa,
     faFireAlt,
+    faBusinessTime,
     faAngleUp,
     faAngleDown, 
     faAngleDoubleUp,
@@ -137,6 +138,12 @@ function Card({ item, navigation, onModal }) {
                             color="#f4f5f7" 
                         />
             case "fas fa-fire-alt":
+                return  <FontAwesomeIcon 
+                            icon={faFireAlt}
+                            size="3x"
+                            color="#f4f5f7" 
+                        />
+            case "fas fa-business-time":
                 return  <FontAwesomeIcon 
                             icon={faFireAlt}
                             size="3x"
