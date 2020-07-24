@@ -1,20 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-    faCode, 
-    faUniversity,
-    faPencilRuler,
-    faBookOpen,
-    faSpa,
-    faFireAlt,
-    faBusinessTime,
-    faAngleUp,
-    faAngleDown, 
-    faAngleDoubleUp,
-    faTrophy,
-    faCheck 
-} from '@fortawesome/free-solid-svg-icons';
+import * as IconSolid from '@fortawesome/free-solid-svg-icons';
 import workingDays from "../../../../utils/workingDays";
 import convertToHours from "../../../../utils/convertTime";
 
@@ -105,82 +92,32 @@ function Card({ item, navigation, onModal }) {
         }
     }
 
-    function renderIcon(icon) {
-            switch (icon) {
-            case "fas fa-code":
-                return  <FontAwesomeIcon 
-                            icon={faCode}
-                            size="3x"
-                            color="#f4f5f7" 
-                        />
-            case "fas fa-university":
-                return  <FontAwesomeIcon 
-                            icon={faUniversity}
-                            size="3x"
-                            color="#f4f5f7" 
-                        />
-            case "fas fa-pencil-ruler":
-                return  <FontAwesomeIcon 
-                            icon={faPencilRuler}
-                            size="3x"
-                            color="#f4f5f7" 
-                        />
-            case "fas fa-book-open":
-                return  <FontAwesomeIcon 
-                            icon={faBookOpen}
-                            size="3x"
-                            color="#f4f5f7" 
-                        />
-            case "fas fa-spa":
-                return  <FontAwesomeIcon 
-                            icon={faSpa}
-                            size="3x"
-                            color="#f4f5f7" 
-                        />
-            case "fas fa-fire-alt":
-                return  <FontAwesomeIcon 
-                            icon={faFireAlt}
-                            size="3x"
-                            color="#f4f5f7" 
-                        />
-            case "fas fa-business-time":
-                return  <FontAwesomeIcon 
-                            icon={faBusinessTime}
-                            size="3x"
-                            color="#f4f5f7" 
-                        />
-            default:
-                return null;
-            }
-
-    }
-
     function renderIconSituation(situation) {
         switch (situation) {
         case " para o progresso ideal":
             return    <FontAwesomeIcon 
-                            icon={faAngleDown}
+                            icon={IconSolid["faAngleDown"]}
                             size="lg" 
                             color="#f4f5f7" 
                             className="icon" 
                         />
         case " acima do ideal":
             return  <FontAwesomeIcon 
-                            icon={faAngleUp}
+                            icon={IconSolid["faAngleUp"]}
                             size="lg" 
                             color="#f4f5f7" 
                             className="icon" 
                     />
         case "Parabéns, objetivo concluido!":
             return  <FontAwesomeIcon 
-                            icon={faTrophy}
+                            icon={IconSolid["faTrophy"]}
                             size="lg" 
                             color="#f4f5f7" 
                             className="icon" 
                     />
         case "Progresso ideal alcançado":
             return  <FontAwesomeIcon 
-                            icon={faCheck}
+                            icon={IconSolid["faCheck"]}
                             size="lg" 
                             color="#f4f5f7" 
                             className="icon" 
@@ -199,8 +136,11 @@ function Card({ item, navigation, onModal }) {
                     <p>{percentage}</p>
                 </div>
                 <div>
-                    {renderIcon(item.icon)}
-                </div>
+                    <FontAwesomeIcon 
+                        icon={IconSolid[item.icon]}
+                        size="3x"
+                        color="#f4f5f7" 
+                    />                </div>
             </div>
             <div className="task-progress">
                 <div className="progress">
@@ -215,7 +155,7 @@ function Card({ item, navigation, onModal }) {
                 {suggestionText ? 
                     <div className="card-suggestion">
                         <FontAwesomeIcon 
-                            icon={faAngleDoubleUp} 
+                            icon={IconSolid["faAngleDoubleUp"]} 
                             size="lg" 
                             color="#f4f5f7" 
                             className="icon" 

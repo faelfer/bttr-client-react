@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-    faCode, 
-    faUniversity,
-    faPencilRuler,
-    faBookOpen,    
-    faSpa,
+import {
     faAngleUp,
     faAngleDown, 
     faAngleDoubleUp,
