@@ -7,7 +7,7 @@ import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import App from "./pages/App";
 import CardDetails from "./pages/CardDetails";
-import Tasks from "./pages/Tasks";
+import Countdown from "./pages/Countdown";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -30,7 +30,7 @@ const Routes = () => (
       <Route path="/forgot-password" component={ForgotPassword} />
       <PrivateRoute path="/progress" component={App} />
       <PrivateRoute path="/card-details/:cardId" component={CardDetails} />
-      {/* <PrivateRoute path="/tasks" component={Tasks} /> */}
+      <PrivateRoute path="/countdown" component={Countdown} />
       <Route path="*" component={() => <h1 style={{color:"#f4f5f7"}}>Page not found</h1>} />
     </Switch>
   </BrowserRouter>

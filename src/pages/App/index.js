@@ -9,14 +9,7 @@ import Modal from "./components/Modal";
 import ModalDetails from "./components/ModalDetails";
 
 function App({ history }) {
-    const [listCards, setListCards] = useState([
-        {"name": "Code", "goalPerDay": 70, "goalDone": (560), "icon": "fas fa-code"},    
-        {"name": "Vest", "goalPerDay": 80, "goalDone": (80 + 80 + 80), "icon": "fas fa-university"},
-        {"name": "Draw", "goalPerDay": 15, "goalDone": (0), "icon": "fas fa-pencil-ruler"},   
-        {"name": "Book", "goalPerDay": 20, "goalDone": (20 + 20 + 20), "icon": "fas fa-book-open"},
-        {"name": "Care", "goalPerDay": 30, "goalDone": (30), "icon": "fas fa-spa"},
-        {"name": "Burn", "goalPerDay": 30, "goalDone": (0), "icon": "fas fa-fire-alt"}
-    ]);
+    const [listCards, setListCards] = useState([]);
     const [item, setItem] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
     const [isModal, setIsModal] = useState(false);
