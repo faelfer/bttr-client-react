@@ -8,10 +8,7 @@ import Load from "../../components/Load";
 
 function App({ history }) {
     const [listCards, setListCards] = useState([]);
-    const [item, setItem] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
-    const [isModal, setIsModal] = useState(false);
-    const [isModalDetails, setIsModalDetails] = useState(false);
     const token = getToken(); 
 
     async function progressMonth() {
