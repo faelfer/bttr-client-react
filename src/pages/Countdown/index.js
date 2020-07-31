@@ -127,42 +127,47 @@ function Countdown({ history }) {
         <div className="container-countdown">
             <NavBar navigation={history}/>
             <div>
-                <Load isShow={isLoad}/>
-                    {counter === 0 ? msToTime(counterInitial) : msToTime(counter)}
-                <div>
-                    {(counter === 0) ?
-                        <button onClick={startCountdown}>Start</button> 
-                    :
-                        null 
-                    }
-                    {(counter === 0 || !isCounter) ?
-                        null 
-                    :
-                        <button onClick={stopCountdown}>Stop</button>
-                    }
-                    {(counter === 0 || isCounter) ?
-                        null 
-                    :
-                        <button onClick={resumeCountdown}>Resume</button>
-                    }
-                    {(counter === 0 || isCounter) ?
-                        null 
-                    :
-                        <button onClick={resetCountdown}>Reset</button>
-                    }
+                <div className="countdown">
+                    <Load isShow={isLoad}/>
+                        {counter === 0 ? msToTime(counterInitial) : msToTime(counter)}
+                    <div className="countdown-actions">
+                        {(counter === 0) ?
+                            <button onClick={startCountdown}>Start</button> 
+                        :
+                            null 
+                        }
+                        {(counter === 0 || !isCounter) ?
+                            null 
+                        :
+                            <button onClick={stopCountdown}>Stop</button>
+                        }
+                        {(counter === 0 || isCounter) ?
+                            null 
+                        :
+                            <button onClick={resumeCountdown}>Resume</button>
+                        }
+                        {(counter === 0 || isCounter) ?
+                            null 
+                        :
+                            <button onClick={resetCountdown}>Reset</button>
+                        }
+                    </div>
                 </div>
-                <div class="container-radio">
+                <div className="container-radio">
                     {skills.map((skill, key) => (
-                        <div>
+                        <div className="radio-option" onClick={() => skillSelected(skill._id, skill.goalPerDay)}>
+                            <div className="radio-input">
                             <input 
                                 type="radio" 
                                 id={skill._id} 
                                 name="skill" 
                                 value={skill._id} 
-                                onClick={() => skillSelected(skill._id, skill.goalPerDay)} 
                                 checked={skill._id === skillSelectedId ? true : false}
                             />
-                            <label for={skill._id}>{skill.name}</label>
+                            </div>
+                            <div className="radio-name">
+                                <label for={skill._id}>{skill.name}</label>
+                            </div>
                         </div>
                     ))}
                 </div>

@@ -6,8 +6,118 @@
     flex-direction: column;
 }
 
+.countdown {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #5e72e4;
+    width: 35vw;
+    font-size: 120px;
+    font-weight: bold;
+    margin-top: 20px;
+    padding: 20px 0px 30px;
+    border-radius: 8px;
+}
+
+.countdown-actions {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    background-color: #5e72e4;
+    font-size: 120px;
+    font-weight: bold;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+.countdown-actions button {
+    color: #5e72e4;
+    font-size: 16px;
+    background: #f4f5f7;
+    height: 56px;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    margin: 10px 20px;
+    cursor: pointer;
+  }
+  
+.countdown-actions button:hover {
+    font-size: 16px;
+    height: 56px;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #5e72e4;
+    color: #f4f5f7;
+    border: 1px solid #f4f5f7;
+    margin: 10px 20px;
+}
+
 .container-radio {
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    color: #5e72e4;
+    font-size: 16px;
+    background: #f4f5f7;
+    height: 56px;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    margin: 10px 0px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+.radio-option:hover {
+    font-size: 16px;
+    height: 56px;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #5e72e4;
+    color: #f4f5f7;
+    border: 1px solid #f4f5f7;
+    margin: 10px 0px;
+}
+
+.radio-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+}
+
+.radio-name {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    text-align: center;
+    width: 90%;
+}
+
+@media screen and (max-width: 1450px) {
+    .countdown { 
+        width: 55vw;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .countdown { 
+        width: 65vw;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .countdown { 
+        width: 95vw; 
+        font-size: 60px; 
+    }
 }
