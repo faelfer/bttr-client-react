@@ -67,24 +67,6 @@ function Countdown({ history }) {
 
     };
 
-    useEffect(() => {
-        progressMonth();
-    }, []);
-
-    // Third Attempts
-    useEffect(() => {
-        console.log("useEffect")
-
-        const timer =
-          counter > 0 && setInterval(() => setCounter(counter - 1000), 1000);
-          if (counter === 0 && isCounter === true) {
-              console.log("useEffect | counter | accountant is over!")
-              progressSum()
-          }
-          setCounterId(timer)  
-        return () => clearInterval(counterId);
-    }, [counter]);
-
     function msToTime(s) {
         // Pad to 2 or 3 digits, default is 2
         function pad(n, z) {
@@ -101,6 +83,28 @@ function Countdown({ history }) {
       
         return pad(hrs) + ':' + pad(mins) + ':' + pad(secs)
     }
+
+    useEffect(() => {
+        progressMonth();
+    }, []);
+
+    // Third Attempts
+    useEffect(() => {
+        console.log("useEffect")
+
+        const timer =
+          counter > 0 && setInterval(() => setCounter(counter - 1000), 1000);
+          if (counter === 0 && isCounter === true) {
+              console.log("useEffect | counter | accountant is over!")
+              document.title = "Contagem Finalizada!"
+              progressSum()
+          }
+          setCounterId(timer)  
+        return () => {
+            clearInterval(counterId);
+            document.title = "Bttr"
+        }
+    }, [counter]);
 
     function startCountdown() {
         setIsCounter(true)
@@ -132,24 +136,24 @@ function Countdown({ history }) {
                         {counter === 0 ? msToTime(counterInitial) : msToTime(counter)}
                     <div className="countdown-actions">
                         {(counter === 0) ?
-                            <button onClick={startCountdown}>Start</button> 
+                            <button onClick={startCountdown}>Começar</button> 
                         :
                             null 
                         }
                         {(counter === 0 || !isCounter) ?
                             null 
                         :
-                            <button onClick={stopCountdown}>Stop</button>
+                            <button onClick={stopCountdown}>Parar</button>
                         }
                         {(counter === 0 || isCounter) ?
                             null 
                         :
-                            <button onClick={resumeCountdown}>Resume</button>
+                            <button onClick={resumeCountdown}>Continuar</button>
                         }
                         {(counter === 0 || isCounter) ?
                             null 
                         :
-                            <button onClick={resetCountdown}>Reset</button>
+                            <button onClick={resetCountdown}>Recomeçar</button>
                         }
                     </div>
                 </div>
