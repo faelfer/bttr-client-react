@@ -5,8 +5,6 @@ import { getToken } from "../../services/auth";
 import NavBar from "../../components/NavBar";
 import Card from "./components/Card";
 import Load from "../../components/Load";
-import Modal from "./components/Modal";
-import ModalDetails from "./components/ModalDetails";
 
 function App({ history }) {
     const [listCards, setListCards] = useState([]);
@@ -42,14 +40,14 @@ function App({ history }) {
     }, []);
 
     function onModal() {
-        console.log("onModal !")
-        setIsModal(!isModal);
+        console.log("onModal")
+        history.push(`/card-create`);
     }
 
-    function onModalDetails(item) {
-        console.log("onModalDetails | item: ", item)
-        setIsModalDetails(!isModalDetails);
-        setItem(item);
+    function onDetails(item) {
+        console.log("onDetails | item: ", item)
+        history.push(`/card-details/${item._id}`);
+        
     }
 
     function onLoad() {
@@ -62,21 +60,6 @@ function App({ history }) {
             <NavBar navigation={history}/>
             <div className="app">
                 <Load isShow={isLoad}/>
-                <Modal
-                    isShow={isModal}
-                    onModal={() => onModal()}
-                    onRefresh={() => progressMonth()}
-                    token={token}
-                    onLoad={() => onLoad()}
-				/>
-                <ModalDetails
-                    isShow={isModalDetails}
-                    onModal={() => onModalDetails()}
-                    onRefresh={() => progressMonth()}
-                    token={token}
-                    onLoad={() => onLoad()}
-                    item={item}
-				/>
                 <button onClick={() => onModal()}>
                     <p>Adicionar</p>
                 </button>
@@ -85,7 +68,7 @@ function App({ history }) {
                         item={item} 
                         key={key} 
                         navigation={history}
-                        onModal={() => onModalDetails(item)}
+                        onModal={() => onDetails(item)}
                     />
                 ))}
             </div>

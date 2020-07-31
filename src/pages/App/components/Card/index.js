@@ -13,6 +13,43 @@ function Card({ item, navigation, onModal }) {
 
     useEffect(() => {
         console.log("component Card | item:", item);
+        async function renderItem() {
+            const {goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining} = await calculateProgress(item.goalPerDay, item.goalDone);
+            // console.log("renderItem: ", goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining);
+    
+            if ( item.goalDone >= goalMonth ){
+                console.log("renderItem | if: Parabéns, você concluiu a meta estabelecida!");
+    
+                setPercentage(parseInt(currentPercentage) + "%"); 
+                setLackText('Parabéns, objetivo concluido!');
+                setSituation('Parabéns, objetivo concluido!');
+                console.log("================================================================");
+            }else if ( item.goalDone === idealSituation ){
+                console.log("renderItem | else if: Você está de acordo com a meta estabelecida.");
+    
+                setPercentage(parseInt(currentPercentage) + "%"); 
+                setLackText('Progresso ideal alcançado');
+                setSuggestionText(( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo'));
+                setSituation('Progresso ideal alcançado');
+                console.log("================================================================");
+            }else if ( item.goalDone > idealSituation ){
+                console.log("renderItem | else if: Você ultrapassou a meta estabelecida.");
+    
+                setPercentage(parseInt(currentPercentage) + "%"); 
+                setLackText(( (convertToHours(item.goalDone-idealSituation)).toString() + ' acima do ideal' ));
+                setSuggestionText(( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo'));
+                setSituation(' acima do ideal');
+                console.log("================================================================");
+            }else {
+                console.warn("renderItem | else: Você está abaixo da meta estabelecida.");
+    
+                setPercentage(parseInt(currentPercentage) + "%"); 
+                setLackText(( (convertToHours(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' ));
+                setSuggestionText(( (convertToHours(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
+                setSituation(' para o progresso ideal');
+                console.log("================================================================");
+            }
+        }
     
         renderItem();
     }, [item]);
@@ -54,74 +91,16 @@ function Card({ item, navigation, onModal }) {
         return { goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining };
     }
 
-    async function renderItem() {
-        const {goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining} = await calculateProgress(item.goalPerDay, item.goalDone);
-        // console.log("renderItem: ", goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining);
-
-        if ( item.goalDone >= goalMonth ){
-            console.log("renderItem | if: Parabéns, você concluiu a meta estabelecida!");
-
-            setPercentage(parseInt(currentPercentage) + "%"); 
-            setLackText('Parabéns, objetivo concluido!');
-            setSituation('Parabéns, objetivo concluido!');
-            console.log("================================================================");
-        }else if ( item.goalDone === idealSituation ){
-            console.log("renderItem | else if: Você está de acordo com a meta estabelecida.");
-
-            setPercentage(parseInt(currentPercentage) + "%"); 
-            setLackText('Progresso ideal alcançado');
-            setSuggestionText(( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo'));
-            setSituation('Progresso ideal alcançado');
-            console.log("================================================================");
-        }else if ( item.goalDone > idealSituation ){
-            console.log("renderItem | else if: Você ultrapassou a meta estabelecida.");
-
-            setPercentage(parseInt(currentPercentage) + "%"); 
-            setLackText(( (convertToHours(item.goalDone-idealSituation)).toString() + ' acima do ideal' ));
-            setSuggestionText(( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo'));
-            setSituation(' acima do ideal');
-            console.log("================================================================");
-        }else {
-            console.warn("renderItem | else: Você está abaixo da meta estabelecida.");
-
-            setPercentage(parseInt(currentPercentage) + "%"); 
-            setLackText(( (convertToHours(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' ));
-            setSuggestionText(( (convertToHours(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
-            setSituation(' para o progresso ideal');
-            console.log("================================================================");
-        }
-    }
-
     function renderIconSituation(situation) {
         switch (situation) {
         case " para o progresso ideal":
-            return    <FontAwesomeIcon 
-                            icon={IconSolid["faAngleDown"]}
-                            size="lg" 
-                            color="#f4f5f7" 
-                            className="icon" 
-                        />
+            return "faAngleDown"
         case " acima do ideal":
-            return  <FontAwesomeIcon 
-                            icon={IconSolid["faAngleUp"]}
-                            size="lg" 
-                            color="#f4f5f7" 
-                            className="icon" 
-                    />
+            return  "faAngleUp"
         case "Parabéns, objetivo concluido!":
-            return  <FontAwesomeIcon 
-                            icon={IconSolid["faTrophy"]}
-                            size="lg" 
-                            color="#f4f5f7" 
-                            className="icon" 
-                    />
+            return  "faTrophy"
         case "Progresso ideal alcançado":
-            return  <FontAwesomeIcon 
-                            icon={IconSolid["faCheck"]}
-                            size="lg" 
-                            color="#f4f5f7" 
-                            className="icon" 
-                    />
+            return  "faCheck"
         default:
             return null;
         }
@@ -144,12 +123,18 @@ function Card({ item, navigation, onModal }) {
             </div>
             <div className="task-progress">
                 <div className="progress">
-                    <div style={{width: (parseInt(percentage) > 100 ?  '100%' : percentage), height: 15, backgroundColor: '#f4f5f7', borderRadius: 50}} />
+                    <div style={{width: (parseInt(percentage) > 100 ? '100%' : percentage), height: 15, backgroundColor: '#f4f5f7', borderRadius: 50}} />
                 </div>
             </div>
             <div>
                 <div className="card-suggestion">
-                    {renderIconSituation(situation)}
+                    <FontAwesomeIcon 
+                        icon={IconSolid[renderIconSituation(situation)]}
+                        size="lg" 
+                        color="#f4f5f7" 
+                        className="icon" 
+                    />
+                    {/* {renderIconSituation(situation)} */}
                     <p>{lackText}</p>
                 </div>
                 {suggestionText ? 

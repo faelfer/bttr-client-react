@@ -24,7 +24,7 @@ function App({ navigation }) {
                     </NavLink>
                 </li>
                 <li className="right" onClick={(event) => exit(event)}>
-                    <a>Sair</a>
+                    <a href="#" >Sair</a>
                 </li>
             </ul>
         </div>

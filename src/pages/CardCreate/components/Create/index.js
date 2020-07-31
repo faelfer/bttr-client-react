@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./styles.css";
 
-function Details({ item, error, onSave, onDelete }) {
+function Create({ error, onSave }) {
     const [name, setName] = useState("");
     const [goalPerDay, setGoalPerDay] = useState(0);
     const [goalDone, setGoalDone] = useState(0);
     const [icon, setIcon] = useState("");
-
-    useEffect(() => {
-        console.log("useEffect Details | item: ", item);
-        setName(item.name);
-        setGoalPerDay(item.goalPerDay);
-        setGoalDone(item.goalDone);
-        setIcon(item.icon);
-    }, [item]);
 
     return (
         <>
@@ -28,7 +20,7 @@ function Details({ item, error, onSave, onDelete }) {
                         onChange={event => setName(event.target.value)}
                     />
                     <input 
-                        type="number" 
+                        type="number"
                         name="quantity"
                         onChange={event => setGoalPerDay(event.target.value)}
                         value={goalPerDay}
@@ -45,8 +37,7 @@ function Details({ item, error, onSave, onDelete }) {
                         value={icon}
                         onChange={event => setIcon(event.target.value)}
                     />
-                    <button type="button" onClick={() => onSave({name, goalPerDay, goalDone, icon})}>Salvar</button>
-                    <button type="button" onClick={onDelete}>Apagar</button>
+                    <button type="button" onClick={() => onSave({name, goalPerDay, goalDone, icon})}>Criar</button>
                     <hr />
                     <Link to="/progress">Cancelar</Link>
                 </form>
@@ -55,5 +46,5 @@ function Details({ item, error, onSave, onDelete }) {
     )
 };
 
-export default Details;
+export default Create;
 
