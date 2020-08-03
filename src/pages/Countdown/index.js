@@ -13,6 +13,7 @@ function Countdown({ history }) {
     const [counter, setCounter] = useState(0);
     const [counterId, setCounterId] = useState(0);
     const [isCounter, setIsCounter] = useState(false);
+    const [error, setError] = useState("");
     const token = getToken(); 
 
     function skillSelected(id, minutesDaily) {
@@ -30,7 +31,7 @@ function Countdown({ history }) {
             console.log("progressThisMonth | response: ", response);
             setIsLoad(false);
             if(!response.data.status === 200) {
-            //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
+                setError("Houve um problema com a listagem de habilidades, tente novamente mais tarde");
             }
 
             setSkills(response.data)
@@ -39,7 +40,7 @@ function Countdown({ history }) {
             }
           } catch (error) {
             console.log("progressThisMonth | error", error);
-            // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+            setError("Houve um problema com a listagem de habilidades, tente novamente mais tarde");
             setIsLoad(false);
           }
 
@@ -55,13 +56,16 @@ function Countdown({ history }) {
             console.log("progressSum | response: ", response);
             setIsLoad(false);
             if(!response.data.status === 200) {
-            //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
+                setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
             }
-            console.log(response.data)
+            console.log("progressSum | response.data", response.data);
+            if (error) {
+                setError("");
+            }
 
           } catch (error) {
             console.log("progressSum | error", error);
-            // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+            setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
             setIsLoad(false);
           }
 
@@ -97,7 +101,11 @@ function Countdown({ history }) {
           if (counter === 0 && isCounter === true) {
               console.log("useEffect | counter | accountant is over!")
               document.title = "Contagem Finalizada!"
-              progressSum()
+              if (skillSelectedId) {
+                progressSum()
+              } else {
+                setError("Nenhuma habilidade foi selecionada para receber o acréscimo de tempo.");
+              }
           }
           setCounterId(timer)  
         return () => {
@@ -158,6 +166,7 @@ function Countdown({ history }) {
                     </div>
                 </div>
                 <div className="container-radio">
+                    {error && <p>{error}</p>}
                     {skills.map((skill, key) => (
                         <div className="radio-option" onClick={() => skillSelected(skill._id, skill.goalPerDay)}>
                             <div className="radio-input">
