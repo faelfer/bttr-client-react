@@ -19,8 +19,7 @@ function CardDetails({ history }) {
             "name": skill.name, 
             "goalPerDay": skill.goalPerDay, 
             "goalDone": skill.goalDone, 
-            "icon": skill.icon,
-            "user": "5ea884c0487b877a3bc9e9da"
+            "icon": skill.icon
         });
         console.log("onSave | response: ", response.data);
         setIsLoad(false);
