@@ -1,4 +1,4 @@
-.details {
+.form-create {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,7 +6,7 @@
   background-color: #172b4d;
 }
 
-.details form {
+.form-create form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,16 +16,16 @@
   border-radius: 5px;
 }
 
-.details form p {
+.form-create form p {
   color: #f4f5f7;
   margin-bottom: 15px;
   border: 1px solid #f4f5f7;
   padding: 10px;
-  width: 95%;
+  width: 99.2%;
   text-align: center;
 }
 
-.details form input {
+.form-create form input {
   height: 46px;
   margin-bottom: 15px;
   color: #5e72e4;
@@ -37,12 +37,12 @@
   border-radius: 5px;
 }
 
-.details form input::placeholder {
+.form-create form input::placeholder {
   color: #5e72e4;
   opacity: 0.4; /* Firefox */
 }
 
-.details form button {
+.form-create form button {
   color: #5e72e4;
   font-size: 16px;
   background: #f4f5f7;
@@ -53,7 +53,7 @@
   margin: 10px 20px;
 }
 
-.details form button:hover {
+.form-create form button:hover {
   font-size: 16px;
   height: 56px;
   border: 0;
@@ -65,28 +65,29 @@
   margin: 10px 20px;
 }
 
-.details form hr {
-  margin: 20px 0;
+.form-create form hr {
+  margin: 10px 0;
   border: none;
   border-bottom: 1px solid #cdcdcd;
   width: 100%;
 }
 
-.details form a {
+.form-create form a {
   font-size: 16px;
   font-weight: bold;
+  margin-top: 5px;
   color: #f4f5f7;
   text-decoration: none;
 }
 
 @media screen and (max-width: 900px) {
-	.details form input { width: 94%; }
+	.form-create form input { width: 94%; }
 
-	.details form p { width: 92% }
+	.form-create form p { width: 92% }
 }
 
 @media screen and (max-width: 600px) {
-	.details form {
+	.form-create form {
 	  display: flex;
 	  flex-direction: column;
 	  align-items: center; 
@@ -96,13 +97,13 @@
 	  border-radius: 5px;
 	}
   
-	.details form input { width: 90%; }
+	.form-create form input { width: 90%; }
 
-	.details form p { width: 94% }
+	.form-details form p { width: 97% }
 }
   
 @media screen and (max-width: 350px) {
-	.details form input { width: 85%; }
+	.form-create form input { width: 85%; }
 
-	.details form p { width: 92% }
+	.form-details form p { width: 99% }
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./styles.css";
 
-function Details({ item, error, onSave, onDelete }) {
+export default function FormDetails({ item, error, onSave, onDelete }) {
     const [name, setName] = useState("");
     const [goalPerDay, setGoalPerDay] = useState(0);
     const [goalDone, setGoalDone] = useState(0);
@@ -18,7 +18,7 @@ function Details({ item, error, onSave, onDelete }) {
 
     return (
         <>
-            <div className="details">
+            <div className="form-details">
                 <form>
                     {error && <p>{error}</p>}
                     <input
@@ -54,6 +54,4 @@ function Details({ item, error, onSave, onDelete }) {
         </>
     )
 };
-
-export default Details;
 

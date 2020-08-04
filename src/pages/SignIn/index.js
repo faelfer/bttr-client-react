@@ -12,13 +12,17 @@ function SignIn({ history }) {
     const [isLoad, setIsLoad] = useState(false);
 
     useEffect(() => {
-      const authenticated = isAuthenticated();
-      // console.log("SignIn | authenticated: ",authenticated);
-      if (authenticated) {
-        history.push("/progress");
+      function redirectAppScreen() {
+        let authenticated = isAuthenticated();
+              // console.log("SignIn | authenticated: ",authenticated);
+        if (authenticated) {
+          history.push("/progress");
+        }
       }
+
+      redirectAppScreen()
   
-    }, []);
+    }, [history]);
 
     async function handleSignIn(event) {
         event.preventDefault();

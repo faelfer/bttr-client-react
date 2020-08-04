@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import NavBar from "../../components/NavBar";
-import Details from "./components/Details";
+import FormDetails from "./components/FormDetails";
 import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import Load from "../../components/Load";
@@ -9,7 +9,7 @@ import { getToken } from "../../services/auth";
 
 function CardDetails({ history }) {
     const [card, setCard] = useState({});
-    const [isLoad, setIsLoad] = useState(false);
+    const [isLoad, setIsLoad] = useState(true);
     const [error, setError] = useState("");
     const { cardId } = useParams();
     const token = getToken(); 
@@ -17,7 +17,6 @@ function CardDetails({ history }) {
     useEffect(() => {
         console.log("UseEffect | cardId: ",cardId);
         async function progress() {
-          setIsLoad(true);
             try {
               const response = await api.get(`/progress/${cardId}`);
               console.log("progress | response: ", response.data);
@@ -40,6 +39,7 @@ function CardDetails({ history }) {
 
     async function onSave(skill) {
       console.log("onSave | skill: ", skill);
+      setIsLoad(true);
       try {
         const response = await api.put(`/progress/${cardId}`, {
           headers: { "Authorization": token },
@@ -49,6 +49,7 @@ function CardDetails({ history }) {
             "icon": skill.icon
         });
         console.log("onSave | response: ", response.data);
+        setError("Registro editado com sucesso!");
         setIsLoad(false);
         if(!response.data.status === 200) {
           setError("Ocorreu um erro ao salvar o registro. ;-;");
@@ -86,7 +87,7 @@ function CardDetails({ history }) {
             <NavBar navigation={history}/>
             <div className="details">
                 <Load show={isLoad}/>
-                <Details
+                <FormDetails
                     onSave={(skill) => onSave(skill)}
                     onDelete={() => onDelete()}
                     item={card}

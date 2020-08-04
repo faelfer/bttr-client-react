@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./styles.css";
 
-function Create({ error, onSave }) {
+export default function FormCreate({ error, onSave }) {
     const [name, setName] = useState("");
     const [goalPerDay, setGoalPerDay] = useState(0);
     const [goalDone, setGoalDone] = useState(0);
@@ -10,7 +10,7 @@ function Create({ error, onSave }) {
 
     return (
         <>
-            <div className="details">
+            <div className="form-create">
                 <form>
                     {error && <p>{error}</p>}
                     <input
@@ -45,6 +45,4 @@ function Create({ error, onSave }) {
         </>
     )
 };
-
-export default Create;
 

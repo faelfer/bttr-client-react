@@ -24,29 +24,33 @@ function Countdown({ history }) {
         setCounterInitial(minutesDaily * 60000)
     }
 
-    async function progressMonth() {
-        setIsLoad(true);
-          try {
-            const response = await api.get("/progress_month", {
-                headers: { "Authorization": token }
-            });
-            console.log("progressThisMonth | response: ", response);
-            setIsLoad(false);
-            if(!response.data.status === 200) {
+    useEffect(() => {
+        async function progressMonth() {
+            setIsLoad(true);
+              try {
+                const response = await api.get("/progress_month", {
+                    headers: { "Authorization": token }
+                });
+                console.log("progressThisMonth | response: ", response);
+                setIsLoad(false);
+                if(!response.data.status === 200) {
+                    setError("Houve um problema com a listagem de habilidades, tente novamente mais tarde");
+                }
+    
+                setSkills(response.data)
+                if (response.data.length > 0) {
+                    skillSelected(response.data[0]._id, response.data[0].goalPerDay)
+                }
+              } catch (error) {
+                console.log("progressThisMonth | error", error);
                 setError("Houve um problema com a listagem de habilidades, tente novamente mais tarde");
-            }
+                setIsLoad(false);
+              }
+    
+        };
 
-            setSkills(response.data)
-            if (response.data.length > 0) {
-                skillSelected(response.data[0]._id, response.data[0].goalPerDay)
-            }
-          } catch (error) {
-            console.log("progressThisMonth | error", error);
-            setError("Houve um problema com a listagem de habilidades, tente novamente mais tarde");
-            setIsLoad(false);
-          }
-
-    };
+        progressMonth();
+    }, [token]);
 
     async function progressSum() {
         setIsLoad(true);
@@ -74,15 +78,9 @@ function Countdown({ history }) {
     };
 
     useEffect(() => {
-        progressMonth();
-    }, []);
+        console.log("Countdown | useEffect")
 
-    // Third Attempts
-    useEffect(() => {
-        console.log("useEffect")
-
-        const timer =
-          counter > 0 && setInterval(() => setCounter(counter - 1000), 1000);
+        const timer = counter > 0 && setInterval(() => setCounter(counter - 1000), 1000);
           if (counter === 0 && isCounter === true) {
               console.log("useEffect | counter | accountant is over!")
               document.title = "Contagem Finalizada!"
@@ -148,6 +146,9 @@ function Countdown({ history }) {
                         :
                             <button onClick={resetCountdown}>Recomeçar</button>
                         }
+                    </div>
+                    <div className="countdown-actions">
+                        <button onClick={progressSum}>Adicionar Tempo</button>
                     </div>
                 </div>
                 <div className="container-radio">

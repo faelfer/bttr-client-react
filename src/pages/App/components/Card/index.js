@@ -12,7 +12,27 @@ function Card({ item, navigation, onModal }) {
     const [situation, setSituation] = useState("");
 
     useEffect(() => {
-        console.log("component Card | item:", item);
+        console.log("Component Card | useEffect | item:", item);
+        async function calculateProgress(goalPerDay, goalDone) {
+            const { currentYear, currentMouth, currentDay, lastDayMonth } = await datesMonth();
+    
+            const businessDays = workingDays(lastDayMonth, currentYear, currentMouth);
+                console.log("businessDays: ", businessDays);
+            let goalMonth = (businessDays * goalPerDay);
+                console.log(`Meta de Minutos: ${goalMonth} | ${minToTimeFormat(goalMonth)}`);
+            let goalRemaining = (goalMonth - goalDone);
+            const businessDaysSoFar = workingDays(currentDay, currentYear, currentMouth);
+                console.log("BusinessDaysSoFar: ", businessDaysSoFar);
+            let daysRemaining = (businessDays - businessDaysSoFar) + 1;
+                console.log(`Dias Restantes: ${daysRemaining}`);
+            let idealSituation = (businessDaysSoFar * goalPerDay);
+                // console.log(`Situação Ideal: ${idealSituation}`);
+            let currentPercentage = (( goalDone * 100 ) / goalMonth);
+                console.log(`Ideal percentage so far: ${parseInt((businessDaysSoFar * 100)/businessDays)}%`);
+    
+            return { goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining };
+        }
+
         async function renderItem() {
             const {goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining} = await calculateProgress(item.goalPerDay, item.goalDone);
             // console.log("renderItem: ", goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining);
@@ -69,26 +89,6 @@ function Card({ item, navigation, onModal }) {
         // console.log(`Último Dia do Mês ${lastDayMonth}`);
 
         return { currentYear, currentMouth, currentDay, lastDayMonth }
-    }
-
-    async function calculateProgress(goalPerDay, goalDone) {
-        const { currentYear, currentMouth, currentDay, lastDayMonth } = await datesMonth();
-
-        const businessDays = workingDays(lastDayMonth, currentYear, currentMouth);
-            console.log("businessDays: ", businessDays);
-        let goalMonth = (businessDays * goalPerDay);
-            console.log(`Meta de Minutos: ${goalMonth} | ${minToTimeFormat(goalMonth)}`);
-        let goalRemaining = (goalMonth - goalDone);
-        const businessDaysSoFar = workingDays(currentDay, currentYear, currentMouth);
-            console.log("BusinessDaysSoFar: ", businessDaysSoFar);
-        let daysRemaining = (businessDays - businessDaysSoFar) + 1;
-            console.log(`Dias Restantes: ${daysRemaining}`);
-        let idealSituation = (businessDaysSoFar * goalPerDay);
-            // console.log(`Situação Ideal: ${idealSituation}`);
-        let currentPercentage = (( goalDone * 100 ) / goalMonth);
-            console.log(`Ideal percentage so far: ${parseInt((businessDaysSoFar * 100)/businessDays)}%`);
-
-        return { goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining };
     }
 
     function renderIconSituation(situation) {

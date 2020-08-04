@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./styles.css";
 import NavBar from "../../components/NavBar";
-import Create from "./components/Create";
+import FormCreate from "./components/FormCreate";
 import api from "../../services/api";
 import Load from "../../components/Load";
 import { getToken } from "../../services/auth";
 
-function CardDetails({ history }) {
+export default function CardCreate({ history }) {
     const [isLoad, setIsLoad] = useState(false);
     const [error, setError] = useState("");
     const token = getToken(); 
@@ -41,7 +41,7 @@ function CardDetails({ history }) {
             <NavBar navigation={history}/>
             <div className="create">
                 <Load show={isLoad}/>
-                <Create
+                <FormCreate
                   onSave={(skill) => onSave(skill)}
                   error={error}
                 />
@@ -49,5 +49,3 @@ function CardDetails({ history }) {
         </div>
     )
 };
-
-export default CardDetails;

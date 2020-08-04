@@ -11,30 +11,30 @@ function App({ history }) {
     const [isLoad, setIsLoad] = useState(false);
     const token = getToken(); 
 
-    async function progressMonth() {
-        setIsLoad(true);
-          try {
-            const response = await api.get("/progress_month", {
-                headers: { "Authorization": token }
-            });
-            console.log("progressThisMonth | response: ", response);
-            setIsLoad(false);
-            if(!response.data.status === 200) {
-            //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
-            }
-
-            setListCards(response.data)
-          } catch (error) {
-            console.log("progressThisMonth | error", error);
-            // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
-            setIsLoad(false);
-          }
-
-    };
-
     useEffect(() => {
+        async function progressMonth() {
+            setIsLoad(true);
+              try {
+                const response = await api.get("/progress_month", {
+                    headers: { "Authorization": token }
+                });
+                console.log("progressThisMonth | response: ", response);
+                setIsLoad(false);
+                if(!response.data.status === 200) {
+                //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
+                }
+    
+                setListCards(response.data)
+              } catch (error) {
+                console.log("progressThisMonth | error", error);
+                // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+                setIsLoad(false);
+              }
+    
+        };
+
         progressMonth();
-    }, []);
+    }, [token]);
 
     function onModal() {
         console.log("onModal")
@@ -45,11 +45,6 @@ function App({ history }) {
         console.log("onDetails | item: ", item)
         history.push(`/card-details/${item._id}`);
         
-    }
-
-    function onLoad() {
-        console.log("onLoad !")
-        setIsLoad(!isLoad);
     }
 
     return (
