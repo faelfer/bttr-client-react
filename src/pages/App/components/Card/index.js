@@ -3,7 +3,7 @@ import "./styles.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as IconSolid from '@fortawesome/free-solid-svg-icons';
 import workingDays from "../../../../utils/workingDays";
-import convertToHours from "../../../../utils/convertTime";
+import { minToTimeFormat } from "../../../../utils/timeFormat";
 
 function Card({ item, navigation, onModal }) {
     const [percentage, setPercentage] = useState("");
@@ -29,23 +29,23 @@ function Card({ item, navigation, onModal }) {
     
                 setPercentage(parseInt(currentPercentage) + "%"); 
                 setLackText('Progresso ideal alcançado');
-                setSuggestionText(( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo'));
+                setSuggestionText(( (minToTimeFormat(goalRemaining)).toString() + ' para atingir o objetivo'));
                 setSituation('Progresso ideal alcançado');
                 console.log("================================================================");
             }else if ( item.goalDone > idealSituation ){
                 console.log("renderItem | else if: Você ultrapassou a meta estabelecida.");
     
                 setPercentage(parseInt(currentPercentage) + "%"); 
-                setLackText(( (convertToHours(item.goalDone-idealSituation)).toString() + ' acima do ideal' ));
-                setSuggestionText(( (convertToHours(goalRemaining)).toString() + ' para atingir o objetivo'));
+                setLackText(( (minToTimeFormat(item.goalDone-idealSituation)).toString() + ' acima do ideal' ));
+                setSuggestionText(( (minToTimeFormat(goalRemaining)).toString() + ' para atingir o objetivo'));
                 setSituation(' acima do ideal');
                 console.log("================================================================");
             }else {
                 console.warn("renderItem | else: Você está abaixo da meta estabelecida.");
     
                 setPercentage(parseInt(currentPercentage) + "%"); 
-                setLackText(( (convertToHours(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' ));
-                setSuggestionText(( (convertToHours(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
+                setLackText(( (minToTimeFormat(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' ));
+                setSuggestionText(( (minToTimeFormat(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
                 setSituation(' para o progresso ideal');
                 console.log("================================================================");
             }
@@ -77,7 +77,7 @@ function Card({ item, navigation, onModal }) {
         const businessDays = workingDays(lastDayMonth, currentYear, currentMouth);
             console.log("businessDays: ", businessDays);
         let goalMonth = (businessDays * goalPerDay);
-            console.log(`Meta de Minutos: ${goalMonth} | ${convertToHours(goalMonth)}`);
+            console.log(`Meta de Minutos: ${goalMonth} | ${minToTimeFormat(goalMonth)}`);
         let goalRemaining = (goalMonth - goalDone);
         const businessDaysSoFar = workingDays(currentDay, currentYear, currentMouth);
             console.log("BusinessDaysSoFar: ", businessDaysSoFar);

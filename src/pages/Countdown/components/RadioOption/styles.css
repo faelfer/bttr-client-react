@@ -1,0 +1,41 @@
+.radio-option {
+    display: flex;
+    align-items: center;
+    color: #5e72e4;
+    font-size: 16px;
+    background: #f4f5f7;
+    height: 56px;
+    border: 0;
+    border-radius: 5px;
+    width: 95%;
+    margin: 10px 0px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+.radio-option:hover {
+    font-size: 16px;
+    height: 54px;
+    border: 0;
+    border-radius: 5px;
+    width: 95%;
+    background-color: #5e72e4;
+    color: #f4f5f7;
+    border: 1px solid #f4f5f7;
+    margin: 10px 0px;
+}
+
+.radio-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+}
+
+.radio-name {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    text-align: center;
+    width: 90%;
+}

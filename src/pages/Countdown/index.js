@@ -4,6 +4,8 @@ import NavBar from "../../components/NavBar";
 import api from "../../services/api";
 import { getToken } from "../../services/auth";
 import Load from "../../components/Load";
+import RadioOption from './components/RadioOption';
+import { msToTimeFormat } from "../../utils/timeFormat";
 
 function Countdown({ history }) {
     const [skills, setSkills] = useState([]);
@@ -71,23 +73,6 @@ function Countdown({ history }) {
 
     };
 
-    function msToTime(s) {
-        // Pad to 2 or 3 digits, default is 2
-        function pad(n, z) {
-          z = z || 2;
-          return ('00' + n).slice(-z);
-        }
-      
-        var ms = s % 1000;
-        s = (s - ms) / 1000;
-        var secs = s % 60;
-        s = (s - secs) / 60;
-        var mins = s % 60;
-        var hrs = (s - mins) / 60;
-      
-        return pad(hrs) + ':' + pad(mins) + ':' + pad(secs)
-    }
-
     useEffect(() => {
         progressMonth();
     }, []);
@@ -141,7 +126,7 @@ function Countdown({ history }) {
             <div>
                 <div className="countdown">
                     <Load isShow={isLoad}/>
-                        {counter === 0 ? msToTime(counterInitial) : msToTime(counter)}
+                        {counter === 0 ? msToTimeFormat(counterInitial) : msToTimeFormat(counter)}
                     <div className="countdown-actions">
                         {(counter === 0) ?
                             <button onClick={startCountdown}>Começar</button> 
@@ -168,20 +153,12 @@ function Countdown({ history }) {
                 <div className="container-radio">
                     {error && <p>{error}</p>}
                     {skills.map((skill, key) => (
-                        <div className="radio-option" onClick={() => skillSelected(skill._id, skill.goalPerDay)}>
-                            <div className="radio-input">
-                            <input 
-                                type="radio" 
-                                id={skill._id} 
-                                name="skill" 
-                                value={skill._id} 
-                                checked={skill._id === skillSelectedId ? true : false}
-                            />
-                            </div>
-                            <div className="radio-name">
-                                <label for={skill._id}>{skill.name}</label>
-                            </div>
-                        </div>
+                        <RadioOption 
+                            skillSelectedId={skillSelectedId}
+                            onSkillSelected={skillSelected}
+                            skill={skill}
+                            key={skill._id}
+                        />
                     ))}
                 </div>
             </div>
