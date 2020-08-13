@@ -6,8 +6,8 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
-import CardDetails from "./pages/CardDetails";
-import CardCreate from "./pages/CardCreate";
+import SkillDetails from "./pages/SkillDetails";
+import SkillCreate from "./pages/SkillCreate";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -29,8 +29,8 @@ const Routes = () => (
       <Route path="/sign-up" component={SignUp} />
       <Route path="/forgot-password" component={ForgotPassword} />
       <PrivateRoute path="/home" component={Home} />
-      <PrivateRoute path="/skill-details/:skillId" component={CardDetails} />
-      <PrivateRoute path="/skill-create" component={CardCreate} />
+      <PrivateRoute path="/skill-details/:skillId" component={SkillDetails} />
+      <PrivateRoute path="/skill-create" component={SkillCreate} />
       <Route 
         path="*" 
         component={() => (

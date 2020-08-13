@@ -6,7 +6,7 @@ import api from "../../services/api";
 import Load from "../../components/Load";
 import { getToken } from "../../services/auth";
 
-export default function CardCreate({ history }) {
+export default function SkillCreate({ history }) {
     const [isLoad, setIsLoad] = useState(false);
     const [error, setError] = useState("");
     const token = getToken(); 

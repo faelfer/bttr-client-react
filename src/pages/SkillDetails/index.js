@@ -7,7 +7,7 @@ import api from "../../services/api";
 import Load from "../../components/Load";
 import { getToken } from "../../services/auth";
 
-function CardDetails({ history }) {
+function SkillDetails({ history }) {
     const [card, setCard] = useState({});
     const [isLoad, setIsLoad] = useState(true);
     const [error, setError] = useState("");
@@ -98,4 +98,4 @@ function CardDetails({ history }) {
     )
 };
 
-export default CardDetails;
+export default SkillDetails;
