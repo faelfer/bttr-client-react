@@ -5,10 +5,11 @@ import * as IconSolid from '@fortawesome/free-solid-svg-icons';
 import workingDays from "../../../../utils/workingDays";
 import { minToTimeFormat } from "../../../../utils/timeFormat";
 
-function Card({ item, navigation, onModal }) {
+function Card({ item, onDetails, onAddMinutes }) {
     const [percentage, setPercentage] = useState("");
     const [lackText, setLackText] = useState("");
     const [suggestionText, setSuggestionText] = useState("");
+    const [suggestionMin, setSuggestionMin] = useState(0);
     const [situation, setSituation] = useState("");
 
     useEffect(() => {
@@ -50,6 +51,7 @@ function Card({ item, navigation, onModal }) {
                 setPercentage(parseInt(currentPercentage) + "%"); 
                 setLackText('Progresso ideal alcançado');
                 setSuggestionText(( (minToTimeFormat(goalRemaining)).toString() + ' para atingir o objetivo'));
+                setSuggestionMin(parseInt(goalRemaining));
                 setSituation('Progresso ideal alcançado');
                 console.log("================================================================");
             }else if ( item.goalDone > idealSituation ){
@@ -58,6 +60,7 @@ function Card({ item, navigation, onModal }) {
                 setPercentage(parseInt(currentPercentage) + "%"); 
                 setLackText(( (minToTimeFormat(item.goalDone-idealSituation)).toString() + ' acima do ideal' ));
                 setSuggestionText(( (minToTimeFormat(goalRemaining)).toString() + ' para atingir o objetivo'));
+                // setSuggestionMin(0);
                 setSituation(' acima do ideal');
                 console.log("================================================================");
             }else {
@@ -66,6 +69,7 @@ function Card({ item, navigation, onModal }) {
                 setPercentage(parseInt(currentPercentage) + "%"); 
                 setLackText(( (minToTimeFormat(idealSituation-item.goalDone)).toString() + ' para o progresso ideal' ));
                 setSuggestionText(( (minToTimeFormat(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
+                setSuggestionMin(parseInt(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining)));
                 setSituation(' para o progresso ideal');
                 console.log("================================================================");
             }
@@ -134,7 +138,6 @@ function Card({ item, navigation, onModal }) {
                         color="#f4f5f7" 
                         className="icon" 
                     />
-                    {/* {renderIconSituation(situation)} */}
                     <p>{lackText}</p>
                 </div>
                 {suggestionText ? 
@@ -155,7 +158,20 @@ function Card({ item, navigation, onModal }) {
             <div className="card-action">
                 <button 
                     type="submit" 
-                    onClick={() => onModal()} 
+                    onClick={() => onAddMinutes(item._id, item.goalPerDay)} 
+                >
+                    Adicionar Tempo Diário
+                </button>
+                <button 
+                    type="submit" 
+                    onClick={() => onAddMinutes(item._id, suggestionMin)}
+                    disabled={suggestionMin === 0 ? true : false} 
+                >
+                    Adicionar Tempo Sugerido
+                </button>
+                <button 
+                    type="submit" 
+                    onClick={() => onDetails()} 
                 >
                     Detalhes
                 </button>

@@ -11,28 +11,28 @@ function App({ history }) {
     const [isLoad, setIsLoad] = useState(false);
     const token = getToken(); 
 
-    useEffect(() => {
-        async function progressMonth() {
-            setIsLoad(true);
-              try {
-                const response = await api.get("/progress_month", {
-                    headers: { "Authorization": token }
-                });
-                console.log("progressThisMonth | response: ", response);
-                setIsLoad(false);
-                if(!response.data.status === 200) {
-                //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
-                }
-    
-                setListCards(response.data)
-              } catch (error) {
-                console.log("progressThisMonth | error", error);
-                // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
-                setIsLoad(false);
-              }
-    
-        };
+    async function progressMonth() {
+        setIsLoad(true);
+          try {
+            const response = await api.get("/progress_month", {
+                headers: { "Authorization": token }
+            });
+            console.log("progressThisMonth | response: ", response);
+            setIsLoad(false);
+            if(!response.data.status === 200) {
+            //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
+            }
 
+            setListCards(response.data)
+          } catch (error) {
+            console.log("progressThisMonth | error", error);
+            // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+            setIsLoad(false);
+          }
+
+    };
+
+    useEffect(() => {
         progressMonth();
     }, [token]);
 
@@ -41,26 +41,57 @@ function App({ history }) {
         history.push(`/card-create`);
     }
 
-    function onDetails(item) {
+    function goToDetailsPage(item) {
         console.log("onDetails | item: ", item)
         history.push(`/card-details/${item._id}`);
         
     }
 
+    async function addMinutesSkill(skillId, minutes) {
+        console.log("addMinutesSkill | skillId, minutes: ", skillId, minutes);
+        setIsLoad(true);
+          try {
+            const response = await api.put(`/progress_sum/${skillId}`, {
+                headers: { "Authorization": token },
+                "minutesDone": minutes, 
+            });
+            console.log("addMinutesSkill | response: ", response);
+            setIsLoad(false);
+            progressMonth();
+
+            if(!response.data.status === 200) {
+                // setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
+            }
+            console.log("addMinutesSkill | response.data", response.data);
+            // if (error) {
+                // setError("");
+            // }
+
+          } catch (error) {
+            console.log("addMinutesSkill | error", error);
+            // setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
+            setIsLoad(false);
+          }
+
+    };
+
     return (
         <div className="Container">
             <NavBar navigation={history}/>
+            <div className="container-create">
+                <button onClick={() => onModal()}>
+                    <p>Criar Nova Habilidade</p>
+                </button>
+            </div>
             <div className="app">
                 <Load isShow={isLoad}/>
-                <button onClick={() => onModal()}>
-                    <p>Adicionar</p>
-                </button>
                 {listCards.map((item, key) => (
                     <Card 
                         item={item} 
                         key={key} 
                         navigation={history}
-                        onModal={() => onDetails(item)}
+                        onDetails={() => goToDetailsPage(item)}
+                        onAddMinutes={(skillId, minutes) => addMinutesSkill(skillId, minutes)}
                     />
                 ))}
             </div>
