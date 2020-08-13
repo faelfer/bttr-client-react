@@ -14,7 +14,7 @@ function App({ navigation }) {
         <div>
             <ul className="topnav">
                 <li>
-                    <NavLink to={'/progress'}>
+                    <NavLink to={'/home'}>
                         Início
                     </NavLink>
                 </li>

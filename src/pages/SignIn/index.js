@@ -16,7 +16,7 @@ function SignIn({ history }) {
         let authenticated = isAuthenticated();
               // console.log("SignIn | authenticated: ",authenticated);
         if (authenticated) {
-          history.push("/progress");
+          history.push("/home");
         }
       }
 
@@ -39,7 +39,7 @@ function SignIn({ history }) {
               setError("Ocorreu um erro ao registrar sua conta. ;-;");
             }
             login(response.data.token);
-            history.push("/progress");
+            history.push("/home");
           } catch (error) {
             console.log("handleSignIn | error", error);
             setError("Houve um problema com o login, verifique suas credenciais. ;-;");

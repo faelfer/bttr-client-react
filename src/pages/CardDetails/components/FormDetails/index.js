@@ -48,7 +48,7 @@ export default function FormDetails({ item, error, onSave, onDelete }) {
                     <button type="button" onClick={() => onSave({name, goalPerDay, goalDone, icon})}>Salvar</button>
                     <button type="button" onClick={onDelete}>Apagar</button>
                     <hr />
-                    <Link to="/progress">Cancelar</Link>
+                    <Link to="/home">Cancelar</Link>
                 </form>
             </div>
         </>

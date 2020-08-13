@@ -11,37 +11,37 @@ function CardDetails({ history }) {
     const [card, setCard] = useState({});
     const [isLoad, setIsLoad] = useState(true);
     const [error, setError] = useState("");
-    const { cardId } = useParams();
+    const { skillId } = useParams();
     const token = getToken(); 
 
     useEffect(() => {
-        console.log("UseEffect | cardId: ",cardId);
+        console.log("UseEffect | skillId: ",skillId);
         async function progress() {
             try {
-              const response = await api.get(`/progress/${cardId}`);
+              const response = await api.get(`/progress/${skillId}`);
               console.log("progress | response: ", response.data);
               setIsLoad(false);
               if(!response.data.status === 200) {
-                setError("Ocorreu um erro ao registrar sua conta. ;-;");
+                setError("Houve um problema ao listar os campos da habilidade, tente novamente mais tarde");
               }
   
               setCard(response.data);
             } catch (error) {
               console.log("progress | error: ", error);
-              setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+              setError("Houve um problema ao listar os campos da habilidade, tente novamente mais tarde");
               setIsLoad(false);
             }
   
       };
 
         progress();
-    }, [cardId]);
+    }, [skillId]);
 
     async function onSave(skill) {
       console.log("onSave | skill: ", skill);
       setIsLoad(true);
       try {
-        const response = await api.put(`/progress/${cardId}`, {
+        const response = await api.put(`/progress/${skillId}`, {
           headers: { "Authorization": token },
             "name": skill.name, 
             "goalPerDay": skill.goalPerDay, 
@@ -66,14 +66,14 @@ function CardDetails({ history }) {
       console.log("onDelete");
       setIsLoad(true);
       try {
-        const response = await api.delete(`/progress/${cardId}`);
+        const response = await api.delete(`/progress/${skillId}`);
         console.log("onDelete | response: ", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
           setError("Ocorreu um erro ao apagar o registro. ;-;");
         }
 
-        history.push("/progress");
+        history.push("/home");
       } catch (error) {
         console.log("onDelete | error: ", error);
         setError("Houve um problema com o registro, tente novamente mais tarde. ;-;");

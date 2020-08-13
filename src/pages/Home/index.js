@@ -6,7 +6,7 @@ import NavBar from "../../components/NavBar";
 import Card from "./components/Card";
 import Load from "../../components/Load";
 
-function App({ history }) {
+function Home({ history }) {
     const [listCards, setListCards] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
     const [error, setError] = useState('');
@@ -21,13 +21,13 @@ function App({ history }) {
             console.log("progressThisMonth | response: ", response);
             setIsLoad(false);
             if(!response.data.status === 200) {
-            //   setError("Ocorreu um erro ao registrar sua conta. ;-;");
+                setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
             }
 
             setListCards(response.data)
           } catch (error) {
             console.log("progressThisMonth | error", error);
-            // setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+            setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
             setIsLoad(false);
           }
 
@@ -37,14 +37,14 @@ function App({ history }) {
         progressMonth();
     }, [token]);
 
-    function onModal() {
-        console.log("onModal")
-        history.push(`/card-create`);
+    function goToCreatePage() {
+        console.log("goToCreatePage")
+        history.push(`/skill-create`);
     }
 
     function goToDetailsPage(item) {
-        console.log("onDetails | item: ", item)
-        history.push(`/card-details/${item._id}`);
+        console.log("goToDetailsPage | item: ", item)
+        history.push(`/skill-details/${item._id}`);
         
     }
 
@@ -52,7 +52,7 @@ function App({ history }) {
         console.log("addMinutesSkill | skillId, minutes: ", skillId, minutes);
         setIsLoad(true);
           try {
-            const response = await api.put(`/progress_sum/044`, {
+            const response = await api.put(`/progress_sum/${skillId}`, {
                 headers: { "Authorization": token },
                 "minutesDone": minutes, 
             });
@@ -80,7 +80,7 @@ function App({ history }) {
         <div className="Container">
             <NavBar navigation={history}/>
             <div className="container-create">
-                <button onClick={() => onModal()}>
+                <button onClick={() => goToCreatePage()}>
                     <p>Criar Nova Habilidade</p>
                 </button>
                 {error && <p className="container-create-error">{error}</p>}
@@ -101,4 +101,4 @@ function App({ history }) {
     )
 };
 
-export default App;
+export default Home;

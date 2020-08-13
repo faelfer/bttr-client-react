@@ -39,7 +39,7 @@ export default function FormCreate({ error, onSave }) {
                     />
                     <button type="button" onClick={() => onSave({name, goalPerDay, goalDone, icon})}>Criar</button>
                     <hr />
-                    <Link to="/progress">Cancelar</Link>
+                    <Link to="/home">Cancelar</Link>
                 </form>
             </div>
         </>

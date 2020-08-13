@@ -27,7 +27,7 @@ export default function CardCreate({ history }) {
           setError("Ocorreu um erro ao registrar. ;-;");
         }
 
-        history.push("/progress");
+        history.push("/home");
       } catch (error) {
         console.log("onSave | error: ", error);
         setError("Houve um problema com o registro, verifique os campos. ;-;");
