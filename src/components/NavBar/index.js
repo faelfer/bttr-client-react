@@ -18,11 +18,6 @@ function App({ navigation }) {
                         Início
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink to={'/countdown'}>
-                        Contagem Regressiva
-                    </NavLink>
-                </li>
                 <li className="right" onClick={(event) => exit(event)}>
                     <a href="#" >Sair</a>
                 </li>
