@@ -16,8 +16,6 @@
     justify-content: center;
     align-items: center;
     background-color: #f4f5f7;
-    /* min-width: 305px;
-    width: 95%; */
     height: 260px;
     margin: 8px;
     border-radius: 8px;
@@ -34,6 +32,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     padding: 8px 6.5px 0px 8px;
 }
 
@@ -51,7 +50,32 @@
     cursor: pointer;
 }
 
+.container-create-error {
+    color: #f4f5f7;
+    margin: 10px 5px 5px 5px;
+    border: 1px solid #f4f5f7;
+    border-radius: 8px;
+    padding: 10px;
+    width: 98.8%;
+    text-align: center;
+}
+
 .container-create button p {
     font-size: 16px;
     font-weight: bold;
+}
+
+@media screen and (max-width: 1600px) {
+    .container-create button { width: 98.8vw }
+	.container-create-error { width: 98.2% }
+}
+
+@media screen and (max-width: 600px) {
+    .container-create button { width: 97.8vw }
+	.container-create-error { width: 95.8% }
+}
+  
+@media screen and (max-width: 350px) {
+    .container-create button { width: 96vw }
+	.container-create-error { width: 92% }
 }

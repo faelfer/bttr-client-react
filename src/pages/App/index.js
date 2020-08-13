@@ -9,6 +9,7 @@ import Load from "../../components/Load";
 function App({ history }) {
     const [listCards, setListCards] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
+    const [error, setError] = useState('');
     const token = getToken(); 
 
     async function progressMonth() {
@@ -51,7 +52,7 @@ function App({ history }) {
         console.log("addMinutesSkill | skillId, minutes: ", skillId, minutes);
         setIsLoad(true);
           try {
-            const response = await api.put(`/progress_sum/${skillId}`, {
+            const response = await api.put(`/progress_sum/044`, {
                 headers: { "Authorization": token },
                 "minutesDone": minutes, 
             });
@@ -60,16 +61,16 @@ function App({ history }) {
             progressMonth();
 
             if(!response.data.status === 200) {
-                // setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
+                setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
             }
             console.log("addMinutesSkill | response.data", response.data);
-            // if (error) {
-                // setError("");
-            // }
+            if (error) {
+                setError("");
+            }
 
           } catch (error) {
             console.log("addMinutesSkill | error", error);
-            // setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
+            setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
             setIsLoad(false);
           }
 
@@ -82,6 +83,7 @@ function App({ history }) {
                 <button onClick={() => onModal()}>
                     <p>Criar Nova Habilidade</p>
                 </button>
+                {error && <p className="container-create-error">{error}</p>}
             </div>
             <div className="app">
                 <Load isShow={isLoad}/>
