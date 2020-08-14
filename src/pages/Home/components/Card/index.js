@@ -43,6 +43,7 @@ function Card({ item, onDetails, onAddMinutes }) {
     
                 setPercentage(parseInt(currentPercentage) + "%"); 
                 setLackText('Parabéns, objetivo concluido!');
+                setSuggestionMin(0);
                 setSituation('Parabéns, objetivo concluido!');
                 console.log("================================================================");
             }else if ( item.goalDone === idealSituation ){
@@ -51,6 +52,7 @@ function Card({ item, onDetails, onAddMinutes }) {
                 setPercentage(parseInt(currentPercentage) + "%"); 
                 setLackText('Progresso ideal alcançado');
                 setSuggestionText(( (minToTimeFormat(goalRemaining)).toString() + ' para atingir o objetivo'));
+                setSuggestionMin(0);
                 setSituation('Progresso ideal alcançado');
                 console.log("================================================================");
             }else if ( item.goalDone > idealSituation ){
@@ -59,6 +61,7 @@ function Card({ item, onDetails, onAddMinutes }) {
                 setPercentage(parseInt(currentPercentage) + "%"); 
                 setLackText(( (minToTimeFormat(item.goalDone-idealSituation)).toString() + ' acima do ideal' ));
                 setSuggestionText(( (minToTimeFormat(goalRemaining)).toString() + ' para atingir o objetivo'));
+                setSuggestionMin(0);
                 setSituation(' acima do ideal');
                 console.log("================================================================");
             }else {
