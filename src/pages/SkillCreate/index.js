@@ -4,7 +4,7 @@ import NavBar from "../../components/NavBar";
 import FormCreate from "./components/FormCreate";
 import api from "../../services/api";
 import Load from "../../components/Load";
-import { getToken } from "../../services/auth";
+import { getToken, logout } from "../../services/auth";
 
 export default function SkillCreate({ history }) {
     const [isLoad, setIsLoad] = useState(false);
@@ -30,6 +30,11 @@ export default function SkillCreate({ history }) {
         history.push("/home");
       } catch (error) {
         console.log("onSave | error: ", error);
+        console.log("progressThisMonth | error", error);
+        if(error.message === "Request failed with status code 401") {
+          logout();
+          history.push("/");
+        }
         setError("Houve um problema com o registro, verifique os campos. ;-;");
         setIsLoad(false);
       }

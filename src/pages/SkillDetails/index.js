@@ -5,7 +5,7 @@ import FormDetails from "./components/FormDetails";
 import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import Load from "../../components/Load";
-import { getToken } from "../../services/auth";
+import { getToken, logout } from "../../services/auth";
 
 function SkillDetails({ history }) {
     const [card, setCard] = useState({});
@@ -28,6 +28,11 @@ function SkillDetails({ history }) {
               setCard(response.data);
             } catch (error) {
               console.log("progress | error: ", error);
+              console.log("progressThisMonth | error", error);
+              if(error.message === "Request failed with status code 401") {
+                logout();
+                history.push("/");
+              }
               setError("Houve um problema ao listar os campos da habilidade, tente novamente mais tarde");
               setIsLoad(false);
             }
