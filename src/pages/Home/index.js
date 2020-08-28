@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import api from "../../services/api";
-import { getToken } from "../../services/auth";
+import { getToken, logout } from "../../services/auth";
 import NavBar from "../../components/NavBar";
 import Card from "./components/Card";
 import Load from "../../components/Load";
@@ -27,6 +27,10 @@ function Home({ history }) {
             setListCards(response.data)
           } catch (error) {
             console.log("progressThisMonth | error", error);
+              if(error.message === "Request failed with status code 401") {
+                logout();
+                history.push("/");
+              }
             setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
             setIsLoad(false);
           }
