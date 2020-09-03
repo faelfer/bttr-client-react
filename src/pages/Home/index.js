@@ -10,12 +10,13 @@ function Home({ history }) {
     const [listCards, setListCards] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
     const [error, setError] = useState('');
+    const [date, setDate] = useState();
     const token = getToken(); 
 
     async function progressMonth() {
         setIsLoad(true);
           try {
-            const response = await api.get("/progress_month", {
+            const response = await api.get(`/progress_month/${date ? date : new Date()}`, {
                 headers: { "Authorization": token }
             });
             console.log("progressThisMonth | response: ", response);
@@ -39,7 +40,7 @@ function Home({ history }) {
 
     useEffect(() => {
         progressMonth();
-    }, [token]);
+    }, [token, date]);
 
     function goToCreatePage() {
         console.log("goToCreatePage")
@@ -84,6 +85,11 @@ function Home({ history }) {
         <div className="Container">
             <NavBar navigation={history}/>
             <div className="container-create">
+                <input 
+                    type="date"
+                    value={date}
+                    onChange={event => setDate(event.target.value)}
+                />
                 <button onClick={() => goToCreatePage()}>
                     <p>Criar Nova Habilidade</p>
                 </button>
@@ -93,7 +99,8 @@ function Home({ history }) {
                 <Load isShow={isLoad}/>
                 {listCards.map((item, key) => (
                     <Card 
-                        item={item} 
+                        item={item}
+                        currentDate={date ? new Date(date) : new Date()} 
                         key={key} 
                         navigation={history}
                         onDetails={() => goToDetailsPage(item)}

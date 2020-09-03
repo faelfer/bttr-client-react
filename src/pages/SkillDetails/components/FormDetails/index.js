@@ -28,13 +28,15 @@ export default function FormDetails({ item, error, onSave, onDelete }) {
                         onChange={event => setName(event.target.value)}
                     />
                     <input 
-                        type="number" 
+                        type="number"
+                        placeholder="Minutos Diários" 
                         name="quantity"
                         onChange={event => setGoalPerDay(event.target.value)}
                         value={goalPerDay}
                     />
                     <input 
                         type="number"
+                        placeholder="Minutos Registrados"
                         name="quantity"
                         onChange={event => setGoalDone(event.target.value)}
                         value={goalDone}

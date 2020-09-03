@@ -5,7 +5,7 @@ import * as IconSolid from '@fortawesome/free-solid-svg-icons';
 import workingDays from "../../../../utils/workingDays";
 import { minToTimeFormat } from "../../../../utils/timeFormat";
 
-function Card({ item, onDetails, onAddMinutes }) {
+function Card({ item, onDetails, onAddMinutes, currentDate }) {
     const [percentage, setPercentage] = useState("");
     const [lackText, setLackText] = useState("");
     const [suggestionText, setSuggestionText] = useState("");
@@ -80,7 +80,6 @@ function Card({ item, onDetails, onAddMinutes }) {
     }, [item]);
 
     function datesMonth() {
-        const currentDate = new Date();
         // console.log(`Hoje: ${currentDate.getDate()}/${((currentDate.getMonth())+1)}/${currentDate.getFullYear()}`);
         const currentYear = currentDate.getFullYear();
         // console.log(`Ano Atual: ${currentYear}`);
