@@ -6,9 +6,12 @@ import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import Load from "../../components/Load";
 import { getToken, logout } from "../../services/auth";
+import { minToTimeFormat } from "../../utils/timeFormat";
+import moment from "moment";
 
 function SkillDetails({ history }) {
     const [card, setCard] = useState({});
+    const [historic, setHistoric] = useState([]);
     const [isLoad, setIsLoad] = useState(true);
     const [error, setError] = useState("");
     const { skillId } = useParams();
@@ -39,7 +42,31 @@ function SkillDetails({ history }) {
   
       };
 
+      async function extract() {
+        try {
+          const response = await api.get(`/progress_historic/extract/${skillId}`);
+          console.log("progress | response: ", response.data);
+          setIsLoad(false);
+          if(!response.data.status === 200) {
+            setError("Houve um problema ao listar os campos da habilidade, tente novamente mais tarde");
+          }
+
+          setHistoric(response.data);
+        } catch (error) {
+          console.log("progress | error: ", error);
+          console.log("progressThisMonth | error", error);
+          if(error.message === "Request failed with status code 401") {
+            logout();
+            history.push("/");
+          }
+          setError("Houve um problema ao listar os campos da habilidade, tente novamente mais tarde");
+          setIsLoad(false);
+        }
+
+      };
+
         progress();
+        extract();
     }, [skillId]);
 
     async function onSave(skill) {
@@ -98,6 +125,23 @@ function SkillDetails({ history }) {
                     item={card}
                     error={error}
                 />
+
+              <table>
+                <tr>
+                  <th>Nome</th>
+                  <th>Minutos</th> 
+                  <th>Data</th>
+                </tr>
+
+                {historic.map((item, key) => (
+                    <tr>
+                      <td>{item.ProgressName}</td>
+                      <td>{minToTimeFormat(item.goalAdded)}</td>
+                      <td>{moment(item.createAt).format('lll')}</td>
+                    </tr>
+                ))}
+
+              </table>
             </div>
         </div>
     )

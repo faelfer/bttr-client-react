@@ -16,7 +16,7 @@ function Home({ history }) {
     async function progressMonth() {
         setIsLoad(true);
           try {
-            const response = await api.get(`/progress_month/${date ? date : new Date()}`, {
+            const response = await api.get(`/progress_month/${date ? new Date(date) : new Date()}`, {
                 headers: { "Authorization": token }
             });
             console.log("progressThisMonth | response: ", response);

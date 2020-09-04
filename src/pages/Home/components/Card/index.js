@@ -80,6 +80,7 @@ function Card({ item, onDetails, onAddMinutes, currentDate }) {
     }, [item]);
 
     function datesMonth() {
+        console.log(`Data Atual: ${currentDate}`);
         // console.log(`Hoje: ${currentDate.getDate()}/${((currentDate.getMonth())+1)}/${currentDate.getFullYear()}`);
         const currentYear = currentDate.getFullYear();
         // console.log(`Ano Atual: ${currentYear}`);
