@@ -5,6 +5,8 @@ import { getToken, logout } from "../../services/auth";
 import NavBar from "../../components/NavBar";
 import Card from "./components/Card";
 import Load from "../../components/Load";
+import fixDate from "../../utils/fixDate";
+
 
 function Home({ history }) {
     const [listCards, setListCards] = useState([]);
@@ -16,7 +18,7 @@ function Home({ history }) {
     async function progressMonth() {
         setIsLoad(true);
           try {
-            const response = await api.get(`/progress_month/${date ? new Date(date) : new Date()}`, {
+            const response = await api.get(`/progress_month/${date ? fixDate(date) : new Date()}`, {
                 headers: { "Authorization": token }
             });
             console.log("progressThisMonth | response: ", response);
@@ -39,6 +41,8 @@ function Home({ history }) {
     };
 
     useEffect(() => {
+        console.log("useEffect | date: ", fixDate(date) )
+
         progressMonth();
     }, [token, date]);
 
@@ -100,7 +104,7 @@ function Home({ history }) {
                 {listCards.map((item, key) => (
                     <Card 
                         item={item}
-                        currentDate={date ? new Date(date) : new Date()} 
+                        currentDate={date ? fixDate(date) : new Date()} 
                         key={key} 
                         navigation={history}
                         onDetails={() => goToDetailsPage(item)}
