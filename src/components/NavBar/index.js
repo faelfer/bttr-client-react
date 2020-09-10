@@ -14,17 +14,12 @@ function App({ navigation }) {
         <div>
             <ul className="topnav">
                 <li>
-                    <NavLink to={'/progress'}>
+                    <NavLink to={'/home'}>
                         Início
                     </NavLink>
                 </li>
-                {/* <li>
-                    <NavLink to={'/tasks'}>
-                        Tarefas
-                    </NavLink>
-                </li> */}
                 <li className="right" onClick={(event) => exit(event)}>
-                    <a>Sair</a>
+                    <a href="#" >Sair</a>
                 </li>
             </ul>
         </div>
