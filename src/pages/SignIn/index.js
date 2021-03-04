@@ -36,41 +36,48 @@ function SignIn({ history }) {
             console.log("handleSignIn | response", response.data);
             setIsLoad(false);
             if(!response.data.status === 200) {
-              setError("Ocorreu um erro ao registrar sua conta. ;-;");
+              setError("Ocorreu um erro ao registrar sua conta.");
             }
             login(response.data.token);
             history.push("/home");
           } catch (error) {
             console.log("handleSignIn | error", error);
-            setError("Houve um problema com o login, verifique suas credenciais. ;-;");
+            setError("Houve um problema com o login, verifique suas credenciais.");
             setIsLoad(false);
           }
         }
     };
 
     return (
-      <div className="sign-in">
+      <div className="container">
         <Load isShow={isLoad}/>
-        <form onSubmit={handleSignIn}>
-          {error && <p>{error}</p>}
+        <form className="form" onSubmit={handleSignIn}>
+          <h1 className="form__header">
+            Bttr
+          </h1>
+          {error && <p className="form__message form__message--error">{error}</p>}
           <input
+            className="form__input"
             type="email"
             placeholder="Endereço de e-mail"
             value={email}
             onChange={event => setEmail(event.target.value)}
           />
           <input
+            className="form__input"
             type="password"
             placeholder="Senha"
             value={password}
             onChange={event => setPassword(event.target.value)}
           />
-          <button type="submit">Entrar</button>
-          <hr />
-          <Link to="/forgot-password">Esqueci minha senha</Link>
-          <hr />
-          <Link to="/sign-up">Criar conta</Link>
+          <button className="form__button" type="submit">Entrar</button>
+          <hr className="form__hr"/>
+          <Link className="blocksignup__link form__link--padding" to="/forgot-password">Esqueceu a senha?</Link>
         </form>
+
+        <div className="blocksignup">
+          <p className="blocksignup__text" >Não tem uma conta? <Link className="blocksignup__link" to="/sign-up">Cadastre-se</Link></p>
+        </div>
       </div>
     );
 

@@ -24,7 +24,7 @@
 table {
     font-family: arial, sans-serif;
     /* border-collapse: collapse; */
-    width: 99%;
+    width: 97%;
     background-color: #5e72e4;
     padding: 20px;
     border-radius: 8px;
@@ -38,6 +38,16 @@ table {
     padding: 8px;
   }
   
-  /* tr:nth-child(even) {
-    background-color: #dddddd;
-  } */
+@media screen and (max-width: 1600px) {
+  table { width: 97.5%; }
+}
+
+@media screen and (max-width: 600px) {
+  /* .container-create button { width: 97.8vw }
+	.container-create-error { width: 95.8% } */
+}
+  
+@media screen and (max-width: 350px) {
+  /* .container-create button { width: 96vw }
+	.container-create-error { width: 92% } */
+}
