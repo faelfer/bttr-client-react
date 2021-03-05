@@ -33,20 +33,33 @@ function ForgotPassword({ history }) {
     };
 
     return (
-      <div className="forgot-password">
+      <div className="container">
         <Load isShow={isLoad}/>
-        <form onSubmit={handleForgotPassword}>
-          {error && <p>{error}</p>}
+        <form className="form" onSubmit={handleForgotPassword}>
+          <p className="form__header">
+            Problemas para entrar?
+          </p>
+          <p className="form__description">
+            Insira o seu email e enviaremos uma senha para você voltar a acessar a sua conta.
+          </p>
+          {error && <p className="form__message form__message--error">{error}</p>}
           <input
+            className="form__input"
             type="email"
             placeholder="Endereço de e-mail"
             value={email}
             onChange={event => setEmail(event.target.value)}
           />
-          <button type="submit">Enviar</button>
-          <hr />
-          <Link to="/">Voltar</Link>
+          <button className="form__button" type="submit">Enviar</button>
+          <hr className="form__hr"/>
+          <Link className="redirect__link" to="/">Criar nova conta</Link>
         </form>
+
+        <div className="redirect">
+          <p className="redirect__text">
+            <Link className="redirect__link" to="/sign-up">Voltar ao login</Link>
+          </p>
+        </div>
       </div>
     );
 
