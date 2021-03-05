@@ -17,7 +17,7 @@ function ForgotPassword({ history }) {
             setIsLoad(false);
         } else {
           try {
-            const response = await api.post("/forgot_password", { email });
+            const response = await api.post("/user/forgot_password", { email });
             console.log("handleForgotPassword | response", response.data);
             setIsLoad(false);
             if(!response.data.status === 200) {

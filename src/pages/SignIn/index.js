@@ -32,7 +32,7 @@ function SignIn({ history }) {
             setIsLoad(false);
         } else {
           try {
-            const response = await api.post("/login", { email, password });
+            const response = await api.post("/user/sign_in", { email, password });
             console.log("handleSignIn | response", response.data);
             setIsLoad(false);
             if(!response.data.status === 200) {

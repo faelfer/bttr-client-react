@@ -20,13 +20,20 @@ function SignUp({ history }) {
       setIsLoad(false);
     } else {
       try {
-        const response = await api.post("/users", { username, email, password });
+        const response = await api.post("/user/sign_up", 
+        { 
+          username, 
+          email, 
+          password 
+        });
+
         setIsLoad(false);
         console.log("handleSignUp | respnse: ",response);
         if(!response.data.status === 200) {
           setError("Ocorreu um erro ao registrar sua conta. ;-;");
         }
         history.push("/");
+        
       } catch (error) {
         console.log("handleSignUp | error: ",error);
         setError("Ocorreu um erro ao registrar sua conta. ;-;");
@@ -43,7 +50,7 @@ function SignUp({ history }) {
             Bttr
           </p>
           <p className="form__description">
-            Cadastre-se para ver fotos e vídeos dos seus amigos.
+            Cadastre-se para evoluir suas habilidades.
           </p>
           {error && <p className="form__message form__message--error">{error}</p>}
           <input
