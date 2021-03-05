@@ -14,11 +14,13 @@
     background-color: var(--primary-color);
     border-radius: 5px;
     margin-bottom: 10px;
+    padding-bottom: 24px;
 }
 
 .form__header {
+    font-size: 24px;
+    font-weight: bold;
     color: var(--on-primary-color);
-    width: 100%;
     text-align: center;
 }
 
@@ -79,11 +81,7 @@
     width: 76%;
 }
 
-.form__link--padding {
-    margin-bottom: 20px;
-}
-
-.blocksignup {
+.redirect {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,12 +91,12 @@
     text-align: center;
 }
 
-.blocksignup__text {
+.redirect__text {
     color: var(--on-primary-color);
     font-size: 14px;
 }
 
-.blocksignup__link {
+.redirect__link {
     color: var(--secondary-color);
     font-size: 14px;
     font-weight: 600;

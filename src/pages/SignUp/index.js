@@ -36,32 +36,43 @@ function SignUp({ history }) {
   };
 
     return (
-      <div className="sign-up">
+      <div className="container">
         <Load isShow={isLoad}/>
-        <form onSubmit={handleSignUp}>
-          {error && <p>{error}</p>}
+        <form className="form" onSubmit={handleSignUp}>
+          <p className="form__header">
+            Bttr
+          </p>
+          <p className="form__description">
+            Cadastre-se para ver fotos e vídeos dos seus amigos.
+          </p>
+          {error && <p className="form__message form__message--error">{error}</p>}
           <input
+            className="form__input"
             type="text"
             placeholder="Nome de usuário"
             value={username}
             onChange={event => setUsername(event.target.value)}
           />
           <input
+            className="form__input"
             type="email"
             placeholder="Endereço de e-mail"
             value={email}
             onChange={event => setEmail(event.target.value)}
           />
           <input
+            className="form__input"
             type="password"
             placeholder="Senha"
             value={password}
             onChange={event => setPassword(event.target.value)}
           />
-          <button type="submit">Cadastrar</button>
-          <hr />
-          <Link to="/">Fazer login</Link>
+          <button className="form__button" type="submit">Cadastre-se</button>
         </form>
+
+        <div className="redirect">
+          <p className="redirect__text" >Tem uma conta? <Link className="redirect__link" to="/">Conecte-se</Link></p>
+        </div>
       </div>
     );
 }

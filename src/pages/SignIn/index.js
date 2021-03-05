@@ -52,9 +52,9 @@ function SignIn({ history }) {
       <div className="container">
         <Load isShow={isLoad}/>
         <form className="form" onSubmit={handleSignIn}>
-          <h1 className="form__header">
+          <p className="form__header">
             Bttr
-          </h1>
+          </p>
           {error && <p className="form__message form__message--error">{error}</p>}
           <input
             className="form__input"
@@ -72,11 +72,11 @@ function SignIn({ history }) {
           />
           <button className="form__button" type="submit">Entrar</button>
           <hr className="form__hr"/>
-          <Link className="blocksignup__link form__link--padding" to="/forgot-password">Esqueceu a senha?</Link>
+          <Link className="redirect__link form__link--padding" to="/forgot-password">Esqueceu a senha?</Link>
         </form>
 
-        <div className="blocksignup">
-          <p className="blocksignup__text" >Não tem uma conta? <Link className="blocksignup__link" to="/sign-up">Cadastre-se</Link></p>
+        <div className="redirect">
+          <p className="redirect__text" >Não tem uma conta? <Link className="redirect__link" to="/sign-up">Cadastre-se</Link></p>
         </div>
       </div>
     );
