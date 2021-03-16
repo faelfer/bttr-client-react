@@ -3,33 +3,31 @@ import "./styles.css";
 import api from "../../services/api";
 import { getToken, logout } from "../../services/auth";
 import NavBar from "../../components/NavBar";
-import Card from "./components/Card";
+import Abiliity from "./components/Abiliity";
 import Load from "../../components/Load";
-import fixDate from "../../utils/fixDate";
-
 
 function Home({ history }) {
-    const [listCards, setListCards] = useState([]);
+    const [abiliities, setAbiliities] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
     const [error, setError] = useState('');
-    const [date, setDate] = useState();
     const token = getToken(); 
 
-    async function progressMonth() {
+    useEffect(() => {
+      async function getAbiliities() {
         setIsLoad(true);
           try {
-            const response = await api.get(`/progress_month/${date ? fixDate(date) : new Date()}`, {
+            const response = await api.get('/abiliity', {
                 headers: { "Authorization": token }
             });
-            console.log("progressThisMonth | response: ", response);
+            console.log("getAbiliities | response: ", response);
             setIsLoad(false);
             if(!response.data.status === 200) {
                 setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
             }
 
-            setListCards(response.data)
+            setAbiliities(response.data)
           } catch (error) {
-            console.log("progressThisMonth | error", error);
+            console.log("getAbiliities | error: ", error);
               if(error.message === "Request failed with status code 401") {
                 logout();
                 history.push("/");
@@ -38,81 +36,27 @@ function Home({ history }) {
             setIsLoad(false);
           }
 
-    };
+      };
 
-    useEffect(() => {
-        console.log("useEffect | date: ", fixDate(date) )
+        getAbiliities();
 
-        progressMonth();
-    }, [token, date]);
-
-    function goToCreatePage() {
-        console.log("goToCreatePage")
-        history.push(`/skill-create`);
-    }
-
-    function goToDetailsPage(item) {
-        console.log("goToDetailsPage | item: ", item)
-        history.push(`/skill-details/${item._id}`);
-        
-    }
-
-    async function addMinutesSkill(skillId, minutes) {
-        console.log("addMinutesSkill | skillId, minutes: ", skillId, minutes);
-        setIsLoad(true);
-          try {
-            const response = await api.put(`/progress_sum/${skillId}`, {
-                headers: { "Authorization": token },
-                "minutesDone": minutes, 
-            });
-            console.log("addMinutesSkill | response: ", response);
-            setIsLoad(false);
-            progressMonth();
-
-            if(!response.data.status === 200) {
-                setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
-            }
-            console.log("addMinutesSkill | response.data", response.data);
-            if (error) {
-                setError("");
-            }
-
-          } catch (error) {
-            console.log("addMinutesSkill | error", error);
-            setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
-            setIsLoad(false);
-          }
-
-    };
+    }, [token]);
 
     return (
-        <div className="Container">
+        <>
             <NavBar navigation={history}/>
-            <div className="container-create">
-                <input 
-                    type="date"
-                    value={date}
-                    onChange={event => setDate(event.target.value)}
-                />
-                <button onClick={() => goToCreatePage()}>
-                    <p>Criar Nova Habilidade</p>
-                </button>
-                {error && <p className="container-create-error">{error}</p>}
-            </div>
-            <div className="app">
+            <div className="home">
+                <div className="home__content">
+                {error && <p className="form__message--error">{error}</p>}
                 <Load isShow={isLoad}/>
-                {listCards.map((item, key) => (
-                    <Card 
-                        item={item}
-                        currentDate={date ? fixDate(date) : new Date()} 
-                        key={key} 
-                        navigation={history}
-                        onDetails={() => goToDetailsPage(item)}
-                        onAddMinutes={(skillId, minutes) => addMinutesSkill(skillId, minutes)}
-                    />
-                ))}
+                  <>
+                  {abiliities.map((abiliity, key) => (
+                    <Abiliity  abiliity={abiliity} key={key}/>
+                  ))}
+                  </>
+                </div>
             </div>
-        </div>
+        </>
     )
 };
 

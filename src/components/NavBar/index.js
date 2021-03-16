@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from 'react-router-dom';
 import "./styles.css";
 import { logout } from "../../services/auth";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function App({ navigation }) {
     function exit(event) {
@@ -11,17 +12,22 @@ function App({ navigation }) {
         navigation.push("/");
     }
     return (
-        <div>
-            <ul className="topnav">
-                <li>
-                    <NavLink to={'/home'}>
-                        Início
-                    </NavLink>
-                </li>
-                <li className="right" onClick={(event) => exit(event)}>
-                    <a href="#" >Sair</a>
-                </li>
-            </ul>
+        <div className="navbar">
+            <div className="navbar__container">
+                <div className="navbar__name">
+                    <p>Bttr</p>
+                </div>
+                <div className="navbar__actions">
+                    <FontAwesomeIcon 
+                        icon="square"
+                        size="3x"
+                        color="black" 
+                    />                
+                    <p className="navbar__action--margin">Início</p>
+                    <p className="navbar__action--margin">Histórico</p>
+                    <p className="navbar__action--margin active">Configurações</p>
+                </div>
+            </div>
         </div>
     )
 };
