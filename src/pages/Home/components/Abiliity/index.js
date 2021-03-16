@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 import { minToTimeFormat } from '../../../../utils/timeFormat';
 
-function Abiliity({ abiliity, key }) {
+function Abiliity({ history, abiliity, key }) {
     return (
         <div className="abiliity" key={key}>
             <p className="abiliity__name">
@@ -14,7 +14,7 @@ function Abiliity({ abiliity, key }) {
             <p className="abiliity__description">
                 Tempo Total: {minToTimeFormat(abiliity.timeTotal)}
             </p>
-            <button className="form__button" onClick={() => alert('Editar!')}>
+            <button className="form__button" onClick={() => history.push(`/abiliity/${abiliity._id}`)}>
                 Editar
             </button>  
             <button className="form__button" onClick={() => alert('Histórico!')}>

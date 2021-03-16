@@ -56,7 +56,11 @@ function Home({ history }) {
                     </button>  
                 </div>
                   {abiliities.map((abiliity, key) => (
-                    <Abiliity  abiliity={abiliity} key={key}/>
+                    <Abiliity  
+                      abiliity={abiliity} 
+                      key={key}
+                      history={history}
+                    />
                   ))}
                   </>
                 </div>
