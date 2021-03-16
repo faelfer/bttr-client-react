@@ -9,7 +9,9 @@
   flex-wrap: wrap;
   background-color: var(--primary-color);
   width: 975px;
-  height: 94.5vh;
+  margin-top: 20px;
+  height: 85vh;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
   grid-template-rows: 300px;
+  border-radius: 5px;
 }

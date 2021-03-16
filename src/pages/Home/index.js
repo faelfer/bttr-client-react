@@ -50,6 +50,11 @@ function Home({ history }) {
                 {error && <p className="form__message--error">{error}</p>}
                 <Load isShow={isLoad}/>
                   <>
+                  <div className="abiliity">
+                    <button className="form__button" onClick={() => alert('Criar habilidade!')}>
+                        Criar habilidade
+                    </button>  
+                </div>
                   {abiliities.map((abiliity, key) => (
                     <Abiliity  abiliity={abiliity} key={key}/>
                   ))}
