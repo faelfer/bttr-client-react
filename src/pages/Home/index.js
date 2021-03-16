@@ -40,18 +40,18 @@ function Home({ history }) {
 
         getAbiliities();
 
-    }, [token]);
+    }, [token, history]);
 
     return (
         <>
             <NavBar navigation={history}/>
-            <div className="home">
+            <div className="content--align">
                 <div className="home__content">
                 {error && <p className="form__message--error">{error}</p>}
                 <Load isShow={isLoad}/>
                   <>
                   <div className="abiliity">
-                    <button className="form__button" onClick={() => alert('Criar habilidade!')}>
+                    <button className="form__button" onClick={() => history.push("/abiliity")}>
                         Criar habilidade
                     </button>  
                 </div>

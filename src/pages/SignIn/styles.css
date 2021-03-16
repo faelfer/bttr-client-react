@@ -64,14 +64,6 @@
 }
 
 .form__button:hover {
-    color: var(--on-secondary-color);
-    font-size: 16px;
-    font-weight: bold;
-    background: var(--secondary-color);
-    height: 35px;
-    border: 0;
-    border-radius: 5px;
-    width: 76%;
     opacity: 0.4;
 }
 
