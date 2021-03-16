@@ -11,7 +11,6 @@
     align-items: center;
     width: 975px;
     max-width: 975px;
-    background-color: pink;
 }
 
 .navbar__name {
@@ -23,8 +22,17 @@
 .navbar__actions {
     display: flex;
     flex-direction: row;
-    color: var(--on-primary-color);
     text-align: center;
+}
+
+.navbar__link {
+    text-decoration: none;
+    color: var(--on-primary-color);
+}
+
+.navbar__link.active {
+    text-decoration: none;
+    color: var(--secondary-color);
 }
 
 .navbar__action--margin {
@@ -48,8 +56,4 @@ color: var(--on-primary-color);
 text-align: center;
 padding: 14px 16px;
 text-decoration: none;
-}
-
-.active {
-    color: var(--secondary-color);
 }

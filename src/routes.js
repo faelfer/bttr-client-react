@@ -29,8 +29,8 @@ const Routes = () => (
       <Route path="/sign-up" component={SignUp} />
       <Route path="/forgot-password" component={ForgotPassword} />
       <PrivateRoute path="/home" component={Home} />
-      <PrivateRoute path="/skill-details/:skillId" component={SkillDetails} />
-      <PrivateRoute path="/skill-create" component={SkillCreate} />
+      <PrivateRoute path="/abiliity/:abiliityId" component={SkillDetails} />
+      <PrivateRoute path="/abiliity" component={SkillCreate} />
       <Route 
         path="*" 
         component={() => (
