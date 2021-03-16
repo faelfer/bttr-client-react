@@ -45,7 +45,7 @@ export default function AbiliityForm({ history }) {
 
     getAbiliity();
 
-  }, [abiliityId]);
+  }, [abiliityId, history, token]);
 
     async function createAbiliity(event) {
       event.preventDefault();

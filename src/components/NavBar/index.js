@@ -13,7 +13,9 @@ function App({ navigation }) {
                     <NavLink className="navbar__link" to={'/home'}>         
                         <p className="navbar__action--margin">Início</p>
                     </NavLink>
-                    <p className="navbar__action--margin">Histórico</p>
+                    <NavLink className="navbar__link" to={'/time-table'}>  
+                        <p className="navbar__action--margin">Tempo</p>
+                    </NavLink>
                     <p className="navbar__action--margin">Configurações</p>
                 </div>
             </div>

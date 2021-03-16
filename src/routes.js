@@ -6,7 +6,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
-import SkillDetails from "./pages/SkillDetails";
+import TimeTable from "./pages/TimeTable";
 import AbiliityForm from "./pages/AbiliityForm";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -29,8 +29,11 @@ const Routes = () => (
       <Route path="/sign-up" component={SignUp} />
       <Route path="/forgot-password" component={ForgotPassword} />
       <PrivateRoute path="/home" component={Home} />
-      <PrivateRoute path="/abiliity/:abiliityId" component={AbiliityForm} />
       <PrivateRoute path="/abiliity" component={AbiliityForm} />
+      <PrivateRoute path="/abiliity/:abiliityId" component={AbiliityForm} />
+      <PrivateRoute path="/time-table" component={TimeTable} />
+      {/* <PrivateRoute path="/time" component={TimeForm} />
+      <PrivateRoute path="/time/:timeId" component={TimeForm} /> */}
       <Route 
         path="*" 
         component={() => (

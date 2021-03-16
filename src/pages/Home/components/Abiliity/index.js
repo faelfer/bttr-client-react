@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 import { minToTimeFormat } from '../../../../utils/timeFormat';
 
-function Abiliity({ history, abiliity, key }) {
+export default function Abiliity({ history, abiliity, key }) {
     return (
         <div className="abiliity" key={key}>
             <p className="abiliity__name">
@@ -23,5 +23,3 @@ function Abiliity({ history, abiliity, key }) {
         </div>
     )
 };
-
-export default Abiliity;

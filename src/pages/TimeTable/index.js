@@ -3,31 +3,31 @@ import "./styles.css";
 import api from "../../services/api";
 import { getToken, logout } from "../../services/auth";
 import NavBar from "../../components/NavBar";
-import Abiliity from "./components/Abiliity";
+import Time from "./components/Time";
 import Load from "../../components/Load";
 
-export default function Home({ history }) {
-    const [abiliities, setAbiliities] = useState([]);
+export default function TimeTable({ history }) {
+    const [times, setTimes] = useState([]);
     const [isLoad, setIsLoad] = useState(false);
     const [error, setError] = useState('');
     const token = getToken(); 
 
     useEffect(() => {
-      async function getAbiliities() {
+      async function getTimes() {
         setIsLoad(true);
           try {
-            const response = await api.get('/abiliity', {
+            const response = await api.get('/time', {
                 headers: { "Authorization": token }
             });
-            console.log("getAbiliities | response: ", response);
+            console.log("getTimes | response: ", response);
             setIsLoad(false);
             if(!response.data.status === 200) {
                 setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
             }
 
-            setAbiliities(response.data)
+            setTimes(response.data)
           } catch (error) {
-            console.log("getAbiliities | error: ", error);
+            console.log("getTimes | error: ", error);
               if(error.message === "Request failed with status code 401") {
                 logout();
                 history.push("/");
@@ -38,7 +38,7 @@ export default function Home({ history }) {
 
       };
 
-        getAbiliities();
+        getTimes();
 
     }, [token, history]);
 
@@ -46,21 +46,17 @@ export default function Home({ history }) {
         <>
             <NavBar navigation={history}/>
             <div className="content--align">
-                <div className="home__content">
+                <div className="time__content">
                 {error && <p className="form__message--error">{error}</p>}
                 <Load isShow={isLoad}/>
                   <>
-                  <div className="abiliity">
-                    <button className="form__button" onClick={() => history.push("/abiliity")}>
-                        Criar habilidade
-                    </button>  
+                <div className="time__create">
+                  <button className="form__button" onClick={() => history.push("/abiliity")}>
+                    Criar habilidade
+                  </button>  
                 </div>
-                  {abiliities.map((abiliity, key) => (
-                    <Abiliity  
-                      abiliity={abiliity} 
-                      key={key}
-                      history={history}
-                    />
+                  {times.map((time, key) => (
+                    <Time time={time}/>
                   ))}
                   </>
                 </div>
