@@ -1,5 +1,6 @@
 import React from "react";
 import "./styles.css";
+import { minToTimeFormat } from '../../../../utils/timeFormat';
 
 function Abiliity({ abiliity, key }) {
     return (
@@ -8,10 +9,10 @@ function Abiliity({ abiliity, key }) {
                 {abiliity.name}
             </p> 
             <p className="abiliity__description">
-                Tempo Diário: {abiliity.timeDaily}
+                Tempo Diário: {minToTimeFormat(abiliity.timeDaily)}
             </p>
             <p className="abiliity__description">
-                Tempo Total: {abiliity.timeTotal}
+                Tempo Total: {minToTimeFormat(abiliity.timeTotal)}
             </p>
             <button className="form__button" onClick={() => alert('Editar!')}>
                 Editar

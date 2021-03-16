@@ -7,11 +7,12 @@
   border-color: var(--on-primary-color);
   border-style: solid;
   border-width: thin;
-  border-radius: 5px;
-  height: 280px;
+  border-radius: 6px;
+  height: 244px;
   margin: 10px 10px 10px 10px;
   text-align: center;
   font-size: 30px;
+  padding: 16px;
 }
 
 .abiliity__name {
@@ -24,8 +25,8 @@
 
 .abiliity__description {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 450;
   margin: 0;
   padding: 0;
-  color: var(--on-primary-color);
+  color:#666666;
 }
