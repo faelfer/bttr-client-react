@@ -4,7 +4,7 @@ import NavBar from "../../components/NavBar";
 import api from "../../services/api";
 import Load from "../../components/Load";
 import { getToken, logout } from "../../services/auth";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function ProfileForm({ history }) {
   const token = getToken(); 
@@ -100,6 +100,19 @@ export default function ProfileForm({ history }) {
 
   };
 
+  async function exit(event) {
+    event.preventDefault();
+
+      try {
+        logout();
+        history.push("/");
+      } catch (error) {
+        console.log("exit | error", error);
+        setError("Houve um problema com o login, verifique suas credenciais.");
+      }
+
+  };
+
     return (
       <>
         <NavBar navigation={history}/>
@@ -141,8 +154,13 @@ export default function ProfileForm({ history }) {
 
               <hr className="abiliity__hr"/>
               <p className="redirect__text redirect__text--margin">
-                <Link className="redirect__link" to="/time-table">Voltar ao tempo</Link>
+                <Link className="redirect__link" to="/redefine-password">Redefinir a senha</Link>
               </p>
+
+              <hr className="abiliity__hr"/>
+              <button className="profile__logout" onClick={exit}>
+                Sair
+              </button>
             </form>
           </div>
         </div>
