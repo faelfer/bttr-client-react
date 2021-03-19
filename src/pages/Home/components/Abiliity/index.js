@@ -14,10 +14,10 @@ export default function Abiliity({ history, abiliity, key }) {
             <p className="abiliity__description">
                 Tempo Total: {minToTimeFormat(abiliity.timeTotal)}
             </p>
-            <button className="form__button" onClick={() => history.push(`/abiliity/${abiliity._id}`)}>
+            <button className="form__button" onClick={() => history.push(`/abiliity-detail/${abiliity._id}`)}>
                 Editar
             </button>  
-            <button className="form__button" onClick={() => history.push(`/time-table/${abiliity._id}`)}>
+            <button className="form__button" onClick={() => history.push(`/time-table-by-abiliity/${abiliity._id}`)}>
                 Histórico
             </button>  
         </div>

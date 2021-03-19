@@ -9,18 +9,25 @@ import Home from "./pages/Home";
 import TimeTable from "./pages/TimeTable";
 import AbiliityForm from "./pages/AbiliityForm";
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      isAuthenticated() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-      )
-    }
-  />
-);
+function PrivateRoute({ children, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        isAuthenticated() ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
 const Routes = () => (
   <BrowserRouter>
@@ -30,8 +37,9 @@ const Routes = () => (
       <Route path="/forgot-password" component={ForgotPassword} />
       <PrivateRoute path="/home" component={Home} />
       <PrivateRoute path="/abiliity" component={AbiliityForm} />
-      <PrivateRoute path="/abiliity/:abiliityId" component={AbiliityForm} />
+      <PrivateRoute path="/abiliity-detail/:abiliityId" component={AbiliityForm} />
       <PrivateRoute path="/time-table" component={TimeTable} />
+      <PrivateRoute path="/time-table-by-abiliity/:abiliityId" component={TimeTable} />
       {/* <PrivateRoute path="/time" component={TimeForm} />
       <PrivateRoute path="/time/:timeId" component={TimeForm} /> */}
       <Route 
