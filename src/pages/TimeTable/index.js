@@ -83,12 +83,12 @@ export default function TimeTable({ history }) {
                 <Load isShow={isLoad}/>
                 <>
                   <div className="time__create">
-                    <button className="form__button" onClick={() => history.push("/abiliity")}>
-                      Criar habilidade
+                    <button className="form__button" onClick={() => history.push("/time")}>
+                      Criar registro de tempo
                     </button>  
                   </div>
                   {times.map((time, key) => (
-                    <Time time={time} key={key}/>
+                    <Time time={time} history={history} key={key}/>
                   ))}
                 </>
                 </div>

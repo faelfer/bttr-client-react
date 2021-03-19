@@ -5,7 +5,7 @@ import moment from 'moment';
 
 function Time({ history, time, key }) {
     return (
-        <div className="time" key={key} onClick={() => alert('Time!')}>
+        <div className="time" key={key} onClick={() => history.push(`/time-detail/${time._id}`)}>
         <p className="time__minutes">
           {minToTimeFormat(time.minutes)}
         </p> 
@@ -13,7 +13,7 @@ function Time({ history, time, key }) {
           {moment(time.createAt).format('L')}
         </p>
         <p className="time__abiliity">
-          {time.abiliityName}
+          {time.abiliity.name}
         </p>
       </div>
     )

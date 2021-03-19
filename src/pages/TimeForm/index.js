@@ -8,31 +8,30 @@ import { Link, useParams } from "react-router-dom";
 
 export default function AbiliityForm({ history }) {
   const token = getToken(); 
-  const { abiliityId } = useParams();
+  const { timeId } = useParams();
   const [isLoad, setIsLoad] = useState(false);
   const [error, setError] = useState("");
-  const [name, setName] = useState("");
-  const [timeDaily, setTimeDaily] = useState(1);
-  const [timeTotal, setTimeTotal] = useState(0);
+  const [abiliity, setAbiliity] = useState("");
+  const [abiliities, setAbiliities] = useState([]);
+  const [minutes, setMinutes] = useState(1);
 
   useEffect(() => {
-    async function getAbiliity() {
+    async function getTime() {
       setIsLoad(true);
         try {
-          const response = await api.get(`/abiliity/${abiliityId}`, {
+          const response = await api.get(`/time/${timeId}`, {
               headers: { "Authorization": token }
           });
-          console.log("getAbiliity | response: ", response);
+          console.log("getTime | response: ", response);
           setIsLoad(false);
           if(!response.data.status === 200) {
               setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
           }
 
-          setName(response.data[0].name);
-          setTimeDaily(response.data[0].timeDaily);
-          setTimeTotal(response.data[0].timeTotal);
+          setAbiliity(response.data.abiliity._id);
+          setMinutes(response.data.minutes);
         } catch (error) {
-          console.log("getAbiliity | error: ", error);
+          console.log("getTime | error: ", error);
             if(error.message === "Request failed with status code 401") {
               logout();
               history.push("/");
@@ -43,40 +42,65 @@ export default function AbiliityForm({ history }) {
 
     };
 
-    if(abiliityId) {
-      getAbiliity();
+    async function getAbiliities() {
+      setIsLoad(true);
+        try {
+          const response = await api.get('/abiliity', {
+              headers: { "Authorization": token }
+          });
+          console.log("getAbiliities | response: ", response);
+          setIsLoad(false);
+          if(!response.data.status === 200) {
+              setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+          }
+
+          setAbiliities(response.data)
+          setAbiliity(response.data[0])
+        } catch (error) {
+          console.log("getAbiliities | error: ", error);
+            if(error.message === "Request failed with status code 401") {
+              logout();
+              history.push("/");
+            }
+          setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+          setIsLoad(false);
+        }
+
+    };
+
+    if(timeId) {
+      getAbiliities();
+      getTime();
+    } else {
+      getAbiliities();
     }
 
-  }, [abiliityId, history, token]);
+  }, [timeId, history, token]);
 
     async function createAbiliity(event) {
+      console.log("abiliity", abiliity)
       event.preventDefault();
       setIsLoad(true);
-      if (!name) {
+      if (!abiliity) {
           setError("Preencha nome para continuar!");
           setIsLoad(false);
-      } else if (!timeDaily) {
+      } else if (!minutes) {
         setError("Preencha tempo diário para continuar!");
-        setIsLoad(false);
-
-      } else if (!timeTotal) {
-        setError("Preencha tempo total continuar!");
         setIsLoad(false);
       
       } else {
         try {
-          const response = await api.post("/abiliity",
+          const response = await api.post("/time",
             { 
-              name, 
-              timeDaily,
-              timeTotal 
+              abiliity, 
+              minutes
             },
             { headers: { 'Authorization': token } }
           );
           console.log("createAbiliity | response", response.data);
           setIsLoad(false);
           if(!response.data.status === 200) {
-            setError("Ocorreu um erro ao registrar sua habilidade.");
+            setError("Ocorreu um erro ao registrar sua registro de tempo.");
           }
           history.push("/home");
         } catch (error) {
@@ -87,38 +111,33 @@ export default function AbiliityForm({ history }) {
       }
   };
 
-  async function editAbiliity(event) {
+  async function editTime(event) {
     event.preventDefault();
     setIsLoad(true);
-    if (!name) {
+    if (!abiliity) {
         setError("Preencha nome para continuar!");
         setIsLoad(false);
-    } else if (!timeDaily) {
+    } else if (!minutes) {
       setError("Preencha tempo diário para continuar!");
-      setIsLoad(false);
-
-    } else if (!timeTotal) {
-      setError("Preencha tempo total continuar!");
       setIsLoad(false);
     
     } else {
       try {
-        const response = await api.put(`/abiliity/${abiliityId}`,
+        const response = await api.put(`/time/${timeId}`,
           { 
-            name, 
-            timeDaily,
-            timeTotal 
+            abiliity, 
+            minutes
           },
           { headers: { 'Authorization': token } }
         );
-        console.log("editAbiliity | response", response.data);
+        console.log("editTime | response", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
-          setError("Ocorreu um erro ao registrar sua habilidade.");
+          setError("Ocorreu um erro ao registrar sua registro de tempo.");
         }
         history.push("/home");
       } catch (error) {
-        console.log("editAbiliity | error", error);
+        console.log("editTime | error", error);
         setError("Houve um problema com o login, verifique suas credenciais.");
         setIsLoad(false);
       }
@@ -130,13 +149,13 @@ export default function AbiliityForm({ history }) {
     setIsLoad(true);
 
       try {
-        const response = await api.delete(`/abiliity/${abiliityId}`,
+        const response = await api.delete(`/time/${timeId}`,
           { headers: { 'Authorization': token } }
         );
         console.log("deleteAbiliity | response", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
-          setError("Ocorreu um erro ao registrar sua habilidade.");
+          setError("Ocorreu um erro ao registrar sua registro de tempo.");
         }
         history.push("/home");
       } catch (error) {
@@ -153,47 +172,48 @@ export default function AbiliityForm({ history }) {
         <div className="content--align">
           <div className="abiliity__content">
             <Load isShow={isLoad}/>
-            <form className="abiliity__form" onSubmit={abiliityId ? editAbiliity : createAbiliity}>
+            <form className="abiliity__form" onSubmit={timeId ? editTime : createAbiliity}>
               <p className="form__header">
-                Habilidade
+                Registro de tempo
               </p>
               <p className="form__description">
-                Crie uma nova habilidade para começar a registrar o quanto você se dedicou.
+                Crie uma nova registro de tempo para começar a registrar o quanto você se dedicou.
               </p>
               {error && <p className="form__message form__message--error">{error}</p>}
-              <input
-                className="abiliity__input"
-                type="text"
-                placeholder="Nome da habilidade"
-                value={name}
-                onChange={event => setName(event.target.value)}
-              />
+
+              <select 
+                className="time__select" 
+                value={abiliity} 
+                onChange={event => { 
+                  console.log(event.target.value)
+                  setAbiliity(event.target.value) 
+                }}
+              >
+                {
+                  abiliities.map((abiliity, key) => {
+                    return (
+                      <option value={abiliity._id} key={key}>{abiliity.name}</option>
+                    )
+                  })
+                }
+              </select>
               <input
                 className="abiliity__input"
                 type="number"
                 placeholder="Tempo diário (em minutos)"
                 min="1" 
                 max="1440"
-                value={timeDaily}
-                onChange={event => setTimeDaily(event.target.value)}
+                value={minutes}
+                onChange={event => setMinutes(event.target.value)}
               />
-              <input
-                className="abiliity__input"
-                type="number"
-                placeholder="Tempo total (em minutos)"
-                min="0" 
-                max="1440"
-                value={timeTotal}
-                onChange={event => setTimeTotal(event.target.value)}
-              />
-              <button className="abiliity__button" type="submit">
-                {abiliityId ? "Editar habilidade" : "Criar habilidade"}
-              </button>
 
-              {abiliityId ?
+              <button className="abiliity__button" type="submit">
+                {timeId ? "Editar registro de tempo" : "Criar registro de tempo"}
+              </button>
+              {timeId ?
                 (
                   <button className="abiliity__delete" onClick={deleteAbiliity}>
-                    Apagar habilidade
+                    Apagar registro de tempo
                   </button>
                 )
               : 
@@ -201,7 +221,7 @@ export default function AbiliityForm({ history }) {
               }
               <hr className="abiliity__hr"/>
               <p className="redirect__text redirect__text--margin">
-                <Link className="redirect__link" to="/home">Voltar ao início</Link>
+                <Link className="redirect__link" to="/time-table">Voltar ao tempo</Link>
               </p>
             </form>
           </div>
