@@ -17,7 +17,7 @@ export default function Abiliity({ history, abiliity, key }) {
             <button className="form__button" onClick={() => history.push(`/abiliity/${abiliity._id}`)}>
                 Editar
             </button>  
-            <button className="form__button" onClick={() => alert('Histórico!')}>
+            <button className="form__button" onClick={() => history.push(`/time-table/${abiliity._id}`)}>
                 Histórico
             </button>  
         </div>
