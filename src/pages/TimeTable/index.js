@@ -68,9 +68,9 @@ export default function TimeTable({ history }) {
 
       if(!abiliityId) {
         getTimes();
+      } else {
+        getTimesFilterByAbiliity();
       }
-
-      getTimesFilterByAbiliity()
 
     }, [token, history, abiliityId]);
 
@@ -88,7 +88,7 @@ export default function TimeTable({ history }) {
                     </button>  
                   </div>
                   {times.map((time, key) => (
-                    <Time time={time}/>
+                    <Time time={time} key={key}/>
                   ))}
                 </>
                 </div>

@@ -43,7 +43,9 @@ export default function AbiliityForm({ history }) {
 
     };
 
-    getAbiliity();
+    if(abiliityId) {
+      getAbiliity();
+    }
 
   }, [abiliityId, history, token]);
 
@@ -101,7 +103,7 @@ export default function AbiliityForm({ history }) {
     
     } else {
       try {
-        const response = await api.post("/abiliity",
+        const response = await api.put(`/abiliity/${abiliityId}`,
           { 
             name, 
             timeDaily,
@@ -109,14 +111,14 @@ export default function AbiliityForm({ history }) {
           },
           { headers: { 'Authorization': token } }
         );
-        console.log("createAbiliity | response", response.data);
+        console.log("editAbiliity | response", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
           setError("Ocorreu um erro ao registrar sua habilidade.");
         }
         history.push("/home");
       } catch (error) {
-        console.log("createAbiliity | error", error);
+        console.log("editAbiliity | error", error);
         setError("Houve um problema com o login, verifique suas credenciais.");
         setIsLoad(false);
       }
