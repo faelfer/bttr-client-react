@@ -123,7 +123,29 @@ export default function AbiliityForm({ history }) {
         setIsLoad(false);
       }
     }
-};
+  };
+
+  async function deleteAbiliity(event) {
+    event.preventDefault();
+    setIsLoad(true);
+
+      try {
+        const response = await api.delete(`/abiliity/${abiliityId}`,
+          { headers: { 'Authorization': token } }
+        );
+        console.log("deleteAbiliity | response", response.data);
+        setIsLoad(false);
+        if(!response.data.status === 200) {
+          setError("Ocorreu um erro ao registrar sua habilidade.");
+        }
+        history.push("/home");
+      } catch (error) {
+        console.log("deleteAbiliity | error", error);
+        setError("Houve um problema com o login, verifique suas credenciais.");
+        setIsLoad(false);
+      }
+
+  };
 
     return (
       <>
@@ -167,6 +189,11 @@ export default function AbiliityForm({ history }) {
               <button className="abiliity__button" type="submit">
                 {abiliityId ? "Editar habilidade" : "Criar habilidade"}
               </button>
+
+              <button className="abiliity__delete" onClick={deleteAbiliity}>
+                Apagar habilidade
+              </button>
+              <hr className="abiliity__hr"/>
               <p className="redirect__text redirect__text--margin">
                 <Link className="redirect__link" to="/home">Voltar ao início</Link>
               </p>

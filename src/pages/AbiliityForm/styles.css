@@ -50,6 +50,27 @@
     opacity: 0.4;
 }
 
+.abiliity__delete {
+    color: var(--error-color);
+    font-size: 14.8px;
+    font-weight: bold;
+    border: 2px solid var(--error-color);
+    border-radius: 5px;
+    padding: 5px 9px;
+    margin-top: 16px;
+}
+
+.abiliity__delete:hover {
+    opacity: 0.4;
+}
+
 .redirect__text--margin {
     margin-top: 16px;
+}
+
+.abiliity__hr {
+    margin-top: 20px;
+    border: none;
+    border-bottom: 1px solid var(--on-primary-color);
+    width: 72.5%;
 }
