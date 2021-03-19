@@ -6,7 +6,7 @@ import Load from "../../components/Load";
 import { getToken, logout } from "../../services/auth";
 import { Link, useParams } from "react-router-dom";
 
-export default function AbiliityForm({ history }) {
+export default function TimeForm({ history }) {
   const token = getToken(); 
   const { timeId } = useParams();
   const [isLoad, setIsLoad] = useState(false);

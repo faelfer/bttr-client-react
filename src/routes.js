@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import TimeTable from "./pages/TimeTable";
 import TimeForm from "./pages/TimeForm"
 import AbiliityForm from "./pages/AbiliityForm";
+import ProfileForm from './pages/ProfileForm';
 
 function PrivateRoute({ children, ...rest }) {
   return (
@@ -43,6 +44,7 @@ const Routes = () => (
       <PrivateRoute path="/time-table-by-abiliity/:abiliityId" component={TimeTable} />
       <PrivateRoute path="/time" component={TimeForm} />
       <PrivateRoute path="/time-detail/:timeId" component={TimeForm} />
+      <PrivateRoute path="/profile" component={ProfileForm} />
       <Route 
         path="*" 
         component={() => (

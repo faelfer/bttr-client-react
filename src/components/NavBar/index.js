@@ -16,7 +16,9 @@ function App({ navigation }) {
                     <NavLink className="navbar__link" to={'/time-table'}>  
                         <p className="navbar__action--margin">Tempo</p>
                     </NavLink>
-                    <p className="navbar__action--margin">Configurações</p>
+                    <NavLink className="navbar__link" to={'/profile'}>
+                        <p className="navbar__action--margin">Perfil</p>
+                    </NavLink>
                 </div>
             </div>
         </div>
