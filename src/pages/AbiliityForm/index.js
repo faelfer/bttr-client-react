@@ -157,9 +157,19 @@ export default function AbiliityForm({ history }) {
               <p className="form__header">
                 Habilidade
               </p>
-              <p className="form__description">
-                Crie uma nova habilidade para começar a registrar o quanto você se dedicou.
-              </p>
+              {abiliityId ?
+                (
+                  <p className="form__description">
+                    Edite a habilidade criada.
+                  </p>
+                )
+              : 
+                (
+                  <p className="form__description">
+                    Crie uma nova habilidade para começar a registrar o quanto você se dedicou.
+                  </p>
+                )
+              }
               {error && <p className="form__message form__message--error">{error}</p>}
               <input
                 className="abiliity__input"

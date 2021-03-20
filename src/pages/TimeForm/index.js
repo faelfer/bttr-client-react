@@ -77,7 +77,7 @@ export default function TimeForm({ history }) {
 
   }, [timeId, history, token]);
 
-    async function createAbiliity(event) {
+    async function createTime(event) {
       console.log("abiliity", abiliity)
       event.preventDefault();
       setIsLoad(true);
@@ -90,21 +90,20 @@ export default function TimeForm({ history }) {
       
       } else {
         try {
-          const response = await api.post("/time",
-            { 
-              abiliity, 
+          const response = await api.put(`/abiliity/${abiliity._id}/add_minutes`,
+            {
               minutes
             },
             { headers: { 'Authorization': token } }
           );
-          console.log("createAbiliity | response", response.data);
+          console.log("createTime | response", response.data);
           setIsLoad(false);
           if(!response.data.status === 200) {
             setError("Ocorreu um erro ao registrar sua registro de tempo.");
           }
-          history.push("/home");
+          history.push("/time-table");
         } catch (error) {
-          console.log("createAbiliity | error", error);
+          console.log("createTime | error", error);
           setError("Houve um problema com o login, verifique suas credenciais.");
           setIsLoad(false);
         }
@@ -135,7 +134,7 @@ export default function TimeForm({ history }) {
         if(!response.data.status === 200) {
           setError("Ocorreu um erro ao registrar sua registro de tempo.");
         }
-        history.push("/home");
+        history.push("/time-table");
       } catch (error) {
         console.log("editTime | error", error);
         setError("Houve um problema com o login, verifique suas credenciais.");
@@ -157,7 +156,7 @@ export default function TimeForm({ history }) {
         if(!response.data.status === 200) {
           setError("Ocorreu um erro ao registrar sua registro de tempo.");
         }
-        history.push("/home");
+        history.push("/time-table");
       } catch (error) {
         console.log("deleteAbiliity | error", error);
         setError("Houve um problema com o login, verifique suas credenciais.");
@@ -172,13 +171,23 @@ export default function TimeForm({ history }) {
         <div className="content--align">
           <div className="abiliity__content">
             <Load isShow={isLoad}/>
-            <form className="abiliity__form" onSubmit={timeId ? editTime : createAbiliity}>
+            <form className="abiliity__form" onSubmit={timeId ? editTime : createTime}>
               <p className="form__header">
                 Registro de tempo
               </p>
-              <p className="form__description">
-                Crie uma nova registro de tempo para começar a registrar o quanto você se dedicou.
-              </p>
+              {timeId ?
+                (
+                  <p className="form__description">
+                    Edite o registro de tempo criado.
+                  </p>
+                )
+              : 
+                (
+                  <p className="form__description">
+                    Crie uma nova registro de tempo para desmonstrar o quanto você se dedicou.
+                  </p>
+                )
+              }
               {error && <p className="form__message form__message--error">{error}</p>}
 
               <select 

@@ -1,7 +1,6 @@
 import React from "react";
 import "./styles.css";
-import { minToTimeFormat } from '../../../../utils/timeFormat';
-import moment from 'moment';
+import { minToTimeFormat, formatDateCalendar } from '../../../../utils/timeFormat';
 
 function Time({ history, time, key }) {
     return (
@@ -10,7 +9,7 @@ function Time({ history, time, key }) {
           {minToTimeFormat(time.minutes)}
         </p> 
         <p className="time__date">
-          {moment(time.createAt).format('L')}
+          {formatDateCalendar(time.createAt)}
         </p>
         <p className="time__abiliity">
           {time.abiliity.name}
