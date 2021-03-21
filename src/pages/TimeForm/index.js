@@ -90,9 +90,9 @@ export default function TimeForm({ history }) {
       
       } else {
         try {
-          const response = await api.put(`/abiliity/${abiliity._id}/add_minutes`,
+          const response = await api.put(`/abiliity/${abiliity}/add_minutes`,
             {
-              minutes
+              "minutes": parseInt(minutes)
             },
             { headers: { 'Authorization': token } }
           );
@@ -125,7 +125,7 @@ export default function TimeForm({ history }) {
         const response = await api.put(`/time/${timeId}`,
           { 
             abiliity, 
-            minutes
+            "minutes": parseInt(minutes)
           },
           { headers: { 'Authorization': token } }
         );
