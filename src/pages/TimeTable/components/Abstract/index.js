@@ -95,38 +95,19 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
       return { currentYear, currentMouth, currentDay, lastDayMonth }
   }
 
-  function renderIconSituation(situation) {
-      switch (situation) {
-      case " para o progresso ideal":
-          return "faAngleDown"
-      case " acima do ideal":
-          return  "faAngleUp"
-      case "Parabéns, objetivo concluido!":
-          return  "faTrophy"
-      case "Progresso ideal alcançado":
-          return  "faCheck"
-      default:
-          return null;
-      }
-
-  }
-
     return (
-        <div 
-          className="abstract" 
-          // onClick={() => history.push(`/time-detail/${time._id}`)}
-        >
+      <div className="abstract" >
         <div className="abstract__progress">
           <div style={{ 
-            width: (parseInt(percentage) > 100 ? '100%' : percentage), 
-            height: 30, 
-            borderRadius: 5,
-            backgroundColor: '#309af4',
-            textAlign: 'center',
-            lineHeight: 1.9,
-            fontWeight: 'bold',
-            color: '#ffffff'
-          }}
+              width: (parseInt(percentage) > 100 ? '100%' : percentage), 
+              height: 30, 
+              borderRadius: 5,
+              backgroundColor: '#309af4',
+              textAlign: 'center',
+              lineHeight: 1.9,
+              fontWeight: 'bold',
+              color: '#ffffff'
+            }}
           >
             {`${parseInt(percentage)}%`}
           </div>
@@ -136,10 +117,10 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
         </p>
         {suggestionText ? 
           <p className="time__abiliity">
-            {suggestionText}
+          {suggestionText}
           </p>
         :
-            null
+          null
         }
       </div>
     )

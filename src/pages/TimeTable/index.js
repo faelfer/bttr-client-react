@@ -137,44 +137,54 @@ export default function TimeTable({ history }) {
     return (
         <>
             <NavBar navigation={history}/>
-            <div className="content--align">
+            <div className="content--align content--column">
+              {dateFilter == "month" ?
                 <div className="time__content">
-                {error && <p className="form__message--error">{error}</p>}
-                <Load isShow={isLoad}/>
-                <>
-                  {dateFilter == "month" ?
+                  <>
                     <Abstract abiliity={abiliity} currentDate={new Date()} timeTotal={timeTotal}/>
-                  :
-                    null
-                  }
-                  <div className="time__create">
-                    <button className="time__button" onClick={() => history.push("/time")}>
-                      Criar registro de tempo
-                    </button>  
-                  </div>
+                  </>
+                </div>
+              :
+                null
+              }
 
-                  {abiliityId ?
-                      (
-                        <select 
-                          className="time__filter" 
-                          value={dateFilter} 
-                          onChange={event => {
-                            console.log("select | event.target.value: ",event.target.value)
-                            setDateFilter(event.target.value) 
-                          }}
-                        >
-                          <option value="month">Este mês</option>
-                          <option value="any date">Qualquer data</option>
-                        </select>
-                      )
-                    :
-                      null
-                  }
-
-                  {times.map((time, key) => (
-                    <Time time={time} history={history} key={key}/>
-                  ))}
+              <div className="time__content">
+                <>
+                    <div className="time__create">
+                      <button className="time__button" onClick={() => history.push("/time")}>
+                        Criar registro de tempo
+                      </button>  
+                    </div>
                 </>
+              </div>
+
+                <div className="time__content">
+                  {error && <p className="form__message--error">{error}</p>}
+                  <Load isShow={isLoad}/>
+                  <>
+
+                    {abiliityId ?
+                        (
+                          <select 
+                            className="time__filter" 
+                            value={dateFilter} 
+                            onChange={event => {
+                              console.log("select | event.target.value: ",event.target.value)
+                              setDateFilter(event.target.value) 
+                            }}
+                          >
+                            <option value="month">Este mês</option>
+                            <option value="any date">Qualquer data</option>
+                          </select>
+                        )
+                      :
+                        null
+                    }
+
+                    {times.map((time, key) => (
+                      <Time time={time} history={history} key={key}/>
+                    ))}
+                  </>
                 </div>
             </div>
         </>
