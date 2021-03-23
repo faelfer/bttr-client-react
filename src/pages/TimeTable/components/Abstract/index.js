@@ -7,10 +7,24 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
   const [percentage, setPercentage] = useState("");
   const [lackText, setLackText] = useState("");
   const [suggestionText, setSuggestionText] = useState("");
-  const [suggestionMin, setSuggestionMin] = useState(0);
-  const [situation, setSituation] = useState("");
 
   useEffect(() => {
+    function datesMonth() {
+        console.log(`Data Atual: ${currentDate}`);
+        // console.log(`Hoje: ${currentDate.getDate()}/${((currentDate.getMonth())+1)}/${currentDate.getFullYear()}`);
+        const currentYear = currentDate.getFullYear();
+        // console.log(`Ano Atual: ${currentYear}`);
+        const currentMouth = currentDate.getMonth();
+        console.log(`Mês Atual: ${currentMouth}`);
+        const currentDay = currentDate.getDate();
+        // console.log(`Hoje: ${currentDay}`);
+        const manipulatedDate = new Date(currentYear, (currentMouth + 1), 0);
+        console.log(`Data Manipulada: ${manipulatedDate}`);
+        const lastDayMonth = manipulatedDate.getDate();
+        // console.log(`Último Dia do Mês ${lastDayMonth}`);
+
+        return { currentYear, currentMouth, currentDay, lastDayMonth }
+    }
     
       console.log("Component Card | useEffect | abiliity:", abiliity);
       async function calculateProgress(goalPerDay, goalDone) {
@@ -42,8 +56,6 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
   
               setPercentage(parseInt(currentPercentage) + "%"); 
               setLackText('Parabéns, objetivo concluido!');
-              setSuggestionMin(0);
-              setSituation('Parabéns, objetivo concluido!');
               console.log("================================================================");
           }else if ( timeTotal === idealSituation ){
               console.log("renderItem | else if: Você está de acordo com a meta estabelecida.");
@@ -51,8 +63,6 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
               setPercentage(parseInt(currentPercentage) + "%"); 
               setLackText('Progresso ideal alcançado');
               setSuggestionText(( (minToTimeFormat(goalRemaining)).toString() + ' para atingir o objetivo'));
-              setSuggestionMin(0);
-              setSituation('Progresso ideal alcançado');
               console.log("================================================================");
           }else if ( timeTotal > idealSituation ){
               console.log("renderItem | else if: Você ultrapassou a meta estabelecida.");
@@ -60,8 +70,6 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
               setPercentage(parseInt(currentPercentage) + "%"); 
               setLackText(( (minToTimeFormat(timeTotal-idealSituation)).toString() + ' acima do ideal' ));
               setSuggestionText(( (minToTimeFormat(goalRemaining)).toString() + ' para atingir o objetivo'));
-              setSuggestionMin(0);
-              setSituation(' acima do ideal');
               console.log("================================================================");
           }else {
               console.warn("renderItem | else: Você está abaixo da meta estabelecida.");
@@ -69,31 +77,12 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
               setPercentage(parseInt(currentPercentage) + "%"); 
               setLackText(( (minToTimeFormat(idealSituation-timeTotal)).toString() + ' para o progresso ideal' ));
               setSuggestionText(( (minToTimeFormat(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString() + ' é sugerido para hoje'));
-              setSuggestionMin(parseInt(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining)));
-              setSituation(' para o progresso ideal');
               console.log("================================================================");
           }
       }
   
       renderItem();
-  }, [abiliity, timeTotal]);
-
-  function datesMonth() {
-      console.log(`Data Atual: ${currentDate}`);
-      // console.log(`Hoje: ${currentDate.getDate()}/${((currentDate.getMonth())+1)}/${currentDate.getFullYear()}`);
-      const currentYear = currentDate.getFullYear();
-      // console.log(`Ano Atual: ${currentYear}`);
-      const currentMouth = currentDate.getMonth();
-      console.log(`Mês Atual: ${currentMouth}`);
-      const currentDay = currentDate.getDate();
-      // console.log(`Hoje: ${currentDay}`);
-      const manipulatedDate = new Date(currentYear, (currentMouth + 1), 0);
-      console.log(`Data Manipulada: ${manipulatedDate}`);
-      const lastDayMonth = manipulatedDate.getDate();
-      // console.log(`Último Dia do Mês ${lastDayMonth}`);
-
-      return { currentYear, currentMouth, currentDay, lastDayMonth }
-  }
+  }, [abiliity, timeTotal, currentDate]);
 
     return (
       <div className="abstract" >

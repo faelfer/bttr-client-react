@@ -94,11 +94,12 @@ export default function TimeTable({ history }) {
           if (response.data) {
             console.log("getTimesFilterByMonth | if (response.data) ");
             setAbiliity(response.data[0].abiliity)
-            if (response.data[0] > 1) {
+            console.log("getTimesFilterByMonth | (response.data).length: ", (response.data).length);
+            if ((response.data).length >= 1) {
               console.log("getTimesFilterByMonth | if (response.data[0] > 1) ");
               let minutesTotal = (response.data).reduce(function(acumulador, valorAtual, index, array) {
                 console.log("(response.data).reduce: ", acumulador, valorAtual)
-                // return acumulador + valorAtual;
+                return acumulador.minutes + valorAtual.minutes;
               });
               setTimeTotal(minutesTotal)
             } else {
@@ -138,7 +139,7 @@ export default function TimeTable({ history }) {
         <>
             <NavBar navigation={history}/>
             <div className="content--align content--column">
-              {dateFilter == "month" ?
+              {dateFilter === "month" ?
                 <div className="time__content">
                   <>
                     <Abstract abiliity={abiliity} currentDate={new Date()} timeTotal={timeTotal}/>
