@@ -61,6 +61,7 @@
     border: 0;
     border-radius: 5px;
     width: 76%;
+    cursor: pointer;
 }
 
 .form__button:hover {

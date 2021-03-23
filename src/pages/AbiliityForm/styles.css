@@ -44,6 +44,7 @@
     border-radius: 5px;
     padding: 5px 9px;
     margin-top: 16px;
+    cursor: pointer;
 }
 
 .abiliity__button:hover {
@@ -58,6 +59,7 @@
     border-radius: 5px;
     padding: 5px 9px;
     margin-top: 16px;
+    cursor: pointer;
 }
 
 .abiliity__delete:hover {
