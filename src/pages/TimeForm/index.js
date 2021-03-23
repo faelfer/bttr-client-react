@@ -55,7 +55,7 @@ export default function TimeForm({ history }) {
           }
 
           setAbiliities(response.data)
-          setAbiliity(response.data[0])
+          setAbiliity(response.data[0]._id)
         } catch (error) {
           console.log("getAbiliities | error: ", error);
             if(error.message === "Request failed with status code 401") {
@@ -78,7 +78,7 @@ export default function TimeForm({ history }) {
   }, [timeId, history, token]);
 
     async function createTime(event) {
-      console.log("abiliity", abiliity)
+      console.log("createTime | abiliity: ", abiliity)
       event.preventDefault();
       setIsLoad(true);
       if (!abiliity) {

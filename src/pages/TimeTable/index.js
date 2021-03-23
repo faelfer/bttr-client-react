@@ -4,6 +4,7 @@ import api from "../../services/api";
 import { getToken, logout } from "../../services/auth";
 import NavBar from "../../components/NavBar";
 import Time from "./components/Time";
+import Abstract from "./components/Abstract";
 import Load from "../../components/Load";
 import { useParams } from "react-router-dom";
 
@@ -11,6 +12,8 @@ export default function TimeTable({ history }) {
     const token = getToken(); 
     const { abiliityId } = useParams();
     const [times, setTimes] = useState([]);
+    const [abiliity, setAbiliity] = useState({});
+    const [timeTotal, setTimeTotal] = useState(100);
     const [isLoad, setIsLoad] = useState(false);
     const [dateFilter, setDateFilter] = useState("any date");
     const [error, setError] = useState('');
@@ -81,15 +84,30 @@ export default function TimeTable({ history }) {
           const response = await api.get(`/time/historic_month/${abiliityId}`, {
               headers: { "Authorization": token }
           });
-          console.log("getTimes | response: ", response);
+          console.log("getTimesFilterByMonth | response: ", response);
           setIsLoad(false);
           if(!response.data.status === 200) {
               setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
           }
 
           setTimes(response.data)
+          if (response.data) {
+            console.log("getTimesFilterByMonth | if (response.data) ");
+            setAbiliity(response.data[0].abiliity)
+            if (response.data[0] > 1) {
+              console.log("getTimesFilterByMonth | if (response.data[0] > 1) ");
+              let minutesTotal = (response.data).reduce(function(acumulador, valorAtual, index, array) {
+                console.log("(response.data).reduce: ", acumulador, valorAtual)
+                // return acumulador + valorAtual;
+              });
+              setTimeTotal(minutesTotal)
+            } else {
+              console.log("getTimesFilterByMonth | else (response.data[0] > 1) ");
+              setTimeTotal(response.data[0].minutes)
+            }
+          }
         } catch (error) {
-          console.log("getTimes | error: ", error);
+          console.log("getTimesFilterByMonth | error: ", error);
             if(error.message === "Request failed with status code 401") {
               logout();
               history.push("/");
@@ -124,6 +142,11 @@ export default function TimeTable({ history }) {
                 {error && <p className="form__message--error">{error}</p>}
                 <Load isShow={isLoad}/>
                 <>
+                  {dateFilter == "month" ?
+                    <Abstract abiliity={abiliity} currentDate={new Date()} timeTotal={timeTotal}/>
+                  :
+                    null
+                  }
                   <div className="time__create">
                     <button className="time__button" onClick={() => history.push("/time")}>
                       Criar registro de tempo
