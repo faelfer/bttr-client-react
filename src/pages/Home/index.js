@@ -45,23 +45,27 @@ export default function Home({ history }) {
     return (
         <>
             <NavBar navigation={history}/>
-            <div className="content--align">
+            <div className="content--align content--column">
+                <div className="time__content">
+                  <>
+                      <div className="time__create">
+                        <button className="time__button" onClick={() => history.push("/abiliity")}>
+                          Criar habilidade
+                        </button>  
+                      </div>
+                  </>
+                </div>
                 <div className="home__content">
                 {error && <p className="form__message--error">{error}</p>}
                 <Load isShow={isLoad}/>
                   <>
-                  <div className="abiliity">
-                    <button className="form__button" onClick={() => history.push("/abiliity")}>
-                        Criar habilidade
-                    </button>  
-                </div>
-                  {abiliities.map((abiliity, key) => (
-                    <Abiliity  
-                      abiliity={abiliity} 
-                      key={key}
-                      history={history}
-                    />
-                  ))}
+                    {abiliities.map((abiliity, key) => (
+                      <Abiliity  
+                        abiliity={abiliity} 
+                        key={key}
+                        history={history}
+                      />
+                    ))}
                   </>
                 </div>
             </div>
