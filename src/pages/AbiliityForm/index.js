@@ -160,7 +160,7 @@ export default function AbiliityForm({ history }) {
               {abiliityId ?
                 (
                   <p className="form__description">
-                    Edite a habilidade criada.
+                    Edite sua habilidade.
                   </p>
                 )
               : 

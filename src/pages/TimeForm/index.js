@@ -178,13 +178,13 @@ export default function TimeForm({ history }) {
               {timeId ?
                 (
                   <p className="form__description">
-                    Edite o registro de tempo criado.
+                    Edite seu registro de tempo.
                   </p>
                 )
               : 
                 (
                   <p className="form__description">
-                    Crie uma nova registro de tempo para desmonstrar o quanto você se dedicou.
+                    Crie um novo registro de tempo para desmonstrar o quanto você se dedicou.
                   </p>
                 )
               }

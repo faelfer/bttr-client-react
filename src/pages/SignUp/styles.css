@@ -2,7 +2,7 @@
   font-size: 17px;
   font-weight: bold;
   margin-top: 0px;
-  color: #8E8E8E;
+  color: var(--on-primary-color);
   text-align: center;
   width: 78%;
 }

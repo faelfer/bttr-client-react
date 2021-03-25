@@ -40,7 +40,7 @@ function ForgotPassword({ history }) {
             Problemas para entrar?
           </p>
           <p className="form__description">
-            Insira o seu email e enviaremos uma senha para você voltar a acessar a sua conta.
+            Insira o seu e-mail e enviaremos uma senha para você voltar a acessar a sua conta.
           </p>
           {error && <p className="form__message form__message--error">{error}</p>}
           <input
