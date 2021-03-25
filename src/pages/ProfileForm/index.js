@@ -23,7 +23,7 @@ export default function ProfileForm({ history }) {
           console.log("getProfile | response: ", response);
           setIsLoad(false);
           if(!response.data.status === 200) {
-              setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+              setError("Houve um problema ao listar suas informações de perfil, tente novamente mais tarde");
           }
 
           setUsername(response.data.username);
@@ -34,7 +34,7 @@ export default function ProfileForm({ history }) {
               logout();
               history.push("/");
             }
-          setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+          setError("Houve um problema ao listar suas informações de perfil, tente novamente mais tarde");
           setIsLoad(false);
         }
 
@@ -66,7 +66,7 @@ export default function ProfileForm({ history }) {
         console.log("editProfile | response", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
-          setError("Ocorreu um erro ao registrar sua registro de tempo.");
+          setError("Ocorreu um erro ao editar suas informações de perfil.");
         }
         history.push("/home");
       } catch (error) {
@@ -88,7 +88,7 @@ export default function ProfileForm({ history }) {
         console.log("deleteProfile | response", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
-          setError("Ocorreu um erro ao registrar sua registro de tempo.");
+          setError("Ocorreu um erro ao apagar suas informações de perfil.");
         }
         logout();
         history.push("/");

@@ -22,7 +22,7 @@ export default function Home({ history }) {
             console.log("getAbiliities | response: ", response);
             setIsLoad(false);
             if(!response.data.status === 200) {
-                setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+                setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
             }
 
             setAbiliities(response.data)
@@ -32,7 +32,7 @@ export default function Home({ history }) {
                 logout();
                 history.push("/");
               }
-            setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+            setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
             setIsLoad(false);
           }
 

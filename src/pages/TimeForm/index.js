@@ -25,7 +25,7 @@ export default function TimeForm({ history }) {
           console.log("getTime | response: ", response);
           setIsLoad(false);
           if(!response.data.status === 200) {
-              setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+              setError("Houve um problema ao consultar seu registro de tempo, tente novamente mais tarde");
           }
 
           setAbiliity(response.data.abiliity._id);
@@ -36,7 +36,7 @@ export default function TimeForm({ history }) {
               logout();
               history.push("/");
             }
-          setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+          setError("Houve um problema ao consultar seu registro de tempo, tente novamente mais tarde");
           setIsLoad(false);
         }
 
@@ -51,7 +51,7 @@ export default function TimeForm({ history }) {
           console.log("getAbiliities | response: ", response);
           setIsLoad(false);
           if(!response.data.status === 200) {
-              setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+              setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
           }
 
           setAbiliities(response.data)
@@ -62,7 +62,7 @@ export default function TimeForm({ history }) {
               logout();
               history.push("/");
             }
-          setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+          setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
           setIsLoad(false);
         }
 
@@ -99,7 +99,7 @@ export default function TimeForm({ history }) {
           console.log("createTime | response", response.data);
           setIsLoad(false);
           if(!response.data.status === 200) {
-            setError("Ocorreu um erro ao registrar sua registro de tempo.");
+            setError("Ocorreu um erro ao criar seu registro de tempo.");
           }
           history.push("/time-table");
         } catch (error) {
@@ -132,7 +132,7 @@ export default function TimeForm({ history }) {
         console.log("editTime | response", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
-          setError("Ocorreu um erro ao registrar sua registro de tempo.");
+          setError("Ocorreu um erro ao editar seu registro de tempo.");
         }
         history.push("/time-table");
       } catch (error) {
@@ -154,7 +154,7 @@ export default function TimeForm({ history }) {
         console.log("deleteAbiliity | response", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
-          setError("Ocorreu um erro ao registrar sua registro de tempo.");
+          setError("Ocorreu um erro ao apagar seu registro de tempo.");
         }
         history.push("/time-table");
       } catch (error) {

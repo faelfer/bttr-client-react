@@ -25,7 +25,7 @@ export default function AbiliityForm({ history }) {
           console.log("getAbiliity | response: ", response);
           setIsLoad(false);
           if(!response.data.status === 200) {
-              setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+              setError("Houve um problema ao consultar sua habilidade, tente novamente mais tarde");
           }
 
           setName(response.data[0].name);
@@ -37,7 +37,7 @@ export default function AbiliityForm({ history }) {
               logout();
               history.push("/");
             }
-          setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+          setError("Houve um problema ao consultar sua habilidade, tente novamente mais tarde");
           setIsLoad(false);
         }
 
@@ -114,7 +114,7 @@ export default function AbiliityForm({ history }) {
         console.log("editAbiliity | response", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
-          setError("Ocorreu um erro ao registrar sua habilidade.");
+          setError("Ocorreu um erro ao editar sua habilidade.");
         }
         history.push("/home");
       } catch (error) {
@@ -136,7 +136,7 @@ export default function AbiliityForm({ history }) {
         console.log("deleteAbiliity | response", response.data);
         setIsLoad(false);
         if(!response.data.status === 200) {
-          setError("Ocorreu um erro ao registrar sua habilidade.");
+          setError("Ocorreu um erro ao apagar sua habilidade.");
         }
         history.push("/home");
       } catch (error) {

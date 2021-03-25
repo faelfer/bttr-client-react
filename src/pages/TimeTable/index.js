@@ -27,7 +27,7 @@ export default function TimeTable({ history }) {
           console.log("getTimes | response: ", response);
           setIsLoad(false);
           if(!response.data.status === 200) {
-              setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+              setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           }
 
           setTimes(response.data)
@@ -37,7 +37,7 @@ export default function TimeTable({ history }) {
               logout();
               history.push("/");
             }
-          setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+          setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           setIsLoad(false);
         }
 
@@ -52,7 +52,7 @@ export default function TimeTable({ history }) {
           console.log("getTimes | response: ", response);
           setIsLoad(false);
           if(!response.data.status === 200) {
-              setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+              setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           }
 
           setTimes(response.data)
@@ -62,7 +62,7 @@ export default function TimeTable({ history }) {
               logout();
               history.push("/");
             }
-          setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+          setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           setIsLoad(false);
         }
 
@@ -87,7 +87,7 @@ export default function TimeTable({ history }) {
           console.log("getTimesFilterByMonth | response: ", response);
           setIsLoad(false);
           if(!response.data.status === 200) {
-              setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+              setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           }
 
           setTimes(response.data)
@@ -113,7 +113,7 @@ export default function TimeTable({ history }) {
               logout();
               history.push("/");
             }
-          setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
+          setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           setIsLoad(false);
         }
 
