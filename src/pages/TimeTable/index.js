@@ -12,27 +12,32 @@ export default function TimeTable({ history }) {
     const token = getToken(); 
     const { abiliityId } = useParams();
     const [times, setTimes] = useState([]);
+    const [timeInfo, setTimeInfo] = useState({});
+    const [page, setPage] = useState(1);
     const [abiliity, setAbiliity] = useState({});
     const [timeTotal, setTimeTotal] = useState(100);
     const [isLoad, setIsLoad] = useState(false);
     const [dateFilter, setDateFilter] = useState("any date");
     const [error, setError] = useState('');
 
-    const getTimesFilterByAbiliity = useCallback(async () => {
+    const getTimesFilterByAbiliity = useCallback(async (pageNumber = 1) => {
       setIsLoad(true);
         try {
-          const response = await api.get(`/time/filter_by_abiliity/${abiliityId}`, {
+          const response = await api.get(`/time/filter_by_abiliity/${abiliityId}?page=${pageNumber}`, {
               headers: { "Authorization": token }
           });
-          console.log("getTimes | response: ", response);
+          console.log("getTimesFilterByAbiliity | response: ", response);
+          const { docs, ...timeInfo } = response.data;
           setIsLoad(false);
           if(!response.data.status === 200) {
               setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           }
 
-          setTimes(response.data)
+          setTimes(docs)
+          setTimeInfo(timeInfo);
+          setPage(pageNumber);
         } catch (error) {
-          console.log("getTimes | error: ", error);
+          console.log("getTimesFilterByAbiliity | error: ", error);
             if(error.message === "Request failed with status code 401") {
               logout();
               history.push("/");
@@ -43,19 +48,22 @@ export default function TimeTable({ history }) {
 
     }, [token, history, abiliityId]);
 
-    const getTimes = useCallback(async () => {
+    const getTimes = useCallback(async (pageNumber = 1) => {
       setIsLoad(true);
         try {
-          const response = await api.get('/time', {
+          const response = await api.get(`/time?page=${pageNumber}`, {
               headers: { "Authorization": token }
           });
           console.log("getTimes | response: ", response);
+          const { docs, ...timeInfo } = response.data;
           setIsLoad(false);
           if(!response.data.status === 200) {
               setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           }
 
-          setTimes(response.data)
+          setTimes(docs)
+          setTimeInfo(timeInfo);
+          setPage(pageNumber);
         } catch (error) {
           console.log("getTimes | error: ", error);
             if(error.message === "Request failed with status code 401") {
@@ -68,43 +76,37 @@ export default function TimeTable({ history }) {
 
     }, [token, history]);
 
-    useEffect(() => {
-
-      if(!abiliityId) {
-        getTimes();
-      } else {
-        getTimesFilterByAbiliity();
-      }
-
-    }, [token, history, abiliityId, getTimes, getTimesFilterByAbiliity]);
-
-    const getTimesFilterByMonth = useCallback(async () => {
+    const getTimesFilterByMonth = useCallback(async (pageNumber = 1) => {
       setIsLoad(true);
         try {
           const response = await api.get(`/time/filter_by_abiliity_and_created_in_current_month/${abiliityId}`, {
               headers: { "Authorization": token }
           });
           console.log("getTimesFilterByMonth | response: ", response);
+          const { docs, ...timeInfo } = response.data;
           setIsLoad(false);
+
           if(!response.data.status === 200) {
               setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           }
 
-          setTimes(response.data)
+          setTimes(docs)
+          setTimeInfo(timeInfo);
+          setPage(pageNumber);
           if (response.data) {
             console.log("getTimesFilterByMonth | if (response.data) ");
-            setAbiliity(response.data[0].abiliity)
-            console.log("getTimesFilterByMonth | (response.data).length: ", (response.data).length);
-            if ((response.data).length >= 1) {
-              console.log("getTimesFilterByMonth | if (response.data[0] > 1) ");
-              let minutesTotal = (response.data).reduce(function(acumulador, valorAtual, index, array) {
-                console.log("(response.data).reduce: ", acumulador, valorAtual)
+            setAbiliity(docs[0].abiliity)
+            console.log("getTimesFilterByMonth | (docs).length: ", (docs).length);
+            if ((docs).length >= 1) {
+              console.log("getTimesFilterByMonth | if (docs[0] > 1) ");
+              let minutesTotal = (docs).reduce(function(acumulador, valorAtual, index, array) {
+                console.log("(docs).reduce: ", acumulador, valorAtual)
                 return acumulador.minutes + valorAtual.minutes;
               });
               setTimeTotal(minutesTotal)
             } else {
-              console.log("getTimesFilterByMonth | else (response.data[0] > 1) ");
-              setTimeTotal(response.data[0].minutes)
+              console.log("getTimesFilterByMonth | else (docs[0] > 1) ");
+              setTimeTotal(docs[0].minutes)
             }
           }
         } catch (error) {
@@ -120,6 +122,16 @@ export default function TimeTable({ history }) {
     }, [token, history, abiliityId]);
 
     useEffect(() => {
+
+      if(!abiliityId) {
+        getTimes();
+      } else {
+        getTimesFilterByAbiliity();
+      }
+
+    }, [token, history, abiliityId, getTimes, getTimesFilterByAbiliity]);
+
+    useEffect(() => {
       switch (dateFilter) {
         case 'month':
           getTimesFilterByMonth()
@@ -132,8 +144,46 @@ export default function TimeTable({ history }) {
           }
       }
 
-
     }, [abiliityId, dateFilter, getTimes, getTimesFilterByAbiliity, getTimesFilterByMonth]);
+
+    function prevPage() {
+      if (page === 1) return;
+
+      const pageNumber = page - 1;
+
+      switch (dateFilter) {
+        case 'month':
+          getTimesFilterByMonth(pageNumber)
+          break;
+        default:
+          if(!abiliityId) {
+            getTimes(pageNumber);
+          } else {
+            getTimesFilterByAbiliity(pageNumber);
+          }
+      }
+      
+  }
+
+  function nextPage() {
+      console.log("nextPage");
+      if (page === timeInfo.pages) return;
+
+      const pageNumber = page + 1;
+      console.log("nextPage | pageNumber: ", pageNumber);
+      switch (dateFilter) {
+        case 'month':
+          getTimesFilterByMonth(pageNumber)
+          break;
+        default:
+          if(!abiliityId) {
+            getTimes(pageNumber);
+          } else {
+            getTimesFilterByAbiliity(pageNumber);
+          }
+      }
+      
+  }
 
     return (
         <>
@@ -159,34 +209,47 @@ export default function TimeTable({ history }) {
                 </>
               </div>
 
-                <div className="time__content">
-                  {error && <p className="form__message--error">{error}</p>}
-                  <Load isShow={isLoad}/>
-                  <>
+              <div className="time__content">
+                {error && <p className="form__message--error">{error}</p>}
+                <Load isShow={isLoad}/>
+                <>
 
-                    {abiliityId ?
-                        (
-                          <select 
-                            className="time__filter" 
-                            value={dateFilter} 
-                            onChange={event => {
-                              console.log("select | event.target.value: ",event.target.value)
-                              setDateFilter(event.target.value) 
-                            }}
-                          >
-                            <option value="month">Este mês</option>
-                            <option value="any date">Qualquer data</option>
-                          </select>
-                        )
-                      :
-                        null
-                    }
+                  {abiliityId ?
+                      (
+                        <select 
+                          className="time__filter" 
+                          value={dateFilter} 
+                          onChange={event => {
+                            console.log("select | event.target.value: ",event.target.value)
+                            setDateFilter(event.target.value) 
+                          }}
+                        >
+                          <option value="month">Este mês</option>
+                          <option value="any date">Qualquer data</option>
+                        </select>
+                      )
+                    :
+                      null
+                  }
 
-                    {times.map((time, key) => (
-                      <Time time={time} history={history} key={key}/>
-                    ))}
-                  </>
-                </div>
+                  {times.map((time, key) => (
+                    <Time time={time} history={history} key={key}/>
+                  ))}
+                </>
+              </div>
+
+              <div className="time__content">
+                <>
+                    <div className="home__pagination">
+                      <button className="pagination__button" disabled={page === 1} onClick={prevPage}>
+                        Anterior
+                      </button>
+                      <button className="pagination__button" disabled={page === timeInfo.pages} onClick={nextPage}>
+                        Próximo
+                      </button>
+                    </div>
+                </>
+              </div>
             </div>
         </>
     )
