@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./styles.css";
 import api from "../../services/api";
 import { getToken, logout } from "../../services/auth";
@@ -8,39 +8,63 @@ import Load from "../../components/Load";
 
 export default function Home({ history }) {
     const [abiliities, setAbiliities] = useState([]);
+    const [abiliityInfo, setAbiliityInfo] = useState({});
+    const [page, setPage] = useState(1);
     const [isLoad, setIsLoad] = useState(false);
     const [error, setError] = useState('');
     const token = getToken(); 
 
-    useEffect(() => {
-      async function getAbiliities() {
-        setIsLoad(true);
-          try {
-            const response = await api.get('/abiliity', {
-                headers: { "Authorization": token }
-            });
-            console.log("getAbiliities | response: ", response);
-            setIsLoad(false);
-            if(!response.data.status === 200) {
-                setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
-            }
-
-            setAbiliities(response.data)
-          } catch (error) {
-            console.log("getAbiliities | error: ", error);
-              if(error.message === "Request failed with status code 401") {
-                logout();
-                history.push("/");
-              }
-            setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
-            setIsLoad(false);
+    const getAbiliities = useCallback(async (pageNumber = 1) => {
+      setIsLoad(true);
+        try {
+          const response = await api.get(`/abiliity?page=${pageNumber}`, {
+              headers: { "Authorization": token }
+          });
+          console.log("getAbiliities | response: ", response);
+          const { docs, ...abiliityInfo } = response.data;
+          setIsLoad(false);
+          if(!response.data.status === 200) {
+              setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
           }
 
-      };
-
-        getAbiliities();
+          setAbiliities(docs);
+          setAbiliityInfo(abiliityInfo);
+          setPage(pageNumber);
+        } catch (error) {
+          console.log("getAbiliities | error: ", error);
+            if(error.message === "Request failed with status code 401") {
+              logout();
+              history.push("/");
+            }
+          setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
+          setIsLoad(false);
+        }
 
     }, [token, history]);
+
+    useEffect(() => {
+      getAbiliities();
+
+    }, [token, history, getAbiliities]);
+
+    function prevPage() {
+      if (page === 1) return;
+
+      const pageNumber = page - 1;
+
+      getAbiliities(pageNumber)
+      
+  }
+
+  function nextPage() {
+      console.log("nextPage");
+      if (page === abiliityInfo.pages) return;
+
+      const pageNumber = page + 1;
+      console.log("nextPage | pageNumber: ", pageNumber);
+      getAbiliities(pageNumber);
+      
+  }
 
     return (
         <>
@@ -55,17 +79,34 @@ export default function Home({ history }) {
                       </div>
                   </>
                 </div>
-                <div className="home__content">
-                {error && <p className="form__message--error">{error}</p>}
-                <Load isShow={isLoad}/>
+                {error ?
+                  <div className="time__content"> 
+                    <p className="form__message--error">{error}</p>
+                  </div>
+                :
+                  <div className="home__content">
+                    <Load isShow={isLoad}/>
+                    <>
+                      {abiliities.map((abiliity, key) => (
+                        <Abiliity  
+                          abiliity={abiliity} 
+                          key={key}
+                          history={history}
+                        />
+                      ))}
+                    </>
+                  </div> 
+                }
+                <div className="time__content">
                   <>
-                    {abiliities.map((abiliity, key) => (
-                      <Abiliity  
-                        abiliity={abiliity} 
-                        key={key}
-                        history={history}
-                      />
-                    ))}
+                      <div className="home__pagination">
+                        <button className="pagination__button" disabled={page === 1} onClick={prevPage}>
+                          Anterior
+                        </button>
+                        <button className="pagination__button" disabled={page === abiliityInfo.pages} onClick={nextPage}>
+                          Próximo
+                        </button>
+                      </div>
                   </>
                 </div>
             </div>
