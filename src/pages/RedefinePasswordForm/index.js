@@ -62,9 +62,6 @@ export default function RedefinePasswordForm({ history }) {
               <p className="form__header">
                 Redefinir senha
               </p>
-              <p className="form__description">
-                Crie uma nova registro de tempo para começar a registrar o quanto você se dedicou.
-              </p>
               {error && <p className="form__message form__message--error">{error}</p>}
 
               <input
