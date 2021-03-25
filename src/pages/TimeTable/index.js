@@ -97,7 +97,7 @@ export default function TimeTable({ history }) {
             console.log("getTimesFilterByMonth | if (response.data) ");
             setAbiliity(docs[0].abiliity)
             console.log("getTimesFilterByMonth | (docs).length: ", (docs).length);
-            if (docs.length >= 1) {
+            if (docs.length > 1) {
               console.log("getTimesFilterByMonth | if (docs[0] > 1) ");
               let minutesTotal = docs.reduce(function(acumulador, valorAtual, index, array) {
                 console.log("(docs).reduce | valorAtual: ", valorAtual)
