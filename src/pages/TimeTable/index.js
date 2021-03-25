@@ -97,15 +97,26 @@ export default function TimeTable({ history }) {
             console.log("getTimesFilterByMonth | if (response.data) ");
             setAbiliity(docs[0].abiliity)
             console.log("getTimesFilterByMonth | (docs).length: ", (docs).length);
-            if ((docs).length >= 1) {
+            if (docs.length >= 1) {
               console.log("getTimesFilterByMonth | if (docs[0] > 1) ");
-              let minutesTotal = (docs).reduce(function(acumulador, valorAtual, index, array) {
-                console.log("(docs).reduce: ", acumulador, valorAtual)
-                return acumulador.minutes + valorAtual.minutes;
+              let minutesTotal = docs.reduce(function(acumulador, valorAtual, index, array) {
+                console.log("(docs).reduce | valorAtual: ", valorAtual)
+                console.log("(docs).reduce | acumulador: ", acumulador)
+                console.log("(docs).reduce | acumulador.minutes: ", acumulador.minutes)
+                console.log("(docs).reduce: | valorAtual.minutes: ", valorAtual.minutes)
+                console.log("============================================================")
+
+                if (typeof acumulador ===	"object") {
+                  return acumulador.minutes + valorAtual.minutes;
+                } else {
+                  return acumulador + valorAtual.minutes;
+                }
+
               });
+              console.log("getTimesFilterByMonth | minutesTotal: ", minutesTotal);
               setTimeTotal(minutesTotal)
             } else {
-              console.log("getTimesFilterByMonth | else (docs[0] > 1) ");
+              console.log("getTimesFilterByMonth | else (docs[0] > 1) | docs[0].minutes: ", docs[0].minutes);
               setTimeTotal(docs[0].minutes)
             }
           }
@@ -214,7 +225,7 @@ export default function TimeTable({ history }) {
                 <Load isShow={isLoad}/>
                 <>
 
-                  {abiliityId ?
+                  {abiliityId && times.length !== 0 ?
                       (
                         <select 
                           className="time__filter" 

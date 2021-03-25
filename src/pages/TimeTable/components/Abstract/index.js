@@ -27,6 +27,9 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
     }
     
       console.log("Component Card | useEffect | abiliity:", abiliity);
+      console.log("Component Card | useEffect | currentDate:", currentDate);
+      console.log("Component Card | useEffect | timeTotal:", timeTotal);
+
       async function calculateProgress(goalPerDay, goalDone) {
           const { currentYear, currentMouth, currentDay, lastDayMonth } = await datesMonth();
   
