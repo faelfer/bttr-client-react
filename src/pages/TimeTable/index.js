@@ -81,7 +81,7 @@ export default function TimeTable({ history }) {
     const getTimesFilterByMonth = useCallback(async () => {
       setIsLoad(true);
         try {
-          const response = await api.get(`/time/historic_month/${abiliityId}`, {
+          const response = await api.get(`/time/filter_by_abiliity_and_created_in_current_month/${abiliityId}`, {
               headers: { "Authorization": token }
           });
           console.log("getTimesFilterByMonth | response: ", response);
