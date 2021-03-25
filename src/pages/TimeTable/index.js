@@ -200,16 +200,6 @@ export default function TimeTable({ history }) {
         <>
             <NavBar navigation={history}/>
             <div className="content--align content--column">
-              {dateFilter === "month" ?
-                <div className="time__content">
-                  <>
-                    <Abstract abiliity={abiliity} currentDate={new Date()} timeTotal={timeTotal}/>
-                  </>
-                </div>
-              :
-                null
-              }
-
               <div className="time__content">
                 <>
                     <div className="time__create">
@@ -219,6 +209,16 @@ export default function TimeTable({ history }) {
                     </div>
                 </>
               </div>
+              
+              {dateFilter === "month" ?
+                <div className="time__content">
+                  <>
+                    <Abstract abiliity={abiliity} currentDate={new Date()} timeTotal={timeTotal}/>
+                  </>
+                </div>
+              :
+                null
+              }
 
               <div className="time__content">
                 {error && <p className="form__message--error">{error}</p>}

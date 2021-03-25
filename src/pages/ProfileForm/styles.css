@@ -1,5 +1,6 @@
 .profile__logout {
     color: var(--on-primary-color);
+    background-color: transparent;
     font-size: 14.8px;
     font-weight: bold;
     border: 0px;
