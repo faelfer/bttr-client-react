@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-import { minToTimeFormat, formatDateCalendar } from '../../../../utils/timeFormat';
+import { minToTimeFormat, formatDateCalendarWithHourAndMinutes } from '../../../../utils/timeFormat';
 
 export default function Time({ history, time, key }) {
     return (
@@ -9,7 +9,7 @@ export default function Time({ history, time, key }) {
           {minToTimeFormat(time.minutes)}
         </p> 
         <p className="time__date">
-          {formatDateCalendar(time.createAt)}
+          {formatDateCalendarWithHourAndMinutes(time.createAt)}
         </p>
         <p className="time__abiliity">
           {time.abiliity.name}
