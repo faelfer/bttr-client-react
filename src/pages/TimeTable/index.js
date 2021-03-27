@@ -90,16 +90,16 @@ export default function TimeTable({ history }) {
               setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           }
 
-          setTimes(docs)
+          setTimes(response.data)
           setTimeInfo(timeInfo);
           setPage(pageNumber);
           if (response.data) {
             console.log("getTimesFilterByMonth | if (response.data) ");
-            setAbiliity(docs[0].abiliity)
-            console.log("getTimesFilterByMonth | (docs).length: ", (docs).length);
-            if (docs.length > 1) {
-              console.log("getTimesFilterByMonth | if (docs[0] > 1) ");
-              let minutesTotal = docs.reduce(function(acumulador, valorAtual, index, array) {
+            setAbiliity(response.data[0].abiliity)
+            console.log("getTimesFilterByMonth | (response.data).length: ", (response.data).length);
+            if ((response.data).length > 1) {
+              console.log("getTimesFilterByMonth | if (response.data[0] > 1) ");
+              let minutesTotal = (response.data).reduce(function(acumulador, valorAtual, index, array) {
                 console.log("(docs).reduce | valorAtual: ", valorAtual)
                 console.log("(docs).reduce | acumulador: ", acumulador)
                 console.log("(docs).reduce | acumulador.minutes: ", acumulador.minutes)
@@ -117,7 +117,7 @@ export default function TimeTable({ history }) {
               setTimeTotal(minutesTotal)
             } else {
               console.log("getTimesFilterByMonth | else (docs[0] > 1) | docs[0].minutes: ", docs[0].minutes);
-              setTimeTotal(docs[0].minutes)
+              setTimeTotal(response.data[0].minutes)
             }
           }
         } catch (error) {
@@ -199,6 +199,7 @@ export default function TimeTable({ history }) {
     return (
         <>
             <NavBar navigation={history}/>
+            <Load isShow={isLoad}/>
             <div className="content--align content--column">
               <div className="time__content">
                 <>
@@ -209,6 +210,26 @@ export default function TimeTable({ history }) {
                     </div>
                 </>
               </div>
+
+              {abiliityId && times.length !== 0 ?
+                (
+                  <div className="time__content">
+                    <select 
+                      className="time__filter" 
+                      value={dateFilter} 
+                      onChange={event => {
+                        console.log("select | event.target.value: ",event.target.value)
+                        setDateFilter(event.target.value) 
+                      }}
+                    >
+                      <option value="month">Métricas do mês atual</option>
+                      <option value="any date">Listar todos os registros</option>
+                    </select>
+                  </div>
+                )
+              :
+                null
+              }
               
               {dateFilter === "month" ?
                 <div className="time__content">
@@ -217,50 +238,30 @@ export default function TimeTable({ history }) {
                   </>
                 </div>
               :
-                null
+                <>
+                  <div className="time__content">
+                    {error && <p className="form__message--error">{error}</p>}
+                    <>
+                      {times.map((time, key) => (
+                        <Time time={time} history={history} key={key}/>
+                      ))}
+                    </>
+                  </div>
+
+                  <div className="time__content">
+                    <>
+                        <div className="home__pagination">
+                          <button className="pagination__button" disabled={page === 1} onClick={prevPage}>
+                            Anterior
+                          </button>
+                          <button className="pagination__button" disabled={page === timeInfo.pages} onClick={nextPage}>
+                            Próximo
+                          </button>
+                        </div>
+                    </>
+                  </div>
+                </>
               }
-
-              <div className="time__content">
-                {error && <p className="form__message--error">{error}</p>}
-                <Load isShow={isLoad}/>
-                <>
-
-                  {abiliityId && times.length !== 0 ?
-                      (
-                        <select 
-                          className="time__filter" 
-                          value={dateFilter} 
-                          onChange={event => {
-                            console.log("select | event.target.value: ",event.target.value)
-                            setDateFilter(event.target.value) 
-                          }}
-                        >
-                          <option value="month">Este mês</option>
-                          <option value="any date">Qualquer data</option>
-                        </select>
-                      )
-                    :
-                      null
-                  }
-
-                  {times.map((time, key) => (
-                    <Time time={time} history={history} key={key}/>
-                  ))}
-                </>
-              </div>
-
-              <div className="time__content">
-                <>
-                    <div className="home__pagination">
-                      <button className="pagination__button" disabled={page === 1} onClick={prevPage}>
-                        Anterior
-                      </button>
-                      <button className="pagination__button" disabled={page === timeInfo.pages} onClick={nextPage}>
-                        Próximo
-                      </button>
-                    </div>
-                </>
-              </div>
             </div>
         </>
     )

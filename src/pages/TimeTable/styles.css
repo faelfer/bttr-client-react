@@ -32,7 +32,6 @@
 
 .time__filter {
   height: 45px;
-  margin-bottom: 16px;
   color: var(--on-primary-color);
   background-color: var(--primary-color);
   border: 1px solid var(--on-primary-color);
