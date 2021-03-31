@@ -26,8 +26,7 @@ export function msToTimeFormat(value) {
   return fillDigits(hours) + ':' + fillDigits(minutes) + ':' + fillDigits(seconds);
 }
 
-export function formatDateCalendar(dateString){
-  let date = new Date(dateString);
+export function formatDateCalendar(date){
   let day  = date.getDate().toString();
   let month  = (date.getMonth()+1).toString();
   let year = date.getFullYear();
@@ -35,7 +34,7 @@ export function formatDateCalendar(dateString){
   day = (day.length === 1) ? '0'+day : day;
   month = (month.length === 1) ? '0'+month : month;
 
-  return `${day}/${month}/${year}`;
+  return `${year}-${month}-${day}`;
 }
 
 export function formatDateCalendarWithHourAndMinutes(dateString) {

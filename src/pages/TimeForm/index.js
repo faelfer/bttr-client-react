@@ -211,7 +211,6 @@ export default function TimeForm({ history }) {
                 type="number"
                 placeholder="Tempo diário (em minutos)"
                 min="1" 
-                max="1440"
                 value={minutes}
                 onChange={event => setMinutes(event.target.value)}
               />

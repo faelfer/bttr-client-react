@@ -14,3 +14,7 @@
     color: var(--on-primary-color);
     opacity: 0.6; /* Firefox */
 }
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}

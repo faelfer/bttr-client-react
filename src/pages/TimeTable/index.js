@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./styles.css";
 import api from "../../services/api";
 import { getToken, logout } from "../../services/auth";
+import { formatDateCalendar } from "../../utils/timeFormat";
 import NavBar from "../../components/NavBar";
 import Time from "./components/Time";
 import Abstract from "./components/Abstract";
@@ -18,6 +19,7 @@ export default function TimeTable({ history }) {
     const [timeTotal, setTimeTotal] = useState(100);
     const [isLoad, setIsLoad] = useState(false);
     const [dateFilter, setDateFilter] = useState("any date");
+    const [currentDate, setCurrentDate] = useState(new Date())
     const [error, setError] = useState('');
 
     const getTimesFilterByAbiliity = useCallback(async (pageNumber = 1) => {
@@ -76,34 +78,31 @@ export default function TimeTable({ history }) {
 
     }, [token, history]);
 
-    const getTimesFilterByMonth = useCallback(async (pageNumber = 1) => {
+    const getTimesFilterByDate = useCallback(async () => {
       setIsLoad(true);
         try {
-          const response = await api.get(`/time/filter_by_abiliity_and_created_in_current_month/${abiliityId}`, {
+          console.log("getTimesFilterByDate | currentDate: ", currentDate);
+          const response = await api.get(`/time/filter_by_abiliity_and_date/${abiliityId}?date=${formatDateCalendar(currentDate)}`, {
               headers: { "Authorization": token }
           });
-          console.log("getTimesFilterByMonth | response: ", response);
-          const { docs, ...timeInfo } = response.data;
+          console.log("getTimesFilterByDate | response: ", response);
           setIsLoad(false);
 
           if(!response.data.status === 200) {
               setError("Houve um problema ao listar seus registros de tempo, tente novamente mais tarde");
           }
 
-          setTimes(response.data)
-          setTimeInfo(timeInfo);
-          setPage(pageNumber);
-          if (response.data) {
-            console.log("getTimesFilterByMonth | if (response.data) ");
-            setAbiliity(response.data[0].abiliity)
-            console.log("getTimesFilterByMonth | (response.data).length: ", (response.data).length);
-            if ((response.data).length > 1) {
-              console.log("getTimesFilterByMonth | if (response.data[0] > 1) ");
+            console.log("getTimesFilterByDate | (response.data).length: ", (response.data).length);
+            if ((response.data).length !== 0) {
+              setTimes(response.data)
+              setAbiliity(response.data[0].abiliity)
+              console.log("getTimesFilterByDate | if (response.data[0] > 1) ");
               let minutesTotal = (response.data).reduce(function(acumulador, valorAtual, index, array) {
-                console.log("(docs).reduce | valorAtual: ", valorAtual)
-                console.log("(docs).reduce | acumulador: ", acumulador)
-                console.log("(docs).reduce | acumulador.minutes: ", acumulador.minutes)
-                console.log("(docs).reduce: | valorAtual.minutes: ", valorAtual.minutes)
+                console.log("(response.data).reduce | valorAtual: ", valorAtual)
+                console.log("(response.data).reduce | acumulador: ", acumulador)
+                console.log("(response.data).reduce | acumulador.minutes: ", acumulador.minutes)
+                console.log("(response.data).reduce | valorAtual.minutes: ", valorAtual.minutes)
+                console.log("(response.data).reduce | typeof acumulador: ", typeof acumulador)
                 console.log("============================================================")
 
                 if (typeof acumulador ===	"object") {
@@ -113,15 +112,15 @@ export default function TimeTable({ history }) {
                 }
 
               });
-              console.log("getTimesFilterByMonth | minutesTotal: ", minutesTotal);
-              setTimeTotal(minutesTotal)
+              console.log("getTimesFilterByDate | minutesTotal: ", minutesTotal);
+              setTimeTotal(typeof minutesTotal ===	"object" ? minutesTotal.minutes : minutesTotal)
             } else {
-              console.log("getTimesFilterByMonth | else (docs[0] > 1) | docs[0].minutes: ", docs[0].minutes);
-              setTimeTotal(response.data[0].minutes)
+              console.log("getTimesFilterByDate | else");
+              setTimeTotal(0)
+              setTimes([])
             }
-          }
         } catch (error) {
-          console.log("getTimesFilterByMonth | error: ", error);
+          console.log("getTimesFilterByDate | error: ", error);
             if(error.message === "Request failed with status code 401") {
               logout();
               history.push("/");
@@ -130,7 +129,7 @@ export default function TimeTable({ history }) {
           setIsLoad(false);
         }
 
-    }, [token, history, abiliityId]);
+    }, [token, history, abiliityId, currentDate]);
 
     useEffect(() => {
 
@@ -145,7 +144,7 @@ export default function TimeTable({ history }) {
     useEffect(() => {
       switch (dateFilter) {
         case 'month':
-          getTimesFilterByMonth()
+          getTimesFilterByDate()
           break;
         default:
           if(!abiliityId) {
@@ -155,7 +154,7 @@ export default function TimeTable({ history }) {
           }
       }
 
-    }, [abiliityId, dateFilter, getTimes, getTimesFilterByAbiliity, getTimesFilterByMonth]);
+    }, [abiliityId, dateFilter, currentDate, getTimes, getTimesFilterByAbiliity, getTimesFilterByDate]);
 
     function prevPage() {
       if (page === 1) return;
@@ -164,7 +163,7 @@ export default function TimeTable({ history }) {
 
       switch (dateFilter) {
         case 'month':
-          getTimesFilterByMonth(pageNumber)
+          getTimesFilterByDate(pageNumber)
           break;
         default:
           if(!abiliityId) {
@@ -184,7 +183,7 @@ export default function TimeTable({ history }) {
       console.log("nextPage | pageNumber: ", pageNumber);
       switch (dateFilter) {
         case 'month':
-          getTimesFilterByMonth(pageNumber)
+          getTimesFilterByDate(pageNumber)
           break;
         default:
           if(!abiliityId) {
@@ -232,11 +231,22 @@ export default function TimeTable({ history }) {
               }
               
               {dateFilter === "month" ?
-                <div className="time__content">
-                  <>
-                    <Abstract abiliity={abiliity} currentDate={new Date()} timeTotal={timeTotal}/>
-                  </>
-                </div>
+                <>
+                  <div className="time__content">
+                    <input 
+                      type="date"
+                      className="time__filter" 
+                      value={formatDateCalendar(currentDate)} 
+                      onChange={event => {
+                        console.log("input date | event.target.value: ",event.target.value)
+                        setCurrentDate(new Date(event.target.value)) 
+                      }}
+                    />
+                  </div>
+                  <div className="time__content">
+                    <Abstract abiliity={abiliity} currentDate={currentDate} timeTotal={timeTotal}/>
+                  </div>
+                </>
               :
                 <>
                   <div className="time__content">

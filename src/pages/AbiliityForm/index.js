@@ -191,8 +191,7 @@ export default function AbiliityForm({ history }) {
                 className="abiliity__input"
                 type="number"
                 placeholder="Tempo total (em minutos)"
-                min="0" 
-                max="1440"
+                min="0"
                 value={timeTotal}
                 onChange={event => setTimeTotal(event.target.value)}
               />
