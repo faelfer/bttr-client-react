@@ -109,7 +109,7 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
         </p>
         {suggestionText ? 
           <p className="time__abiliity">
-          {suggestionText}
+            {suggestionText}
           </p>
         :
           null
