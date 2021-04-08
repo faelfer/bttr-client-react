@@ -25,3 +25,31 @@ export function msToTimeFormat(value) {
 
   return fillDigits(hours) + ':' + fillDigits(minutes) + ':' + fillDigits(seconds);
 }
+
+export function formatDateCalendar(date){
+  let day  = date.getDate().toString();
+  let month  = (date.getMonth()+1).toString();
+  let year = date.getFullYear();
+
+  day = (day.length === 1) ? '0'+day : day;
+  month = (month.length === 1) ? '0'+month : month;
+
+  return `${year}-${month}-${day}`;
+}
+
+export function formatDateCalendarWithHourAndMinutes(dateString) {
+  let date = new Date(dateString);
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let day  = date.getDate().toString();
+  let month  = (date.getMonth()+1).toString();
+  let year = date.getFullYear();
+
+  hours = hours < 10 ? '0' + hours : hours;
+  minutes = minutes < 10 ? '0' + parseInt(minutes) : parseInt(minutes);
+
+  day = (day.length === 1) ? '0'+day : day;
+  month = (month.length === 1) ? '0'+month : month;
+
+  return `${day}/${month}/${year} às ${hours}:${minutes}`;
+}

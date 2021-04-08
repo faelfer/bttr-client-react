@@ -1,27 +1,26 @@
 import React from "react";
 import { NavLink } from 'react-router-dom';
 import "./styles.css";
-import { logout } from "../../services/auth";
 
 function App({ navigation }) {
-    function exit(event) {
-		event.preventDefault();
-		console.log("exit");
-        logout();
-        navigation.push("/");
-    }
     return (
-        <div>
-            <ul className="topnav">
-                <li>
-                    <NavLink to={'/home'}>
-                        Início
+        <div className="navbar">
+            <div className="navbar__container">
+                <div className="navbar__name">
+                    <p>Bttr</p>
+                </div>
+                <div className="navbar__actions">
+                    <NavLink className="navbar__link" to={'/home'}>         
+                        <p className="navbar__action--margin">Início</p>
                     </NavLink>
-                </li>
-                <li className="right" onClick={(event) => exit(event)}>
-                    <a href="#" >Sair</a>
-                </li>
-            </ul>
+                    <NavLink className="navbar__link" to={'/time-table'}>  
+                        <p className="navbar__action--margin">Tempo</p>
+                    </NavLink>
+                    <NavLink className="navbar__link" to={'/profile'}>
+                        <p className="navbar__action--margin">Perfil</p>
+                    </NavLink>
+                </div>
+            </div>
         </div>
     )
 };

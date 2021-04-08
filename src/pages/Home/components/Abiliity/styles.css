@@ -1,0 +1,32 @@
+.abiliity {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: transparent;
+  border-color: var(--on-primary-color);
+  border-style: solid;
+  border-width: thin;
+  border-radius: 6px;
+  height: 244px;
+  margin: 10px 10px 10px 10px;
+  text-align: center;
+  font-size: 30px;
+  padding: 16px;
+}
+
+.abiliity__name {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  color: var(--on-primary-color);
+}
+
+.abiliity__description {
+  font-size: 14px;
+  font-weight: 450;
+  margin: 0;
+  padding: 0;
+  color: var(--on-primary-color);
+}
