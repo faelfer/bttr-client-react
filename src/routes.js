@@ -6,21 +6,31 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
-import SkillDetails from "./pages/SkillDetails";
-import SkillCreate from "./pages/SkillCreate";
+import TimeTable from "./pages/TimeTable";
+import TimeForm from "./pages/TimeForm"
+import AbiliityForm from "./pages/AbiliityForm";
+import ProfileForm from './pages/ProfileForm';
+import RedefinePasswordForm from './pages/RedefinePasswordForm'
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      isAuthenticated() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-      )
-    }
-  />
-);
+function PrivateRoute({ children, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        isAuthenticated() ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
 const Routes = () => (
   <BrowserRouter>
@@ -29,8 +39,14 @@ const Routes = () => (
       <Route path="/sign-up" component={SignUp} />
       <Route path="/forgot-password" component={ForgotPassword} />
       <PrivateRoute path="/home" component={Home} />
-      <PrivateRoute path="/skill-details/:skillId" component={SkillDetails} />
-      <PrivateRoute path="/skill-create" component={SkillCreate} />
+      <PrivateRoute path="/abiliity" component={AbiliityForm} />
+      <PrivateRoute path="/abiliity-detail/:abiliityId" component={AbiliityForm} />
+      <PrivateRoute path="/time-table" component={TimeTable} />
+      <PrivateRoute path="/time-table-by-abiliity/:abiliityId" component={TimeTable} />
+      <PrivateRoute path="/time" component={TimeForm} />
+      <PrivateRoute path="/time-detail/:timeId" component={TimeForm} />
+      <PrivateRoute path="/profile" component={ProfileForm} />
+      <PrivateRoute path="/redefine-password" component={RedefinePasswordForm} />
       <Route 
         path="*" 
         component={() => (

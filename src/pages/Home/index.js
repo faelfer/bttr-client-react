@@ -1,119 +1,115 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./styles.css";
 import api from "../../services/api";
 import { getToken, logout } from "../../services/auth";
 import NavBar from "../../components/NavBar";
-import Card from "./components/Card";
+import Abiliity from "./components/Abiliity";
 import Load from "../../components/Load";
-import fixDate from "../../utils/fixDate";
 
-
-function Home({ history }) {
-    const [listCards, setListCards] = useState([]);
+export default function Home({ history }) {
+    const [abiliities, setAbiliities] = useState([]);
+    const [abiliityInfo, setAbiliityInfo] = useState({});
+    const [page, setPage] = useState(1);
     const [isLoad, setIsLoad] = useState(false);
     const [error, setError] = useState('');
-    const [date, setDate] = useState();
     const token = getToken(); 
 
-    async function progressMonth() {
-        setIsLoad(true);
-          try {
-            const response = await api.get(`/progress_month/${date ? fixDate(date) : new Date()}`, {
-                headers: { "Authorization": token }
-            });
-            console.log("progressThisMonth | response: ", response);
-            setIsLoad(false);
-            if(!response.data.status === 200) {
-                setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
-            }
-
-            setListCards(response.data)
-          } catch (error) {
-            console.log("progressThisMonth | error", error);
-              if(error.message === "Request failed with status code 401") {
-                logout();
-                history.push("/");
-              }
-            setError("Houve um problema ao listar as habilidades, tente novamente mais tarde");
-            setIsLoad(false);
+    const getAbiliities = useCallback(async (pageNumber = 1) => {
+      setIsLoad(true);
+        try {
+          const response = await api.get(`/abiliity?page=${pageNumber}`, {
+              headers: { "Authorization": token }
+          });
+          console.log("getAbiliities | response: ", response);
+          const { docs, ...abiliityInfo } = response.data;
+          setIsLoad(false);
+          if(!response.data.status === 200) {
+              setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
           }
 
-    };
+          setAbiliities(docs);
+          setAbiliityInfo(abiliityInfo);
+          setPage(pageNumber);
+        } catch (error) {
+          console.log("getAbiliities | error: ", error);
+            if(error.message === "Request failed with status code 401") {
+              logout();
+              history.push("/");
+            }
+          setError("Houve um problema ao listar suas habilidades, tente novamente mais tarde");
+          setIsLoad(false);
+        }
+
+    }, [token, history]);
 
     useEffect(() => {
-        console.log("useEffect | date: ", fixDate(date) )
+      getAbiliities();
 
-        progressMonth();
-    }, [token, date]);
+    }, [token, history, getAbiliities]);
 
-    function goToCreatePage() {
-        console.log("goToCreatePage")
-        history.push(`/skill-create`);
-    }
+    function prevPage() {
+      if (page === 1) return;
 
-    function goToDetailsPage(item) {
-        console.log("goToDetailsPage | item: ", item)
-        history.push(`/skill-details/${item._id}`);
-        
-    }
+      const pageNumber = page - 1;
 
-    async function addMinutesSkill(skillId, minutes) {
-        console.log("addMinutesSkill | skillId, minutes: ", skillId, minutes);
-        setIsLoad(true);
-          try {
-            const response = await api.put(`/progress_sum/${skillId}`, {
-                headers: { "Authorization": token },
-                "minutesDone": minutes, 
-            });
-            console.log("addMinutesSkill | response: ", response);
-            setIsLoad(false);
-            progressMonth();
+      getAbiliities(pageNumber)
+      
+  }
 
-            if(!response.data.status === 200) {
-                setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
-            }
-            console.log("addMinutesSkill | response.data", response.data);
-            if (error) {
-                setError("");
-            }
+  function nextPage() {
+      console.log("nextPage");
+      if (page === abiliityInfo.pages) return;
 
-          } catch (error) {
-            console.log("addMinutesSkill | error", error);
-            setError("Houve um problema com o acréscimo de tempo, tente novamente mais tarde");
-            setIsLoad(false);
-          }
-
-    };
+      const pageNumber = page + 1;
+      console.log("nextPage | pageNumber: ", pageNumber);
+      getAbiliities(pageNumber);
+      
+  }
 
     return (
-        <div className="Container">
+        <>
             <NavBar navigation={history}/>
-            <div className="container-create">
-                <input 
-                    type="date"
-                    value={date}
-                    onChange={event => setDate(event.target.value)}
-                />
-                <button onClick={() => goToCreatePage()}>
-                    <p>Criar Nova Habilidade</p>
-                </button>
-                {error && <p className="container-create-error">{error}</p>}
+            <div className="content--align content--column">
+                <div className="time__content">
+                  <>
+                      <div className="time__create">
+                        <button className="time__button" onClick={() => history.push("/abiliity")}>
+                          Criar habilidade
+                        </button>  
+                      </div>
+                  </>
+                </div>
+                {error ?
+                  <div className="time__content"> 
+                    <p className="form__message--error">{error}</p>
+                  </div>
+                :
+                  <div className="home__content">
+                    <Load isShow={isLoad}/>
+                    <>
+                      {abiliities.map((abiliity, key) => (
+                        <Abiliity  
+                          abiliity={abiliity} 
+                          key={key}
+                          history={history}
+                        />
+                      ))}
+                    </>
+                  </div> 
+                }
+                <div className="time__content">
+                  <>
+                      <div className="home__pagination">
+                        <button className="pagination__button" disabled={page === 1} onClick={prevPage}>
+                          Anterior
+                        </button>
+                        <button className="pagination__button" disabled={page === abiliityInfo.pages} onClick={nextPage}>
+                          Próximo
+                        </button>
+                      </div>
+                  </>
+                </div>
             </div>
-            <div className="app">
-                <Load isShow={isLoad}/>
-                {listCards.map((item, key) => (
-                    <Card 
-                        item={item}
-                        currentDate={date ? fixDate(date) : new Date()} 
-                        key={key} 
-                        navigation={history}
-                        onDetails={() => goToDetailsPage(item)}
-                        onAddMinutes={(skillId, minutes) => addMinutesSkill(skillId, minutes)}
-                    />
-                ))}
-            </div>
-        </div>
+        </>
     )
 };
-
-export default Home;
