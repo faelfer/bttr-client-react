@@ -1,0 +1,20 @@
+.form__input {
+    height: 35px;
+    margin-bottom: 15px;
+    color: var(--on-primary-color);
+	background-color: var(--primary-color);
+	border: 1px solid var(--on-primary-color);
+    padding: 0 10px;
+    font-size: 16px;
+    width: 70%;
+    border-radius: 5px;
+}
+
+.form__input::placeholder {
+    color: var(--on-primary-color);
+    opacity: 0.6; /* Firefox */
+}
+
+@media screen and (max-width: 350px) {
+	.form__input { width: 85%; }
+}

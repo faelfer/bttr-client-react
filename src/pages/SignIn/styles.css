@@ -17,13 +17,6 @@
     padding-bottom: 24px;
 }
 
-.form__header {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--on-primary-color);
-    text-align: center;
-}
-
 .form__message {
     color: var(--on-primary-color);
     margin-top: 0px;

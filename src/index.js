@@ -7,14 +7,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const { version } = require('../package.json');
+
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY,
   integrations: [new Integrations.BrowserTracing()],
-
+  release: `bttr-client@${version}`,
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
+  tracesSampleRate: 1,
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

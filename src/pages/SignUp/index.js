@@ -5,6 +5,9 @@ import emailIsInvalid from '../../utils/validation/emailIsInvalid';
 import passwordIsInvalid from '../../utils/validation/passwordIsInvalid';
 
 import Load from "../../components/Load";
+import HeaderForm from "../../components/HeaderForm";
+import DescriptionForm from "../../components/DescriptionForm";
+import InputOutlineForm from "../../components/InputOutlineForm";
 
 import './styles.css';
 
@@ -75,33 +78,25 @@ function SignUp({ history }) {
       <div className="container">
         <Load isShow={isLoad}/>
         <form className="form" onSubmit={handleSignUp}>
-          <p className="form__header">
-            Bttr
-          </p>
-          <p className="form__description">
-            Cadastre-se para evoluir suas habilidades.
-          </p>
+          <HeaderForm title="Bttr" />
+          <DescriptionForm description="Cadastre-se para evoluir suas habilidades." />
           {error && <p className="form__message form__message--error">{error}</p>}
-          <input
-            className="form__input"
-            type="text"
-            placeholder="Nome de usuário"
-            value={username}
-            onChange={event => setUsername(event.target.value)}
+          <InputOutlineForm
+            inputPlaceholder="Nome de usuário"
+            inputValue={username}
+            onChangeInput={textValue => setUsername(textValue)}
           />
-          <input
-            className="form__input"
-            type="email"
-            placeholder="Endereço de e-mail"
-            value={email}
-            onChange={event => setEmail(event.target.value)}
+          <InputOutlineForm
+            inputType="email"
+            inputPlaceholder="Endereço de e-mail"
+            inputValue={email}
+            onChangeInput={textValue => setEmail(textValue)}
           />
-          <input
-            className="form__input"
-            type="password"
-            placeholder="Senha"
-            value={password}
-            onChange={event => setPassword(event.target.value)}
+          <InputOutlineForm
+            inputType="password"
+            inputPlaceholder="Senha"
+            inputValue={password}
+            onChangeInput={textValue => setPassword(textValue)}
           />
           <button className="form__button" type="submit">Cadastre-se</button>
         </form>
