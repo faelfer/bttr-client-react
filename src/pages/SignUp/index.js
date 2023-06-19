@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import './styles.css';
 import { Link, withRouter } from "react-router-dom";
-import api from "../../services/api";
+
+import emailIsInvalid from '../../utils/validation/emailIsInvalid';
+import passwordIsInvalid from '../../utils/validation/passwordIsInvalid';
+
 import Load from "../../components/Load";
+
+import './styles.css';
+
+import { SignUpFetch } from '../../api/services/UserAPI';
 
 function SignUp({ history }) {
   const [username, setUsername] = useState("");
@@ -11,31 +17,54 @@ function SignUp({ history }) {
   const [error, setError] = useState("");
   const [isLoad, setIsLoad] = useState(false);
 
+  function validateSignUp() {
+    let message = '';
+    const nameWithoutTrimValidate = username.trim();
 
+    if (!nameWithoutTrimValidate) {
+      message = 'Preencha o campo nome';
+    } else if (nameWithoutTrimValidate.length < 3) {
+      message = 'Campo nome completo é inválido';
+    } else if (emailIsInvalid(email)) {
+      message = 'Campo e-mail é inválido';
+    } else if (!password) {
+      message = 'Preencha o campo senha';
+    } else if (passwordIsInvalid(password)) {
+      message = 'Campo senha deve conter números e letras.';
+    } else if (password.length < 4 || password.length > 8) {
+      message = 'Campo senha deve conter de 4 à 8 caracteres';
+    }
+
+    return { isInvalid: !!message, message };
+  }
+  
   async function handleSignUp(event) {
     event.preventDefault();
     setIsLoad(true);
-    if (!username || !email || !password) {
-      setError("Preencha todos os dados para se cadastrar");
+
+    const responseValidateSignUp = await validateSignUp();
+    console.log('sendSignUp | responseValidateSignUp: ', responseValidateSignUp);
+
+    if (responseValidateSignUp.isInvalid) {
+      setError(responseValidateSignUp.message);
       setIsLoad(false);
     } else {
       try {
-        const response = await api.post("/user/sign_up", 
-        { 
+        const resultSignUp = await SignUpFetch(
           username, 
           email, 
           password 
-        });
+        );
+        console.log("handleSignUp | resultSignUp: ", resultSignUp);
 
         setIsLoad(false);
-        console.log("handleSignUp | respnse: ",response);
-        if(!response.data.status === 200) {
-          setError("Ocorreu um erro ao registrar sua conta. ;-;");
+        if(!resultSignUp.isSuccess) {
+          setError(resultSignUp.message);
+        } else {
+          history.push("/");
         }
-        history.push("/");
-        
       } catch (error) {
-        console.log("handleSignUp | error: ",error);
+        console.log("handleSignUp | error: ", error);
         setError("Ocorreu um erro ao registrar sua conta. ;-;");
         setIsLoad(false);
       }
@@ -78,7 +107,9 @@ function SignUp({ history }) {
         </form>
 
         <div className="redirect">
-          <p className="redirect__text" >Tem uma conta? <Link className="redirect__link" to="/">Conecte-se</Link></p>
+          <p className="redirect__text" >
+            Tem uma conta? <Link className="redirect__link" to="/">Conecte-se</Link>
+          </p>
         </div>
       </div>
     );
