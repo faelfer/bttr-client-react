@@ -12,6 +12,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
+    "luxon": "^3.3.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,8 +23,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "test-unit": "jest --coverage",
+    "test-e2e": "playwright test --headed",
+    "test-e2e-report": "playwright show-report",
+    "test-e2e-debug": "playwright test --debug",
+    "test-e2e-codegen": "playwright codegen http://localhost:3000/",
+    "lint": "yarn run eslint src/**",
+    "lint-fix": "yarn run eslint src/pages/** --fix",
     "package-clean": "rm -rf node_modules yarn.lock && yarn install",
     "commit-version": "git add CHANGELOG.md package.json && git commit -m 'update CHANGELOG and number version'"
   },
@@ -46,11 +53,17 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "babel-jest": "^29.5.0",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0"
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "jest": "^29.5.0",
+    "react-test-renderer": "^18.2.0"
   }
 }

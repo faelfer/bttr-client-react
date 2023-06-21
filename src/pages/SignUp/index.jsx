@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, useHistory } from 'react-router-dom';
 
-import emailIsInvalid from '../../utils/validation/emailIsInvalid';
-import passwordIsInvalid from '../../utils/validation/passwordIsInvalid';
+import emailIsInvalid from '../../utils/rules/emailIsInvalid';
+import passwordIsInvalid from '../../utils/rules/passwordIsInvalid';
 
 import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
@@ -13,12 +13,14 @@ import './styles.css';
 
 import { SignUpFetch } from '../../api/services/UserAPI';
 
-function SignUp({ history }) {
+function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [isLoad, setIsLoad] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const history = useHistory();
 
   function validateSignUp() {
     let message = '';
@@ -43,14 +45,14 @@ function SignUp({ history }) {
 
   async function handleSignUp(event) {
     event.preventDefault();
-    setIsLoad(true);
+    setIsLoading(true);
 
     const responseValidateSignUp = await validateSignUp();
     console.log('sendSignUp | responseValidateSignUp: ', responseValidateSignUp);
 
     if (responseValidateSignUp.isInvalid) {
       setErrorMessage(responseValidateSignUp.message);
-      setIsLoad(false);
+      setIsLoading(false);
     } else {
       try {
         const resultSignUp = await SignUpFetch(
@@ -60,7 +62,7 @@ function SignUp({ history }) {
         );
         console.log('handleSignUp | resultSignUp: ', resultSignUp);
 
-        setIsLoad(false);
+        setIsLoading(false);
         if (!resultSignUp.isSuccess) {
           setErrorMessage(resultSignUp.message);
         } else {
@@ -69,14 +71,14 @@ function SignUp({ history }) {
       } catch (error) {
         console.log('handleSignUp | error: ', error);
         setErrorMessage('Ocorreu um erro ao registrar sua conta. ;-;');
-        setIsLoad(false);
+        setIsLoading(false);
       }
     }
   }
 
   return (
     <div className="container">
-      <Load isShow={isLoad} />
+      <Load isShow={isLoading} />
       <form className="form" onSubmit={handleSignUp}>
         <HeaderForm title="Bttr" />
         <DescriptionForm description="Cadastre-se para evoluir suas habilidades." />
@@ -103,8 +105,7 @@ function SignUp({ history }) {
 
       <div className="redirect">
         <p className="redirect__text">
-          Tem uma conta?
-          {' '}
+          {'Tem uma conta? '}
           <Link className="redirect__link" to="/">Conecte-se</Link>
         </p>
       </div>
