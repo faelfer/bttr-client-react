@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, withRouter, useHistory } from 'react-router-dom';
 
-import emailIsInvalid from '../../utils/rules/emailIsInvalid';
-import passwordIsInvalid from '../../utils/rules/passwordIsInvalid';
+import isInvalidEmail from '../../utils/rules/isInvalidEmail';
+import isInvalidPassword from '../../utils/rules/isInvalidPassword';
 
 import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
@@ -30,11 +30,11 @@ function SignUp() {
       message = 'Preencha o campo nome';
     } else if (nameWithoutTrimValidate.length < 3) {
       message = 'Campo nome completo é inválido';
-    } else if (emailIsInvalid(email)) {
+    } else if (isInvalidEmail(email)) {
       message = 'Campo e-mail é inválido';
     } else if (!password) {
       message = 'Preencha o campo senha';
-    } else if (passwordIsInvalid(password)) {
+    } else if (isInvalidPassword(password)) {
       message = 'Campo senha deve conter números e letras.';
     } else if (password.length < 4 || password.length > 8) {
       message = 'Campo senha deve conter de 4 à 8 caracteres';
@@ -84,19 +84,19 @@ function SignUp() {
         <DescriptionForm description="Cadastre-se para evoluir suas habilidades." />
         {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
         <InputOutlineForm
-          inputPlaceholder="Nome de usuário"
+          inputPlaceholder="Digite seu nome de usuário"
           inputValue={username}
           onChangeInput={(textValue) => setUsername(textValue)}
         />
         <InputOutlineForm
           inputType="email"
-          inputPlaceholder="Endereço de e-mail"
+          inputPlaceholder="Digite seu e-mail"
           inputValue={email}
           onChangeInput={(textValue) => setEmail(textValue)}
         />
         <InputOutlineForm
           inputType="password"
-          inputPlaceholder="Senha"
+          inputPlaceholder="Digite sua senha"
           inputValue={password}
           onChangeInput={(textValue) => setPassword(textValue)}
         />
