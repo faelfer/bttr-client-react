@@ -5,7 +5,7 @@ const { faker } = require('@faker-js/faker');
 
 const userFactory = require('../factories/userFactory');
 
-test('deve mostrar mensagem de sucesso ao pressionar o botão cadastre-se', async ({ page }) => {
+test('deve inserir os dados do novo usuário com sucesso', async ({ page }) => {
   const browser = await chromium.launch();
   const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
   // Make sure to await close, so that videos are saved.
@@ -13,7 +13,7 @@ test('deve mostrar mensagem de sucesso ao pressionar o botão cadastre-se', asyn
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
-  const user = await userFactory(false);
+  const user = await userFactory();
 
   await page.getByRole('link', { name: 'Cadastre-se' }).click();
 
@@ -25,42 +25,149 @@ test('deve mostrar mensagem de sucesso ao pressionar o botão cadastre-se', asyn
   // Make sure to await close, so that videos are saved.
 });
 
-// test('deve mostrar mensagem de senha incorreta ao pressionar o botão entrar', async ({ page }) => {
-//   const browser = await chromium.launch();
-//   const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-//   // Make sure to await close, so that videos are saved.
+test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo nome vazio', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
 
-//   const passwordIncorrect = faker.random.alphaNumeric(8);
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
 
-//   // Go to http://localhost:3000/
-//   await page.goto('http://localhost:3000/');
+  await page.getByRole('link', { name: 'Cadastre-se' }).click();
 
-//   const user = await userFactory(false);
+  const user = await userFactory();
+  user.username = '';
 
-//   await signInScenario(page, user.email, passwordIncorrect);
+  await signUpScenario(page, user);
 
-//   const locatorSignInIncorrectPassword = page.locator('text=senha incorreta.');
-//   await expect(locatorSignInIncorrectPassword).toBeVisible();
+  await page.getByText('Preencha o campo nome de usuário');
 
-//   await context.close();
-//   // Make sure to await close, so that videos are saved.
-// });
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
 
-// test('deve mostrar mensagem de usuário não encontrado ao pressionar o botão entrar', async ({ page }) => {
-//   const browser = await chromium.launch();
-//   const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-//   // Make sure to await close, so that videos are saved.
+test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo nome inválido', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
 
-//   const userNotFound = await userFactory();
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
 
-//   // Go to http://localhost:3000/
-//   await page.goto('http://localhost:3000/');
+  await page.getByRole('link', { name: 'Cadastre-se' }).click();
 
-//   await signInScenario(page, userNotFound.email, userNotFound.password);
+  const user = await userFactory();
+  user.username = 'ab';
 
-//   const locatorSignInNotFoundUser = page.locator('text=usuário não foi encontrado.');
-//   await expect(locatorSignInNotFoundUser).toBeVisible();
+  await signUpScenario(page, user);
 
-//   await context.close();
-//   // Make sure to await close, so that videos are saved.
-// });
+  await page.getByText('Campo nome de usuário é inválido');
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
+test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo e-mail vazio', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  await page.getByRole('link', { name: 'Cadastre-se' }).click();
+
+  const user = await userFactory();
+  user.email = '';
+
+  await signUpScenario(page, user);
+
+  await page.getByText('Preencha o campo e-mail');
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
+test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo e-mail inválido', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  await page.getByRole('link', { name: 'Cadastre-se' }).click();
+
+  const user = await userFactory();
+  user.email = 'emailemail';
+
+  await signUpScenario(page, user);
+
+  await page.getByText('Campo e-mail é inválido');
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
+test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo senha vazio', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  await page.getByRole('link', { name: 'Cadastre-se' }).click();
+
+  const user = await userFactory();
+  user.password = '';
+
+  await signUpScenario(page, user);
+
+  await page.getByText('Preencha o campo senha');
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
+test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo senha inválido', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  await page.getByRole('link', { name: 'Cadastre-se' }).click();
+
+  const user = await userFactory();
+  user.password = 'senha';
+
+  await signUpScenario(page, user);
+
+  await page.getByText('Campo senha deve conter números e letras');
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
+test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo senha que ultrapassar o limite de caracteres', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  await page.getByRole('link', { name: 'Cadastre-se' }).click();
+
+  const user = await userFactory();
+  user.password = 'senhasenhasenha';
+
+  await signUpScenario(page, user);
+
+  await page.getByText('Campo senha deve conter de 4 à 8 caracteres');
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});

@@ -27,9 +27,11 @@ function SignUp() {
     const nameWithoutTrimValidate = username.trim();
 
     if (!nameWithoutTrimValidate) {
-      message = 'Preencha o campo nome';
+      message = 'Preencha o campo nome de usuário';
     } else if (nameWithoutTrimValidate.length < 3) {
-      message = 'Campo nome completo é inválido';
+      message = 'Campo nome de usuário é inválido';
+    } else if (!email) {
+      message = 'Preencha o campo e-mail';
     } else if (isInvalidEmail(email)) {
       message = 'Campo e-mail é inválido';
     } else if (!password) {
