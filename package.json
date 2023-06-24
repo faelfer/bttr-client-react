@@ -29,8 +29,8 @@
     "test-e2e-report": "playwright show-report",
     "test-e2e-debug": "playwright test --debug",
     "test-e2e-codegen": "playwright codegen http://localhost:3000/",
-    "lint": "yarn run eslint src/**",
-    "lint-fix": "yarn run eslint src/pages/** --fix",
+    "lint": "yarn eslint src/**",
+    "lint-fix": "yarn eslint --ext .jsx,.js src/pages/** --fix",
     "package-clean": "rm -rf node_modules yarn.lock && yarn install",
     "commit-version": "git add CHANGELOG.md package.json && git commit -m 'update CHANGELOG and number version'"
   },
