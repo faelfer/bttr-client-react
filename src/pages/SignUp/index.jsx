@@ -87,19 +87,16 @@ function SignUp() {
         {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
         <InputOutlineForm
           inputPlaceholder="Digite seu nome de usuário"
-          inputValue={username}
           onChangeInput={(textValue) => setUsername(textValue)}
         />
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Digite seu e-mail"
-          inputValue={email}
           onChangeInput={(textValue) => setEmail(textValue)}
         />
         <InputOutlineForm
           inputType="password"
           inputPlaceholder="Digite sua senha"
-          inputValue={password}
           onChangeInput={(textValue) => setPassword(textValue)}
         />
         <button className="form__button" type="submit">Cadastre-se</button>
