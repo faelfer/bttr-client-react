@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, withRouter, useHistory } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 
 import isInvalidEmail from '../../utils/rules/isInvalidEmail';
 import isInvalidPassword from '../../utils/rules/isInvalidPassword';
@@ -8,6 +8,7 @@ import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
 import DescriptionForm from '../../components/DescriptionForm';
 import InputOutlineForm from '../../components/InputOutlineForm';
+import LinkRedirect from '../../components/LinkRedirect';
 
 import './styles.css';
 
@@ -102,12 +103,11 @@ function SignUp() {
         <button className="form__button" type="submit">Cadastre-se</button>
       </form>
 
-      <div className="redirect">
-        <p className="redirect__text">
-          {'Tem uma conta? '}
-          <Link className="redirect__link" to="/">Conecte-se</Link>
-        </p>
-      </div>
+      <LinkRedirect
+        description="Tem uma conta? "
+        urlTo="/"
+        descriptionUrl="Conecte-se"
+      />
     </div>
   );
 }

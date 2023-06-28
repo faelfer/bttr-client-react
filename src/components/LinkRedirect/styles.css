@@ -1,0 +1,21 @@
+.redirect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 330px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    text-align: center;
+}
+
+.redirect__text {
+    color: var(--on-primary-color);
+    font-size: 14px;
+}
+
+.redirect__link {
+    color: var(--secondary-color);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
