@@ -4,7 +4,7 @@ import { screen, render, fireEvent } from '@testing-library/react';
 
 import InputOutlineForm from '../InputOutlineForm';
 
-it('InputOutlineForm deve chamar o manipulador onChangeInput handler com o novo valor do input', () => {
+it('InputOutlineForm deve chamar o manipulador onChangeInput com o novo valor do input', () => {
   const onChangeInputSpy = jest.fn();
   const inputValue = 'testinputoutlineform';
 

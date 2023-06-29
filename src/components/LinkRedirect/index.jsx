@@ -1,24 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import './styles.css';
 
 export default function LinkRedirect({
   description,
-  urlTo,
   descriptionUrl,
+  onRedirect,
 }) {
   return (
     <div className="redirect">
       <p className="redirect__text">
         {description}
-        <Link
-          className="redirect__link"
-          to={urlTo}
-        >
-          {descriptionUrl}
-        </Link>
       </p>
+      <button
+        className="redirect__link"
+        onClick={() => onRedirect()}
+        type="button"
+        data-testid="link-redirect-button"
+      >
+        {descriptionUrl}
+      </button>
     </div>
   );
 }

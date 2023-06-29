@@ -105,8 +105,8 @@ function SignUp() {
 
       <LinkRedirect
         description="Tem uma conta? "
-        urlTo="/"
         descriptionUrl="Conecte-se"
+        onRedirect={() => history.push('/')}
       />
     </div>
   );
