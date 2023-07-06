@@ -78,14 +78,10 @@
 	  padding: 20px;
 	  border-radius: 5px;
 	}
-  
-	/* .form__input { width: 90%; } */
 
 	.form__message { width: 94% }
 }
   
 @media screen and (max-width: 350px) {
-	.form__input { width: 85%; }
-
 	.form__message { width: 92% }
 }

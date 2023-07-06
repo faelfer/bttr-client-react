@@ -53,6 +53,47 @@ export async function SignUpFetch(
   }
 }
 
+export async function SignInFetch(email, password) {
+  console.log('SignInFetch | email, password:', email, password);
+  const configRequest = {
+    method: 'post',
+    url: '/users/sign_in',
+    body: { email, password },
+  };
+
+  try {
+    const response = await Axios(configRequest);
+    console.log('SignInFetch | response.data:', response.data);
+    return {
+      isSuccess: true,
+      message: response.data.message,
+      user: {
+        ...response.data.user,
+        token: response.data.token,
+      },
+    };
+  } catch (error) {
+    console.log('SignInFetch | error:', error.message);
+    let message;
+    const expectedStatusCodes = [401, 404];
+    if (expectedStatusCodes.includes(error.response.status)) {
+      message = error.response.data.message;
+    } else {
+      message = 'No momento esse recurso está indisponível, tente novamente mais tarde.';
+      createExceptionSentry(
+        error,
+        configRequest.method,
+        configRequest.url,
+        configRequest.body,
+      );
+    }
+    return {
+      isSuccess: false,
+      message,
+    };
+  }
+}
+
 export async function ProfileFetch(tokenAuthorization) {
   console.log('ProfileFetch | tokenAuthorization:', tokenAuthorization);
   const configRequest = {
@@ -84,52 +125,6 @@ export async function ProfileFetch(tokenAuthorization) {
     return {
       isSuccess: false,
       message: 'No momento esse recurso está indisponível, tente novamente mais tarde.',
-    };
-  }
-}
-
-export async function SignInFetch(cpfCnpj, password) {
-  console.log('SignInFetch | cpfCnpj, password:', cpfCnpj, password);
-  const configRequest = {
-    method: 'post',
-    url: '/users/sign_in',
-    body: {
-      cpf_cnpj_or_username: cpfCnpj,
-      password,
-    },
-  };
-
-  try {
-    const response = await Axios[configRequest.method](
-      configRequest.url,
-      configRequest.body,
-    );
-    console.log('SignInFetch | response.data:', response.data);
-    return {
-      isSuccess: true,
-      message: response.data.message,
-      user: {
-        ...response.data.user,
-        token: response.data.token,
-      },
-    };
-  } catch (error) {
-    console.log('SignInFetch | error:', error.message);
-    let message;
-    if (error.message === 'Request failed with status code 401' || error.message === 'Request failed with status code 404') {
-      message = error.response.data.message;
-    } else {
-      message = 'No momento esse recurso está indisponível, tente novamente mais tarde.';
-      createExceptionSentry(
-        error,
-        configRequest.method,
-        configRequest.url,
-        configRequest.body,
-      );
-    }
-    return {
-      isSuccess: false,
-      message,
     };
   }
 }
