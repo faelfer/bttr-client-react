@@ -94,6 +94,44 @@ export async function SignInFetch(email, password) {
   }
 }
 
+export async function ForgotPasswordFetch(email) {
+  console.log('ForgotPasswordFetch | email: ', email);
+  const configRequest = {
+    method: 'post',
+    url: '/users/forgot_password',
+    body: { email },
+  };
+
+  try {
+    const response = await Axios(configRequest);
+    console.log('ForgotPasswordFetch | response.data:', response.data);
+    return {
+      isSuccess: true,
+      message: response.data.message,
+    };
+  } catch (error) {
+    console.log('ForgotPasswordFetch | error: ', error);
+    let message;
+    const expectedStatusCodes = [404];
+    if (expectedStatusCodes.includes(error.response.status)) {
+      message = error.response.data.message;
+    } else {
+      message = 'No momento esse recurso está indisponível, tente novamente mais tarde.';
+      createExceptionSentry(
+        error,
+        configRequest.method,
+        configRequest.url,
+        configRequest.body,
+      );
+    }
+
+    return {
+      isSuccess: false,
+      message,
+    };
+  }
+}
+
 export async function ProfileFetch(tokenAuthorization) {
   console.log('ProfileFetch | tokenAuthorization:', tokenAuthorization);
   const configRequest = {
@@ -263,48 +301,6 @@ export async function RedefinePasswordFetch(
         },
       );
     }
-    return {
-      isSuccess: false,
-      message,
-    };
-  }
-}
-
-export async function ForgotPasswordFetch(cpfCnpjOrUsername) {
-  console.log('ForgotPassword | cpfCnpjOrUsername: ', cpfCnpjOrUsername);
-  const configRequest = {
-    method: 'post',
-    url: '/users/forgot_password',
-    body: {
-      cpf_cnpj_or_username: cpfCnpjOrUsername,
-    },
-  };
-
-  try {
-    const response = await Axios[configRequest.method](
-      configRequest.url,
-      configRequest.body,
-    );
-    console.log('ForgotPassword | response.data:', response.data);
-    return {
-      isSuccess: true,
-      message: response.data.message,
-    };
-  } catch (error) {
-    console.log('ForgotPassword | error: ', error);
-    let message;
-    if (error.message === 'Request failed with status code 404') {
-      message = error.response.data.message;
-    } else {
-      message = 'No momento esse recurso está indisponível, tente novamente mais tarde.';
-      createExceptionSentry(
-        error,
-        configRequest.method,
-        configRequest.url,
-        configRequest.body,
-      );
-    }
-
     return {
       isSuccess: false,
       message,

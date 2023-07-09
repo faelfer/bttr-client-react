@@ -9,6 +9,7 @@ import HeaderForm from '../../components/HeaderForm';
 import DescriptionForm from '../../components/DescriptionForm';
 import InputOutlineForm from '../../components/InputOutlineForm';
 import LinkRedirect from '../../components/LinkRedirect';
+import ButtonContained from '../../components/ButtonContained';
 
 import './styles.css';
 
@@ -46,8 +47,7 @@ function SignUp() {
     return { isInvalid: !!message, message };
   }
 
-  async function handleSignUp(event) {
-    event.preventDefault();
+  async function sendSignUp() {
     setIsLoading(true);
 
     const responseValidateSignUp = await validateSignUp();
@@ -63,7 +63,7 @@ function SignUp() {
           email,
           password,
         );
-        console.log('handleSignUp | resultSignUp: ', resultSignUp);
+        console.log('sendSignUp | resultSignUp: ', resultSignUp);
 
         setIsLoading(false);
         if (!resultSignUp.isSuccess) {
@@ -72,7 +72,7 @@ function SignUp() {
           history.push('/');
         }
       } catch (error) {
-        console.log('handleSignUp | error: ', error);
+        console.log('sendSignUp | error: ', error);
         setErrorMessage('Ocorreu um erro ao registrar sua conta. ;-;');
         setIsLoading(false);
       }
@@ -82,7 +82,7 @@ function SignUp() {
   return (
     <div className="container">
       <Load isShow={isLoading} />
-      <form className="form" onSubmit={handleSignUp}>
+      <div className="form">
         <HeaderForm title="Bttr" />
         <DescriptionForm description="Cadastre-se para evoluir suas habilidades." />
         {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
@@ -100,8 +100,11 @@ function SignUp() {
           inputPlaceholder="Digite sua senha"
           onChangeInput={(textValue) => setPassword(textValue)}
         />
-        <button className="form__button" type="submit">Cadastre-se</button>
-      </form>
+        <ButtonContained
+          text="Cadastre-se"
+          onAction={() => sendSignUp()}
+        />
+      </div>
 
       <LinkRedirect
         description="Tem uma conta? "

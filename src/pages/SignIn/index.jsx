@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Link,
-  withRouter,
-  useHistory,
-} from 'react-router-dom';
+import { withRouter, useHistory} from 'react-router-dom';
 
 import { login, isAuthenticated } from '../../services/auth';
 
@@ -11,6 +7,8 @@ import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
 import InputOutlineForm from '../../components/InputOutlineForm';
 import LinkRedirect from '../../components/LinkRedirect';
+import ButtonContained from '../../components/ButtonContained';
+import ButtonOutlined from '../../components/ButtonOutlined';
 
 import './styles.css';
 
@@ -48,8 +46,7 @@ function SignIn() {
     return { isInvalid: !!message, message };
   }
 
-  async function handleSignIn(event) {
-    event.preventDefault();
+  async function sendSignIn() {
     setIsLoading(true);
 
     const responseValidateSignIn = await validateSignIn();
@@ -64,7 +61,7 @@ function SignIn() {
           email,
           password,
         );
-        console.log('handleSignIn | resultSignIn: ', resultSignIn);
+        console.log('sendSignIn | resultSignIn: ', resultSignIn);
 
         setIsLoading(false);
         if (!resultSignIn.isSuccess) {
@@ -74,7 +71,7 @@ function SignIn() {
           history.push('/home');
         }
       } catch (error) {
-        console.log('handleSignIn | error: ', error);
+        console.log('sendSignIn | error: ', error);
         setErrorMessage('Ocorreu um erro ao acessar sua conta. ;-;');
         setIsLoading(false);
       }
@@ -84,7 +81,7 @@ function SignIn() {
   return (
     <div className="container">
       <Load isShow={isLoading} />
-      <form className="form" onSubmit={handleSignIn}>
+      <div className="form">
         <HeaderForm title="Bttr" />
         {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
         <InputOutlineForm
@@ -97,10 +94,15 @@ function SignIn() {
           inputPlaceholder="Insira sua senha"
           onChangeInput={(textValue) => setPassword(textValue)}
         />
-        <button className="form__button" type="submit">Entrar</button>
-        <hr className="form__hr" />
-        <Link className="redirect__link form__link--padding" to="/forgot-password">Esqueceu a senha?</Link>
-      </form>
+        <ButtonContained
+          text="Entrar"
+          onAction={() => sendSignIn()}
+        />
+        <ButtonOutlined
+          text="Esqueceu a senha?"
+          onAction={() => history.push('/forgot-password')}
+        />
+      </div>
 
       <LinkRedirect
         description="Não tem uma conta? "
