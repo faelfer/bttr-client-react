@@ -99,7 +99,7 @@ export async function ForgotPasswordFetch(email) {
   const configRequest = {
     method: 'post',
     url: '/users/forgot_password',
-    data: { email },
+    body: { email },
   };
 
   try {
@@ -121,7 +121,7 @@ export async function ForgotPasswordFetch(email) {
         error,
         configRequest.method,
         configRequest.url,
-        configRequest.data,
+        configRequest.body,
       );
     }
 
@@ -137,11 +137,14 @@ export async function ProfileFetch(tokenAuthorization) {
   const configRequest = {
     method: 'get',
     url: '/users/profile',
-    headers: { Authorization: tokenAuthorization },
+    headers: { headers: { Authorization: tokenAuthorization } },
   };
 
   try {
-    const response = await Axios(configRequest);
+    const response = await Axios[configRequest.method](
+      configRequest.url,
+      configRequest.headers,
+    );
     console.log('ProfileFetch | response.data:', response.data);
     return {
       isSuccess: true,
@@ -150,50 +153,74 @@ export async function ProfileFetch(tokenAuthorization) {
     };
   } catch (error) {
     console.log('ProfileFetch | error:', error.message);
-    let message;
-    const expectedStatusCodes = [401];
-    if (expectedStatusCodes.includes(error.response.status)) {
-      message = error.response.data.message;
-    } else {
-      message = 'No momento esse recurso está indisponível, tente novamente mais tarde.';
-      createExceptionSentry(
-        error,
-        configRequest.method,
-        configRequest.url,
-        configRequest.headers,
-      );
-    }
+    createExceptionSentry(
+      error,
+      configRequest.method,
+      configRequest.url,
+      configRequest.headers.headers,
+    );
 
     return {
       isSuccess: false,
-      message,
+      message: 'No momento esse recurso está indisponível, tente novamente mais tarde.',
     };
   }
 }
 
 export async function ProfileUpdateFetch(
   tokenAuthorization,
-  username,
+  name,
+  cpfCnpj,
+  birthDate,
   email,
+  phone,
+  phoneWhatsapp,
+  address,
+  district,
+  city,
+  unitFederative,
+  cep,
 ) {
   console.log(
     'ProfileUpdateFetch | tokenAuthorization, name, phone, email, state, city:',
     tokenAuthorization,
-    username,
+    name,
+    cpfCnpj,
+    birthDate,
     email,
+    phone,
+    phoneWhatsapp,
+    address,
+    district,
+    city,
+    unitFederative,
+    cep,
   );
   const configRequest = {
     method: 'patch',
     url: '/users/profile',
-    data: {
-      username,
+    body: {
+      name,
+      cpf_cnpj: cpfCnpj,
+      birth_date: birthDate,
       email,
+      phone,
+      whatsapp: phoneWhatsapp,
+      address,
+      district,
+      city,
+      state: unitFederative,
+      cep,
     },
-    headers: { Authorization: tokenAuthorization },
+    headers: { headers: { Authorization: tokenAuthorization } },
   };
 
   try {
-    const response = await Axios(configRequest);
+    const response = await Axios[configRequest.method](
+      configRequest.url,
+      configRequest.body,
+      configRequest.headers,
+    );
     console.log('ProfileUpdateFetch | response.data:', response.data);
     return {
       isSuccess: true,
@@ -202,8 +229,7 @@ export async function ProfileUpdateFetch(
   } catch (error) {
     console.log('ProfileUpdateFetch | error:', error.message);
     let message;
-    const expectedStatusCodes = [401, 409];
-    if (expectedStatusCodes.includes(error.response.status)) {
+    if (error.message === 'Request failed with status code 409') {
       message = error.response.data.message;
     } else {
       message = 'No momento esse recurso está indisponível, tente novamente mais tarde.';
@@ -212,51 +238,9 @@ export async function ProfileUpdateFetch(
         configRequest.method,
         configRequest.url,
         {
-          ...configRequest.headers,
-          ...configRequest.data,
+          ...configRequest.headers.headers,
+          ...configRequest.body,
         },
-      );
-    }
-    return {
-      isSuccess: false,
-      message,
-    };
-  }
-}
-
-export async function ProfileDeleteFetch(
-  tokenAuthorization,
-) {
-  console.log(
-    'ProfileDeleteFetch | tokenAuthorization:',
-    tokenAuthorization,
-  );
-  const configRequest = {
-    method: 'delete',
-    url: '/users/profile',
-    headers: { Authorization: tokenAuthorization },
-  };
-
-  try {
-    const response = await Axios(configRequest);
-    console.log('ProfileDeleteFetch | response.data:', response.data);
-    return {
-      isSuccess: true,
-      message: response.data.message,
-    };
-  } catch (error) {
-    console.log('ProfileDeleteFetch | error:', error.message);
-    let message;
-    const expectedStatusCodes = [401];
-    if (expectedStatusCodes.includes(error.response.status)) {
-      message = error.response.data.message;
-    } else {
-      message = 'No momento esse recurso está indisponível, tente novamente mais tarde.';
-      createExceptionSentry(
-        error,
-        configRequest.method,
-        configRequest.url,
-        configRequest.headers,
       );
     }
     return {
@@ -280,15 +264,19 @@ export async function RedefinePasswordFetch(
   const configRequest = {
     method: 'post',
     url: '/users/redefine_password',
-    data: {
+    body: {
       password,
       new_password: passwordNew,
     },
-    headers: { Authorization: tokenAuthorization },
+    headers: { headers: { Authorization: tokenAuthorization } },
   };
 
   try {
-    const response = await Axios(configRequest);
+    const response = await Axios[configRequest.method](
+      configRequest.url,
+      configRequest.body,
+      configRequest.headers,
+    );
     console.log('RedefinePasswordFetch | response.data:', response.data);
     return {
       isSuccess: true,
@@ -297,8 +285,7 @@ export async function RedefinePasswordFetch(
   } catch (error) {
     console.log('RedefinePasswordFetch | error: ', error);
     let message;
-    const expectedStatusCodes = [401];
-    if (expectedStatusCodes.includes(error.response.status)) {
+    if (error.message === 'Request failed with status code 401') {
       console.log('RedefinePasswordFetch | error.response.data.message:', error.response.data.message);
       message = error.response.data.message;
     } else {
@@ -309,8 +296,8 @@ export async function RedefinePasswordFetch(
         configRequest.method,
         configRequest.url,
         {
-          ...configRequest.headers,
-          ...configRequest.data,
+          ...configRequest.headers.headers,
+          ...configRequest.body,
         },
       );
     }

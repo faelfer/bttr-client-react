@@ -1,9 +1,3 @@
-.content--align {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
 .content--column {
   flex-direction: column;
   align-items: center;

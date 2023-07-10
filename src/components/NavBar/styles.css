@@ -3,6 +3,7 @@
     justify-content: center;
     background-color: var(--primary-color);
     height: 54px;
+    margin-bottom: 10px;
 }
 
 .navbar__container {

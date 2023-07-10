@@ -1,18 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './styles.css';
-import api from '../../services/api';
+import { useHistory } from 'react-router-dom';
+
 import { getToken, logout } from '../../services/auth';
+
 import NavBar from '../../components/NavBar';
 import Abiliity from './components/Abiliity';
 import Load from '../../components/Load';
 
-export default function Home({ history }) {
+import './styles.css';
+
+import { SignInFetch } from '../../api/services/UserAPI';
+
+export default function Home() {
   const [abiliities, setAbiliities] = useState([]);
   const [abiliityInfo, setAbiliityInfo] = useState({});
   const [page, setPage] = useState(1);
   const [isLoad, setIsLoad] = useState(false);
   const [error, setError] = useState('');
+
   const token = getToken();
+  const history = useHistory();
 
   const getAbiliities = useCallback(async (pageNumber = 1) => {
     setIsLoad(true);
@@ -82,10 +89,10 @@ export default function Home({ history }) {
           : (
             <div className="home__content">
               <Load isShow={isLoad} />
-              {abiliities.map((abiliity, key) => (
+              {abiliities.map((abiliity) => (
                 <Abiliity
                   abiliity={abiliity}
-                  key={key}
+                  key={abiliity.id}
                   history={history}
                 />
               ))}

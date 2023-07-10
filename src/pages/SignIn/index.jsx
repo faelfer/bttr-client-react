@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter, useHistory} from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 
 import { login, isAuthenticated } from '../../services/auth';
 
@@ -8,7 +8,7 @@ import HeaderForm from '../../components/HeaderForm';
 import InputOutlineForm from '../../components/InputOutlineForm';
 import LinkRedirect from '../../components/LinkRedirect';
 import ButtonContained from '../../components/ButtonContained';
-import ButtonOutlined from '../../components/ButtonOutlined';
+import ButtonTransparent from '../../components/ButtonTransparent';
 
 import './styles.css';
 
@@ -67,7 +67,7 @@ function SignIn() {
         if (!resultSignIn.isSuccess) {
           setErrorMessage(resultSignIn.message);
         } else {
-          login(resultSignIn.user.token);
+          login(`Token ${resultSignIn.user.token}`);
           history.push('/home');
         }
       } catch (error) {
@@ -98,7 +98,7 @@ function SignIn() {
           text="Entrar"
           onAction={() => sendSignIn()}
         />
-        <ButtonOutlined
+        <ButtonTransparent
           text="Esqueceu a senha?"
           onAction={() => history.push('/forgot-password')}
         />

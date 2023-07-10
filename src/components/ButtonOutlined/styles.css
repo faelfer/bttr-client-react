@@ -1,12 +1,12 @@
 .outlined__button {
-    height: 35px;
+    height: 34px;
     width: 76%;
-    margin: 14px 0px 4px 0px;
-    background: transparent;
-    color: var(--secondary-color);
+    margin: 7px 0px 7px 0px;
+    color: var(--on-secondary-color);
     font-size: 16px;
     font-weight: bold;
-    border: 0;
+    background: transparent;
+    border: 1px solid var(--on-secondary-color);
     border-radius: 5px;
     cursor: pointer;
 }

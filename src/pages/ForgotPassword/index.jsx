@@ -48,7 +48,7 @@ function ForgotPassword() {
         setErrorMessage(resultForgotPassword.message);
       } catch (error) {
         console.log('sendForgotPassword | error: ', error);
-        setErrorMessage('Ocorreu um erro ao acessar sua conta. ;-;');
+        setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
         setIsLoading(false);
       }
     }
