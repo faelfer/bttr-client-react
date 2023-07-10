@@ -58,7 +58,7 @@ export async function SignInFetch(email, password) {
   const configRequest = {
     method: 'post',
     url: '/users/sign_in',
-    body: { email, password },
+    data: { email, password },
   };
 
   try {

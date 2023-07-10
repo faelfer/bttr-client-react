@@ -96,16 +96,19 @@ export default function RedefinePasswordForm() {
           <InputOutlineForm
             inputType="password"
             inputPlaceholder="Digite sua senha atual"
+            inputValue={password}
             onChangeInput={(textValue) => setPassword(textValue)}
           />
           <InputOutlineForm
             inputType="password"
             inputPlaceholder="Digite sua nova senha"
+            inputValue={passwordNew}
             onChangeInput={(textValue) => setPasswordNew(textValue)}
           />
           <InputOutlineForm
             inputType="password"
             inputPlaceholder="Digite sua confirmação de nova senha"
+            inputValue={passwordNewConfirm}
             onChangeInput={(textValue) => setPasswordNewConfirm(textValue)}
           />
           <ButtonContained

@@ -87,11 +87,13 @@ function SignIn() {
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
+          inputValue={email}
           onChangeInput={(textValue) => setEmail(textValue)}
         />
         <InputOutlineForm
           inputType="password"
           inputPlaceholder="Insira sua senha"
+          inputValue={password}
           onChangeInput={(textValue) => setPassword(textValue)}
         />
         <ButtonContained

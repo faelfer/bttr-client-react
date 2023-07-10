@@ -15,7 +15,7 @@ import TimeTable from './pages/TimeTable';
 import TimeForm from './pages/TimeForm';
 import AbiliityForm from './pages/AbiliityForm';
 import Profile from './pages/Profile';
-import RedefinePasswordForm from './pages/RedefinePasswordForm';
+import RedefinePassword from './pages/RedefinePassword';
 
 function PrivateRoute({ children, ...rest }) {
   return (
@@ -50,7 +50,7 @@ function Routes() {
         <PrivateRoute path="/time" component={TimeForm} />
         <PrivateRoute path="/time-detail/:timeId" component={TimeForm} />
         <PrivateRoute path="/profile" component={Profile} />
-        <PrivateRoute path="/redefine-password" component={RedefinePasswordForm} />
+        <PrivateRoute path="/redefine-password" component={RedefinePassword} />
         <Route
           path="*"
           component={() => (

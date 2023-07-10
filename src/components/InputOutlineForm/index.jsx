@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './styles.css';
 
 export default function InputOutlineForm({
   inputPlaceholder,
+  inputValue,
   onChangeInput,
   inputType = 'text',
 }) {
-  const [inputValue, setInputValue] = useState('');
-
   const onChangeValue = ({ currentTarget: { value } }) => {
-    setInputValue(value);
     onChangeInput(value);
   };
 

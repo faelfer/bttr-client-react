@@ -145,11 +145,13 @@ export default function ProfileForm() {
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           <InputOutlineForm
             inputPlaceholder="Digite seu nome de usuário"
+            inputValue={username}
             onChangeInput={(textValue) => setUsername(textValue)}
           />
           <InputOutlineForm
             inputType="email"
             inputPlaceholder="Digite seu e-mail"
+            inputValue={email}
             onChangeInput={(textValue) => setEmail(textValue)}
           />
           <ButtonContained

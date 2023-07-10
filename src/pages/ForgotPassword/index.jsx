@@ -64,6 +64,7 @@ function ForgotPassword() {
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
+          inputValue={email}
           onChangeInput={(textValue) => setEmail(textValue)}
         />
         <ButtonContained

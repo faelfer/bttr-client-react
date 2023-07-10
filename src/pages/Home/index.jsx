@@ -9,64 +9,60 @@ import Load from '../../components/Load';
 
 import './styles.css';
 
-import { SignInFetch } from '../../api/services/UserAPI';
+import { SkillsByPageFetch } from '../../api/services/SkillAPI';
 
 export default function Home() {
-  const [abiliities, setAbiliities] = useState([]);
-  const [abiliityInfo, setAbiliityInfo] = useState({});
+  const [skills, setSkills] = useState([]);
   const [page, setPage] = useState(1);
-  const [isLoad, setIsLoad] = useState(false);
-  const [error, setError] = useState('');
+  const [totalPages, setTotalPages] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const token = getToken();
   const history = useHistory();
+  const amountItensByPage = 10;
 
-  const getAbiliities = useCallback(async (pageNumber = 1) => {
-    setIsLoad(true);
+  async function getSkillsByPage(nextPage) {
+    setIsLoading(true);
+
     try {
-      const response = await api.get(`/abiliity?page=${pageNumber}`, {
-        headers: { Authorization: token },
-      });
-      console.log('getAbiliities | response: ', response);
-      const { docs, ...abiliityInfo } = response.data;
-      setIsLoad(false);
-      if (!response.data.status === 200) {
-        setError('Houve um problema ao listar suas habilidades, tente novamente mais tarde');
-      }
+      const resultSkills = await SkillsByPageFetch(token, nextPage);
+      console.log('getSkillsByPage | resultSkills: ', resultSkills);
 
-      setAbiliities(docs);
-      setAbiliityInfo(abiliityInfo);
-      setPage(pageNumber);
-    } catch (error) {
-      console.log('getAbiliities | error: ', error);
-      if (error.message === 'Request failed with status code 401') {
-        logout();
-        history.push('/');
+      setIsLoading(false);
+      if (!resultSkills.isSuccess) {
+        setErrorMessage(resultSkills.message);
+      } else {
+        setSkills(resultSkills.skills);
+        const countTotalPages = Math.ceil(((resultSkills.skills).length) / amountItensByPage);
+        setTotalPages(countTotalPages);
       }
-      setError('Houve um problema ao listar suas habilidades, tente novamente mais tarde');
-      setIsLoad(false);
+    } catch (error) {
+      console.log('getSkillsByPage | error: ', error);
+      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setIsLoading(false);
     }
-  }, [token, history]);
+  }
 
   useEffect(() => {
-    getAbiliities();
-  }, [token, history, getAbiliities]);
+    getSkillsByPage(1);
+  }, [token, history]);
 
   function prevPage() {
     if (page === 1) return;
 
     const pageNumber = page - 1;
 
-    getAbiliities(pageNumber);
+    getSkillsByPage(pageNumber);
   }
 
   function nextPage() {
     console.log('nextPage');
-    if (page === abiliityInfo.pages) return;
+    if (page === totalPages) return;
 
     const pageNumber = page + 1;
     console.log('nextPage | pageNumber: ', pageNumber);
-    getAbiliities(pageNumber);
+    getSkillsByPage(pageNumber);
   }
 
   return (
@@ -80,19 +76,19 @@ export default function Home() {
             </button>
           </div>
         </div>
-        {error
+        {errorMessage
           ? (
             <div className="time__content">
-              <p className="form__message--error">{error}</p>
+              <p className="form__message--error">{errorMessage}</p>
             </div>
           )
           : (
             <div className="home__content">
-              <Load isShow={isLoad} />
-              {abiliities.map((abiliity) => (
+              <Load isShow={isLoading} />
+              {skills.map((skillLoop) => (
                 <Abiliity
-                  abiliity={abiliity}
-                  key={abiliity.id}
+                  abiliity={skillLoop}
+                  key={skillLoop.id}
                   history={history}
                 />
               ))}
@@ -103,7 +99,7 @@ export default function Home() {
             <button className="pagination__button" disabled={page === 1} onClick={prevPage}>
               Anterior
             </button>
-            <button className="pagination__button" disabled={page === abiliityInfo.pages} onClick={nextPage}>
+            <button className="pagination__button" disabled={page === totalPages} onClick={nextPage}>
               Próximo
             </button>
           </div>
