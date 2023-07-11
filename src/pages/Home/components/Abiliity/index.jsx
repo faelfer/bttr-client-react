@@ -1,29 +1,28 @@
 import React from 'react';
+
+import ButtonContained from '../../../../components/ButtonContained';
+
 import './styles.css';
+
 import { minToTimeFormat } from '../../../../utils/timeFormat';
 
-export default function Abiliity({ history, abiliity, key }) {
+export default function Abiliity({ abiliityParam, onEdit, onHistoric }) {
   return (
-    <div className="abiliity" key={key}>
+    <div className="abiliity" key={abiliityParam.id}>
       <p className="abiliity__name">
-        {abiliity.name}
+        {abiliityParam.name}
       </p>
       <p className="abiliity__description">
-        Tempo Diário:
-        {' '}
-        {minToTimeFormat(abiliity.timeDaily)}
+        {`Tempo Diário: ${minToTimeFormat(abiliityParam.time_daily)}`}
       </p>
-      <p className="abiliity__description">
-        Tempo Total:
-        {' '}
-        {minToTimeFormat(abiliity.timeTotal)}
-      </p>
-      <button className="form__button" onClick={() => history.push(`/abiliity-detail/${abiliity._id}`)}>
-        Editar
-      </button>
-      <button className="form__button" onClick={() => history.push(`/time-table-by-abiliity/${abiliity._id}`)}>
-        Histórico
-      </button>
+      <ButtonContained
+        text="Editar"
+        onAction={() => onEdit()}
+      />
+      <ButtonContained
+        text="Histórico"
+        onAction={() => onHistoric()}
+      />
     </div>
   );
 }

@@ -9,10 +9,11 @@
   border-width: thin;
   border-radius: 6px;
   height: 244px;
+  width: 76%;
   margin: 10px 10px 10px 10px;
   text-align: center;
   font-size: 30px;
-  padding: 16px;
+  padding: 16px 0px;
 }
 
 .abiliity__name {

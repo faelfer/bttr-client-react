@@ -1,0 +1,31 @@
+
+.home__pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 77%;
+}
+  
+.pagination__button {
+    color: var(--on-secondary-color);
+    font-size: 16px;
+    font-weight: bold;
+    background: var(--secondary-color);
+    border: 0;
+    border-radius: 5px;
+    padding: 5px 9px;
+    cursor: pointer;
+}
+
+.pagination__button[disabled] { 
+    opacity: 0.5;
+    cursor: default;
+}
+
+.pagination__button:hover {
+    opacity: 0.7;
+}
+
+.pagination__button[disabled]:hover { 
+    opacity: 0.5;
+}
