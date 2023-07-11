@@ -60,6 +60,7 @@ export default function Home() {
             text="Criar habilidade"
             onAction={() => history.push('/abiliity')}
           />
+          {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           {skills.map((skillLoop) => (
             <Abiliity
               abiliityParam={skillLoop}

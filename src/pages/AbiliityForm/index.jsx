@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css';
-import { Link, useParams } from 'react-router-dom';
-import NavBar from '../../components/NavBar';
-import api from '../../services/api';
-import Load from '../../components/Load';
+import { useParams, useHistory } from 'react-router-dom';
+
 import { getToken, logout } from '../../services/auth';
 
-export default function AbiliityForm({ history }) {
-  const token = getToken();
+import NavBar from '../../components/NavBar';
+import Load from '../../components/Load';
+import HeaderForm from '../../components/HeaderForm';
+import DescriptionForm from '../../components/DescriptionForm';
+import InputOutlineForm from '../../components/InputOutlineForm';
+import ButtonContained from '../../components/ButtonContained';
+import ButtonOutlined from '../../components/ButtonOutlined';
+import ButtonTransparent from '../../components/ButtonTransparent';
+import LinkRedirect from '../../components/LinkRedirect';
+
+import './styles.css';
+
+export default function AbiliityForm() {
   const { abiliityId } = useParams();
-  const [isLoad, setIsLoad] = useState(false);
-  const [error, setError] = useState('');
+
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const [timeDaily, setTimeDaily] = useState(1);
-  const [timeTotal, setTimeTotal] = useState(0);
+
+  const token = getToken();
+  const history = useHistory();
 
   useEffect(() => {
     async function getAbiliity() {
@@ -146,66 +157,41 @@ export default function AbiliityForm({ history }) {
   return (
     <>
       <NavBar navigation={history} />
+      <Load isShow={isLoading} />
       <div className="content--align">
-        <div className="abiliity__content">
-          <Load isShow={isLoad} />
-          <form className="abiliity__form" onSubmit={abiliityId ? editAbiliity : createAbiliity}>
-            <p className="form__header">
-              Habilidade
-            </p>
-            {abiliityId
-              ? (
-                <p className="form__description">
-                  Edite sua habilidade.
-                  </p>
-              )
-              : (
-                <p className="form__description">
-                  Crie uma nova habilidade para começar a registrar o quanto você se dedicou.
-                  </p>
-              )}
-            {error && <p className="form__message form__message--error">{error}</p>}
-            <input
-              className="abiliity__input"
-              type="text"
-              placeholder="Nome da habilidade"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-            <input
-              className="abiliity__input"
-              type="number"
-              placeholder="Tempo diário (em minutos)"
-              min="1"
-              max="1440"
-              value={timeDaily}
-              onChange={(event) => setTimeDaily(event.target.value)}
-            />
-            <input
-              className="abiliity__input"
-              type="number"
-              placeholder="Tempo total (em minutos)"
-              min="0"
-              value={timeTotal}
-              onChange={(event) => setTimeTotal(event.target.value)}
-            />
-            <button className="abiliity__button" type="submit">
-              {abiliityId ? 'Editar habilidade' : 'Criar habilidade'}
-            </button>
-
-            {abiliityId
-              ? (
-                <button className="abiliity__delete" onClick={deleteAbiliity}>
-                  Apagar habilidade
-                  </button>
-              )
-              : null}
-            <hr className="abiliity__hr" />
-            <p className="redirect__text redirect__text--margin">
-              <Link className="redirect__link" to="/home">Voltar ao início</Link>
-            </p>
-          </form>
+        <div className="form">
+          <HeaderForm title="Perfil" />
+          <DescriptionForm description="Edite suas informações." />
+          {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
+          <InputOutlineForm
+            inputPlaceholder="Digite seu nome de usuário"
+            inputValue={username}
+            onChangeInput={(textValue) => setUsername(textValue)}
+          />
+          <InputOutlineForm
+            inputType="email"
+            inputPlaceholder="Digite seu e-mail"
+            inputValue={email}
+            onChangeInput={(textValue) => setEmail(textValue)}
+          />
+          <ButtonContained
+            text="Salvar"
+            onAction={() => sendProfileUpdate()}
+          />
+          <ButtonOutlined
+            text="Apagar"
+            onAction={() => sendProfileDelete()}
+          />
+          <ButtonTransparent
+            text="Sair"
+            onAction={() => exit()}
+          />
         </div>
+        <LinkRedirect
+          description=""
+          descriptionUrl="Redefinir a senha"
+          onRedirect={() => history.push('/redefine-password')}
+        />
       </div>
     </>
   );
