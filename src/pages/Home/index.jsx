@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { getToken, logout } from '../../services/auth';
+import { getToken } from '../../services/auth';
 
 import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
@@ -58,13 +58,13 @@ export default function Home() {
         <div className="form">
           <ButtonContained
             text="Criar habilidade"
-            onAction={() => history.push('/abiliity')}
+            onAction={() => history.push('/skills/create')}
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           {skills.map((skillLoop) => (
             <Abiliity
               abiliityParam={skillLoop}
-              onEdit={() => history.push(`/abiliity-detail/${skillLoop.id}`)}
+              onEdit={() => history.push(`/skills/${skillLoop.id}/update`)}
               onHistoric={() => history.push(`/time-table-by-abiliity/${skillLoop.id}`)}
             />
           ))}

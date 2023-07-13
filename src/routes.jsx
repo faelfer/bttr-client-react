@@ -13,7 +13,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import TimeTable from './pages/TimeTable';
 import TimeForm from './pages/TimeForm';
-import AbiliityForm from './pages/AbiliityForm';
+import SkillForm from './pages/SkillForm';
 import Profile from './pages/Profile';
 import RedefinePassword from './pages/RedefinePassword';
 
@@ -43,8 +43,8 @@ function Routes() {
         <Route path="/sign-up" component={SignUp} />
         <Route path="/forgot-password" component={ForgotPassword} />
         <PrivateRoute path="/home" component={Home} />
-        <PrivateRoute path="/abiliity" component={AbiliityForm} />
-        <PrivateRoute path="/abiliity-detail/:abiliityId" component={AbiliityForm} />
+        <PrivateRoute path="/skills/create" component={SkillForm} />
+        <PrivateRoute path="/skills/:skillId/update" component={SkillForm} />
         <PrivateRoute path="/time-table" component={TimeTable} />
         <PrivateRoute path="/time-table-by-abiliity/:abiliityId" component={TimeTable} />
         <PrivateRoute path="/time" component={TimeForm} />
