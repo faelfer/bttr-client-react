@@ -250,7 +250,7 @@ export default function TimeTable({ history }) {
                       </button>
                   <button className="pagination__button" disabled={page === timeInfo.pages} onClick={nextPage}>
                     Próximo
-                      </button>
+                  </button>
                 </div>
               </div>
             </>

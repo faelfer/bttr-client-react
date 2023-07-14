@@ -1,0 +1,19 @@
+.content--align {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.home__content {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  grid-template-rows: 300px;
+  background-color: var(--primary-color);
+  width: 975px;
+  padding: 16px 0px;
+  margin-top: 20px;
+  border-radius: 5px;
+}

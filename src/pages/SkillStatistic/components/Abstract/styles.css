@@ -1,0 +1,15 @@
+.abstract {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 75%;
+  height: 95px;
+  background-color: transparent;
+}
+
+.abstract__progress {
+  width: 100%;
+  border-radius: 5px;
+  background-color: var(--on-primary-color);
+}

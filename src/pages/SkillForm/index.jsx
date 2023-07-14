@@ -32,11 +32,11 @@ export default function SkillForm() {
   const token = getToken();
   const history = useHistory();
 
-  async function getSkillById(skillId) {
+  async function getSkillById(skillIdToRead) {
     setIsLoading(true);
 
     try {
-      const resultSkills = await SkillByIdFetch(token, skillId);
+      const resultSkills = await SkillByIdFetch(token, skillIdToRead);
       console.log('getSkillById | resultSkills: ', resultSkills);
 
       setIsLoading(false);

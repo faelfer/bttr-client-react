@@ -14,6 +14,7 @@ import Home from './pages/Home';
 import TimeTable from './pages/TimeTable';
 import TimeForm from './pages/TimeForm';
 import SkillForm from './pages/SkillForm';
+import SkillStatistic from './pages/SkillStatistic';
 import Profile from './pages/Profile';
 import RedefinePassword from './pages/RedefinePassword';
 
@@ -45,6 +46,7 @@ function Routes() {
         <PrivateRoute path="/home" component={Home} />
         <PrivateRoute path="/skills/create" component={SkillForm} />
         <PrivateRoute path="/skills/:skillId/update" component={SkillForm} />
+        <PrivateRoute path="/skills/:skillId/statistic" component={SkillStatistic} />
         <PrivateRoute path="/time-table" component={TimeTable} />
         <PrivateRoute path="/time-table-by-abiliity/:abiliityId" component={TimeTable} />
         <PrivateRoute path="/time" component={TimeForm} />

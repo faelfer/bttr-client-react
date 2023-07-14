@@ -65,7 +65,7 @@ export default function Home() {
             <Abiliity
               abiliityParam={skillLoop}
               onEdit={() => history.push(`/skills/${skillLoop.id}/update`)}
-              onHistoric={() => history.push(`/time-table-by-abiliity/${skillLoop.id}`)}
+              onHistoric={() => history.push(`/skills/${skillLoop.id}/statistic`)}
             />
           ))}
           <ButtonPagination
