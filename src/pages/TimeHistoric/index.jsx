@@ -24,30 +24,30 @@ export default function TimeHistoric() {
   const navigate = useNavigate();
   const amountItensByPage = 10;
 
-  async function getSkillsByPage(goToPage) {
+  async function getTimesByPage(goToPage) {
     setIsLoading(true);
 
     try {
-      const resultSkills = await TimesByPageFetch(token, goToPage);
-      console.log('getSkillsByPage | resultSkills: ', resultSkills);
+      const resultTimes = await TimesByPageFetch(token, goToPage);
+      console.log('getTimesByPage | resultTimes: ', resultTimes);
 
       setIsLoading(false);
-      if (!resultSkills.isSuccess) {
-        setErrorMessage(resultSkills.message);
+      if (!resultTimes.isSuccess) {
+        setErrorMessage(resultTimes.message);
       } else {
-        setTime(resultSkills.times);
-        const countTotalPages = Math.ceil(((resultSkills.times).length) / amountItensByPage);
+        setTime(resultTimes.times);
+        const countTotalPages = Math.ceil(((resultTimes.times).length) / amountItensByPage);
         setCountPages(countTotalPages);
       }
     } catch (error) {
-      console.log('getSkillsByPage | error: ', error);
+      console.log('getTimesByPage | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    getSkillsByPage(1);
+    getTimesByPage(1);
   }, [token, navigate]);
 
   return (
@@ -72,7 +72,7 @@ export default function TimeHistoric() {
             totalPages={countPages}
             onChangeCurrentPage={(updatedCurrentPage) => {
               setPage(updatedCurrentPage);
-              getSkillsByPage(updatedCurrentPage);
+              getTimesByPage(updatedCurrentPage);
             }}
           />
         </div>

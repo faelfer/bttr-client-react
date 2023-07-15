@@ -71,9 +71,7 @@ export default function SkillForm() {
       console.log('sendSkillCreate | resultSkillCreate: ', resultSkillCreate);
 
       setIsLoading(false);
-      if (!resultSkillCreate.isSuccess) {
-        setErrorMessage(resultSkillCreate.message);
-      }
+      setErrorMessage(resultSkillCreate.message);
     } catch (error) {
       console.log('sendSkillCreate | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
@@ -94,9 +92,7 @@ export default function SkillForm() {
       console.log('sendSkillUpdate | resultSkillUpdate: ', resultSkillUpdate);
 
       setIsLoading(false);
-      if (!resultSkillUpdate.isSuccess) {
-        setErrorMessage(resultSkillUpdate.message);
-      }
+      setErrorMessage(resultSkillUpdate.message);
     } catch (error) {
       console.log('sendSkillUpdate | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
@@ -112,9 +108,7 @@ export default function SkillForm() {
       console.log('sendSkillDelete | resultSkillDelete: ', resultSkillDelete);
 
       setIsLoading(false);
-      if (!resultSkillDelete.isSuccess) {
-        setErrorMessage(resultSkillDelete.message);
-      }
+      setErrorMessage(resultSkillDelete.message);
     } catch (error) {
       console.log('sendSkillDelete | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');

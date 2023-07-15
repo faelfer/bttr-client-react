@@ -39,7 +39,7 @@ export default function SignUp() {
     } else if (!password) {
       message = 'Preencha o campo senha';
     } else if (isInvalidPassword(password)) {
-      message = 'Campo senha deve conter números e letras.';
+      message = 'Campo senha deve conter número, símbolo, letra maiúscula e minúscula';
     } else if (password.length < 4 || password.length > 8) {
       message = 'Campo senha deve conter de 4 à 8 caracteres';
     }

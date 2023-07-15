@@ -7,6 +7,7 @@ import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
 import DescriptionForm from '../../components/DescriptionForm';
+import SelectOutline from '../../components/SelectOutlineForm';
 import InputOutlineForm from '../../components/InputOutlineForm';
 import ButtonContained from '../../components/ButtonContained';
 import ButtonOutlined from '../../components/ButtonOutlined';
@@ -20,13 +21,15 @@ import {
   TimeDeleteByIdFetch,
   TimeUpdateByIdFetch,
 } from '../../api/services/TimeAPI';
+import { SkillsFromUserFetch } from '../../api/services/SkillAPI';
 
 export default function TimeForm() {
   const { timeId } = useParams();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [name, setName] = useState('');
+  const [skills, setSkills] = useState([]);
+  const [skillSelected, setSkillSelected] = useState(null);
   const [minutes, setMinutes] = useState(1);
 
   const token = getToken();
@@ -44,9 +47,34 @@ export default function TimeForm() {
         setErrorMessage(resultTime.message);
       } else {
         setMinutes(resultTime.time.minutes);
+        setSkillSelected(resultTime.time.skill.id);
       }
     } catch (error) {
       console.log('getTimeById | error: ', error);
+      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setIsLoading(false);
+    }
+  }
+
+  async function getSkillsFromUser() {
+    setIsLoading(true);
+
+    try {
+      const resultSkills = await SkillsFromUserFetch(token);
+      console.log('getSkillsFromUser | resultSkills: ', resultSkills);
+
+      setIsLoading(false);
+      if (!resultSkills.isSuccess) {
+        setErrorMessage(resultSkills.message);
+      } else {
+        const skillsToOptions = (resultSkills.skills).map((skillPhase) => ({
+          id: skillPhase.id,
+          value: skillPhase.name,
+        }));
+        setSkills(skillsToOptions);
+      }
+    } catch (error) {
+      console.log('getSkillsFromUser | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
       setIsLoading(false);
     }
@@ -56,6 +84,7 @@ export default function TimeForm() {
     if (timeId) {
       getTimeById(timeId);
     }
+    getSkillsFromUser();
   }, [timeId, navigate, token]);
 
   async function sendTimeCreate() {
@@ -64,15 +93,13 @@ export default function TimeForm() {
     try {
       const resultTimeCreate = await TimeCreateFetch(
         token,
-        name,
-        minutes,
+        skillSelected,
+        parseInt(minutes, 10),
       );
       console.log('sendTimeCreate | resultTimeCreate: ', resultTimeCreate);
 
       setIsLoading(false);
-      if (!resultTimeCreate.isSuccess) {
-        setErrorMessage(resultTimeCreate.message);
-      }
+      setErrorMessage(resultTimeCreate.message);
     } catch (error) {
       console.log('sendTimeCreate | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
@@ -87,15 +114,13 @@ export default function TimeForm() {
       const resultTimeUpdate = await TimeUpdateByIdFetch(
         token,
         timeIdToUpdate,
-        name,
-        minutes,
+        skillSelected,
+        parseInt(minutes, 10),
       );
       console.log('sendTimeUpdate | resultTimeUpdate: ', resultTimeUpdate);
 
       setIsLoading(false);
-      if (!resultTimeUpdate.isSuccess) {
-        setErrorMessage(resultTimeUpdate.message);
-      }
+      setErrorMessage(resultTimeUpdate.message);
     } catch (error) {
       console.log('sendTimeUpdate | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
@@ -111,9 +136,7 @@ export default function TimeForm() {
       console.log('sendTimeDelete | resultTimeDelete: ', resultTimeDelete);
 
       setIsLoading(false);
-      if (!resultTimeDelete.isSuccess) {
-        setErrorMessage(resultTimeDelete.message);
-      }
+      setErrorMessage(resultTimeDelete.message);
     } catch (error) {
       console.log('sendTimeDelete | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
@@ -136,6 +159,11 @@ export default function TimeForm() {
             }
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
+          <SelectOutline
+            options={skills}
+            selectValue={skillSelected}
+            onChangeSelect={(optionSelected) => setSkillSelected(optionSelected)}
+          />
           <InputOutlineForm
             inputType="number"
             inputPlaceholder="Digite os minutos"
@@ -157,8 +185,8 @@ export default function TimeForm() {
         </div>
         <LinkRedirect
           description=""
-          descriptionUrl="Voltar ao início"
-          onRedirect={() => navigate('/home', { replace: true })}
+          descriptionUrl="Voltar ao histórico"
+          onRedirect={() => navigate('/times', { replace: true })}
         />
       </div>
     </>

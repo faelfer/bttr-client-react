@@ -2,6 +2,38 @@
 import createExceptionSentry from '../../utils/createExceptionSentry';
 import Axios from '../Axios';
 
+export async function SkillsFromUserFetch(tokenAuthorization, page) {
+  console.log('SkillsFromUserFetch | tokenAuthorization, page:', tokenAuthorization, page);
+  const configRequest = {
+    method: 'get',
+    url: '/skills/skills_from_user',
+    headers: { Authorization: tokenAuthorization },
+  };
+
+  try {
+    const response = await Axios(configRequest);
+    console.log('SkillsFromUserFetch | response.data:', response.data);
+    return {
+      isSuccess: true,
+      message: '',
+      skills: response.data.skills,
+    };
+  } catch (error) {
+    console.log('SkillsFromUserFetch | error:', error.message);
+    createExceptionSentry(
+      error,
+      configRequest.method,
+      configRequest.url,
+      { ...configRequest.headers },
+    );
+
+    return {
+      isSuccess: false,
+      message: 'No momento esse recurso está indisponível, tente novamente mais tarde.',
+    };
+  }
+}
+
 export async function SkillsByPageFetch(tokenAuthorization, page) {
   console.log('SkillsByPageFetch | tokenAuthorization, page:', tokenAuthorization, page);
   const configRequest = {

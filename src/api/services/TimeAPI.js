@@ -68,14 +68,14 @@ export async function TimeByIdFetch(tokenAuthorization, timeID) {
   }
 }
 
-export async function TimeCreateFetch(tokenAuthorization, name, timeDaily) {
-  console.log('TimeCreateFetch | tokenAuthorization, name, timeDaily:', tokenAuthorization, name, timeDaily);
+export async function TimeCreateFetch(tokenAuthorization, skillID, minutes) {
+  console.log('TimeCreateFetch | tokenAuthorization, skillID, minutes:', tokenAuthorization, skillID, minutes);
   const configRequest = {
     method: 'post',
     url: '/times/create_time',
     data: {
-      name,
-      time_daily: timeDaily,
+      skill_id: skillID,
+      minutes,
     },
     headers: { Authorization: tokenAuthorization },
   };
@@ -106,16 +106,22 @@ export async function TimeCreateFetch(tokenAuthorization, name, timeDaily) {
 export async function TimeUpdateByIdFetch(
   tokenAuthorization,
   timeID,
-  name,
-  timeDaily,
+  skillID,
+  minutes,
 ) {
-  console.log('TimeUpdateByIdFetch | tokenAuthorization, name, timeDaily:', tokenAuthorization, name, timeDaily);
+  console.log(
+    'TimeUpdateByIdFetch | tokenAuthorization, skillID, minutes:',
+    tokenAuthorization,
+    timeID,
+    skillID,
+    minutes,
+  );
   const configRequest = {
     method: 'put',
     url: `/times/update_time_by_id/${timeID}`,
     data: {
-      name,
-      time_daily: timeDaily,
+      skill_id: skillID,
+      minutes,
     },
     headers: { Authorization: tokenAuthorization },
   };

@@ -81,7 +81,7 @@ export default function SkillStatistic() {
       } else {
         const initialValue = 0;
         const sumTotalTimes = (resultTimeByDate.times).reduce(
-          (accumulator, currentValue) => accumulator + currentValue.time_daily,
+          (accumulator, currentValue) => accumulator + currentValue.minutes,
           initialValue,
         );
         setTimeTotal(sumTotalTimes);
