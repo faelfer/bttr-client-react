@@ -14,7 +14,7 @@ export default function NavBar() {
           <NavLink className="navbar__link" to="/home">
             <p className="navbar__action--margin">Início</p>
           </NavLink>
-          <NavLink className="navbar__link" to="/time-table">
+          <NavLink className="navbar__link" to="/times">
             <p className="navbar__action--margin">Tempo</p>
           </NavLink>
           <NavLink className="navbar__link" to="/profile">

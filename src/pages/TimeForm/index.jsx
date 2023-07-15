@@ -15,14 +15,14 @@ import LinkRedirect from '../../components/LinkRedirect';
 import './styles.css';
 
 import {
-  SkillByIdFetch,
-  SkillCreateFetch,
-  SkillDeleteByIdFetch,
-  SkillUpdateByIdFetch,
-} from '../../api/services/SkillAPI';
+  TimeByIdFetch,
+  TimeCreateFetch,
+  TimeDeleteByIdFetch,
+  TimeUpdateByIdFetch,
+} from '../../api/services/TimeAPI';
 
-export default function SkillForm() {
-  const { skillId } = useParams();
+export default function TimeForm() {
+  const { timeId } = useParams();
 
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -32,91 +32,91 @@ export default function SkillForm() {
   const token = getToken();
   const history = useHistory();
 
-  async function getSkillById(skillIdToRead) {
+  async function getTimeById(timeIdToRead) {
     setIsLoading(true);
 
     try {
-      const resultSkill = await SkillByIdFetch(token, skillIdToRead);
-      console.log('getSkillById | resultSkill: ', resultSkill);
+      const resultTime = await TimeByIdFetch(token, timeIdToRead);
+      console.log('getTimeById | resultTime: ', resultTime);
 
       setIsLoading(false);
-      if (!resultSkill.isSuccess) {
-        setErrorMessage(resultSkill.message);
+      if (!resultTime.isSuccess) {
+        setErrorMessage(resultTime.message);
       } else {
-        setName(resultSkill.skill.name);
-        setTimeDaily(resultSkill.skill.timeDaily);
+        setName(resultTime.skill.name);
+        setTimeDaily(resultTime.skill.timeDaily);
       }
     } catch (error) {
-      console.log('getSkillById | error: ', error);
+      console.log('getTimeById | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    if (skillId) {
-      getSkillById(skillId);
+    if (timeId) {
+      getTimeById(timeId);
     }
-  }, [skillId, history, token]);
+  }, [timeId, history, token]);
 
-  async function sendSkillCreate() {
+  async function sendTimeCreate() {
     setIsLoading(true);
 
     try {
-      const resultSkillCreate = await SkillCreateFetch(
+      const resultTimeCreate = await TimeCreateFetch(
         token,
         name,
         timeDaily,
       );
-      console.log('sendSkillCreate | resultSkillCreate: ', resultSkillCreate);
+      console.log('sendTimeCreate | resultTimeCreate: ', resultTimeCreate);
 
       setIsLoading(false);
-      if (!resultSkillCreate.isSuccess) {
-        setErrorMessage(resultSkillCreate.message);
+      if (!resultTimeCreate.isSuccess) {
+        setErrorMessage(resultTimeCreate.message);
       }
     } catch (error) {
-      console.log('sendSkillCreate | error: ', error);
+      console.log('sendTimeCreate | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
       setIsLoading(false);
     }
   }
 
-  async function sendSkillUpdate(skillIdToUpdate) {
+  async function sendTimeUpdate(timeIdToUpdate) {
     setIsLoading(true);
 
     try {
-      const resultSkillUpdate = await SkillUpdateByIdFetch(
+      const resultTimeUpdate = await TimeUpdateByIdFetch(
         token,
-        skillIdToUpdate,
+        timeIdToUpdate,
         name,
         timeDaily,
       );
-      console.log('sendSkillUpdate | resultSkillUpdate: ', resultSkillUpdate);
+      console.log('sendTimeUpdate | resultTimeUpdate: ', resultTimeUpdate);
 
       setIsLoading(false);
-      if (!resultSkillUpdate.isSuccess) {
-        setErrorMessage(resultSkillUpdate.message);
+      if (!resultTimeUpdate.isSuccess) {
+        setErrorMessage(resultTimeUpdate.message);
       }
     } catch (error) {
-      console.log('sendSkillUpdate | error: ', error);
+      console.log('sendTimeUpdate | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
       setIsLoading(false);
     }
   }
 
-  async function sendSkillDelete(skillIdToDelete) {
+  async function sendTimeDelete(timeIdToDelete) {
     setIsLoading(true);
 
     try {
-      const resultSkillDelete = await SkillDeleteByIdFetch(token, skillIdToDelete);
-      console.log('sendSkillDelete | resultSkillDelete: ', resultSkillDelete);
+      const resultTimeDelete = await TimeDeleteByIdFetch(token, timeIdToDelete);
+      console.log('sendTimeDelete | resultTimeDelete: ', resultTimeDelete);
 
       setIsLoading(false);
-      if (!resultSkillDelete.isSuccess) {
-        setErrorMessage(resultSkillDelete.message);
+      if (!resultTimeDelete.isSuccess) {
+        setErrorMessage(resultTimeDelete.message);
       }
     } catch (error) {
-      console.log('sendSkillDelete | error: ', error);
+      console.log('sendTimeDelete | error: ', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
       setIsLoading(false);
     }
@@ -128,12 +128,12 @@ export default function SkillForm() {
       <Load isShow={isLoading} />
       <div className="content--align">
         <div className="form">
-          <HeaderForm title="Habilidade" />
+          <HeaderForm title="Tempo" />
           <DescriptionForm
             description={
-              skillId
+              timeId
                 ? 'Edite suas informações.'
-                : 'Crie uma nova habilidade para começar a registrar o quanto você se dedicou.'
+                : 'Crie um novo registro de tempo para demonstrar o quanto você se dedicou.'
             }
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
@@ -149,15 +149,15 @@ export default function SkillForm() {
             onChangeInput={(textValue) => setTimeDaily(textValue)}
           />
           <ButtonContained
-            text={skillId ? 'Editar' : 'Criar'}
-            onAction={() => (skillId
-              ? sendSkillUpdate(skillId)
-              : sendSkillCreate())}
+            text={timeId ? 'Editar' : 'Criar'}
+            onAction={() => (timeId
+              ? sendTimeUpdate(timeId)
+              : sendTimeCreate())}
           />
-          {skillId ? (
+          {timeId ? (
             <ButtonOutlined
               text="Apagar"
-              onAction={() => sendSkillDelete(skillId)}
+              onAction={() => sendTimeDelete(timeId)}
             />
           ) : null }
         </div>

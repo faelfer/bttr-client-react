@@ -5,16 +5,16 @@ import { getToken } from '../../services/auth';
 
 import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
-import Abiliity from './components/Abiliity';
+import Time from './components/Time';
 import ButtonContained from '../../components/ButtonContained';
 import ButtonPagination from '../../components/ButtonPagination';
 
 import './styles.css';
 
-import { SkillsByPageFetch } from '../../api/services/SkillAPI';
+import { TimesByPageFetch } from '../../api/services/TimeAPI';
 
-export default function Home() {
-  const [skills, setSkills] = useState([]);
+export default function TimeHistoric() {
+  const [times, setTime] = useState([]);
   const [page, setPage] = useState(1);
   const [countPages, setCountPages] = useState(1);
   const [errorMessage, setErrorMessage] = useState('');
@@ -28,15 +28,15 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      const resultSkills = await SkillsByPageFetch(token, goToPage);
+      const resultSkills = await TimesByPageFetch(token, goToPage);
       console.log('getSkillsByPage | resultSkills: ', resultSkills);
 
       setIsLoading(false);
       if (!resultSkills.isSuccess) {
         setErrorMessage(resultSkills.message);
       } else {
-        setSkills(resultSkills.skills);
-        const countTotalPages = Math.ceil(((resultSkills.skills).length) / amountItensByPage);
+        setTime(resultSkills.times);
+        const countTotalPages = Math.ceil(((resultSkills.times).length) / amountItensByPage);
         setCountPages(countTotalPages);
       }
     } catch (error) {
@@ -57,15 +57,14 @@ export default function Home() {
       <div className="content--align">
         <div className="form">
           <ButtonContained
-            text="Criar habilidade"
-            onAction={() => history.push('/skills/create')}
+            text="Criar tempo"
+            onAction={() => history.push('/times/create')}
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
-          {skills.map((skillLoop) => (
-            <Abiliity
-              abiliityParam={skillLoop}
-              onUpdate={() => history.push(`/skills/${skillLoop.id}/update`)}
-              onStatistic={() => history.push(`/skills/${skillLoop.id}/statistic`)}
+          {times.map((timeLoop) => (
+            <Time
+              time={timeLoop}
+              onUpdate={() => history.push(`/times/${timeLoop.id}/update`)}
             />
           ))}
           <ButtonPagination

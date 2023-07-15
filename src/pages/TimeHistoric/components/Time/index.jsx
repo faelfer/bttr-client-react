@@ -2,17 +2,17 @@ import React from 'react';
 import './styles.css';
 import { minToTimeFormat, formatDateCalendarWithHourAndMinutes } from '../../../../utils/timeFormat';
 
-export default function Time({ history, time, key }) {
+export default function Time({ time, onUpdate }) {
   return (
-    <div className="time" key={key} onClick={() => history.push(`/time-detail/${time._id}`)}>
+    <div className="time" key={time.id} onClick={() => onUpdate()}>
       <p className="time__minutes">
         {minToTimeFormat(time.minutes)}
       </p>
       <p className="time__date">
-        {formatDateCalendarWithHourAndMinutes(time.createAt)}
+        {formatDateCalendarWithHourAndMinutes(time.created)}
       </p>
       <p className="time__abiliity">
-        {time.abiliity.name}
+        {time.skill.name}
       </p>
     </div>
   );

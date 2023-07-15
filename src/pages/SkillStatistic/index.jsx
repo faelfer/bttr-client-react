@@ -67,20 +67,20 @@ export default function SkillStatistic() {
         lastDayToFilterDateIso,
       );
 
-      const resultSkills = await TimesByDateFetch(
+      const resultTimeByDate = await TimesByDateFetch(
         token,
         skillIdToFilter,
         firstDayToFilterDateIso,
         lastDayToFilterDateIso,
       );
-      console.log('getTimesByDate | resultSkills: ', resultSkills);
+      console.log('getTimesByDate | resultTimeByDate: ', resultTimeByDate);
 
       setIsLoading(false);
-      if (!resultSkills.isSuccess) {
-        setErrorMessage(resultSkills.message);
+      if (!resultTimeByDate.isSuccess) {
+        setErrorMessage(resultTimeByDate.message);
       } else {
         const initialValue = 0;
-        const sumTotalTimes = (resultSkills.times).reduce(
+        const sumTotalTimes = (resultTimeByDate.times).reduce(
           (accumulator, currentValue) => accumulator + currentValue.time_daily,
           initialValue,
         );
@@ -108,7 +108,7 @@ export default function SkillStatistic() {
         <div className="form">
           <ButtonContained
             text="Criar tempo"
-            onAction={() => history.push('/skills/create')}
+            onAction={() => history.push('/times/create')}
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           {skill !== null ? (

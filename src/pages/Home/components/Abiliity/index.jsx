@@ -6,7 +6,7 @@ import './styles.css';
 
 import { minToTimeFormat } from '../../../../utils/timeFormat';
 
-export default function Abiliity({ abiliityParam, onEdit, onHistoric }) {
+export default function Abiliity({ abiliityParam, onUpdate, onStatistic }) {
   return (
     <div className="abiliity" key={abiliityParam.id}>
       <p className="abiliity__name">
@@ -17,11 +17,11 @@ export default function Abiliity({ abiliityParam, onEdit, onHistoric }) {
       </p>
       <ButtonContained
         text="Editar"
-        onAction={() => onEdit()}
+        onAction={() => onUpdate()}
       />
       <ButtonContained
-        text="Histórico"
-        onAction={() => onHistoric()}
+        text="Estatística"
+        onAction={() => onStatistic()}
       />
     </div>
   );
