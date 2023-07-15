@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import {
-  withRouter,
-  useHistory,
-} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
@@ -15,12 +12,12 @@ import './styles.css';
 
 import { ForgotPasswordFetch } from '../../api/services/UserAPI';
 
-function ForgotPassword() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function validateForgotPassword() {
     let message = '';
@@ -76,10 +73,8 @@ function ForgotPassword() {
       <LinkRedirect
         description=" "
         descriptionUrl="Voltar ao login"
-        onRedirect={() => history.push('/sign-up')}
+        onRedirect={() => navigate('/sign-up', { replace: true })}
       />
     </div>
   );
 }
-
-export default withRouter(ForgotPassword);

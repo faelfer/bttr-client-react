@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 import isInvalidPassword from '../../utils/rules/isInvalidPassword';
@@ -22,7 +22,7 @@ export default function RedefinePasswordForm() {
   const [passwordNew, setPasswordNew] = useState('');
   const [passwordNewConfirm, setPasswordNewConfirm] = useState('');
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const token = getToken();
 
   function validateRedefinePassword() {
@@ -87,7 +87,7 @@ export default function RedefinePasswordForm() {
 
   return (
     <>
-      <NavBar navigation={history} />
+      <NavBar navigation={navigate} />
       <Load isShow={isLoading} />
       <div className="content--align">
         <div className="form">
@@ -119,7 +119,7 @@ export default function RedefinePasswordForm() {
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao perfil"
-          onRedirect={() => history.push('/profile')}
+          onRedirect={() => navigate('/profile', { replace: true })}
         />
       </div>
     </>

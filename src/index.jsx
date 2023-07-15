@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 
 import './index.css';
-import App from './App';
+
+import routes from './routes';
 import reportWebVitals from './reportWebVitals';
 
 const { version } = require('../package.json');
@@ -22,7 +24,7 @@ Sentry.init({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={routes} />
   </React.StrictMode>,
 );
 

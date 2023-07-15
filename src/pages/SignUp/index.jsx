@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import isInvalidEmail from '../../utils/rules/isInvalidEmail';
 import isInvalidPassword from '../../utils/rules/isInvalidPassword';
@@ -15,14 +15,14 @@ import './styles.css';
 
 import { SignUpFetch } from '../../api/services/UserAPI';
 
-function SignUp() {
+export default function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function validateSignUp() {
     let message = '';
@@ -69,7 +69,7 @@ function SignUp() {
         if (!resultSignUp.isSuccess) {
           setErrorMessage(resultSignUp.message);
         } else {
-          history.push('/');
+          navigate('/', { replace: true });
         }
       } catch (error) {
         console.log('sendSignUp | error: ', error);
@@ -112,10 +112,8 @@ function SignUp() {
       <LinkRedirect
         description="Tem uma conta? "
         descriptionUrl="Conecte-se"
-        onRedirect={() => history.push('/')}
+        onRedirect={() => navigate('/', { replace: true })}
       />
     </div>
   );
 }
-
-export default withRouter(SignUp);

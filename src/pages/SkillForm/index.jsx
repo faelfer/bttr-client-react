@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 
@@ -30,7 +30,7 @@ export default function SkillForm() {
   const [timeDaily, setTimeDaily] = useState(1);
 
   const token = getToken();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   async function getSkillById(skillIdToRead) {
     setIsLoading(true);
@@ -57,7 +57,7 @@ export default function SkillForm() {
     if (skillId) {
       getSkillById(skillId);
     }
-  }, [skillId, history, token]);
+  }, [skillId, navigate, token]);
 
   async function sendSkillCreate() {
     setIsLoading(true);
@@ -124,7 +124,7 @@ export default function SkillForm() {
 
   return (
     <>
-      <NavBar navigation={history} />
+      <NavBar navigation={navigate} />
       <Load isShow={isLoading} />
       <div className="content--align">
         <div className="form">
@@ -164,7 +164,7 @@ export default function SkillForm() {
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao início"
-          onRedirect={() => history.push('/home')}
+          onRedirect={() => navigate('/home', { replace: true })}
         />
       </div>
     </>

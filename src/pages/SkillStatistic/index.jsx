@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 
@@ -22,7 +22,7 @@ export default function SkillStatistic() {
   const [isLoading, setIsLoading] = useState(false);
 
   const token = getToken();
-  const history = useHistory();
+  const navigate = useNavigate();
   const currentDate = new Date();
 
   async function getSkillById(skillIdToRead) {
@@ -98,17 +98,17 @@ export default function SkillStatistic() {
       getSkillById(skillId);
       getTimesByDate(skillId, currentDate);
     }
-  }, [skillId, history, token]);
+  }, [skillId, navigate, token]);
 
   return (
     <>
-      <NavBar navigation={history} />
+      <NavBar navigation={navigate} />
       <Load isShow={isLoading} />
       <div className="content--align">
         <div className="form">
           <ButtonContained
             text="Criar tempo"
-            onAction={() => history.push('/times/create')}
+            onAction={() => navigate('/times/create', { replace: true })}
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           {skill !== null ? (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { getToken, logout } from '../../services/auth';
 import isInvalidEmail from '../../utils/rules/isInvalidEmail';
@@ -28,7 +28,7 @@ export default function ProfileForm() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const token = getToken();
 
   async function getProfile() {
@@ -56,7 +56,7 @@ export default function ProfileForm() {
 
   useEffect(() => {
     getProfile();
-  }, [history, token]);
+  }, [navigate, token]);
 
   function validateProfileUpdate() {
     let message = '';
@@ -115,7 +115,7 @@ export default function ProfileForm() {
         setErrorMessage(resultProfileDelete.message);
       } else {
         logout();
-        history.push('/');
+        navigate('/', { replace: true });
       }
     } catch (error) {
       console.log('sendProfileDelete | error: ', error);
@@ -127,7 +127,7 @@ export default function ProfileForm() {
   async function exit() {
     try {
       logout();
-      history.push('/');
+      navigate('/', { replace: true });
     } catch (error) {
       console.log('exit | error', error);
       setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
@@ -136,7 +136,7 @@ export default function ProfileForm() {
 
   return (
     <>
-      <NavBar navigation={history} />
+      <NavBar navigation={navigate} />
       <Load isShow={isLoading} />
       <div className="content--align">
         <div className="form">
@@ -170,7 +170,7 @@ export default function ProfileForm() {
         <LinkRedirect
           description=""
           descriptionUrl="Redefinir a senha"
-          onRedirect={() => history.push('/redefine-password')}
+          onRedirect={() => navigate('/redefine-password', { replace: true })}
         />
       </div>
     </>

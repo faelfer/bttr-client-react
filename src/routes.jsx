@@ -1,68 +1,128 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { isAuthenticated } from './services/auth';
+
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import ForgotPassword from './pages/ForgotPassword';
+import Profile from './pages/Profile';
+import RedefinePassword from './pages/RedefinePassword';
 import Home from './pages/Home';
 import TimeHistoric from './pages/TimeHistoric';
 import TimeForm from './pages/TimeForm';
 import SkillForm from './pages/SkillForm';
 import SkillStatistic from './pages/SkillStatistic';
-import Profile from './pages/Profile';
-import RedefinePassword from './pages/RedefinePassword';
+import PageNotFound from './pages/PageNotFound';
 
-function PrivateRoute({ children, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={({ location }) => (isAuthenticated() ? (
-        children
-      ) : (
-        <Redirect
-          to={{
-            pathname: '/',
-            state: { from: location },
-          }}
-        />
-      ))}
-    />
-  );
+function RequireAuth({ children }) {
+  const isAuthUser = isAuthenticated();
+  // console.log('RequireAuth | token: ', token);
+
+  if (!isAuthUser) {
+    // console.log('RequireAuth | if | token: ', token);
+    // Redirect them to the /login page, but save the current location they were
+    // trying to go to when they were redirected. This allows us to send them
+    // along to that page after they login, which is a nicer user experience
+    // than dropping them off on the home page.
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 }
 
-function Routes() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={SignIn} />
-        <Route path="/sign-up" component={SignUp} />
-        <Route path="/forgot-password" component={ForgotPassword} />
-        <PrivateRoute path="/home" component={Home} />
-        <PrivateRoute path="/skills/create" component={SkillForm} />
-        <PrivateRoute path="/skills/:skillId/update" component={SkillForm} />
-        <PrivateRoute path="/skills/:skillId/statistic" component={SkillStatistic} />
-        <PrivateRoute path="/times" component={TimeHistoric} />
-        <PrivateRoute path="/times/create" component={TimeForm} />
-        <PrivateRoute path="/times/:timeId/update" component={TimeForm} />
-        <PrivateRoute path="/profile" component={Profile} />
-        <PrivateRoute path="/redefine-password" component={RedefinePassword} />
-        <Route
-          path="*"
-          component={() => (
-            <h1 style={{ display: 'flex', justifyContent: 'center', color: '#f4f5f7' }}>
-              Página não foi encontrada
-            </h1>
-          )}
-        />
-      </Switch>
-    </BrowserRouter>
-  );
-}
+const routes = createBrowserRouter([
+  {
+    path: '/',
+    element: <SignIn />,
+  },
+  {
+    path: '/sign-up',
+    element: <SignUp />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPassword />,
+  },
+  {
+    path: '/profile',
+    element: (
+      <RequireAuth>
+        <Profile />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '/redefine-password',
+    element: (
+      <RequireAuth>
+        <RedefinePassword />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '/home',
+    element: (
+      <RequireAuth>
+        <Home />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '/skills/create',
+    element: (
+      <RequireAuth>
+        <SkillForm />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '/skills/:skillId/update',
+    element: (
+      <RequireAuth>
+        <SkillForm />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '/skills/:skillId/statistic',
+    element: (
+      <RequireAuth>
+        <SkillStatistic />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '/times',
+    element: (
+      <RequireAuth>
+        <TimeHistoric />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '/times/create',
+    element: (
+      <RequireAuth>
+        <TimeForm />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '/times/:timeId/update',
+    element: (
+      <RequireAuth>
+        <TimeForm />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: '*',
+    element: (
+      <PageNotFound />
+    ),
+  },
+]);
 
-export default Routes;
+export default routes;

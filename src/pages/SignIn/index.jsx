@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter, useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { login, isAuthenticated } from '../../services/auth';
 
@@ -14,25 +14,25 @@ import './styles.css';
 
 import { SignInFetch } from '../../api/services/UserAPI';
 
-function SignIn() {
+export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     function redirectAppScreen() {
       const authenticated = isAuthenticated();
       // console.log("SignIn | authenticated: ",authenticated);
       if (authenticated) {
-        history.push('/home');
+        navigate('/home', { replace: true });
       }
     }
 
     redirectAppScreen();
-  }, [history]);
+  }, [navigate]);
 
   function validateSignIn() {
     let message = '';
@@ -68,7 +68,7 @@ function SignIn() {
           setErrorMessage(resultSignIn.message);
         } else {
           login(`Token ${resultSignIn.user.token}`);
-          history.push('/home');
+          navigate('/home', { replace: true });
         }
       } catch (error) {
         console.log('sendSignIn | error: ', error);
@@ -102,17 +102,15 @@ function SignIn() {
         />
         <ButtonTransparent
           text="Esqueceu a senha?"
-          onAction={() => history.push('/forgot-password')}
+          onAction={() => navigate('/forgot-password', { replace: true })}
         />
       </div>
 
       <LinkRedirect
         description="Não tem uma conta? "
         descriptionUrl="Cadastre-se"
-        onRedirect={() => history.push('/sign-up')}
+        onRedirect={() => navigate('/sign-up', { replace: true })}
       />
     </div>
   );
 }
-
-export default withRouter(SignIn);

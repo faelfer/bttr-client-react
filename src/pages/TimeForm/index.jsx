@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 
@@ -27,10 +27,10 @@ export default function TimeForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
-  const [timeDaily, setTimeDaily] = useState(1);
+  const [minutes, setMinutes] = useState(1);
 
   const token = getToken();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   async function getTimeById(timeIdToRead) {
     setIsLoading(true);
@@ -43,8 +43,7 @@ export default function TimeForm() {
       if (!resultTime.isSuccess) {
         setErrorMessage(resultTime.message);
       } else {
-        setName(resultTime.skill.name);
-        setTimeDaily(resultTime.skill.timeDaily);
+        setMinutes(resultTime.time.minutes);
       }
     } catch (error) {
       console.log('getTimeById | error: ', error);
@@ -57,7 +56,7 @@ export default function TimeForm() {
     if (timeId) {
       getTimeById(timeId);
     }
-  }, [timeId, history, token]);
+  }, [timeId, navigate, token]);
 
   async function sendTimeCreate() {
     setIsLoading(true);
@@ -66,7 +65,7 @@ export default function TimeForm() {
       const resultTimeCreate = await TimeCreateFetch(
         token,
         name,
-        timeDaily,
+        minutes,
       );
       console.log('sendTimeCreate | resultTimeCreate: ', resultTimeCreate);
 
@@ -89,7 +88,7 @@ export default function TimeForm() {
         token,
         timeIdToUpdate,
         name,
-        timeDaily,
+        minutes,
       );
       console.log('sendTimeUpdate | resultTimeUpdate: ', resultTimeUpdate);
 
@@ -124,7 +123,7 @@ export default function TimeForm() {
 
   return (
     <>
-      <NavBar navigation={history} />
+      <NavBar navigation={navigate} />
       <Load isShow={isLoading} />
       <div className="content--align">
         <div className="form">
@@ -138,15 +137,10 @@ export default function TimeForm() {
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           <InputOutlineForm
-            inputPlaceholder="Digite nome da habilidade"
-            inputValue={name}
-            onChangeInput={(textValue) => setName(textValue)}
-          />
-          <InputOutlineForm
             inputType="number"
-            inputPlaceholder="Digite o tempo diário"
-            inputValue={timeDaily}
-            onChangeInput={(textValue) => setTimeDaily(textValue)}
+            inputPlaceholder="Digite os minutos"
+            inputValue={minutes}
+            onChangeInput={(textValue) => setMinutes(textValue)}
           />
           <ButtonContained
             text={timeId ? 'Editar' : 'Criar'}
@@ -164,7 +158,7 @@ export default function TimeForm() {
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao início"
-          onRedirect={() => history.push('/home')}
+          onRedirect={() => navigate('/home', { replace: true })}
         />
       </div>
     </>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 
@@ -21,7 +21,7 @@ export default function TimeHistoric() {
   const [isLoading, setIsLoading] = useState(false);
 
   const token = getToken();
-  const history = useHistory();
+  const navigate = useNavigate();
   const amountItensByPage = 10;
 
   async function getSkillsByPage(goToPage) {
@@ -48,23 +48,23 @@ export default function TimeHistoric() {
 
   useEffect(() => {
     getSkillsByPage(1);
-  }, [token, history]);
+  }, [token, navigate]);
 
   return (
     <>
-      <NavBar navigation={history} />
+      <NavBar navigation={navigate} />
       <Load isShow={isLoading} />
       <div className="content--align">
         <div className="form">
           <ButtonContained
             text="Criar tempo"
-            onAction={() => history.push('/times/create')}
+            onAction={() => navigate('/times/create', { replace: true })}
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           {times.map((timeLoop) => (
             <Time
               time={timeLoop}
-              onUpdate={() => history.push(`/times/${timeLoop.id}/update`)}
+              onUpdate={() => navigate(`/times/${timeLoop.id}/update`, { replace: true })}
             />
           ))}
           <ButtonPagination

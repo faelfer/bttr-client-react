@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 
@@ -21,7 +21,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   const token = getToken();
-  const history = useHistory();
+  const navigate = useNavigate();
   const amountItensByPage = 10;
 
   async function getSkillsByPage(goToPage) {
@@ -48,24 +48,24 @@ export default function Home() {
 
   useEffect(() => {
     getSkillsByPage(1);
-  }, [token, history]);
+  }, [token, navigate]);
 
   return (
     <>
-      <NavBar navigation={history} />
+      <NavBar navigation={navigate} />
       <Load isShow={isLoading} />
       <div className="content--align">
         <div className="form">
           <ButtonContained
             text="Criar habilidade"
-            onAction={() => history.push('/skills/create')}
+            onAction={() => navigate('/skills/create', { replace: true })}
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           {skills.map((skillLoop) => (
             <Abiliity
               abiliityParam={skillLoop}
-              onUpdate={() => history.push(`/skills/${skillLoop.id}/update`)}
-              onStatistic={() => history.push(`/skills/${skillLoop.id}/statistic`)}
+              onUpdate={() => navigate(`/skills/${skillLoop.id}/update`, { replace: true })}
+              onStatistic={() => navigate(`/skills/${skillLoop.id}/statistic`, { replace: true })}
             />
           ))}
           <ButtonPagination
