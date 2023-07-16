@@ -11,7 +11,6 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
   useEffect(() => {
     function datesMonth() {
       console.log(`Data Atual: ${currentDate}`);
-      // console.log(`Hoje: ${currentDate.getDate()}/${((currentDate.getMonth())+1)}/${currentDate.getFullYear()}`);
       const currentYear = currentDate.getFullYear();
       // console.log(`Ano Atual: ${currentYear}`);
       const currentMouth = currentDate.getMonth();
@@ -49,7 +48,7 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
       const idealSituation = (businessDaysSoFar * goalPerDay);
       // console.log(`Situação Ideal: ${idealSituation}`);
       const currentPercentage = ((goalDone * 100) / goalMonth);
-      console.log(`Ideal percentage so far: ${parseInt((businessDaysSoFar * 100) / businessDays)}%`);
+      console.log(`Ideal percentage so far: ${parseInt((businessDaysSoFar * 100) / businessDays, 10)}%`);
 
       return {
         goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining,
@@ -60,32 +59,39 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
       const {
         goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining,
       } = await calculateProgress(abiliity.time_daily, timeTotal);
-      // console.log("renderItem: ", goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining);
+      console.log(
+        'renderItem: ',
+        goalMonth,
+        idealSituation,
+        currentPercentage,
+        goalRemaining,
+        daysRemaining,
+      );
 
       if (timeTotal >= goalMonth) {
         console.log('renderItem | if: Parabéns, você concluiu a meta estabelecida!');
 
-        setPercentage(`${parseInt(currentPercentage)}%`);
+        setPercentage(`${parseInt(currentPercentage, 10)}%`);
         setLackText('Parabéns, objetivo concluido!');
         console.log('================================================================');
       } else if (timeTotal === idealSituation) {
         console.log('renderItem | else if: Você está de acordo com a meta estabelecida.');
 
-        setPercentage(`${parseInt(currentPercentage)}%`);
+        setPercentage(`${parseInt(currentPercentage, 10)}%`);
         setLackText('Progresso ideal alcançado');
         setSuggestionText((`${(minToTimeFormat(goalRemaining)).toString()} para atingir o objetivo`));
         console.log('================================================================');
       } else if (timeTotal > idealSituation) {
         console.log('renderItem | else if: Você ultrapassou a meta estabelecida.');
 
-        setPercentage(`${parseInt(currentPercentage)}%`);
+        setPercentage(`${parseInt(currentPercentage, 10)}%`);
         setLackText((`${(minToTimeFormat(timeTotal - idealSituation)).toString()} acima do ideal`));
         setSuggestionText((`${(minToTimeFormat(goalRemaining)).toString()} para atingir o objetivo`));
         console.log('================================================================');
       } else {
         console.warn('renderItem | else: Você está abaixo da meta estabelecida.');
 
-        setPercentage(`${parseInt(currentPercentage)}%`);
+        setPercentage(`${parseInt(currentPercentage, 10)}%`);
         setLackText((`${(minToTimeFormat(idealSituation - timeTotal)).toString()} para o progresso ideal`));
         setSuggestionText((`${(minToTimeFormat(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString()} é sugerido para hoje`));
         console.log('================================================================');
@@ -99,7 +105,7 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
     <div className="abstract">
       <div className="abstract__progress">
         <div style={{
-          width: (parseInt(percentage) > 100 ? '100%' : percentage),
+          width: (parseInt(percentage, 10) > 100 ? '100%' : percentage),
           height: 30,
           borderRadius: 5,
           backgroundColor: '#309af4',
@@ -109,7 +115,7 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
           color: '#ffffff',
         }}
         >
-          {`${parseInt(percentage)}%`}
+          {`${parseInt(percentage, 10)}%`}
         </div>
       </div>
       <p className="time__abiliity">

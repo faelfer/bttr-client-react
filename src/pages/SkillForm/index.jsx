@@ -44,7 +44,7 @@ export default function SkillForm() {
         setErrorMessage(resultSkill.message);
       } else {
         setName(resultSkill.skill.name);
-        setTimeDaily(resultSkill.skill.timeDaily);
+        setTimeDaily(resultSkill.skill.time_daily);
       }
     } catch (error) {
       console.log('getSkillById | error: ', error);
