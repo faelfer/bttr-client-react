@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ButtonContained from '../../../../components/ButtonContained';
+import ButtonOutlined from '../../../../components/ButtonOutlined';
 
 import './styles.css';
 
@@ -19,7 +20,7 @@ export default function Abiliity({ abiliityParam, onUpdate, onStatistic }) {
         text="Editar"
         onAction={() => onUpdate()}
       />
-      <ButtonContained
+      <ButtonOutlined
         text="Estatística"
         onAction={() => onStatistic()}
       />

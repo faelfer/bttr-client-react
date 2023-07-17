@@ -4,12 +4,27 @@
   justify-content: space-around;
   align-items: center;
   width: 75%;
-  height: 95px;
+  height: 150px;
   background-color: transparent;
+  border-color: var(--on-primary-color);
+  border-style: solid;
+  border-width: thin;
+  border-radius: 6px;
+  margin: 10px 10px 10px 10px;
+  padding: 16px 0px;
 }
 
 .abstract__progress {
-  width: 100%;
+  width: 85%;
   border-radius: 5px;
   background-color: var(--on-primary-color);
+  margin: 10px 0px;
+}
+
+.text__abiliity {
+  font-size: 14px;
+  font-weight: 450;
+  margin: 5px 0px;
+  padding: 0;
+  color: var(--on-primary-color);
 }

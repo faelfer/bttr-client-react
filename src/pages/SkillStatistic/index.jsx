@@ -7,6 +7,7 @@ import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
 import Abstract from './components/Abstract';
 import ButtonContained from '../../components/ButtonContained';
+import LinkRedirect from '../../components/LinkRedirect';
 
 import './styles.css';
 
@@ -119,6 +120,11 @@ export default function SkillStatistic() {
             />
           ) : null}
         </div>
+        <LinkRedirect
+          description=""
+          descriptionUrl="Voltar ao início"
+          onRedirect={() => navigate('/home', { replace: true })}
+        />
       </div>
     </>
   );

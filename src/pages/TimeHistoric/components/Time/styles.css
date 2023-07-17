@@ -5,10 +5,12 @@
   width: 75%;
   height: 81px;
   background-color: transparent;
-  border-top-style: solid;
-  border-top-color: var(--on-primary-color);
-  border-top-width: thin;
+  border-color: var(--on-primary-color);
+  border-style: solid;
+  border-width: thin;
+  border-radius: 6px;
   padding: 16px 0px;
+  margin: 10px 10px 10px 10px;
 }
 
 .time:hover {
@@ -18,7 +20,7 @@
 .time__minutes {
   font-size: 14px;
   font-weight: bold;
-  margin: 0;
+  margin: 0px 8px;
   padding: 0;
   color: var(--on-primary-color);
 }
@@ -26,7 +28,7 @@
 .time__date {
   font-size: 14px;
   font-weight: 450;
-  margin: 0;
+  margin: 0px 8px;
   padding: 0;
   color: var(--on-primary-color);
 }
@@ -34,7 +36,7 @@
 .time__abiliity {
   font-size: 14px;
   font-weight: 450;
-  margin: 0;
+  margin: 0px 8px;
   padding: 0;
   color: var(--on-primary-color);
 }
