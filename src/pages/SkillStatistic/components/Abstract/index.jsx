@@ -7,10 +7,12 @@ import calculeProgressColorBiggerThen from '../../../../utils/calculeProgressCol
 import './styles.css';
 
 export default function Time({ abiliity, currentDate, timeTotal }) {
+  const [messageProgress, setMessageProgress] = useState('');
   const [percentage, setPercentage] = useState(0);
   const [percentageColor, setPercentageColor] = useState('');
-  const [lackText, setLackText] = useState('');
-  const [suggestionText, setSuggestionText] = useState('');
+  const [timeGoalMonth, setTimeGoalMonth] = useState('');
+  const [timeLack, setTimeLack] = useState('');
+  const [timeSuggestion, setTimeSuggestion] = useState('');
 
   useEffect(() => {
     console.log('useEffect | abiliity, timeTotal, currentDate:', abiliity, timeTotal, currentDate);
@@ -28,31 +30,42 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
       // console.log(`Último Dia do Mês ${lastDayMonth}`);
 
       return {
-        currentYear, currentMouth, currentDay, lastDayMonth,
+        currentYear,
+        currentMouth,
+        currentDay,
+        lastDayMonth,
       };
     }
 
     async function calculateProgress(goalPerDay, goalDone) {
       const {
-        currentYear, currentMouth, currentDay, lastDayMonth,
+        currentYear,
+        currentMouth,
+        currentDay,
+        lastDayMonth,
       } = await datesMonth();
 
       const businessDays = workingDays(lastDayMonth, currentYear, currentMouth);
-      console.log('businessDays: ', businessDays);
+      console.log('calculateProgress | businessDays: ', businessDays);
       const goalMonth = (businessDays * goalPerDay);
-      console.log(`Meta de Minutos: ${goalMonth} | ${minToTimeFormat(goalMonth)}`);
+      console.log('calculateProgress | goalMonth:', goalMonth, minToTimeFormat(goalMonth));
       const goalRemaining = (goalMonth - goalDone);
+      console.log('calculateProgress | goalRemaining:', goalRemaining);
       const businessDaysSoFar = workingDays(currentDay, currentYear, currentMouth);
-      console.log('BusinessDaysSoFar: ', businessDaysSoFar);
+      console.log('calculateProgress | businessDaysSoFar:', businessDaysSoFar);
       const daysRemaining = (businessDays - businessDaysSoFar) + 1;
-      console.log(`Dias Restantes: ${daysRemaining}`);
+      console.log('calculateProgress | daysRemaining:', daysRemaining);
       const idealSituation = (businessDaysSoFar * goalPerDay);
-      // console.log(`Situação Ideal: ${idealSituation}`);
+      console.log('calculateProgress | idealSituation:', idealSituation);
       const currentPercentage = ((goalDone * 100) / goalMonth);
-      console.log(`Ideal percentage so far: ${parseInt((businessDaysSoFar * 100) / businessDays, 10)}%`);
+      console.log('calculateProgress | currentPercentage:', currentPercentage);
 
       return {
-        goalMonth, idealSituation, currentPercentage, goalRemaining, daysRemaining,
+        goalMonth,
+        idealSituation,
+        currentPercentage,
+        goalRemaining,
+        daysRemaining,
       };
     }
 
@@ -74,30 +87,33 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
       );
       const percentageInt = parseInt(currentPercentage, 10);
       const colorFromProgressPercentage = calculeProgressColorBiggerThen(percentageInt);
-
-      setPercentage(percentageInt);
-      setPercentageColor(colorFromProgressPercentage);
+      let messageToProgress = '';
+      let timeToLack = 0;
+      let timeToSuggestion = 0;
 
       if (timeTotal >= goalMonth) {
         console.log('fillSkillProgress | if: Parabéns, você concluiu a meta estabelecida!');
-        setLackText('Parabéns, objetivo concluido!');
-        console.log('================================================================');
+        messageToProgress = 'O acumulado do mês foi concluído!';
       } else if (timeTotal === idealSituation) {
         console.log('fillSkillProgress | else if: Você está de acordo com a meta estabelecida.');
-        setLackText('Progresso ideal alcançado');
-        setSuggestionText((`${(minToTimeFormat(goalRemaining)).toString()} para atingir o objetivo`));
-        console.log('================================================================');
+        messageToProgress = 'O acumulado do dia foi concluido!';
       } else if (timeTotal > idealSituation) {
         console.log('fillSkillProgress | else if: Você ultrapassou a meta estabelecida.');
-        setLackText((`${(minToTimeFormat(timeTotal - idealSituation)).toString()} acima do ideal`));
-        setSuggestionText((`${(minToTimeFormat(goalRemaining)).toString()} para atingir o objetivo`));
-        console.log('================================================================');
+        messageToProgress = 'O acumulado do dia foi ultrapassado!';
+        timeToLack = timeTotal - idealSituation;
+        timeToSuggestion = goalRemaining;
       } else {
         console.warn('fillSkillProgress | else: Você está abaixo da meta estabelecida.');
-        setLackText((`${(minToTimeFormat(idealSituation - timeTotal)).toString()} para o progresso ideal`));
-        setSuggestionText((`${(minToTimeFormat(goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining))).toString()} é sugerido para hoje`));
-        console.log('================================================================');
+        timeToLack = idealSituation - timeTotal;
+        timeToSuggestion = goalRemaining / (daysRemaining === 0 ? 1 : daysRemaining);
       }
+
+      setMessageProgress(messageToProgress);
+      setTimeLack(timeToLack);
+      setTimeSuggestion(timeToSuggestion);
+      setTimeGoalMonth(goalMonth);
+      setPercentage(percentageInt);
+      setPercentageColor(colorFromProgressPercentage);
     }
 
     fillSkillProgress();
@@ -105,34 +121,45 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
 
   return (
     <div className="abstract">
-      <p className="text__abiliity">
-        {abiliity.name}
+      <p className="text__abstract">
+        {(abiliity.name).toUpperCase()}
       </p>
-      <p className="text__abiliity">
+      <p className="text__abstract">
         {`${minToTimeFormat(abiliity.time_daily)} é a meta diária`}
       </p>
+      <p className="text__abstract">
+        {`${minToTimeFormat(timeGoalMonth)} é a meta do mês`}
+      </p>
+      {timeTotal > 0 ? (
+        <p className="text__abstract">
+          {`${minToTimeFormat(timeTotal)} é o acumulado`}
+        </p>
+      ) : null}
       <div className="abstract__progress">
-        <div style={{
-          width: (percentage > 100 ? '100%' : `${percentage}%`),
-          height: 30,
-          borderRadius: 5,
-          backgroundColor: percentageColor,
-          textAlign: 'center',
-          lineHeight: 1.9,
-          fontWeight: 'bold',
-          color: '#ffffff',
-        }}
+        <div
+          className="abstract__percentege"
+          style={{
+            width: (percentage > 100 ? '100%' : `${percentage}%`),
+            backgroundColor: percentageColor,
+          }}
         >
           {`${percentage}%`}
         </div>
       </div>
-      <p className="text__abiliity">
-        {lackText}
-      </p>
-      {suggestionText
+      {messageProgress ? (
+        <p className="text__abstract">
+          {messageProgress}
+        </p>
+      ) : null }
+      {timeLack > 0 ? (
+        <p className="text__abstract">
+          {`${minToTimeFormat(timeLack)} para o acumulado do dia`}
+        </p>
+      ) : null }
+      {timeSuggestion > 0 && timeSuggestion !== timeLack
         ? (
-          <p className="text__abiliity">
-            {suggestionText}
+          <p className="text__abstract">
+            {`${minToTimeFormat(timeSuggestion)} é a sugestão do dia`}
           </p>
         )
         : null}

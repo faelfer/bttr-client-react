@@ -4,7 +4,6 @@
   justify-content: space-around;
   align-items: center;
   width: 75%;
-  height: 150px;
   background-color: transparent;
   border-color: var(--on-primary-color);
   border-style: solid;
@@ -21,7 +20,16 @@
   margin: 10px 0px;
 }
 
-.text__abiliity {
+.abstract__percentege {
+  height: 30px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.text__abstract {
   font-size: 14px;
   font-weight: 450;
   margin: 5px 0px;
