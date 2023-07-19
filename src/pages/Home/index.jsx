@@ -22,7 +22,7 @@ export default function Home() {
 
   const token = getToken();
   const navigate = useNavigate();
-  const amountItensByPage = 10;
+  const amountItensByPage = 5;
 
   async function getSkillsByPage(goToPage) {
     setIsLoading(true);
@@ -36,7 +36,8 @@ export default function Home() {
         setErrorMessage(resultSkills.message);
       } else {
         setSkills(resultSkills.skills);
-        const countTotalPages = Math.ceil(((resultSkills.skills).length) / amountItensByPage);
+        const countTotalPages = Math.ceil(resultSkills.count / amountItensByPage);
+        console.log('getTimesByPage | countTotalPages: ', countTotalPages);
         setCountPages(countTotalPages);
       }
     } catch (error) {

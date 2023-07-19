@@ -22,7 +22,7 @@ export default function TimeHistoric() {
 
   const token = getToken();
   const navigate = useNavigate();
-  const amountItensByPage = 10;
+  const amountItensByPage = 5;
 
   async function getTimesByPage(goToPage) {
     setIsLoading(true);
@@ -36,7 +36,8 @@ export default function TimeHistoric() {
         setErrorMessage(resultTimes.message);
       } else {
         setTime(resultTimes.times);
-        const countTotalPages = Math.ceil(((resultTimes.times).length) / amountItensByPage);
+        const countTotalPages = Math.ceil(resultTimes.count / amountItensByPage);
+        console.log('getTimesByPage | countTotalPages: ', countTotalPages);
         setCountPages(countTotalPages);
       }
     } catch (error) {
