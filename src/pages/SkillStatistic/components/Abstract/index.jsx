@@ -156,7 +156,7 @@ export default function Time({ abiliity, currentDate, timeTotal }) {
           {`${minToTimeFormat(timeLack)} para o acumulado do dia`}
         </p>
       ) : null }
-      {timeSuggestion > 0 && timeSuggestion !== timeLack
+      {timeSuggestion > 0 && timeLack > timeSuggestion
         ? (
           <p className="text__abstract">
             {`${minToTimeFormat(timeSuggestion)} é a sugestão do dia`}
