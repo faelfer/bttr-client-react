@@ -7,14 +7,18 @@ import './styles.css';
 
 import { minToTimeFormat } from '../../../../utils/timeFormat';
 
-export default function Abiliity({ abiliityParam, onUpdate, onStatistic }) {
+export default function SkillItem({
+  skillProps,
+  onUpdate,
+  onStatistic,
+}) {
   return (
-    <div className="abiliity" key={abiliityParam.id}>
+    <div className="abiliity" key={skillProps.id}>
       <p className="abiliity__name">
-        {abiliityParam.name}
+        {skillProps.name}
       </p>
       <p className="abiliity__description">
-        {`Tempo Diário: ${minToTimeFormat(abiliityParam.time_daily)}`}
+        {`Tempo Diário: ${minToTimeFormat(skillProps.time_daily)}`}
       </p>
       <ButtonContained
         text="Editar"

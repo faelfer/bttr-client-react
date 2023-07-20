@@ -5,7 +5,7 @@ import { getToken } from '../../services/auth';
 
 import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
-import Abstract from './components/Abstract';
+import StatisticItem from './components/StatisticItem';
 import ButtonContained from '../../components/ButtonContained';
 import LinkRedirect from '../../components/LinkRedirect';
 
@@ -113,8 +113,8 @@ export default function SkillStatistic() {
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           {skill !== null ? (
-            <Abstract
-              abiliity={skill}
+            <StatisticItem
+              skillProps={skill}
               currentDate={currentDate}
               timeTotal={timeTotal}
             />

@@ -5,7 +5,7 @@ import { getToken } from '../../services/auth';
 
 import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
-import Time from './components/Time';
+import TimeItem from './components/TimeItem';
 import ButtonContained from '../../components/ButtonContained';
 import ButtonPagination from '../../components/ButtonPagination';
 
@@ -63,8 +63,8 @@ export default function TimeHistoric() {
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           {times.map((timeLoop) => (
-            <Time
-              time={timeLoop}
+            <TimeItem
+              timeProps={timeLoop}
               onUpdate={() => navigate(`/times/${timeLoop.id}/update`, { replace: true })}
             />
           ))}

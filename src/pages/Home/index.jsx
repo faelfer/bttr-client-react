@@ -5,7 +5,7 @@ import { getToken } from '../../services/auth';
 
 import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
-import Abiliity from './components/Abiliity';
+import SkillItem from './components/SkillItem';
 import ButtonContained from '../../components/ButtonContained';
 import ButtonPagination from '../../components/ButtonPagination';
 
@@ -63,8 +63,8 @@ export default function Home() {
           />
           {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
           {skills.map((skillLoop) => (
-            <Abiliity
-              abiliityParam={skillLoop}
+            <SkillItem
+              skillProps={skillLoop}
               onUpdate={() => navigate(`/skills/${skillLoop.id}/update`, { replace: true })}
               onStatistic={() => navigate(`/skills/${skillLoop.id}/statistic`, { replace: true })}
             />

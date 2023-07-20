@@ -1,8 +1,8 @@
-const progressColors = require('./resources/progressColors.json');
+const progressColors = require('../resources/colors_progress.json');
 
-export default function calculeProgressColorBiggerThen(progressPercentage) {
+export default function colorFromPercentage(progressPercentage) {
   try {
-    console.log('calculeProgressColorBiggerThen | progressPercentage: ', progressPercentage);
+    console.log('colorFromPercentage | progressPercentage: ', progressPercentage);
     if (progressPercentage < 25) {
       return progressColors[0];
     }
@@ -21,7 +21,7 @@ export default function calculeProgressColorBiggerThen(progressPercentage) {
 
     return progressColors[0];
   } catch (error) {
-    console.log('calculeProgressColorBiggerThen | error: ', error);
+    console.log('colorFromPercentage | error: ', error);
     return progressColors[0];
   }
 }
