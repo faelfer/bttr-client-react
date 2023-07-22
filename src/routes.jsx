@@ -14,7 +14,7 @@ import TimeHistoric from './pages/TimeHistoric';
 import TimeForm from './pages/TimeForm';
 import SkillForm from './pages/SkillForm';
 import SkillStatistic from './pages/SkillStatistic';
-import PageNotFound from './pages/PageNotFound';
+import NotFound from './pages/NotFound';
 
 function RequireAuth({ children }) {
   const isAuthUser = isAuthenticated();
@@ -120,7 +120,7 @@ const routes = createBrowserRouter([
   {
     path: '*',
     element: (
-      <PageNotFound />
+      <NotFound />
     ),
   },
 ]);

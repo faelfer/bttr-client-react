@@ -5,6 +5,7 @@ import { login, isAuthenticated } from '../../services/auth';
 
 import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
+import MessageContainer from '../../components/MessageContainer';
 import InputOutlineForm from '../../components/InputOutlineForm';
 import LinkRedirect from '../../components/LinkRedirect';
 import ButtonContained from '../../components/ButtonContained';
@@ -17,7 +18,8 @@ import { SignInFetch } from '../../api/services/UserAPI';
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [exceptMessage, setExceptionMessage] = useState('');
+  const [exceptType, setExceptionType] = useState('error');
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -47,14 +49,12 @@ export default function SignIn() {
   }
 
   async function sendSignIn() {
-    setIsLoading(true);
-
     const responseValidateSignIn = await validateSignIn();
     console.log('sendSignIn | responseValidateSignIn: ', responseValidateSignIn);
 
     if (responseValidateSignIn.isInvalid) {
-      setErrorMessage(responseValidateSignIn.message);
-      setIsLoading(false);
+      setExceptionMessage(responseValidateSignIn.message);
+      setExceptionType('warning');
     } else {
       try {
         const resultSignIn = await SignInFetch(
@@ -65,14 +65,16 @@ export default function SignIn() {
 
         setIsLoading(false);
         if (!resultSignIn.isSuccess) {
-          setErrorMessage(resultSignIn.message);
+          setExceptionMessage(resultSignIn.message);
+          setExceptionType('error');
         } else {
           login(`Token ${resultSignIn.user.token}`);
           navigate('/home', { replace: true });
         }
       } catch (error) {
         console.log('sendSignIn | error: ', error);
-        setErrorMessage('Ocorreu um erro ao acessar sua conta. ;-;');
+        setExceptionMessage('Ocorreu um erro ao acessar sua conta. ;-;');
+        setExceptionType('error');
         setIsLoading(false);
       }
     }
@@ -83,7 +85,7 @@ export default function SignIn() {
       <Load isShow={isLoading} />
       <div className="form">
         <HeaderForm title="Bttr" />
-        {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
+        {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Insira seu e-mail"

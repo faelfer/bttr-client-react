@@ -7,6 +7,7 @@ import isInvalidPassword from '../../utils/rules/isInvalidPassword';
 import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
 import DescriptionForm from '../../components/DescriptionForm';
+import MessageContainer from '../../components/MessageContainer';
 import InputOutlineForm from '../../components/InputOutlineForm';
 import LinkRedirect from '../../components/LinkRedirect';
 import ButtonContained from '../../components/ButtonContained';
@@ -19,7 +20,8 @@ export default function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [exceptMessage, setExceptionMessage] = useState('');
+  const [exceptType, setExceptionType] = useState('error');
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -48,32 +50,28 @@ export default function SignUp() {
   }
 
   async function sendSignUp() {
-    setIsLoading(true);
-
     const responseValidateSignUp = await validateSignUp();
     console.log('sendSignUp | responseValidateSignUp: ', responseValidateSignUp);
 
     if (responseValidateSignUp.isInvalid) {
-      setErrorMessage(responseValidateSignUp.message);
-      setIsLoading(false);
+      setExceptionMessage(responseValidateSignUp.message);
+      setExceptionType('warning');
     } else {
       try {
+        setIsLoading(true);
         const resultSignUp = await SignUpFetch(
           username,
           email,
           password,
         );
         console.log('sendSignUp | resultSignUp: ', resultSignUp);
-
+        setExceptionMessage(resultSignUp.message);
+        setExceptionType(resultSignUp.isSuccess ? 'success' : 'error');
         setIsLoading(false);
-        if (!resultSignUp.isSuccess) {
-          setErrorMessage(resultSignUp.message);
-        } else {
-          navigate('/', { replace: true });
-        }
       } catch (error) {
         console.log('sendSignUp | error: ', error);
-        setErrorMessage('Ocorreu um erro ao registrar sua conta. ;-;');
+        setExceptionMessage('Ocorreu um erro ao registrar sua conta. ;-;');
+        setExceptionType('error');
         setIsLoading(false);
       }
     }
@@ -85,7 +83,7 @@ export default function SignUp() {
       <div className="form">
         <HeaderForm title="Bttr" />
         <DescriptionForm description="Cadastre-se para evoluir suas habilidades." />
-        {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
+        {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
         <InputOutlineForm
           inputPlaceholder="Digite seu nome de usuário"
           inputValue={username}

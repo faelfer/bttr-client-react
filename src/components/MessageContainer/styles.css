@@ -1,0 +1,26 @@
+.container__message {
+    color: var(--on-primary-color);
+    margin-top: 0px;
+    width: 78%;
+    text-align: center;
+}
+
+.container__message--error {
+    color: var(--error-color);
+}
+
+.container__message--warning {
+    color: var(--warning-color);
+}
+
+.container__message--success {
+    color: var(--success-color);
+}
+
+@media screen and (max-width: 450px) {
+	.container__message { width: 94% }
+}
+  
+@media screen and (max-width: 350px) {
+	.container__message { width: 92% }
+}
