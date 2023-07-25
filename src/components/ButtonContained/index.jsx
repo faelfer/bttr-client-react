@@ -5,7 +5,7 @@ import './styles.css';
 export default function ButtonContained({ text, onAction }) {
   return (
     <button
-      className="contained__button"
+      className="button--contained text--contained"
       type="button"
       onClick={() => onAction()}
     >

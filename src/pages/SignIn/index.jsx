@@ -27,7 +27,7 @@ export default function SignIn() {
   useEffect(() => {
     function redirectAppScreen() {
       const authenticated = isAuthenticated();
-      // console.log("SignIn | authenticated: ",authenticated);
+      // console.log("SignIn | authenticated: ", authenticated);
       if (authenticated) {
         navigate('/home', { replace: true });
       }

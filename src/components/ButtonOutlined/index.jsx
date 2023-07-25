@@ -5,7 +5,7 @@ import './styles.css';
 export default function ButtonOutlined({ text, onAction }) {
   return (
     <button
-      className="outlined__button"
+      className="button--outlined text--outlined"
       type="button"
       onClick={() => onAction()}
     >

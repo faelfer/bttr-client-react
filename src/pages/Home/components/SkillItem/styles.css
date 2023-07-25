@@ -1,4 +1,4 @@
-.abiliity {
+.container--skill {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -8,26 +8,21 @@
   border-style: solid;
   border-width: thin;
   border-radius: 6px;
-  height: 180px;
   width: 76%;
-  margin: 10px 10px 10px 10px;
-  text-align: center;
-  font-size: 30px;
-  padding: 16px 0px;
+  margin: 10px 0px;
+  padding: 12px 0px;
 }
 
-.abiliity__name {
-  font-size: 20px;
+.text--skill-headline {
+  font-size: 24px;
   font-weight: bold;
   margin: 0;
   padding: 0;
-  color: var(--on-primary-color);
+  color: var(--on-secondary-color);
 }
 
-.abiliity__description {
+.text--skill-subhead {
   font-size: 14px;
-  font-weight: 450;
-  margin: 0;
-  padding: 0;
+  font-weight: 300;
   color: var(--on-primary-color);
 }

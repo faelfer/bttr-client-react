@@ -1,16 +1,19 @@
-.contained__button {
+.button--contained {
     height: 35px;
     width: 76%;
     margin: 7px 0px 7px 0px;
-    color: var(--on-secondary-color);
-    font-size: 16px;
-    font-weight: bold;
     background: var(--secondary-color);
     border: 0;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.contained__button:hover {
+.text--contained {
+    color: var(--on-secondary-color);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.button--contained:hover {
     opacity: 0.4;
 }

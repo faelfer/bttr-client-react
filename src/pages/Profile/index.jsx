@@ -8,6 +8,7 @@ import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
 import DescriptionForm from '../../components/DescriptionForm';
+import MessageContainer from '../../components/MessageContainer';
 import InputOutlineForm from '../../components/InputOutlineForm';
 import ButtonContained from '../../components/ButtonContained';
 import ButtonOutlined from '../../components/ButtonOutlined';
@@ -23,33 +24,33 @@ import {
 } from '../../api/services/UserAPI';
 
 export default function ProfileForm() {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [exceptMessage, setExceptionMessage] = useState('');
+  const [exceptType, setExceptionType] = useState('error');
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const token = getToken();
 
   async function getProfile() {
-    setIsLoading(true);
-
     try {
+      setIsLoading(true);
       const resultProfile = await ProfileFetch(
         token,
       );
       console.log('getProfile | resultProfile: ', resultProfile);
-
+      setExceptionMessage(resultProfile.message);
+      setExceptionType(resultProfile.isSuccess ? 'success' : 'error');
       setIsLoading(false);
-      if (!resultProfile.isSuccess) {
-        setErrorMessage(resultProfile.message);
-      } else {
+      if (resultProfile.isSuccess) {
         setUsername(resultProfile.user.username);
         setEmail(resultProfile.user.email);
       }
     } catch (error) {
       console.log('getProfile | error: ', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
       setIsLoading(false);
     }
   }
@@ -76,50 +77,49 @@ export default function ProfileForm() {
   }
 
   async function sendProfileUpdate() {
-    setIsLoading(true);
-
     const responseValidateProfileUpdate = await validateProfileUpdate();
     console.log('sendProfileUpdate | responseValidateProfileUpdate: ', responseValidateProfileUpdate);
 
     if (responseValidateProfileUpdate.isInvalid) {
-      setErrorMessage(responseValidateProfileUpdate.message);
-      setIsLoading(false);
+      setExceptionMessage(responseValidateProfileUpdate.message);
+      setExceptionType('warning');
     } else {
       try {
+        setIsLoading(true);
         const resultProfileUpdate = await ProfileUpdateFetch(
           token,
           username,
           email,
         );
         console.log('sendProfileUpdate | resultProfileUpdate: ', resultProfileUpdate);
-
+        setExceptionMessage(resultProfileUpdate.message);
+        setExceptionType(resultProfileUpdate.isSuccess ? 'success' : 'error');
         setIsLoading(false);
-        setErrorMessage(resultProfileUpdate.message);
       } catch (error) {
         console.log('sendProfileUpdate | error: ', error);
-        setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+        setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+        setExceptionType('error');
         setIsLoading(false);
       }
     }
   }
 
   async function sendProfileDelete() {
-    setIsLoading(true);
-
     try {
+      setIsLoading(true);
       const resultProfileDelete = await ProfileDeleteFetch(token);
       console.log('sendProfileDelete | resultProfileDelete: ', resultProfileDelete);
-
       setIsLoading(false);
-      if (!resultProfileDelete.isSuccess) {
-        setErrorMessage(resultProfileDelete.message);
-      } else {
+      setExceptionMessage(resultProfileDelete.message);
+      setExceptionType(resultProfileDelete.isSuccess ? 'success' : 'error');
+      if (resultProfileDelete.isSuccess) {
         logout();
         navigate('/', { replace: true });
       }
     } catch (error) {
       console.log('sendProfileDelete | error: ', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
       setIsLoading(false);
     }
   }
@@ -130,7 +130,8 @@ export default function ProfileForm() {
       navigate('/', { replace: true });
     } catch (error) {
       console.log('exit | error', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
     }
   }
 
@@ -142,7 +143,7 @@ export default function ProfileForm() {
         <div className="form">
           <HeaderForm title="Perfil" />
           <DescriptionForm description="Edite suas informações." />
-          {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
+          {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
           <InputOutlineForm
             inputPlaceholder="Digite seu nome de usuário"
             inputValue={username}

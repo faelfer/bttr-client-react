@@ -13,11 +13,11 @@ export default function SkillItem({
   onStatistic,
 }) {
   return (
-    <div className="abiliity" key={skillProps.id}>
-      <p className="abiliity__name">
+    <div className="container--skill" key={skillProps.id}>
+      <p className="text--skill-headline">
         {skillProps.name}
       </p>
-      <p className="abiliity__description">
+      <p className="text--skill-subhead">
         {`Tempo Diário: ${minToTimeFormat(skillProps.time_daily)}`}
       </p>
       <ButtonContained
