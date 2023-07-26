@@ -8,15 +8,15 @@ import { minToTimeFormat, formatDateCalendarWithHourAndMinutes } from '../../../
 
 export default function TimeItem({ timeProps, onUpdate }) {
   return (
-    <div className="time" key={timeProps.id}>
-      <p className="time__minutes">
+    <div className="container--time" key={timeProps.id}>
+      <p className="text--time-headline">
         {minToTimeFormat(timeProps.minutes)}
       </p>
-      <p className="time__date">
-        {formatDateCalendarWithHourAndMinutes(timeProps.created)}
-      </p>
-      <p className="time__abiliity">
+      <p className="text--time-subhead">
         {timeProps.skill.name}
+      </p>
+      <p className="text--time-supporting">
+        {formatDateCalendarWithHourAndMinutes(timeProps.created)}
       </p>
       <ButtonOutlined
         text="Editar"

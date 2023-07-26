@@ -32,6 +32,8 @@ export async function TimesByPageFetch(tokenAuthorization, page) {
     return {
       isSuccess: false,
       message: 'No momento esse recurso está indisponível, tente novamente mais tarde.',
+      times: [],
+      count: 0,
     };
   }
 }

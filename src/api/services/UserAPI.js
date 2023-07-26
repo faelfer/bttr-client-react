@@ -167,6 +167,7 @@ export async function ProfileFetch(tokenAuthorization) {
     return {
       isSuccess: false,
       message,
+      user: null,
     };
   }
 }

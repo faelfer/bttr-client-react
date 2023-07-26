@@ -1,39 +1,36 @@
-.time {
+.container--time {
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
-  width: 75%;
   background-color: transparent;
   border-color: var(--on-primary-color);
   border-style: solid;
   border-width: thin;
   border-radius: 6px;
-  padding: 16px 0px;
-  margin: 10px 10px 10px 10px;
-  text-align: center;
+  width: 76%;
+  margin: 10px 0px;
+  padding: 12px 0px;
 }
 
-.time__minutes {
-  font-size: 14px;
+.text--time-headline {
+  font-size: 18px;
   font-weight: bold;
-  margin: 4px 0px;
+  margin: 0;
   padding: 0;
+  color: var(--on-secondary-color);
+}
+
+.text--time-subhead {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 8px 0px;
   color: var(--on-primary-color);
 }
 
-.time__date {
+.text--time-supporting {
   font-size: 14px;
-  font-weight: 450;
-  margin: 4px 0px;
-  padding: 0;
-  color: var(--on-primary-color);
-}
-
-.time__abiliity {
-  font-size: 14px;
-  font-weight: 450;
-  margin: 4px 0px;
-  padding: 0;
+  font-weight: 300;
+  margin: 0px 0px 4px 0px;
   color: var(--on-primary-color);
 }

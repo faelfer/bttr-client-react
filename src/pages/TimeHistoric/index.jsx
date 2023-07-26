@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 
 import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
+import MessageContainer from '../../components/MessageContainer';
 import TimeItem from './components/TimeItem';
 import ButtonContained from '../../components/ButtonContained';
 import ButtonPagination from '../../components/ButtonPagination';
@@ -17,39 +18,38 @@ export default function TimeHistoric() {
   const [times, setTime] = useState([]);
   const [page, setPage] = useState(1);
   const [countPages, setCountPages] = useState(1);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [exceptMessage, setExceptionMessage] = useState('');
+  const [exceptType, setExceptionType] = useState('error');
   const [isLoading, setIsLoading] = useState(false);
 
-  const token = getToken();
   const navigate = useNavigate();
+  const location = useLocation();
+  const token = getToken();
   const amountItensByPage = 5;
 
   async function getTimesByPage(goToPage) {
-    setIsLoading(true);
-
     try {
+      setIsLoading(true);
       const resultTimes = await TimesByPageFetch(token, goToPage);
       console.log('getTimesByPage | resultTimes: ', resultTimes);
-
+      setTime(resultTimes.times);
+      const countTotalPages = Math.ceil(resultTimes.count / amountItensByPage);
+      console.log('getTimesByPage | countTotalPages: ', countTotalPages);
+      setCountPages(countTotalPages);
+      setExceptionMessage(resultTimes.message);
+      setExceptionType(resultTimes.isSuccess ? 'success' : 'error');
       setIsLoading(false);
-      if (!resultTimes.isSuccess) {
-        setErrorMessage(resultTimes.message);
-      } else {
-        setTime(resultTimes.times);
-        const countTotalPages = Math.ceil(resultTimes.count / amountItensByPage);
-        console.log('getTimesByPage | countTotalPages: ', countTotalPages);
-        setCountPages(countTotalPages);
-      }
     } catch (error) {
       console.log('getTimesByPage | error: ', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
     getTimesByPage(1);
-  }, [token, navigate]);
+  }, [location]);
 
   return (
     <>
@@ -61,7 +61,7 @@ export default function TimeHistoric() {
             text="Criar tempo"
             onAction={() => navigate('/times/create', { replace: true })}
           />
-          {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
+          {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
           {times.map((timeLoop) => (
             <TimeItem
               timeProps={timeLoop}

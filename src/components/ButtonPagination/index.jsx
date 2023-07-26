@@ -7,31 +7,35 @@ export default function ButtonPagination({
   totalPages,
   onChangeCurrentPage,
 }) {
+  function onPagePrevious() {
+    if (currentPage <= totalPages && currentPage > 1) {
+      const updateNumberCurrentPage = currentPage - 1;
+      onChangeCurrentPage(updateNumberCurrentPage);
+    }
+  }
+
+  function onPageNext() {
+    if (currentPage < totalPages && currentPage >= 1) {
+      const updateNumberCurrentPage = currentPage + 1;
+      onChangeCurrentPage(updateNumberCurrentPage);
+    }
+  }
+
   return (
-    <div className="home__pagination">
+    <div className="container--pagination">
       <button
-        className="pagination__button"
+        className="button--pagination text--pagination"
         disabled={currentPage === 1}
         type="button"
-        onClick={() => {
-          if (currentPage <= totalPages && currentPage > 1) {
-            const updateNumberCurrentPage = currentPage - 1;
-            onChangeCurrentPage(updateNumberCurrentPage);
-          }
-        }}
+        onClick={() => onPagePrevious()}
       >
         Anterior
       </button>
       <button
-        className="pagination__button"
+        className="button--pagination text--pagination"
         disabled={currentPage === totalPages}
         type="button"
-        onClick={() => {
-          if (currentPage < totalPages && currentPage >= 1) {
-            const updateNumberCurrentPage = currentPage + 1;
-            onChangeCurrentPage(updateNumberCurrentPage);
-          }
-        }}
+        onClick={() => onPageNext()}
       >
         Próximo
       </button>

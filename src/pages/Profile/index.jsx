@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { getToken, logout } from '../../services/auth';
 import isInvalidEmail from '../../utils/rules/isInvalidEmail';
@@ -31,22 +31,21 @@ export default function ProfileForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const token = getToken();
 
   async function getProfile() {
     try {
       setIsLoading(true);
-      const resultProfile = await ProfileFetch(
-        token,
-      );
+      const resultProfile = await ProfileFetch(token);
       console.log('getProfile | resultProfile: ', resultProfile);
-      setExceptionMessage(resultProfile.message);
-      setExceptionType(resultProfile.isSuccess ? 'success' : 'error');
-      setIsLoading(false);
       if (resultProfile.isSuccess) {
         setUsername(resultProfile.user.username);
         setEmail(resultProfile.user.email);
       }
+      setExceptionMessage(resultProfile.message);
+      setExceptionType(resultProfile.isSuccess ? 'success' : 'error');
+      setIsLoading(false);
     } catch (error) {
       console.log('getProfile | error: ', error);
       setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
@@ -57,7 +56,7 @@ export default function ProfileForm() {
 
   useEffect(() => {
     getProfile();
-  }, [navigate, token]);
+  }, [location]);
 
   function validateProfileUpdate() {
     let message = '';

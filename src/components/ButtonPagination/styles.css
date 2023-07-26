@@ -1,15 +1,12 @@
 
-.home__pagination {
+.container--pagination {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 77%;
 }
   
-.pagination__button {
-    color: var(--on-secondary-color);
-    font-size: 16px;
-    font-weight: bold;
+.button--pagination {
     background: var(--secondary-color);
     border: 0;
     border-radius: 5px;
@@ -17,15 +14,21 @@
     cursor: pointer;
 }
 
-.pagination__button[disabled] { 
+.text--pagination {
+    color: var(--on-secondary-color);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.button--pagination[disabled] { 
     opacity: 0.5;
     cursor: default;
 }
 
-.pagination__button:hover {
+.button--pagination:hover {
     opacity: 0.7;
 }
 
-.pagination__button[disabled]:hover { 
+.button--pagination[disabled]:hover { 
     opacity: 0.5;
 }
