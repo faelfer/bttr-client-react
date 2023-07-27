@@ -98,6 +98,7 @@ export async function SkillByIdFetch(tokenAuthorization, skillID) {
     return {
       isSuccess: false,
       message: 'No momento esse recurso está indisponível, tente novamente mais tarde.',
+      skill: null,
     };
   }
 }

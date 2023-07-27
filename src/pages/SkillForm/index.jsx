@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  useNavigate,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 
@@ -7,6 +11,7 @@ import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
 import DescriptionForm from '../../components/DescriptionForm';
+import MessageContainer from '../../components/MessageContainer';
 import InputOutlineForm from '../../components/InputOutlineForm';
 import ButtonContained from '../../components/ButtonContained';
 import ButtonOutlined from '../../components/ButtonOutlined';
@@ -24,31 +29,32 @@ import {
 export default function SkillForm() {
   const { skillId } = useParams();
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const [timeDaily, setTimeDaily] = useState(1);
+  const [exceptMessage, setExceptionMessage] = useState('');
+  const [exceptType, setExceptionType] = useState('error');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const token = getToken();
   const navigate = useNavigate();
+  const location = useLocation();
+  const token = getToken();
 
   async function getSkillById(skillIdToRead) {
-    setIsLoading(true);
-
     try {
+      setIsLoading(true);
       const resultSkill = await SkillByIdFetch(token, skillIdToRead);
       console.log('getSkillById | resultSkill: ', resultSkill);
-
-      setIsLoading(false);
-      if (!resultSkill.isSuccess) {
-        setErrorMessage(resultSkill.message);
-      } else {
+      if (resultSkill.isSuccess) {
         setName(resultSkill.skill.name);
         setTimeDaily(resultSkill.skill.time_daily);
       }
+      setExceptionMessage(resultSkill.message);
+      setExceptionType(resultSkill.isSuccess ? 'success' : 'error');
+      setIsLoading(false);
     } catch (error) {
       console.log('getSkillById | error: ', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
       setIsLoading(false);
     }
   }
@@ -57,61 +63,92 @@ export default function SkillForm() {
     if (skillId) {
       getSkillById(skillId);
     }
-  }, [skillId, navigate, token]);
+  }, [location]);
+
+  function validateSkill() {
+    let message = '';
+    const nameWithoutTrimValidate = name.trim();
+
+    if (!nameWithoutTrimValidate) {
+      message = 'Preencha o campo nome da habilidade';
+    } else if (nameWithoutTrimValidate.length < 3) {
+      message = 'Campo nome da habilidade é inválido';
+    } else if (timeDaily <= 0) {
+      message = 'Campo minutos diário é inválido';
+    }
+
+    return { isInvalid: !!message, message };
+  }
 
   async function sendSkillCreate() {
-    setIsLoading(true);
-
     try {
-      const resultSkillCreate = await SkillCreateFetch(
-        token,
-        name,
-        timeDaily,
-      );
-      console.log('sendSkillCreate | resultSkillCreate: ', resultSkillCreate);
+      const responseValidateSkillCreate = await validateSkill();
+      console.log('sendSkillCreate | responseValidateSkillCreate: ', responseValidateSkillCreate);
 
-      setIsLoading(false);
-      setErrorMessage(resultSkillCreate.message);
+      if (responseValidateSkillCreate.isInvalid) {
+        setExceptionMessage(responseValidateSkillCreate.message);
+        setExceptionType('warning');
+      } else {
+        setIsLoading(true);
+        const resultSkillCreate = await SkillCreateFetch(
+          token,
+          name,
+          timeDaily,
+        );
+        console.log('sendSkillCreate | resultSkillCreate: ', resultSkillCreate);
+        setExceptionMessage(resultSkillCreate.message);
+        setExceptionType(resultSkillCreate.isSuccess ? 'success' : 'error');
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log('sendSkillCreate | error: ', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
       setIsLoading(false);
     }
   }
 
   async function sendSkillUpdate(skillIdToUpdate) {
-    setIsLoading(true);
-
     try {
-      const resultSkillUpdate = await SkillUpdateByIdFetch(
-        token,
-        skillIdToUpdate,
-        name,
-        timeDaily,
-      );
-      console.log('sendSkillUpdate | resultSkillUpdate: ', resultSkillUpdate);
+      const responseValidateSkillUpdate = await validateSkill();
+      console.log('sendSkillCreate | responseValidateSkillUpdate: ', responseValidateSkillUpdate);
 
-      setIsLoading(false);
-      setErrorMessage(resultSkillUpdate.message);
+      if (responseValidateSkillUpdate.isInvalid) {
+        setExceptionMessage(responseValidateSkillUpdate.message);
+        setExceptionType('warning');
+      } else {
+        setIsLoading(true);
+        const resultSkillUpdate = await SkillUpdateByIdFetch(
+          token,
+          skillIdToUpdate,
+          name,
+          timeDaily,
+        );
+        console.log('sendSkillUpdate | resultSkillUpdate: ', resultSkillUpdate);
+        setExceptionMessage(resultSkillUpdate.message);
+        setExceptionType(resultSkillUpdate.isSuccess ? 'success' : 'error');
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log('sendSkillUpdate | error: ', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
       setIsLoading(false);
     }
   }
 
   async function sendSkillDelete(skillIdToDelete) {
-    setIsLoading(true);
-
     try {
+      setIsLoading(true);
       const resultSkillDelete = await SkillDeleteByIdFetch(token, skillIdToDelete);
       console.log('sendSkillDelete | resultSkillDelete: ', resultSkillDelete);
-
+      setExceptionMessage(resultSkillDelete.message);
+      setExceptionType(resultSkillDelete.isSuccess ? 'success' : 'error');
       setIsLoading(false);
-      setErrorMessage(resultSkillDelete.message);
     } catch (error) {
       console.log('sendSkillDelete | error: ', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
       setIsLoading(false);
     }
   }
@@ -130,7 +167,7 @@ export default function SkillForm() {
                 : 'Crie uma nova habilidade para começar a registrar o quanto você se dedicou.'
             }
           />
-          {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
+          {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
           <InputOutlineForm
             inputPlaceholder="Digite nome da habilidade"
             inputValue={name}
@@ -138,7 +175,7 @@ export default function SkillForm() {
           />
           <InputOutlineForm
             inputType="number"
-            inputPlaceholder="Digite o tempo diário"
+            inputPlaceholder="Digite os minutos diário"
             inputValue={timeDaily}
             onChangeInput={(textValue) => setTimeDaily(textValue)}
           />

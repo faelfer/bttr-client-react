@@ -81,24 +81,10 @@ export default function StatisticItem({
   }, [skillProps, timeTotal, currentDate]);
 
   return (
-    <div className="abstract">
-      <p className="text__abstract">
-        {(skillProps.name).toUpperCase()}
-      </p>
-      <p className="text__abstract">
-        {`${minToTimeFormat(skillProps.time_daily)} é a meta diária`}
-      </p>
-      <p className="text__abstract">
-        {`${minToTimeFormat(timeGoalMonth)} é a meta do mês`}
-      </p>
-      {timeTotal > 0 ? (
-        <p className="text__abstract">
-          {`${minToTimeFormat(timeTotal)} é o acumulado`}
-        </p>
-      ) : null}
-      <div className="abstract__progress">
+    <>
+      <div className="container--statistic-percentege">
         <div
-          className="abstract__percentege"
+          className="text--statistic-percentege"
           style={{
             width: (percentage > 100 ? '100%' : `${percentage}%`),
             backgroundColor: percentageColor,
@@ -107,23 +93,41 @@ export default function StatisticItem({
           {`${percentage}%`}
         </div>
       </div>
-      {messageProgress ? (
-        <p className="text__abstract">
-          {messageProgress}
+      <div className="container--statistic">
+        <p className="text--statistic-headline">
+          {(skillProps.name).toUpperCase()}
         </p>
-      ) : null }
-      {timeLack > 0 ? (
-        <p className="text__abstract">
-          {`${minToTimeFormat(timeLack)} para o acumulado do dia`}
+        <p className="text--statistic-subhead">
+          {`meta diária: ${minToTimeFormat(skillProps.time_daily)}`}
         </p>
-      ) : null }
-      {timeSuggestion > 0 && timeLack > timeSuggestion
-        ? (
-          <p className="text__abstract">
-            {`${minToTimeFormat(timeSuggestion)} é a sugestão do dia`}
+        <p className="text--statistic-subhead">
+          {`meta mês: ${minToTimeFormat(timeGoalMonth)}`}
+        </p>
+      </div>
+      <div className="container--statistic">
+        {timeTotal > 0 ? (
+          <p className="text--statistic-supporting">
+            {`${minToTimeFormat(timeTotal)} é o acumulado`}
           </p>
-        )
-        : null}
-    </div>
+        ) : null}
+        {messageProgress ? (
+          <p className="text--statistic-supporting">
+            {messageProgress}
+          </p>
+        ) : null }
+        {timeLack > 0 ? (
+          <p className="text--statistic-supporting">
+            {`${minToTimeFormat(timeLack)} para o acumulado do dia`}
+          </p>
+        ) : null }
+        {timeSuggestion > 0 && timeLack > timeSuggestion
+          ? (
+            <p className="text--statistic-supporting">
+              {`${minToTimeFormat(timeSuggestion)} é a sugestão do dia`}
+            </p>
+          )
+          : null}
+      </div>
+    </>
   );
 }
