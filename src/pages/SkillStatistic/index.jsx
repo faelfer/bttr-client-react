@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import {
+  useNavigate,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 
 import NavBar from '../../components/NavBar';
 import Load from '../../components/Load';
+import MessageContainer from '../../components/MessageContainer';
 import StatisticItem from './components/StatisticItem';
 import ButtonContained from '../../components/ButtonContained';
 import LinkRedirect from '../../components/LinkRedirect';
@@ -18,38 +23,36 @@ export default function SkillStatistic() {
   const { skillId } = useParams();
 
   const [skill, setSkill] = useState(null);
-  const [timeTotal, setTimeTotal] = useState(0);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [minutesTotalMonth, setMinutesTotalMonth] = useState(0);
+  const [exceptMessage, setExceptionMessage] = useState('');
+  const [exceptType, setExceptionType] = useState('error');
   const [isLoading, setIsLoading] = useState(false);
 
-  const token = getToken();
   const navigate = useNavigate();
+  const location = useLocation();
+  const token = getToken();
   const currentDate = new Date();
 
   async function getSkillById(skillIdToRead) {
-    setIsLoading(true);
-
     try {
+      setIsLoading(true);
       const resultSkills = await SkillByIdFetch(token, skillIdToRead);
       console.log('getSkillById | resultSkills: ', resultSkills);
-
+      setSkill(resultSkills.skill);
+      setExceptionMessage(resultSkills.message);
+      setExceptionType(resultSkills.isSuccess ? 'success' : 'error');
       setIsLoading(false);
-      if (!resultSkills.isSuccess) {
-        setErrorMessage(resultSkills.message);
-      } else {
-        setSkill(resultSkills.skill);
-      }
     } catch (error) {
       console.log('getSkillById | error: ', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
       setIsLoading(false);
     }
   }
 
   async function getTimesByDate(skillIdToFilter, currentDateToFilter) {
-    setIsLoading(true);
-
     try {
+      setIsLoading(true);
       const firstDayToFilter = new Date(
         currentDateToFilter.getFullYear(),
         currentDateToFilter.getMonth(),
@@ -75,21 +78,19 @@ export default function SkillStatistic() {
         lastDayToFilterDateIso,
       );
       console.log('getTimesByDate | resultTimeByDate: ', resultTimeByDate);
-
+      const initialValue = 0;
+      const sumTotalTimes = (resultTimeByDate.times).reduce(
+        (accumulator, currentValue) => accumulator + currentValue.minutes,
+        initialValue,
+      );
+      setMinutesTotalMonth(sumTotalTimes);
+      setExceptionMessage(resultTimeByDate.message);
+      setExceptionType(resultTimeByDate.isSuccess ? 'success' : 'error');
       setIsLoading(false);
-      if (!resultTimeByDate.isSuccess) {
-        setErrorMessage(resultTimeByDate.message);
-      } else {
-        const initialValue = 0;
-        const sumTotalTimes = (resultTimeByDate.times).reduce(
-          (accumulator, currentValue) => accumulator + currentValue.minutes,
-          initialValue,
-        );
-        setTimeTotal(sumTotalTimes);
-      }
     } catch (error) {
       console.log('getTimesByDate | error: ', error);
-      setErrorMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
+      setExceptionType('error');
       setIsLoading(false);
     }
   }
@@ -99,7 +100,7 @@ export default function SkillStatistic() {
       getSkillById(skillId);
       getTimesByDate(skillId, currentDate);
     }
-  }, [skillId, navigate, token]);
+  }, [location]);
 
   return (
     <>
@@ -111,12 +112,12 @@ export default function SkillStatistic() {
             text="Criar tempo"
             onAction={() => navigate('/times/create', { replace: true })}
           />
-          {errorMessage && <p className="form__message form__message--error">{errorMessage}</p>}
+          {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
           {skill !== null ? (
             <StatisticItem
               skillProps={skill}
               currentDate={currentDate}
-              timeTotal={timeTotal}
+              timeTotal={minutesTotalMonth}
             />
           ) : null}
         </div>
