@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { minToTimeFormat } from '../../../../utils/timeFormat';
-import workingDays from '../../../../utils/workingDays';
+import clockHourMinute from '../../../../utils/customs/clockHourMinute';
+import workingDays from '../../../../utils/customs/workingDays';
 import datesFromCurrentDay from '../../../../utils/customs/datesFromCurrentDay';
 import progressFromCurrentDay from '../../../../utils/customs/progressFromCurrentDay';
 import colorFromPercentage from '../../../../utils/customs/colorFromPercentage';
@@ -98,16 +98,16 @@ export default function StatisticItem({
           {(skillProps.name).toUpperCase()}
         </p>
         <p className="text--statistic-subhead">
-          {`meta diária: ${minToTimeFormat(skillProps.time_daily)}`}
+          {`meta diária: ${clockHourMinute(skillProps.time_daily)}`}
         </p>
         <p className="text--statistic-subhead">
-          {`meta mês: ${minToTimeFormat(timeGoalMonth)}`}
+          {`meta mês: ${clockHourMinute(timeGoalMonth)}`}
         </p>
       </div>
       <div className="container--statistic">
         {timeTotal > 0 ? (
           <p className="text--statistic-supporting">
-            {`${minToTimeFormat(timeTotal)} é o acumulado`}
+            {`${clockHourMinute(timeTotal)} é o acumulado`}
           </p>
         ) : null}
         {messageProgress ? (
@@ -117,13 +117,13 @@ export default function StatisticItem({
         ) : null }
         {timeLack > 0 ? (
           <p className="text--statistic-supporting">
-            {`${minToTimeFormat(timeLack)} para o acumulado do dia`}
+            {`${clockHourMinute(timeLack)} para o acumulado do dia`}
           </p>
         ) : null }
         {timeSuggestion > 0 && timeLack > timeSuggestion
           ? (
             <p className="text--statistic-supporting">
-              {`${minToTimeFormat(timeSuggestion)} é a sugestão do dia`}
+              {`${clockHourMinute(timeSuggestion)} é a sugestão do dia`}
             </p>
           )
           : null}

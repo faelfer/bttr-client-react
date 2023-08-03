@@ -5,7 +5,7 @@ import ButtonOutlined from '../../../../components/ButtonOutlined';
 
 import './styles.css';
 
-import { minToTimeFormat } from '../../../../utils/timeFormat';
+import clockHourMinute from '../../../../utils/customs/clockHourMinute';
 
 export default function SkillItem({
   skillProps,
@@ -18,7 +18,7 @@ export default function SkillItem({
         {skillProps.name}
       </p>
       <p className="text--skill-subhead">
-        {`Tempo Diário: ${minToTimeFormat(skillProps.time_daily)}`}
+        {`Tempo Diário: ${clockHourMinute(skillProps.time_daily)}`}
       </p>
       <ButtonContained
         text="Editar"

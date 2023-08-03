@@ -4,19 +4,20 @@ import ButtonOutlined from '../../../../components/ButtonContained';
 
 import './styles.css';
 
-import { minToTimeFormat, formatDateCalendarWithHourAndMinutes } from '../../../../utils/timeFormat';
+import clockHourMinute from '../../../../utils/customs/clockHourMinute';
+import calendarDateHourMinutes from '../../../../utils/customs/calendarDateHourMinutes';
 
 export default function TimeItem({ timeProps, onUpdate }) {
   return (
     <div className="container--time" key={timeProps.id}>
       <p className="text--time-headline">
-        {minToTimeFormat(timeProps.minutes)}
+        {clockHourMinute(timeProps.minutes)}
       </p>
       <p className="text--time-subhead">
         {timeProps.skill.name}
       </p>
       <p className="text--time-supporting">
-        {formatDateCalendarWithHourAndMinutes(timeProps.created)}
+        {calendarDateHourMinutes(timeProps.created)}
       </p>
       <ButtonOutlined
         text="Editar"
