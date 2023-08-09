@@ -1,6 +1,11 @@
 /* eslint-disable no-undef */
 import * as React from 'react';
-import { cleanup, render, screen, fireEvent } from '@testing-library/react';
+import {
+  cleanup,
+  render,
+  screen,
+  fireEvent,
+} from '@testing-library/react';
 
 import LinkRedirect from '../LinkRedirect';
 

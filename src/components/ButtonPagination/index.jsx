@@ -28,6 +28,7 @@ export default function ButtonPagination({
         disabled={currentPage === 1}
         type="button"
         onClick={() => onPagePrevious()}
+        data-testid="button-pagination-prev"
       >
         Anterior
       </button>
@@ -36,6 +37,7 @@ export default function ButtonPagination({
         disabled={currentPage === totalPages}
         type="button"
         onClick={() => onPageNext()}
+        data-testid="button-pagination-next"
       >
         Próximo
       </button>

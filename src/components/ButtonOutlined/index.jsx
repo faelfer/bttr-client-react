@@ -8,6 +8,7 @@ export default function ButtonOutlined({ text, onAction }) {
       className="button--outlined text--outlined"
       type="button"
       onClick={() => onAction()}
+      data-testid="button-outlined"
     >
       {text}
     </button>
