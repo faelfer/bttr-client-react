@@ -14,7 +14,7 @@ export default function InputOutlineForm({
 
   return (
     <input
-      className="form__input"
+      className="input--outlined"
       type={inputType}
       placeholder={inputPlaceholder}
       value={inputValue}

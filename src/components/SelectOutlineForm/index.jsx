@@ -2,7 +2,8 @@ import React from 'react';
 
 import './styles.css';
 
-export default function HeaderForm({
+export default function SelectOutlineForm({
+  selectPlaceholder,
   options,
   selectValue,
   onChangeSelect,
@@ -11,10 +12,14 @@ export default function HeaderForm({
 
   return (
     <select
-      className="time__select"
+      className="select--outline"
       value={selectValue}
       onChange={onChangeValue}
+      data-testid="outline-form-select"
     >
+      <option value="" key={0}>
+        {selectPlaceholder}
+      </option>
       {
         options.map((optionLoop) => (
           <option value={optionLoop.id} key={optionLoop.id}>

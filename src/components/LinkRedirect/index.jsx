@@ -8,12 +8,12 @@ export default function LinkRedirect({
   onRedirect,
 }) {
   return (
-    <div className="redirect">
-      <p className="redirect__text">
+    <div className="container--redirect">
+      <p className="text--redirect">
         {description}
       </p>
       <button
-        className="redirect__link"
+        className="link--redirect"
         onClick={() => onRedirect()}
         type="button"
         data-testid="link-redirect-button"

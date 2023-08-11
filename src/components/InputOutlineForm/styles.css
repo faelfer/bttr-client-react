@@ -1,4 +1,4 @@
-.form__input {
+.input--outlined {
     height: 35px;
     margin-bottom: 15px;
     color: var(--on-primary-color);
@@ -10,11 +10,11 @@
     border-radius: 5px;
 }
 
-.form__input::placeholder {
+.input--outlined::placeholder {
     color: var(--on-primary-color);
     opacity: 0.6; /* Firefox */
 }
 
 @media screen and (max-width: 350px) {
-	.form__input { width: 85%; }
+	.input--outlined { width: 85%; }
 }

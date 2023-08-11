@@ -12,7 +12,7 @@ import Load from '../../components/Load';
 import HeaderForm from '../../components/HeaderForm';
 import DescriptionForm from '../../components/DescriptionForm';
 import MessageContainer from '../../components/MessageContainer';
-import SelectOutline from '../../components/SelectOutlineForm';
+import SelectOutlineForm from '../../components/SelectOutlineForm';
 import InputOutlineForm from '../../components/InputOutlineForm';
 import ButtonContained from '../../components/ButtonContained';
 import ButtonOutlined from '../../components/ButtonOutlined';
@@ -193,7 +193,8 @@ export default function TimeForm() {
             }
           />
           {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
-          <SelectOutline
+          <SelectOutlineForm
+            selectPlaceholder="Selecione uma habilidade"
             options={skills}
             selectValue={skillSelected}
             onChangeSelect={(optionSelected) => setSkillSelected(optionSelected)}

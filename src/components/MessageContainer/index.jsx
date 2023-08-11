@@ -4,7 +4,7 @@ import './styles.css';
 
 export default function MessageContainer({ type, message }) {
   return (
-    <p className={`container__message container__message--${type}`}>
+    <p className={`container--message container--message-${type}`}>
       {message}
     </p>
   );

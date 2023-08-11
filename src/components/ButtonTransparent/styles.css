@@ -1,4 +1,4 @@
-.transparent__button {
+.button--transparent {
     height: 35px;
     width: 76%;
     margin: 7px 0px 4px 0px;
@@ -11,6 +11,6 @@
     cursor: pointer;
 }
 
-.transparent__button:hover {
+.button--transparent:hover {
     opacity: 0.4;
 }

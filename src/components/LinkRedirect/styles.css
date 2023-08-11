@@ -1,4 +1,4 @@
-.redirect {
+.container--redirect {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,13 +8,13 @@
     text-align: center;
 }
 
-.redirect__text {
+.text--redirect {
     color: var(--on-primary-color);
     font-size: 14px;
     margin-right: 3px;
 }
 
-.redirect__link {
+.link--redirect {
     background:none;
     border:none;
     margin: 14px 0px 12px 0px;

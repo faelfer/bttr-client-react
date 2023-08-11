@@ -1,4 +1,4 @@
-.time__select {
+.select--outline {
     height: 40px;
     margin-bottom: 16px;
     color: var(--on-primary-color);
@@ -10,7 +10,7 @@
     border-radius: 5px;
 }
 
-.time__select::placeholder {
+.select--outline::placeholder {
     color: var(--on-primary-color);
     opacity: 0.6; /* Firefox */
 }

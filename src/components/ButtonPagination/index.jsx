@@ -8,17 +8,13 @@ export default function ButtonPagination({
   onChangeCurrentPage,
 }) {
   function onPagePrevious() {
-    if (currentPage <= totalPages && currentPage > 1) {
-      const updateNumberCurrentPage = currentPage - 1;
-      onChangeCurrentPage(updateNumberCurrentPage);
-    }
+    const updateNumberCurrentPage = currentPage - 1;
+    onChangeCurrentPage(updateNumberCurrentPage);
   }
 
   function onPageNext() {
-    if (currentPage < totalPages && currentPage >= 1) {
-      const updateNumberCurrentPage = currentPage + 1;
-      onChangeCurrentPage(updateNumberCurrentPage);
-    }
+    const updateNumberCurrentPage = currentPage + 1;
+    onChangeCurrentPage(updateNumberCurrentPage);
   }
 
   return (
