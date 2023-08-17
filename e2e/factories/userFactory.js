@@ -7,7 +7,7 @@ module.exports = function userFactory(isGenerateUserNew = true) {
   const userNew = {
     username: faker.person.firstName(),
     email: faker.internet.email(),
-    password: `!A${faker.string.alpha(3)}${faker.string.numeric(3)}`,
+    password: '!Ab1!Ab1',
   };
 
   if (isGenerateUserNew) {

@@ -32,7 +32,7 @@ export default function SignUp() {
 
     if (!nameWithoutTrimValidate) {
       message = 'Preencha o campo nome de usuário';
-    } else if (nameWithoutTrimValidate.length < 3) {
+    } else if (nameWithoutTrimValidate.length < 2) {
       message = 'Campo nome de usuário é inválido';
     } else if (!email) {
       message = 'Preencha o campo e-mail';
