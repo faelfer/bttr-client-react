@@ -42,10 +42,10 @@ export default function RedefinePasswordForm() {
       message = 'Campo senha atual é inválido';
     } else if (!passwordNew) {
       message = 'Preencha o campo nova senha';
+    } else if (passwordNew.length < 4) {
+      message = 'Campo nova senha deve conter no mínimo 4 caracteres';
     } else if (isInvalidPassword(passwordNew)) {
-      message = 'Campo nova senha deve conter números e letras';
-    } else if (passwordNew.length < 4 && passwordNew.length > 8) {
-      message = 'Campo nova senha deve conter de 4 à 8 caracteres';
+      message = 'Campo nova senha deve conter número, símbolo, letra maiúscula e minúscula';
     } else if (!passwordNewConfirm) {
       message = 'Preencha o campo confirmar nova senha';
     } else if (passwordNewConfirm.length < 4) {
