@@ -15,18 +15,18 @@ test('deve inserir os dados do novo usuário e realizar o esqueci minha senha co
 
   const user = await userFactory();
 
-  await page.getByTestId('link-redirect-button').click();
+  await page.getByText('Cadastre-se').click();
 
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
   await expect(hasSignUpSuccess).toBeVisible();
 
-  await page.getByTestId('link-redirect-button').click();
+  await page.getByText('Conecte-se').click();
 
   await expect(page).toHaveURL('http://localhost:3000/');
 
-  await page.getByTestId('button-transparent').click();
+  await page.getByText('Esqueceu a senha?').click();
 
   await forgotPasswordScenario(page, user);
 
@@ -47,12 +47,34 @@ test('deve mostrar mensagem de erro ao tentar realizar esqueci minha senha com o
 
   const user = await userFactory();
 
-  await page.getByTestId('button-transparent').click();
+  await page.getByText('Esqueceu a senha?').click();
 
   await forgotPasswordScenario(page, user);
 
-  const hasSignInNotFound = await page.getByText('usuário não foi encontrado.');
-  await expect(hasSignInNotFound).toBeVisible();
+  const hasForgotPasswordNotFound = await page.getByText('usuário não foi encontrado.');
+  await expect(hasForgotPasswordNotFound).toBeVisible();
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
+test('deve mostrar mensagem de erro ao tentar realizar esqueci minha senha com o campo e-mail vazio', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  const user = await userFactory();
+
+  await page.getByText('Esqueceu a senha?').click();
+  user.email = '';
+
+  await forgotPasswordScenario(page, user);
+
+  const hasForgotPasswordWrong = await page.getByText('Preencha o campo e-mail');
+  await expect(hasForgotPasswordWrong).toBeVisible();
 
   await context.close();
   // Make sure to await close, so that videos are saved.

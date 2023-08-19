@@ -199,6 +199,44 @@ test('deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
   // Make sure to await close, so that videos are saved.
 });
 
+test('deve mostrar mensagem de erro ao tentar alterar senha do usuário com o campo senha atual e nova senha iguais', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  const user = await userFactory();
+
+  await page.getByText('Cadastre-se').click();
+
+  await signUpScenario(page, user);
+
+  const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
+  await expect(hasSignUpSuccess).toBeVisible();
+
+  await page.getByText('Conecte-se').click();
+
+  await expect(page).toHaveURL('http://localhost:3000/');
+
+  await signInScenario(page, user);
+
+  await page.getByRole('link', { name: 'Perfil' }).click();
+
+  await page.getByText('Redefinir a senha').click();
+  user.newPassword = '!Ab1!Ab1';
+  user.confirmNewPassword = '!Ab1!Ab1';
+
+  await redefinePasswordScenario(page, user);
+
+  const hasRedefinePasswordWrong = await page.getByText('Campos senha atual e nova senha devem ser diferentes');
+  await expect(hasRedefinePasswordWrong).toBeVisible();
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
 test('deve mostrar mensagem de erro ao tentar alterar senha do usuário com o campo nova senha sem seguir requisitos', async ({ page }) => {
   const browser = await chromium.launch();
   const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
@@ -307,6 +345,44 @@ test('deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
   await redefinePasswordScenario(page, user);
 
   const hasRedefinePasswordWrong = await page.getByText('Campo confirmar nova senha é inválido');
+  await expect(hasRedefinePasswordWrong).toBeVisible();
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
+test('deve mostrar mensagem de erro ao tentar alterar senha do usuário com o campo nova senha e confirmar nova senha diferentes', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  const user = await userFactory();
+
+  await page.getByText('Cadastre-se').click();
+
+  await signUpScenario(page, user);
+
+  const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
+  await expect(hasSignUpSuccess).toBeVisible();
+
+  await page.getByText('Conecte-se').click();
+
+  await expect(page).toHaveURL('http://localhost:3000/');
+
+  await signInScenario(page, user);
+
+  await page.getByRole('link', { name: 'Perfil' }).click();
+
+  await page.getByText('Redefinir a senha').click();
+  user.newPassword = '@Ab1!Ab1';
+  user.confirmNewPassword = '$Ab1!Ab1';
+
+  await redefinePasswordScenario(page, user);
+
+  const hasRedefinePasswordWrong = await page.getByText('Os campos nova senha e confirmar nova senha devem ser iguais');
   await expect(hasRedefinePasswordWrong).toBeVisible();
 
   await context.close();

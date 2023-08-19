@@ -46,12 +46,12 @@ export default function RedefinePasswordForm() {
       message = 'Campo nova senha deve conter no mínimo 4 caracteres';
     } else if (isInvalidPassword(passwordNew)) {
       message = 'Campo nova senha deve conter número, símbolo, letra maiúscula e minúscula';
+    } else if (password === passwordNew) {
+      message = 'Campos senha atual e nova senha devem ser diferentes';
     } else if (!passwordNewConfirm) {
       message = 'Preencha o campo confirmar nova senha';
     } else if (passwordNewConfirm.length < 4) {
       message = 'Campo confirmar nova senha é inválido';
-    } else if (password === passwordNew) {
-      message = 'Campos senha atual e nova senha devem ser diferentes';
     } else if (passwordNew !== passwordNewConfirm) {
       message = 'Os campos nova senha e confirmar nova senha devem ser iguais';
     }
