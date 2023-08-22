@@ -37,7 +37,7 @@ test('deve inserir os dados da nova habilidade com sucesso', async ({ page }) =>
   await skillScenario(page, skill);
   await page.getByText('Criar').click();
 
-  const hasSkillSuccess = await page.getByText('habilitade foi criada com sucesso.');
+  const hasSkillSuccess = await page.getByText('habilidade foi criada com sucesso.');
   await expect(hasSkillSuccess).toBeVisible();
 
   await page.getByText('Voltar ao início').click();
@@ -79,7 +79,7 @@ test('deve alterar os dados de uma habilidade com sucesso', async ({ page }) => 
   await skillScenario(page, skill);
   await page.getByText('Criar').click();
 
-  const hasSkillCreateSuccess = await page.getByText('habilitade foi criada com sucesso.');
+  const hasSkillCreateSuccess = await page.getByText('habilidade foi criada com sucesso.');
   await expect(hasSkillCreateSuccess).toBeVisible();
 
   await page.getByText('Voltar ao início').click();
@@ -136,7 +136,7 @@ test('deve excluir uma habilidade com sucesso', async ({ page }) => {
   await skillScenario(page, skill);
   await page.getByText('Criar').click();
 
-  const hasSkillCreateSuccess = await page.getByText('habilitade foi criada com sucesso.');
+  const hasSkillCreateSuccess = await page.getByText('habilidade foi criada com sucesso.');
   await expect(hasSkillCreateSuccess).toBeVisible();
 
   await page.getByText('Voltar ao início').click();
@@ -231,6 +231,59 @@ test('deve mostrar mensagem de erro ao tentar criar uma habilidade com o campo n
 
   const hasSkillSuccess = await page.getByText('Campo nome da habilidade é inválido');
   await expect(hasSkillSuccess).toBeVisible();
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
+test('deve mostrar mensagem de erro ao tentar alterar uma habilidade com o campo nome vazio', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  const user = await userFactory();
+
+  await page.getByText('Cadastre-se').click();
+
+  await signUpScenario(page, user);
+
+  const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
+  await expect(hasSignUpSuccess).toBeVisible();
+
+  await page.getByText('Conecte-se').click();
+
+  await expect(page).toHaveURL('http://localhost:3000/');
+
+  await signInScenario(page, user);
+
+  await page.getByText('Criar habilidade').click();
+
+  const skill = await skillFactory();
+
+  await skillScenario(page, skill);
+  await page.getByText('Criar').click();
+
+  const hasSkillCreatedSuccess = await page.getByText('habilidade foi criada com sucesso.');
+  await expect(hasSkillCreatedSuccess).toBeVisible();
+
+  await page.getByText('Voltar ao início').click();
+
+  const hasSkillSuccess = await page.getByText(skill.name);
+  await expect(hasSkillSuccess).toBeVisible();
+
+  await page.getByText('Editar').click();
+
+  const skillUpdated = await skillFactory();
+  skillUpdated.name = '';
+
+  await skillScenario(page, skillUpdated);
+  await page.getByText('Editar').click();
+
+  const hasSkillUpdatedWrong = await page.getByText('Preencha o campo nome da habilidade');
+  await expect(hasSkillUpdatedWrong).toBeVisible();
 
   await context.close();
   // Make sure to await close, so that videos are saved.

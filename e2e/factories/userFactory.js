@@ -5,8 +5,8 @@ const userDefault = require('../../src/utils/resources/user_default.json');
 
 module.exports = function userFactory(isGenerateUserNew = true) {
   const userNew = {
-    username: faker.person.firstName(),
-    email: faker.internet.email(),
+    username: `${faker.person.firstName()}${faker.number.int({ min: 10, max: 100 })}`,
+    email: `${faker.number.int({ min: 10, max: 100 })}${faker.internet.email()}`,
     password: '!Ab1!Ab1',
   };
 

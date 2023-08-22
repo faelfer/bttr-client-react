@@ -32,7 +32,7 @@ export default function TimeForm() {
   const { timeId } = useParams();
 
   const [skills, setSkills] = useState([]);
-  const [skillSelected, setSkillSelected] = useState(null);
+  const [skillSelected, setSkillSelected] = useState('');
   const [minutes, setMinutes] = useState(1);
   const [exceptMessage, setExceptionMessage] = useState('');
   const [exceptType, setExceptionType] = useState('error');
@@ -96,8 +96,8 @@ export default function TimeForm() {
   function validateTime() {
     let message = '';
 
-    if (skillSelected === null) {
-      message = 'Selecione uma habilidade';
+    if (skillSelected === '') {
+      message = 'Campo habilidade é inválido';
     } else if (minutes <= 0) {
       message = 'Campo minutos é inválido';
     }

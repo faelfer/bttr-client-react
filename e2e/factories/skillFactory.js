@@ -5,8 +5,7 @@ const skillDefault = require('../../src/utils/resources/skill_default.json');
 
 module.exports = function userFactory(isGenerateSkillNew = true) {
   const skillNew = {
-    name: faker.commerce.department(),
-    dailyMinutes: faker.number.int({ min: 10, max: 100 }),
+    name: `${faker.commerce.department()}${faker.number.int({ min: 10, max: 100 })}`,
   };
 
   if (isGenerateSkillNew) {

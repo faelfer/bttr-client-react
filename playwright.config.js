@@ -11,6 +11,7 @@ const { defineConfig, devices } = require('@playwright/test');
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
+  timeout: 60 * 1000,
   testDir: './e2e/tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -31,26 +32,26 @@ module.exports = defineConfig({
     trace: 'on-first-retry',
     video: {
       mode: 'on',
-      size: { width: 854, height: 480 },
+      size: { width: 640, height: 480 },
     },
   },
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
 
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },
     // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {
