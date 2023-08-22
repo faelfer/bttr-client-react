@@ -1,0 +1,122 @@
+import signUpScenario from '../support/signUpScenario';
+import signInScenario from '../support/signInScenario';
+import skillScenario from '../support/skillScenario';
+import timeScenario from '../support/timeScenario';
+
+const { test, expect, chromium } = require('@playwright/test');
+
+const userFactory = require('../factories/userFactory');
+const skillFactory = require('../factories/skillFactory');
+
+test('deve inserir os dados do novo tempo com sucesso', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  const user = await userFactory();
+
+  await page.getByText('Cadastre-se').click();
+
+  await signUpScenario(page, user);
+
+  const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
+  await expect(hasSignUpSuccess).toBeVisible();
+
+  await page.getByText('Conecte-se').click();
+
+  await expect(page).toHaveURL('http://localhost:3000/');
+
+  await signInScenario(page, user);
+
+  await page.getByText('Criar habilidade').click();
+
+  const skill = await skillFactory();
+
+  await skillScenario(page, skill);
+  await page.getByText('Criar').click();
+
+  const hasSkillSuccess = await page.getByText('habilitade foi criada com sucesso.');
+  await expect(hasSkillSuccess).toBeVisible();
+
+  await page.getByText('Voltar ao início').click();
+
+  const hasSkillInHome = await page.getByText(skill.name);
+  await expect(hasSkillInHome).toBeVisible();
+
+  await page.getByRole('link', { name: 'Tempo' }).click();
+
+  await page.getByText('Criar tempo').click();
+
+  await timeScenario(page, skill.name);
+  await page.getByText('Criar').click();
+
+  const hasTimeSuccess = await page.getByText('tempo foi criado com sucesso.');
+  await expect(hasTimeSuccess).toBeVisible();
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});
+
+test('deve alterar os dados do tempo com sucesso', async ({ page }) => {
+  const browser = await chromium.launch();
+  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
+  // Make sure to await close, so that videos are saved.
+
+  // Go to http://localhost:3000/
+  await page.goto('http://localhost:3000/');
+
+  const user = await userFactory();
+
+  await page.getByText('Cadastre-se').click();
+
+  await signUpScenario(page, user);
+
+  const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
+  await expect(hasSignUpSuccess).toBeVisible();
+
+  await page.getByText('Conecte-se').click();
+
+  await expect(page).toHaveURL('http://localhost:3000/');
+
+  await signInScenario(page, user);
+
+  await page.getByText('Criar habilidade').click();
+
+  const skill = await skillFactory();
+
+  await skillScenario(page, skill);
+  await page.getByText('Criar').click();
+
+  const hasSkillSuccess = await page.getByText('habilitade foi criada com sucesso.');
+  await expect(hasSkillSuccess).toBeVisible();
+
+  await page.getByText('Voltar ao início').click();
+
+  const hasSkillInHome = await page.getByText(skill.name);
+  await expect(hasSkillInHome).toBeVisible();
+
+  await page.getByRole('link', { name: 'Tempo' }).click();
+
+  await page.getByText('Criar tempo').click();
+
+  await timeScenario(page, skill.name);
+  await page.getByText('Criar').click();
+
+  const hasTimeSuccess = await page.getByText('tempo foi criado com sucesso.');
+  await expect(hasTimeSuccess).toBeVisible();
+
+  await page.getByText('Voltar ao histórico').click();
+  await page.getByText('Editar').click();
+
+  await timeScenario(page, skill.name);
+  await page.getByText('Editar').click();
+
+  const hasTimeUpdateSuccess = await page.getByText('tempo alterado com sucesso.');
+  await expect(hasTimeUpdateSuccess).toBeVisible();
+
+  await context.close();
+  // Make sure to await close, so that videos are saved.
+});

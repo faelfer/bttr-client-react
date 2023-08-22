@@ -15,14 +15,14 @@ test('deve inserir os dados do novo usuário e realizar login com sucesso', asyn
 
   const user = await userFactory();
 
-  await page.getByTestId('link-redirect-button').click();
+  await page.getByText('Cadastre-se').click();
 
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
   await expect(hasSignUpSuccess).toBeVisible();
 
-  await page.getByTestId('link-redirect-button').click();
+  await page.getByText('Conecte-se').click();
 
   await expect(page).toHaveURL('http://localhost:3000/');
 
@@ -64,14 +64,14 @@ test('deve mostrar mensagem de erro ao tentar realizar login com o campo senha i
 
   const user = await userFactory();
 
-  await page.getByTestId('link-redirect-button').click();
+  await page.getByText('Cadastre-se').click();
 
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
   await expect(hasSignUpSuccess).toBeVisible();
 
-  await page.getByTestId('link-redirect-button').click();
+  await page.getByText('Conecte-se').click();
 
   await expect(page).toHaveURL('http://localhost:3000/');
 
