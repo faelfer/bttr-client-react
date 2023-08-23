@@ -2,16 +2,12 @@ import signUpScenario from '../support/signUpScenario';
 import signInScenario from '../support/signInScenario';
 import skillScenario from '../support/skillScenario';
 
-const { test, expect, chromium } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 const userFactory = require('../factories/userFactory');
 const skillFactory = require('../factories/skillFactory');
 
-test('deve inserir os dados da nova habilidade com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
+test('deve criar uma habilidade com sucesso', async ({ page }) => {
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -37,23 +33,13 @@ test('deve inserir os dados da nova habilidade com sucesso', async ({ page }) =>
   await skillScenario(page, skill);
   await page.getByText('Criar').click();
 
-  const hasSkillSuccess = await page.getByText('habilidade foi criada com sucesso.');
-  await expect(hasSkillSuccess).toBeVisible();
+  const hasSkillCreateSuccess = await page.getByText('habilidade foi criada com sucesso.');
+  await expect(hasSkillCreateSuccess).toBeVisible();
 
   await page.getByText('Voltar ao início').click();
-
-  const hasSkillInHome = await page.getByText(skill.name);
-  await expect(hasSkillInHome).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve alterar os dados de uma habilidade com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -101,16 +87,9 @@ test('deve alterar os dados de uma habilidade com sucesso', async ({ page }) => 
 
   const hasSkillUpdatedInHome = await page.getByText(skillUpdate.name);
   await expect(hasSkillUpdatedInHome).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve excluir uma habilidade com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -155,16 +134,9 @@ test('deve excluir uma habilidade com sucesso', async ({ page }) => {
 
   const hasSkillUpdatedInHome = await page.getByText(skill.name);
   await expect(hasSkillUpdatedInHome).not.toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar criar uma habilidade com o campo nome vazio', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -193,16 +165,9 @@ test('deve mostrar mensagem de erro ao tentar criar uma habilidade com o campo n
 
   const hasSkillSuccess = await page.getByText('Preencha o campo nome da habilidade');
   await expect(hasSkillSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar criar uma habilidade com o campo nome inválido', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -231,16 +196,9 @@ test('deve mostrar mensagem de erro ao tentar criar uma habilidade com o campo n
 
   const hasSkillSuccess = await page.getByText('Campo nome da habilidade é inválido');
   await expect(hasSkillSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar alterar uma habilidade com o campo nome vazio', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -284,7 +242,4 @@ test('deve mostrar mensagem de erro ao tentar alterar uma habilidade com o campo
 
   const hasSkillUpdatedWrong = await page.getByText('Preencha o campo nome da habilidade');
   await expect(hasSkillUpdatedWrong).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });

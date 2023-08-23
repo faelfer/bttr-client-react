@@ -2,15 +2,11 @@ import signUpScenario from '../support/signUpScenario';
 import signInScenario from '../support/signInScenario';
 import profileScenario from '../support/profileScenario';
 
-const { test, expect, chromium } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 const userFactory = require('../factories/userFactory');
 
 test('deve alterar os dados do usuário login com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -37,16 +33,9 @@ test('deve alterar os dados do usuário login com sucesso', async ({ page }) => 
 
   const hasProfileSuccess = await page.getByText('perfil alterado com sucesso.');
   await expect(hasProfileSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo nome vazio', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -72,16 +61,9 @@ test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   const hasProfileSuccess = await page.getByText('Preencha o campo nome de usuário');
   await expect(hasProfileSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo nome inválido', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -107,16 +89,9 @@ test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   const hasProfileSuccess = await page.getByText('Campo nome de usuário é inválido');
   await expect(hasProfileSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo nome já existente', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -152,16 +127,9 @@ test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   const hasProfileSuccess = await page.getByText('nome de usuário já existente.');
   await expect(hasProfileSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo e-mail já existente', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -197,16 +165,9 @@ test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo e-
 
   const hasProfileSuccess = await page.getByText('usuário com e-mail já existente');
   await expect(hasProfileSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo email vazio', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -232,16 +193,9 @@ test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo em
 
   const hasProfileSuccess = await page.getByText('Preencha o campo e-mail');
   await expect(hasProfileSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo email inválido', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -267,16 +221,9 @@ test('deve mostrar mensagem de erro ao tentar alterar um usuário com o campo em
 
   const hasProfileSuccess = await page.getByText('Campo e-mail é inválido');
   await expect(hasProfileSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve realizar logout do usuário com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -302,16 +249,9 @@ test('deve realizar logout do usuário com sucesso', async ({ page }) => {
   await page.getByText('Sair').click();
 
   await expect(page).toHaveURL('http://localhost:3000/');
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve apagar o usuário com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -337,7 +277,4 @@ test('deve apagar o usuário com sucesso', async ({ page }) => {
   await page.getByText('Apagar').click();
 
   await expect(page).toHaveURL('http://localhost:3000/');
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });

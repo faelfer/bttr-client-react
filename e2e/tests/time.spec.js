@@ -3,16 +3,12 @@ import signInScenario from '../support/signInScenario';
 import skillScenario from '../support/skillScenario';
 import timeScenario from '../support/timeScenario';
 
-const { test, expect, chromium } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 const userFactory = require('../factories/userFactory');
 const skillFactory = require('../factories/skillFactory');
 
 test('deve inserir os dados do novo tempo com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -55,16 +51,9 @@ test('deve inserir os dados do novo tempo com sucesso', async ({ page }) => {
 
   const hasTimeSuccess = await page.getByText('tempo foi criado com sucesso.');
   await expect(hasTimeSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve alterar os dados do tempo com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -116,16 +105,9 @@ test('deve alterar os dados do tempo com sucesso', async ({ page }) => {
 
   const hasTimeUpdateSuccess = await page.getByText('tempo alterado com sucesso.');
   await expect(hasTimeUpdateSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar criar um tempo com o campo habilidade inválido', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -152,16 +134,9 @@ test('deve mostrar mensagem de erro ao tentar criar um tempo com o campo habilid
 
   const hasTimeWrong = await page.getByText('Campo habilidade é inválido');
   await expect(hasTimeWrong).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar alterar um tempo com o campo habilidade inválido', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -213,7 +188,4 @@ test('deve mostrar mensagem de erro ao tentar alterar um tempo com o campo habil
 
   const hasTimeUpdateWrong = await page.getByText('Campo habilidade é inválido');
   await expect(hasTimeUpdateWrong).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });

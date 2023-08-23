@@ -1,15 +1,11 @@
 import signUpScenario from '../support/signUpScenario';
 import forgotPasswordScenario from '../support/forgotPasswordScenario';
 
-const { test, expect, chromium } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 const userFactory = require('../factories/userFactory');
 
 test('deve inserir os dados do novo usuário e realizar o esqueci minha senha com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -32,16 +28,9 @@ test('deve inserir os dados do novo usuário e realizar o esqueci minha senha co
 
   const hasForgotPasswordSuccess = await page.getByText('senha temporária enviada');
   await expect(hasForgotPasswordSuccess).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar realizar esqueci minha senha com o campo e-mail não existente', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -53,16 +42,9 @@ test('deve mostrar mensagem de erro ao tentar realizar esqueci minha senha com o
 
   const hasForgotPasswordNotFound = await page.getByText('usuário não foi encontrado.');
   await expect(hasForgotPasswordNotFound).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar realizar esqueci minha senha com o campo e-mail vazio', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -75,7 +57,4 @@ test('deve mostrar mensagem de erro ao tentar realizar esqueci minha senha com o
 
   const hasForgotPasswordWrong = await page.getByText('Preencha o campo e-mail');
   await expect(hasForgotPasswordWrong).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });

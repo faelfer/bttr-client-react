@@ -1,14 +1,10 @@
 import signUpScenario from '../support/signUpScenario';
 
-const { test, expect, chromium } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 const userFactory = require('../factories/userFactory');
 
 test('deve inserir os dados do novo usuário com sucesso', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -24,16 +20,9 @@ test('deve inserir os dados do novo usuário com sucesso', async ({ page }) => {
   await page.getByTestId('link-redirect-button').click();
 
   await expect(page).toHaveURL('http://localhost:3000/');
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo nome já existente', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -63,16 +52,9 @@ test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
   await page.getByTestId('link-redirect-button').click();
 
   await expect(page).toHaveURL('http://localhost:3000/');
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo e-mail já existente', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -102,16 +84,9 @@ test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
   await page.getByTestId('link-redirect-button').click();
 
   await expect(page).toHaveURL('http://localhost:3000/');
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo nome vazio', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -124,16 +99,9 @@ test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
 
   const hasSignUpValidateUsernameEmpty = await page.getByText('Preencha o campo nome de usuário');
   await expect(hasSignUpValidateUsernameEmpty).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo nome inválido', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -146,16 +114,9 @@ test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
 
   const hasSignUpValidateUsername = await page.getByText('Campo nome de usuário é inválido');
   await expect(hasSignUpValidateUsername).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo e-mail vazio', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -168,16 +129,9 @@ test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
 
   const hasSignUpValidateEmailEmpty = await page.getByText('Preencha o campo e-mail');
   await expect(hasSignUpValidateEmailEmpty).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo e-mail inválido', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -190,16 +144,9 @@ test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
 
   const hasSignUpValidateEmail = await page.getByText('Campo e-mail é inválido');
   await expect(hasSignUpValidateEmail).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo senha vazio', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -212,16 +159,9 @@ test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
 
   const hasSignUpValidatePasswordEmpty = await page.getByText('Preencha o campo senha');
   await expect(hasSignUpValidatePasswordEmpty).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo senha inválido', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -234,16 +174,9 @@ test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
 
   const hasSignUpValidatePassword = await page.getByText('Campo senha deve conter número, símbolo, letra maiúscula e minúscula');
   await expect(hasSignUpValidatePassword).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
 
 test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo senha que ultrapassar o limite de caracteres', async ({ page }) => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  // Make sure to await close, so that videos are saved.
-
   // Go to http://localhost:3000/
   await page.goto('http://localhost:3000/');
 
@@ -256,7 +189,4 @@ test('deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
 
   const hasSignUpValidatePasswordMinimum = await page.getByText('Campo senha deve conter de 4 à 8 caracteres');
   await expect(hasSignUpValidatePasswordMinimum).toBeVisible();
-
-  await context.close();
-  // Make sure to await close, so that videos are saved.
 });
