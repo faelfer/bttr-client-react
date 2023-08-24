@@ -1,20 +1,21 @@
 # Bttr
 
-![GitHub issue](https://img.shields.io/github/issues/NYDino/bttr)
-![GitHub forks](https://img.shields.io/github/forks/NYDino/bttr)
-![GitHub stars](https://img.shields.io/github/stars/NYDino/bttr)
-![GitHub license](https://img.shields.io/github/license/NYDino/bttr)
+![GitHub issue](https://img.shields.io/github/issues/faelfer/bttr-client-react)
+![GitHub forks](https://img.shields.io/github/forks/faelfer/bttr-client-react)
+![GitHub stars](https://img.shields.io/github/stars/faelfer/bttr-client-react)
+![GitHub license](https://img.shields.io/github/license/faelfer/bttr-client-react)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
-![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FiNYD5)
+![Twitter Follow](https://img.shields.io/twitter/follow/fael_fer)
 
-Front-end of the bttr project with ReactJS.
+
+Client of the bttr project with ReactJS.
 
 ## Installation
 
 Use the package manager [yarn](https://yarnpkg.com/en/) to install the necessary libs and run the project.
 
 ```bash
-yarn install
+yarn package-clean
 ```
 ```bash
 yarn start

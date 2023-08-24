@@ -1,7 +1,7 @@
 {
-  "name": "bttr",
-  "version": "0.1.0",
-  "private": true,
+  "name": "bttr-client-react",
+  "version": "0.6.3",
+  "private": false,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",

@@ -12,13 +12,13 @@ There are several ways you can help the project out:
 
 A lot of our code comes from pull requests sent by the developer community. Here is how you can contribute too:
 
-- [x] Open the [Task List GitHub page](https://github.com/NYDino/bttr) and click the ★ Star and then ⑂ Fork buttons.
-- [x] Clone a copy to your local machine with `$ git clone git@github.com:YOUR-GITHUB-USER-NAME/bttr`.
+- [x] Open the [Task List GitHub page](https://github.com/faelfer/bttr-client-react) and click the ★ Star and then ⑂ Fork buttons.
+- [x] Clone a copy to your local machine with `$ git clone git@github.com:YOUR-GITHUB-USER-NAME/bttr-client-react`.
 - [x] Run `yarn install` to install all dependencies and `yarn start` to run project.
 - [x] Now, code, code, code.
 - [x] Commit your local changes by using `$ git commit -m "nice detailed message here..."`
 - [x] Once you've made sure all your changes work correctly and have been committed, push your local changes back to github with `$ git push -u origin master`
-- [x] Visit your fork on GitHub.com ([https://github.com/YOUR-USER-NAME/bttr](https://github.com/YOUR-USER-NAME/bttr)) and create a pull request for your changes.
+- [x] Visit your fork on GitHub.com ([https://github.com/YOUR-USER-NAME/bttr-client-react](https://github.com/YOUR-USER-NAME/bttr)) and create a pull request for your changes.
 - [x] Makes sure your pull request describes exactly what you changed and if it relates to an open issue, reference that issue (just include the issue number in the title like this: #49)
 
 #### Important:
@@ -30,7 +30,7 @@ A lot of our code comes from pull requests sent by the developer community. Here
 
 ### Reporting Bugs
 
-Bugs are tracked as [GitHub issues](https://github.com/NYDino/bttr/issues). If you found a bug with xplore, the quickest way to get help would be to look through existing open and closed [GitHub issues](https://github.com/NYDino/bttr/issues/issues?q=is%3Aissue). If the issue is already being discussed and hasn't been resolved yet, you can join the discussion and provide details about the problem you are having. If this is a new bug, please open a [new issue](https://github.com/NYDino/bttr/issues/new).
+Bugs are tracked as [GitHub issues](https://github.com/faelfer/bttr-client-react/issues). If you found a bug with xplore, the quickest way to get help would be to look through existing open and closed [GitHub issues](https://github.com/faelfer/bttr-client-react/issues/issues?q=is%3Aissue). If the issue is already being discussed and hasn't been resolved yet, you can join the discussion and provide details about the problem you are having. If this is a new bug, please open a [new issue](https://github.com/faelfer/bttr-client-react/issues/new).
 
 When you are creating a bug report, please include as much detail as possible.
 
@@ -41,6 +41,6 @@ When you are creating a bug report, please include as much detail as possible.
 
 ### Feature Requests and Ideas
 
-We track discussions of new features, proposed changes, and other ideas as [GitHub issues](https://github.com/NYDino/bttr/issues). If you would like to discuss one of those, please first look through existing open and closed [GitHub issues](https://github.com/NYDino/bttr/issues?q=is%3Aissue) and see if there is already a discussion on this topic which you can join. If there isn't, please open a [new issue](https://github.com/NYDino/bttr/issues/new).
+We track discussions of new features, proposed changes, and other ideas as [GitHub issues](https://github.com/faelfer/bttr-client-react/issues). If you would like to discuss one of those, please first look through existing open and closed [GitHub issues](https://github.com/faelfer/bttr-client-react/issues?q=is%3Aissue) and see if there is already a discussion on this topic which you can join. If there isn't, please open a [new issue](https://github.com/faelfer/bttr-client-react/issues/new).
 
 When discussing new ideas or proposing changes, please take the time to be as descriptive as possible about the topic at hand. Please take the time to explain the issue you are facing, or the problem you propose to solve in as much detail as possible.
