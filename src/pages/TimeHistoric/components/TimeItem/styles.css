@@ -1,0 +1,36 @@
+.container--time {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: transparent;
+  border-color: var(--on-primary-color);
+  border-style: solid;
+  border-width: thin;
+  border-radius: 6px;
+  width: 76%;
+  margin: 10px 0px;
+  padding: 12px 0px;
+}
+
+.text--time-headline {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  color: var(--on-secondary-color);
+}
+
+.text--time-subhead {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 8px 0px;
+  color: var(--on-primary-color);
+}
+
+.text--time-supporting {
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0px 0px 4px 0px;
+  color: var(--on-primary-color);
+}

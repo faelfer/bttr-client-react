@@ -5,7 +5,9 @@
   --on-secondary-color: #ffffff;
   --surface-colors: #000000;
   --background-color: #242526;
-  --error-color: #ED4956;
+  --error-color: #ff313b; 
+  --warning-color: #f6d32d;
+  --success-color: #33d17a;
 }
 
 body {
@@ -21,4 +23,43 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 330px;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding-bottom: 14px;
+}
+
+.content--align {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+@media screen and (max-width: 450px) {
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  width: 100%;
+  background: transparent;
+  padding: 20px;
+  border-radius: 5px;
+}
 }

@@ -1,0 +1,29 @@
+.container--skill {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: transparent;
+  border-color: var(--on-primary-color);
+  border-style: solid;
+  border-width: thin;
+  border-radius: 6px;
+  width: 76%;
+  margin: 10px 0px;
+  padding: 12px 0px;
+}
+
+.text--skill-headline {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  color: var(--on-secondary-color);
+}
+
+.text--skill-subhead {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 8px 0px;
+  color: var(--on-primary-color);
+}

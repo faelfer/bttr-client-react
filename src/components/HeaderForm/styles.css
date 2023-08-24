@@ -1,0 +1,6 @@
+.text--header {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--on-primary-color);
+    text-align: center;
+}
