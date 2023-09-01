@@ -29,6 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Community profile requirements have been completed.
 
-[Unreleased]: https://github.com/faelfer/bttr/compare/v0.5.3...HEAD
-[0.5.3]: https://github.com/faelfer/bttr/compare/v0.1.0...v0.5.3
-[0.1.0]: https://github.com/faelfer/bttr/releases/tag/v0.1.0
+[Unreleased]: https://github.com/faelfer/bttr-client-react/compare/v0.6.3...HEAD
+[0.6.3]: https://github.com/faelfer/bttr-client-react/compare/v0.1.0...v0.6.3
+[0.1.0]: https://github.com/faelfer/bttr-client-react/releases/tag/v0.1.0
