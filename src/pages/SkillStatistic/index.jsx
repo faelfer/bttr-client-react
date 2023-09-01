@@ -62,6 +62,9 @@ export default function SkillStatistic() {
         currentDateToFilter.getFullYear(),
         currentDateToFilter.getMonth() + 1,
         0,
+        20,
+        59,
+        59,
       );
       const firstDayToFilterDateIso = firstDayToFilter.toISOString();
       const lastDayToFilterDateIso = lastDayToFilter.toISOString();
