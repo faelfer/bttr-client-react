@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 export default function calendarDateHourMinutes(dateString) {
   // console.log('calendarDateHourMinutes | dateString: ', dateString);
 
-  const dateTimeFromISO = DateTime.fromISO(dateString);
+  const dateTimeFromISO = DateTime.fromISO(dateString).setLocale('pt-BR');
   // console.log('calendarDateHourMinutes | dateTimeFromISO: ', dateTimeFromISO);
 
   const dateCalendarFormat = dateTimeFromISO.toLocaleString(DateTime.DATE_SHORT);
