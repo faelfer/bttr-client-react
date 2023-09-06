@@ -27,54 +27,44 @@ export default function SignIn() {
   useEffect(() => {
     function redirectAppScreen() {
       const authenticated = isAuthenticated();
-      // console.log("SignIn | authenticated: ", authenticated);
       if (authenticated) {
         navigate('/home', { replace: true });
       }
     }
-
     redirectAppScreen();
   }, [navigate]);
 
   function validateSignIn() {
     let message = '';
-
     if (!email) {
       message = 'Preencha o campo e-mail';
     } else if (!password) {
       message = 'Preencha o campo senha';
     }
-
     return { isInvalid: !!message, message };
+  }
+
+  function showException(message, type) {
+    setExceptionMessage(message);
+    setExceptionType(type);
   }
 
   async function sendSignIn() {
     const responseValidateSignIn = await validateSignIn();
-    console.log('sendSignIn | responseValidateSignIn: ', responseValidateSignIn);
-
     if (responseValidateSignIn.isInvalid) {
-      setExceptionMessage(responseValidateSignIn.message);
-      setExceptionType('warning');
+      showException(responseValidateSignIn.message, 'warning');
     } else {
       try {
-        const resultSignIn = await SignInFetch(
-          email,
-          password,
-        );
-        console.log('sendSignIn | resultSignIn: ', resultSignIn);
-
+        const resultSignIn = await SignInFetch(email, password);
         setIsLoading(false);
         if (!resultSignIn.isSuccess) {
-          setExceptionMessage(resultSignIn.message);
-          setExceptionType('error');
+          showException(resultSignIn.message, 'error');
         } else {
           login(`Token ${resultSignIn.user.token}`);
           navigate('/home', { replace: true });
         }
       } catch (error) {
-        console.log('sendSignIn | error: ', error);
-        setExceptionMessage('Ocorreu um erro ao acessar sua conta. ;-;');
-        setExceptionType('error');
+        showException('Ocorreu um erro, tente novamente mais tarde.');
         setIsLoading(false);
       }
     }
@@ -107,7 +97,6 @@ export default function SignIn() {
           onAction={() => navigate('/forgot-password', { replace: true })}
         />
       </div>
-
       <LinkRedirect
         description="Não tem uma conta? "
         descriptionUrl="Cadastre-se"
