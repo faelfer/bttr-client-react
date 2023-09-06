@@ -49,29 +49,24 @@ export default function SignUp() {
     return { isInvalid: !!message, message };
   }
 
+  function showException(message, type) {
+    setExceptionMessage(message);
+    setExceptionType(type);
+  }
+
   async function sendSignUp() {
     const responseValidateSignUp = await validateSignUp();
-    console.log('sendSignUp | responseValidateSignUp: ', responseValidateSignUp);
 
     if (responseValidateSignUp.isInvalid) {
-      setExceptionMessage(responseValidateSignUp.message);
-      setExceptionType('warning');
+      showException(responseValidateSignUp.message, 'warning');
     } else {
       try {
         setIsLoading(true);
-        const resultSignUp = await SignUpFetch(
-          username,
-          email,
-          password,
-        );
-        console.log('sendSignUp | resultSignUp: ', resultSignUp);
-        setExceptionMessage(resultSignUp.message);
-        setExceptionType(resultSignUp.isSuccess ? 'success' : 'error');
+        const resultSignUp = await SignUpFetch(username, email, password);
+        showException(resultSignUp.message, resultSignUp.isSuccess ? 'success' : 'error');
         setIsLoading(false);
       } catch (error) {
-        console.log('sendSignUp | error: ', error);
-        setExceptionMessage('Ocorreu um erro ao registrar sua conta. ;-;');
-        setExceptionType('error');
+        showException('Ocorreu um erro, tente novamente mais tarde', 'error');
         setIsLoading(false);
       }
     }
@@ -106,7 +101,6 @@ export default function SignUp() {
           onAction={() => sendSignUp()}
         />
       </div>
-
       <LinkRedirect
         description="Tem uma conta? "
         descriptionUrl="Conecte-se"

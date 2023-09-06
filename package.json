@@ -3,9 +3,6 @@
   "version": "0.6.3",
   "private": false,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@sentry/react": "^7.55.2",
     "@sentry/tracing": "^7.55.2",
     "@testing-library/jest-dom": "^5.16.5",
@@ -29,7 +26,7 @@
     "test-e2e-report": "playwright show-report",
     "test-e2e-debug": "playwright test --debug",
     "test-e2e-codegen": "playwright codegen http://localhost:3000/",
-    "lint": "eslint src/**",
+    "lint": "eslint --ext .jsx,.js src/**",
     "lint-fix": "eslint --ext .jsx,.js src/** --fix",
     "package-clean": "rm -rf node_modules yarn.lock && yarn install",
     "commit-version": "git add CHANGELOG.md package.json && git commit -m 'update CHANGELOG and number version'"
