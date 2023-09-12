@@ -47,7 +47,7 @@ jobs:
         run: yarn test-unit
   coverage:
     needs:
-      - test
+      - jest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
