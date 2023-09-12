@@ -1,16 +1,84 @@
 export default function isInvalidPassword(inputText) {
   // console.log('isInvalidPassword | inputText: ', inputText);
-  const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-  const lettersCapital = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-  const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  const symbols = ['!', '@', '#', '$', '%', '&', '*', '(', ')', '_', '+', '-', '?'];
+  const letters = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ];
+  const lettersCapital = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
+  const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  const symbols = [
+    "!",
+    "@",
+    "#",
+    "$",
+    "%",
+    "&",
+    "*",
+    "(",
+    ")",
+    "_",
+    "+",
+    "-",
+    "?",
+  ];
 
   const foundLetter = letters.find((letter) => inputText.includes(letter));
   const isIncludeLetter = foundLetter !== undefined;
   // console.log('isInvalidPassword | isIncludeLetter: ', isIncludeLetter);
 
-  const foundLetterCapital = lettersCapital.find(
-    (letterCapital) => inputText.includes(letterCapital),
+  const foundLetterCapital = lettersCapital.find((letterCapital) =>
+    inputText.includes(letterCapital),
   );
   const isIncludeLetterCapital = foundLetterCapital !== undefined;
   // console.log('isInvalidPassword | isIncludeLetterCapital: ', isIncludeLetterCapital);
@@ -31,7 +99,12 @@ export default function isInvalidPassword(inputText) {
   //   isIncludeSymbol,
   // );
 
-  if (isIncludeLetter && isIncludeLetterCapital && isIncludeNumber && isIncludeSymbol) {
+  if (
+    isIncludeLetter &&
+    isIncludeLetterCapital &&
+    isIncludeNumber &&
+    isIncludeSymbol
+  ) {
     // console.log('isInvalidPassword | Valid password!');
     return false;
   }

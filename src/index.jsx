@@ -1,15 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
-import * as Sentry from '@sentry/react';
-import { Integrations } from '@sentry/tracing';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
 
-import './index.css';
+import "./index.css";
 
-import routes from './routes';
-import reportWebVitals from './reportWebVitals';
+import routes from "./routes";
+import reportWebVitals from "./reportWebVitals";
 
-const { version } = require('../package.json');
+const { version } = require("../package.json");
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY,
@@ -21,7 +21,7 @@ Sentry.init({
   tracesSampleRate: 1,
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RouterProvider router={routes} />

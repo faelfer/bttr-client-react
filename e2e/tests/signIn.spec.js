@@ -1,65 +1,75 @@
-import signUpScenario from '../support/signUpScenario';
-import signInScenario from '../support/signInScenario';
+import signUpScenario from "../support/signUpScenario";
+import signInScenario from "../support/signInScenario";
 
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require("@playwright/test");
 
-const userFactory = require('../factories/userFactory');
+const userFactory = require("../factories/userFactory");
 
-test('deve inserir os dados do novo usuário e realizar login com sucesso', async ({ page }) => {
+test("deve inserir os dados do novo usuário e realizar login com sucesso", async ({
+  page,
+}) => {
   // Go to http://localhost:3000/
-  await page.goto('http://localhost:3000/');
+  await page.goto("http://localhost:3000/");
 
   const user = await userFactory();
 
-  await page.getByText('Cadastre-se').click();
+  await page.getByText("Cadastre-se").click();
 
   await signUpScenario(page, user);
 
-  const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
+  const hasSignUpSuccess = await page.getByText(
+    "usuário foi criado com sucesso.",
+  );
   await expect(hasSignUpSuccess).toBeVisible();
 
-  await page.getByText('Conecte-se').click();
+  await page.getByText("Conecte-se").click();
 
-  await expect(page).toHaveURL('http://localhost:3000/');
+  await expect(page).toHaveURL("http://localhost:3000/");
 
   await signInScenario(page, user);
 
-  await page.getByRole('link', { name: 'Perfil' }).click();
-  await page.getByTestId('button-transparent').click();
+  await page.getByRole("link", { name: "Perfil" }).click();
+  await page.getByTestId("button-transparent").click();
 });
 
-test('deve mostrar mensagem de erro ao tentar realizar login com o campo e-mail não existente', async ({ page }) => {
+test("deve mostrar mensagem de erro ao tentar realizar login com o campo e-mail não existente", async ({
+  page,
+}) => {
   // Go to http://localhost:3000/
-  await page.goto('http://localhost:3000/');
+  await page.goto("http://localhost:3000/");
 
   const user = await userFactory();
 
   await signInScenario(page, user);
 
-  const hasSignInNotFound = await page.getByText('usuário não foi encontrado.');
+  const hasSignInNotFound = await page.getByText("usuário não foi encontrado.");
   await expect(hasSignInNotFound).toBeVisible();
 });
 
-test('deve mostrar mensagem de erro ao tentar realizar login com o campo senha incorreta', async ({ page }) => {
+test("deve mostrar mensagem de erro ao tentar realizar login com o campo senha incorreta", async ({
+  page,
+}) => {
   // Go to http://localhost:3000/
-  await page.goto('http://localhost:3000/');
+  await page.goto("http://localhost:3000/");
 
   const user = await userFactory();
 
-  await page.getByText('Cadastre-se').click();
+  await page.getByText("Cadastre-se").click();
 
   await signUpScenario(page, user);
 
-  const hasSignUpSuccess = await page.getByText('usuário foi criado com sucesso.');
+  const hasSignUpSuccess = await page.getByText(
+    "usuário foi criado com sucesso.",
+  );
   await expect(hasSignUpSuccess).toBeVisible();
 
-  await page.getByText('Conecte-se').click();
+  await page.getByText("Conecte-se").click();
 
-  await expect(page).toHaveURL('http://localhost:3000/');
+  await expect(page).toHaveURL("http://localhost:3000/");
 
-  user.password = '654789';
+  user.password = "654789";
   await signInScenario(page, user);
 
-  const hasSignInPasswordWrong = await page.getByText('senha incorreta.');
+  const hasSignInPasswordWrong = await page.getByText("senha incorreta.");
   await expect(hasSignInPasswordWrong).toBeVisible();
 });

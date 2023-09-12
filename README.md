@@ -9,7 +9,6 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/0543d3fafe54ce417928/test_coverage)](https://codeclimate.com/github/faelfer/bttr-client-react/test_coverage)
 ![Twitter Follow](https://img.shields.io/twitter/follow/fael_fer)
 
-
 Client of the bttr project with ReactJS.
 
 ## Installation
@@ -19,14 +18,17 @@ Use the package manager [yarn](https://yarnpkg.com/en/) to install the necessary
 ```bash
 yarn package-clean
 ```
+
 ```bash
 yarn start
 ```
 
 ## Contributing
+
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit/)

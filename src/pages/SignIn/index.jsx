@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { login, isAuthenticated } from '../../services/auth';
+import { login, isAuthenticated } from "../../services/auth";
 
-import Load from '../../components/Load';
-import HeaderForm from '../../components/HeaderForm';
-import MessageContainer from '../../components/MessageContainer';
-import InputOutlineForm from '../../components/InputOutlineForm';
-import LinkRedirect from '../../components/LinkRedirect';
-import ButtonContained from '../../components/ButtonContained';
-import ButtonTransparent from '../../components/ButtonTransparent';
+import Load from "../../components/Load";
+import HeaderForm from "../../components/HeaderForm";
+import MessageContainer from "../../components/MessageContainer";
+import InputOutlineForm from "../../components/InputOutlineForm";
+import LinkRedirect from "../../components/LinkRedirect";
+import ButtonContained from "../../components/ButtonContained";
+import ButtonTransparent from "../../components/ButtonTransparent";
 
-import './styles.css';
+import "./styles.css";
 
-import { SignInFetch } from '../../api/services/UserAPI';
+import { SignInFetch } from "../../api/services/UserAPI";
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [exceptMessage, setExceptionMessage] = useState('');
-  const [exceptType, setExceptionType] = useState('error');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [exceptMessage, setExceptionMessage] = useState("");
+  const [exceptType, setExceptionType] = useState("error");
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -28,18 +28,18 @@ export default function SignIn() {
     function redirectAppScreen() {
       const authenticated = isAuthenticated();
       if (authenticated) {
-        navigate('/home', { replace: true });
+        navigate("/home", { replace: true });
       }
     }
     redirectAppScreen();
   }, [navigate]);
 
   function validateSignIn() {
-    let message = '';
+    let message = "";
     if (!email) {
-      message = 'Preencha o campo e-mail';
+      message = "Preencha o campo e-mail";
     } else if (!password) {
-      message = 'Preencha o campo senha';
+      message = "Preencha o campo senha";
     }
     return { isInvalid: !!message, message };
   }
@@ -52,19 +52,19 @@ export default function SignIn() {
   async function sendSignIn() {
     const responseValidateSignIn = await validateSignIn();
     if (responseValidateSignIn.isInvalid) {
-      showException(responseValidateSignIn.message, 'warning');
+      showException(responseValidateSignIn.message, "warning");
     } else {
       try {
         const resultSignIn = await SignInFetch(email, password);
         setIsLoading(false);
         if (!resultSignIn.isSuccess) {
-          showException(resultSignIn.message, 'error');
+          showException(resultSignIn.message, "error");
         } else {
           login(`Token ${resultSignIn.user.token}`);
-          navigate('/home', { replace: true });
+          navigate("/home", { replace: true });
         }
       } catch (error) {
-        showException('Ocorreu um erro, tente novamente mais tarde.');
+        showException("Ocorreu um erro, tente novamente mais tarde.");
         setIsLoading(false);
       }
     }
@@ -75,7 +75,9 @@ export default function SignIn() {
       <Load isShow={isLoading} />
       <div className="form">
         <HeaderForm title="Bttr" />
-        {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
+        {exceptMessage && (
+          <MessageContainer type={exceptType} message={exceptMessage} />
+        )}
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
@@ -88,19 +90,16 @@ export default function SignIn() {
           inputValue={password}
           onChangeInput={(textValue) => setPassword(textValue)}
         />
-        <ButtonContained
-          text="Entrar"
-          onAction={() => sendSignIn()}
-        />
+        <ButtonContained text="Entrar" onAction={() => sendSignIn()} />
         <ButtonTransparent
           text="Esqueceu a senha?"
-          onAction={() => navigate('/forgot-password', { replace: true })}
+          onAction={() => navigate("/forgot-password", { replace: true })}
         />
       </div>
       <LinkRedirect
         description="Não tem uma conta? "
         descriptionUrl="Cadastre-se"
-        onRedirect={() => navigate('/sign-up', { replace: true })}
+        onRedirect={() => navigate("/sign-up", { replace: true })}
       />
     </div>
   );

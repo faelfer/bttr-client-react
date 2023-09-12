@@ -1,4 +1,4 @@
-const progressColors = require('../resources/colors_progress.json');
+const progressColors = require("../resources/colors_progress.json");
 
 export default function colorFromPercentage(progressPercentage) {
   // console.log('colorFromPercentage | progressPercentage: ', progressPercentage);

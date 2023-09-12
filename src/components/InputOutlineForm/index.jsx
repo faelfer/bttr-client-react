@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import './styles.css';
+import "./styles.css";
 
 export default function InputOutlineForm({
   inputPlaceholder,
   inputValue,
   onChangeInput,
-  inputType = 'text',
+  inputType = "text",
 }) {
   const onChangeValue = ({ currentTarget: { value } }) => {
     onChangeInput(value);

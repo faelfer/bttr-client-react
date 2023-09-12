@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import './styles.css';
+import "./styles.css";
 
 export default function SelectOutlineForm({
   selectPlaceholder,
@@ -20,13 +20,11 @@ export default function SelectOutlineForm({
       <option value="" key={0}>
         {selectPlaceholder}
       </option>
-      {
-        options.map((optionLoop) => (
-          <option value={optionLoop.id} key={optionLoop.id}>
-            {optionLoop.value}
-          </option>
-        ))
-      }
+      {options.map((optionLoop) => (
+        <option value={optionLoop.id} key={optionLoop.id}>
+          {optionLoop.value}
+        </option>
+      ))}
     </select>
   );
 }

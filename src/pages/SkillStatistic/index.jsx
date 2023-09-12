@@ -1,31 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import {
-  useNavigate,
-  useLocation,
-  useParams,
-} from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
-import { getToken } from '../../services/auth';
+import { getToken } from "../../services/auth";
 
-import NavBar from '../../components/NavBar';
-import Load from '../../components/Load';
-import MessageContainer from '../../components/MessageContainer';
-import StatisticItem from './components/StatisticItem';
-import ButtonContained from '../../components/ButtonContained';
-import LinkRedirect from '../../components/LinkRedirect';
+import NavBar from "../../components/NavBar";
+import Load from "../../components/Load";
+import MessageContainer from "../../components/MessageContainer";
+import StatisticItem from "./components/StatisticItem";
+import ButtonContained from "../../components/ButtonContained";
+import LinkRedirect from "../../components/LinkRedirect";
 
-import './styles.css';
+import "./styles.css";
 
-import { SkillByIdFetch } from '../../api/services/SkillAPI';
-import { TimesByDateFetch } from '../../api/services/TimeAPI';
+import { SkillByIdFetch } from "../../api/services/SkillAPI";
+import { TimesByDateFetch } from "../../api/services/TimeAPI";
 
 export default function SkillStatistic() {
   const { skillId } = useParams();
 
   const [skill, setSkill] = useState(null);
   const [minutesTotalMonth, setMinutesTotalMonth] = useState(0);
-  const [exceptMessage, setExceptionMessage] = useState('');
-  const [exceptType, setExceptionType] = useState('error');
+  const [exceptMessage, setExceptionMessage] = useState("");
+  const [exceptType, setExceptionType] = useState("error");
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -37,15 +33,17 @@ export default function SkillStatistic() {
     try {
       setIsLoading(true);
       const resultSkills = await SkillByIdFetch(token, skillIdToRead);
-      console.log('getSkillById | resultSkills: ', resultSkills);
+      console.log("getSkillById | resultSkills: ", resultSkills);
       setSkill(resultSkills.skill);
       setExceptionMessage(resultSkills.message);
-      setExceptionType(resultSkills.isSuccess ? 'success' : 'error');
+      setExceptionType(resultSkills.isSuccess ? "success" : "error");
       setIsLoading(false);
     } catch (error) {
-      console.log('getSkillById | error: ', error);
-      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
-      setExceptionType('error');
+      console.log("getSkillById | error: ", error);
+      setExceptionMessage(
+        "No momento esse recurso está indisponível, tente novamente mais tarde.",
+      );
+      setExceptionType("error");
       setIsLoading(false);
     }
   }
@@ -69,7 +67,7 @@ export default function SkillStatistic() {
       const firstDayToFilterDateIso = firstDayToFilter.toISOString();
       const lastDayToFilterDateIso = lastDayToFilter.toISOString();
       console.log(
-        'handleGoalAdd | firstDayToFilterDateIso, lastDayToFilterDateIso: ',
+        "handleGoalAdd | firstDayToFilterDateIso, lastDayToFilterDateIso: ",
         firstDayToFilterDateIso,
         lastDayToFilterDateIso,
       );
@@ -80,20 +78,22 @@ export default function SkillStatistic() {
         firstDayToFilterDateIso,
         lastDayToFilterDateIso,
       );
-      console.log('getTimesByDate | resultTimeByDate: ', resultTimeByDate);
+      console.log("getTimesByDate | resultTimeByDate: ", resultTimeByDate);
       const initialValue = 0;
-      const sumTotalTimes = (resultTimeByDate.times).reduce(
+      const sumTotalTimes = resultTimeByDate.times.reduce(
         (accumulator, currentValue) => accumulator + currentValue.minutes,
         initialValue,
       );
       setMinutesTotalMonth(sumTotalTimes);
       setExceptionMessage(resultTimeByDate.message);
-      setExceptionType(resultTimeByDate.isSuccess ? 'success' : 'error');
+      setExceptionType(resultTimeByDate.isSuccess ? "success" : "error");
       setIsLoading(false);
     } catch (error) {
-      console.log('getTimesByDate | error: ', error);
-      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
-      setExceptionType('error');
+      console.log("getTimesByDate | error: ", error);
+      setExceptionMessage(
+        "No momento esse recurso está indisponível, tente novamente mais tarde.",
+      );
+      setExceptionType("error");
       setIsLoading(false);
     }
   }
@@ -113,9 +113,11 @@ export default function SkillStatistic() {
         <div className="form">
           <ButtonContained
             text="Criar tempo"
-            onAction={() => navigate('/times/create', { replace: true })}
+            onAction={() => navigate("/times/create", { replace: true })}
           />
-          {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
+          {exceptMessage && (
+            <MessageContainer type={exceptType} message={exceptMessage} />
+          )}
           {skill !== null ? (
             <StatisticItem
               skillProps={skill}
@@ -127,7 +129,7 @@ export default function SkillStatistic() {
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao início"
-          onRedirect={() => navigate('/home', { replace: true })}
+          onRedirect={() => navigate("/home", { replace: true })}
         />
       </div>
     </>

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import './styles.css';
+import "./styles.css";
 
 export default function LinkRedirect({
   description,
@@ -9,9 +9,7 @@ export default function LinkRedirect({
 }) {
   return (
     <div className="container--redirect">
-      <p className="text--redirect">
-        {description}
-      </p>
+      <p className="text--redirect">{description}</p>
       <button
         className="link--redirect"
         onClick={() => onRedirect()}

@@ -1,7 +1,7 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
-import './styles.css';
+import "./styles.css";
 
 export default function NavBar() {
   return (

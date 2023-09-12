@@ -5,35 +5,47 @@ name: Test React Application
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Set Node.js version 18.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.x'
-    - name: Install dependencies
-      run: yarn
-    - run: yarn test-unit
+      - uses: actions/checkout@v3
+      - name: Set Node.js version 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+      - name: Install dependencies
+        run: yarn
+      - run: yarn test-unit
   coverage:
-    needs: [ test ]
+    needs: [test]
     name: coverage
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-node@master
-      with:
-        node-version: '18.x'
-    - run: npm install -g yarn
-    - run: yarn install
-    - uses: paambaati/codeclimate-action@v5.0.0
-      env:
-        CC_TEST_REPORTER_ID: ${{ vars.TEST_COVERAGE_ID }}
-      with:
-        coverageCommand: yarn test-unit-coverage
+      - uses: actions/checkout@master
+      - name: Set Node.js version 18.x
+      - uses: actions/setup-node@master
+        with:
+          node-version: "18.x"
+      - run: npm install -g yarn
+      - run: yarn install
+      - uses: paambaati/codeclimate-action@v5.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ vars.TEST_COVERAGE_ID }}
+        with:
+          coverageCommand: yarn test-unit-coverage
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Node.js version 18.x
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+      - name: Install dependencies
+        run: yarn
+      - run: yarn prettify-check

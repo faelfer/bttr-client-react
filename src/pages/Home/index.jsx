@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import { getToken } from '../../services/auth';
+import { getToken } from "../../services/auth";
 
-import NavBar from '../../components/NavBar';
-import Load from '../../components/Load';
-import MessageContainer from '../../components/MessageContainer';
-import SkillItem from './components/SkillItem';
-import ButtonContained from '../../components/ButtonContained';
-import ButtonPagination from '../../components/ButtonPagination';
+import NavBar from "../../components/NavBar";
+import Load from "../../components/Load";
+import MessageContainer from "../../components/MessageContainer";
+import SkillItem from "./components/SkillItem";
+import ButtonContained from "../../components/ButtonContained";
+import ButtonPagination from "../../components/ButtonPagination";
 
-import './styles.css';
+import "./styles.css";
 
-import { SkillsByPageFetch } from '../../api/services/SkillAPI';
+import { SkillsByPageFetch } from "../../api/services/SkillAPI";
 
 export default function Home() {
   const [skills, setSkills] = useState([]);
   const [page, setPage] = useState(1);
   const [countPages, setCountPages] = useState(1);
-  const [exceptMessage, setExceptionMessage] = useState('');
-  const [exceptType, setExceptionType] = useState('error');
+  const [exceptMessage, setExceptionMessage] = useState("");
+  const [exceptType, setExceptionType] = useState("error");
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -31,19 +31,21 @@ export default function Home() {
     try {
       setIsLoading(true);
       const resultSkills = await SkillsByPageFetch(token, goToPage);
-      console.log('getSkillsByPage | resultSkills: ', resultSkills);
+      console.log("getSkillsByPage | resultSkills: ", resultSkills);
 
       setSkills(resultSkills.skills);
       const countTotalPages = Math.ceil(resultSkills.count / amountItensByPage);
-      console.log('getTimesByPage | countTotalPages: ', countTotalPages);
+      console.log("getTimesByPage | countTotalPages: ", countTotalPages);
       setCountPages(countTotalPages);
       setExceptionMessage(resultSkills.message);
-      setExceptionType(resultSkills.isSuccess ? 'success' : 'error');
+      setExceptionType(resultSkills.isSuccess ? "success" : "error");
       setIsLoading(false);
     } catch (error) {
-      console.log('getSkillsByPage | error: ', error);
-      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
-      setExceptionType('error');
+      console.log("getSkillsByPage | error: ", error);
+      setExceptionMessage(
+        "No momento esse recurso está indisponível, tente novamente mais tarde.",
+      );
+      setExceptionType("error");
       setIsLoading(false);
     }
   }
@@ -60,14 +62,20 @@ export default function Home() {
         <div className="form">
           <ButtonContained
             text="Criar habilidade"
-            onAction={() => navigate('/skills/create', { replace: true })}
+            onAction={() => navigate("/skills/create", { replace: true })}
           />
-          {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
+          {exceptMessage && (
+            <MessageContainer type={exceptType} message={exceptMessage} />
+          )}
           {skills.map((skillLoop) => (
             <SkillItem
               skillProps={skillLoop}
-              onUpdate={() => navigate(`/skills/${skillLoop.id}/update`, { replace: true })}
-              onStatistic={() => navigate(`/skills/${skillLoop.id}/statistic`, { replace: true })}
+              onUpdate={() =>
+                navigate(`/skills/${skillLoop.id}/update`, { replace: true })
+              }
+              onStatistic={() =>
+                navigate(`/skills/${skillLoop.id}/statistic`, { replace: true })
+              }
             />
           ))}
           <ButtonPagination

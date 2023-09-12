@@ -1,18 +1,18 @@
-import * as Sentry from '@sentry/react';
+import * as Sentry from "@sentry/react";
 
 export default async function createExceptionSentry(
   err,
-  method = '',
-  path = '',
-  context = '',
+  method = "",
+  path = "",
+  context = "",
 ) {
   try {
     Sentry.withScope((scope) => {
-      if (method !== '') {
+      if (method !== "") {
         scope.setFingerprint([method, path, String(err.statusCode)]);
       }
-      if (context !== '') {
-        scope.setContext('context', context);
+      if (context !== "") {
+        scope.setContext("context", context);
       }
       Sentry.captureException(err);
     });

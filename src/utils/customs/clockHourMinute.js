@@ -5,7 +5,8 @@ export default function clockHourMinute(amount) {
   // console.log('clockHourMinute | hoursFromAmount: ', hoursFromAmount);
   const restMinutesFromAmount = amount % 60;
   const minutesInt = parseInt(restMinutesFromAmount, 10);
-  const hoursWithDigits = hoursIntFloor < 10 ? `0${hoursIntFloor}` : hoursIntFloor;
+  const hoursWithDigits =
+    hoursIntFloor < 10 ? `0${hoursIntFloor}` : hoursIntFloor;
   const minutesWithDigits = minutesInt < 10 ? `0${minutesInt}` : minutesInt;
   return `${hoursWithDigits}h${minutesWithDigits}min`;
 }
