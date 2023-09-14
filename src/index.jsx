@@ -3,13 +3,18 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
+import { Provider } from "react-redux";
+import { createStandaloneToast } from "@chakra-ui/react";
 
 import "./index.css";
 
 import routes from "./routes";
+import store from "./services/store";
 import reportWebVitals from "./reportWebVitals";
 
 const { version } = require("../package.json");
+
+const { ToastContainer } = createStandaloneToast();
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY,
@@ -24,7 +29,10 @@ Sentry.init({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={routes} />
+    <Provider store={store}>
+      <RouterProvider router={routes} />
+        <ToastContainer />
+    </Provider>
   </React.StrictMode>,
 );
 

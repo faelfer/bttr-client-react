@@ -3,33 +3,30 @@ import { useNavigate } from "react-router-dom";
 
 import isInvalidEmail from "../../utils/rules/isInvalidEmail";
 import isInvalidPassword from "../../utils/rules/isInvalidPassword";
+import showToast from "../../utils/showToast";
 
 import Load from "../../components/Load";
 import HeaderForm from "../../components/HeaderForm";
 import DescriptionForm from "../../components/DescriptionForm";
-import MessageContainer from "../../components/MessageContainer";
 import InputOutlineForm from "../../components/InputOutlineForm";
 import LinkRedirect from "../../components/LinkRedirect";
 import ButtonContained from "../../components/ButtonContained";
 
 import "./styles.css";
 
-import { SignUpFetch } from "../../api/services/UserAPI";
+import { useSignUpMutation } from "../../services/user";
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [exceptMessage, setExceptionMessage] = useState("");
-  const [exceptType, setExceptionType] = useState("error");
-  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const [signUp, { isLoading }] = useSignUpMutation();
 
   function validateSignUp() {
     let message = "";
     const nameWithoutTrimValidate = username.trim();
-
     if (!nameWithoutTrimValidate) {
       message = "Preencha o campo nome de usuário";
     } else if (nameWithoutTrimValidate.length < 2) {
@@ -50,29 +47,16 @@ export default function SignUp() {
     return { isInvalid: !!message, message };
   }
 
-  function showException(message, type) {
-    setExceptionMessage(message);
-    setExceptionType(type);
-  }
-
   async function sendSignUp() {
-    const responseValidateSignUp = await validateSignUp();
-
-    if (responseValidateSignUp.isInvalid) {
-      showException(responseValidateSignUp.message, "warning");
-    } else {
-      try {
-        setIsLoading(true);
-        const resultSignUp = await SignUpFetch(username, email, password);
-        showException(
-          resultSignUp.message,
-          resultSignUp.isSuccess ? "success" : "error",
-        );
-        setIsLoading(false);
-      } catch (error) {
-        showException("Ocorreu um erro, tente novamente mais tarde", "error");
-        setIsLoading(false);
+    try {
+      const responseValidateSignUp = await validateSignUp();
+      if (responseValidateSignUp.isInvalid) {
+        showToast("Aviso", responseValidateSignUp.message, "warning");
+      } else {
+        await signUp({ username, email, password }).unwrap();
       }
+    } catch(err) { 
+      showToast("Aviso", err.data.message, "error");
     }
   }
 
@@ -82,9 +66,6 @@ export default function SignUp() {
       <div className="form">
         <HeaderForm title="Bttr" />
         <DescriptionForm description="Cadastre-se para evoluir suas habilidades." />
-        {exceptMessage && (
-          <MessageContainer type={exceptType} message={exceptMessage} />
-        )}
         <InputOutlineForm
           inputPlaceholder="Digite seu nome de usuário"
           inputValue={username}
