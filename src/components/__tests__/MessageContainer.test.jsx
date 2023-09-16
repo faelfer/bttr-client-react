@@ -10,9 +10,7 @@ afterEach(cleanup);
 it("MessageContainer deve exibir texto", () => {
   const textMessage = "testmessage";
 
-  const { getByText } = render(
-    <MessageContainer message={textMessage} />,
-  );
+  const { getByText } = render(<MessageContainer message={textMessage} />);
 
   expect(getByText(/testmessage/i)).toBeTruthy();
 });
