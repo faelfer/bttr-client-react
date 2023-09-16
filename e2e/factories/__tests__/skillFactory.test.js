@@ -1,30 +1,30 @@
 /* eslint-disable no-undef */
-const skillFactory = require('../skillFactory');
+const skillFactory = require("../skillFactory");
 
-const desiredSkillDefault = require('../../../src/utils/resources/skill_default.json');
+const desiredSkillDefault = require("../../../src/utils/resources/skill_default.json");
 
-test('deve retornar um objeto com os dados de uma habilidade padrão', () => {
+test("deve retornar um objeto com os dados de uma habilidade padrão", () => {
   expect(skillFactory(false)).toMatchObject(desiredSkillDefault);
 });
 
-test('deve verificar as propriedades do objeto habilidade padrão', async () => {
+test("deve verificar as propriedades do objeto habilidade padrão", async () => {
   const skillDefault = await skillFactory(false);
-  expect(skillDefault).toHaveProperty('name');
+  expect(skillDefault).toHaveProperty("name");
 });
 
-test('deve verificar os tipos do objeto habilidade padrão', async () => {
+test("deve verificar os tipos do objeto habilidade padrão", async () => {
   const skillDefault = await skillFactory(false);
-  expect(typeof skillDefault).toBe('object');
-  expect(typeof skillDefault.name).toBe('string');
+  expect(typeof skillDefault).toBe("object");
+  expect(typeof skillDefault.name).toBe("string");
 });
 
-test('deve verificar as propriedades do objeto habilidade novo', async () => {
+test("deve verificar as propriedades do objeto habilidade novo", async () => {
   const skillNew = await skillFactory();
-  expect(skillNew).toHaveProperty('name');
+  expect(skillNew).toHaveProperty("name");
 });
 
-test('deve verificar os tipos do objeto habilidade novo', async () => {
+test("deve verificar os tipos do objeto habilidade novo", async () => {
   const skillNew = await skillFactory();
-  expect(typeof skillNew).toBe('object');
-  expect(typeof skillNew.name).toBe('string');
+  expect(typeof skillNew).toBe("object");
+  expect(typeof skillNew.name).toBe("string");
 });

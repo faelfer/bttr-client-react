@@ -1,14 +1,14 @@
 /* eslint-disable no-undef */
-import * as React from 'react';
-import { screen, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import * as React from "react";
+import { screen, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-import SelectOutlineForm from '../SelectOutlineForm';
+import SelectOutlineForm from "../SelectOutlineForm";
 
-it('SelectOutlineForm deve chamar o manipulador onChangeSelect com o novo valor do select', async () => {
+it("SelectOutlineForm deve chamar o manipulador onChangeSelect com o novo valor do select", async () => {
   const onChangeSelectSpy = jest.fn();
-  const selectValueDefault = '';
-  const selectOptions = [{ id: '1', value: 'testselectoutlineform' }];
+  const selectValueDefault = "";
+  const selectOptions = [{ id: "1", value: "testselectoutlineform" }];
 
   render(
     <SelectOutlineForm
@@ -19,7 +19,7 @@ it('SelectOutlineForm deve chamar o manipulador onChangeSelect com o novo valor 
     />,
   );
 
-  const select = screen.getByTestId('outline-form-select');
+  const select = screen.getByTestId("outline-form-select");
 
   await userEvent.selectOptions(select, [selectOptions[0].value]);
 

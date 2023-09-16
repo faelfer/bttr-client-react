@@ -11,15 +11,15 @@ export default function progressFromCurrentDay(
   //   businessDays,
   //   businessDaysSoFar,
   // );
-  const goalMonth = (businessDays * goalPerDay);
+  const goalMonth = businessDays * goalPerDay;
   // console.log('progressFromCurrentDay | goalMonth:', goalMonth);
-  const goalRemaining = (goalMonth - goalDone);
+  const goalRemaining = goalMonth - goalDone;
   // console.log('progressFromCurrentDay | goalRemaining:', goalRemaining);
-  const daysRemaining = (businessDays - businessDaysSoFar) + 1;
+  const daysRemaining = businessDays - businessDaysSoFar + 1;
   // console.log('progressFromCurrentDay | daysRemaining:', daysRemaining);
-  const idealSituation = (businessDaysSoFar * goalPerDay);
+  const idealSituation = businessDaysSoFar * goalPerDay;
   // console.log('progressFromCurrentDay | idealSituation:', idealSituation);
-  const currentPercentage = ((goalDone * 100) / goalMonth);
+  const currentPercentage = (goalDone * 100) / goalMonth;
   // console.log('progressFromCurrentDay | currentPercentage:', currentPercentage);
 
   return {

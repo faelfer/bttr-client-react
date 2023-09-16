@@ -2,9 +2,9 @@
 
 There are several ways you can help the project out:
 
-* [Contributing code](#contributing-code)
-* [Reporting Bugs](#reporting-bugs)
-* [Feature Requests and Ideas](#feature-requests-and-ideas)
+- [Contributing code](#contributing-code)
+- [Reporting Bugs](#reporting-bugs)
+- [Feature Requests and Ideas](#feature-requests-and-ideas)
 
 ## How Can I Contribute?
 
@@ -23,10 +23,9 @@ A lot of our code comes from pull requests sent by the developer community. Here
 
 #### Important:
 
-* Please stick to the project's existing coding style. Coding styles don't need to have a consensus, they just need to be consistent :smile:
-* Push your changes to a topic branch in your fork of the repository. Your branch should be based on the `master` branch
-* When submitting a [pull request](https://help.github.com/articles/using-pull-requests/), please elaborate as much as possible about the change, your motivation for the change, etc.
-
+- Please stick to the project's existing coding style. Coding styles don't need to have a consensus, they just need to be consistent :smile:
+- Push your changes to a topic branch in your fork of the repository. Your branch should be based on the `master` branch
+- When submitting a [pull request](https://help.github.com/articles/using-pull-requests/), please elaborate as much as possible about the change, your motivation for the change, etc.
 
 ### Reporting Bugs
 
@@ -34,10 +33,10 @@ Bugs are tracked as [GitHub issues](https://github.com/faelfer/bttr-client-react
 
 When you are creating a bug report, please include as much detail as possible.
 
-* Fill in the predefined template provided.
-* Use a clear and descriptive title for the issue to identify the problem.
-* Describe the exact steps which reproduce the problem. Share the relevant code to reproduce the issue if possible.
-* Try to isolate the issue as much as possible, reducing unrelated code until you get to the minimal amount of code in which the bug still reproduces. This is the most important step to help the community solve the issue.
+- Fill in the predefined template provided.
+- Use a clear and descriptive title for the issue to identify the problem.
+- Describe the exact steps which reproduce the problem. Share the relevant code to reproduce the issue if possible.
+- Try to isolate the issue as much as possible, reducing unrelated code until you get to the minimal amount of code in which the bug still reproduces. This is the most important step to help the community solve the issue.
 
 ### Feature Requests and Ideas
 

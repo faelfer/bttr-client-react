@@ -144,7 +144,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: 'jest-environment-jsdom',
+  testEnvironment: "jest-environment-jsdom",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -153,10 +153,7 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  testMatch: [
-    '**/__tests__/**/*.[jt]s?(x)',
-    '**/?(*.)+(test).[tj]s?(x)',
-  ],
+  testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(test).[tj]s?(x)"],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
@@ -174,8 +171,8 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '\\.[jt]sx?$': 'babel-jest',
-    '^.+\\.css$': 'jest-transform-css',
+    "\\.[jt]sx?$": "babel-jest",
+    "^.+\\.css$": "jest-transform-css",
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

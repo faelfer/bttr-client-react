@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import './styles.css';
+import "./styles.css";
 
 export default function HeaderForm({ title }) {
-  return (
-    <p className="text--header">
-      {title}
-    </p>
-  );
+  return <p className="text--header">{title}</p>;
 }

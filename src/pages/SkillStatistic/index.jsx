@@ -1,58 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import {
-  useNavigate,
-  useLocation,
-  useParams,
-} from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
-import { getToken } from '../../services/auth';
+import showToast from "../../utils/showToast";
 
-import NavBar from '../../components/NavBar';
-import Load from '../../components/Load';
-import MessageContainer from '../../components/MessageContainer';
-import StatisticItem from './components/StatisticItem';
-import ButtonContained from '../../components/ButtonContained';
-import LinkRedirect from '../../components/LinkRedirect';
+import NavBar from "../../components/NavBar";
+import Load from "../../components/Load";
+import StatisticItem from "./components/StatisticItem";
+import ButtonContained from "../../components/ButtonContained";
+import LinkRedirect from "../../components/LinkRedirect";
 
-import './styles.css';
+import "./styles.css";
 
-import { SkillByIdFetch } from '../../api/services/SkillAPI';
-import { TimesByDateFetch } from '../../api/services/TimeAPI';
+import { useSkillMutation } from "../../services/skill/api";
+import { useTimesByDateMutation } from "../../services/time/api";
 
 export default function SkillStatistic() {
   const { skillId } = useParams();
 
-  const [skill, setSkill] = useState(null);
+  const [skillItem, setSkillItem] = useState(null);
   const [minutesTotalMonth, setMinutesTotalMonth] = useState(0);
-  const [exceptMessage, setExceptionMessage] = useState('');
-  const [exceptType, setExceptionType] = useState('error');
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [skill, { isLoading: isGetting }] = useSkillMutation();
+  const [timesByDate, { isLoading }] = useTimesByDateMutation();
 
   const navigate = useNavigate();
   const location = useLocation();
-  const token = getToken();
   const currentDate = new Date();
 
-  async function getSkillById(skillIdToRead) {
+  async function getSkillById() {
     try {
-      setIsLoading(true);
-      const resultSkills = await SkillByIdFetch(token, skillIdToRead);
-      console.log('getSkillById | resultSkills: ', resultSkills);
-      setSkill(resultSkills.skill);
-      setExceptionMessage(resultSkills.message);
-      setExceptionType(resultSkills.isSuccess ? 'success' : 'error');
-      setIsLoading(false);
-    } catch (error) {
-      console.log('getSkillById | error: ', error);
-      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
-      setExceptionType('error');
-      setIsLoading(false);
+      const payload = await skill(skillId).unwrap();
+      setSkillItem(payload.skill);
+    } catch {
+      showToast(
+        "Aviso",
+        "No momento esse recurso está indisponível, tente novamente mais tarde.",
+        "error",
+      );
     }
   }
 
   async function getTimesByDate(skillIdToFilter, currentDateToFilter) {
     try {
-      setIsLoading(true);
       const firstDayToFilter = new Date(
         currentDateToFilter.getFullYear(),
         currentDateToFilter.getMonth(),
@@ -68,33 +57,23 @@ export default function SkillStatistic() {
       );
       const firstDayToFilterDateIso = firstDayToFilter.toISOString();
       const lastDayToFilterDateIso = lastDayToFilter.toISOString();
-      console.log(
-        'handleGoalAdd | firstDayToFilterDateIso, lastDayToFilterDateIso: ',
-        firstDayToFilterDateIso,
-        lastDayToFilterDateIso,
-      );
-
-      const resultTimeByDate = await TimesByDateFetch(
-        token,
-        skillIdToFilter,
-        firstDayToFilterDateIso,
-        lastDayToFilterDateIso,
-      );
-      console.log('getTimesByDate | resultTimeByDate: ', resultTimeByDate);
+      const payloadTimesByDate = await timesByDate({
+        id: skillIdToFilter,
+        firstDay: firstDayToFilterDateIso,
+        lastDay: lastDayToFilterDateIso,
+      }).unwrap();
       const initialValue = 0;
-      const sumTotalTimes = (resultTimeByDate.times).reduce(
+      const sumTotalTimes = payloadTimesByDate.times.reduce(
         (accumulator, currentValue) => accumulator + currentValue.minutes,
         initialValue,
       );
       setMinutesTotalMonth(sumTotalTimes);
-      setExceptionMessage(resultTimeByDate.message);
-      setExceptionType(resultTimeByDate.isSuccess ? 'success' : 'error');
-      setIsLoading(false);
-    } catch (error) {
-      console.log('getTimesByDate | error: ', error);
-      setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
-      setExceptionType('error');
-      setIsLoading(false);
+    } catch {
+      showToast(
+        "Aviso",
+        "No momento esse recurso está indisponível, tente novamente mais tarde.",
+        "error",
+      );
     }
   }
 
@@ -108,17 +87,16 @@ export default function SkillStatistic() {
   return (
     <>
       <NavBar navigation={navigate} />
-      <Load isShow={isLoading} />
+      <Load isShow={isGetting || isLoading} />
       <div className="content--align">
         <div className="form">
           <ButtonContained
             text="Criar tempo"
-            onAction={() => navigate('/times/create', { replace: true })}
+            onAction={() => navigate("/times/create", { replace: true })}
           />
-          {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
-          {skill !== null ? (
+          {skillItem !== null ? (
             <StatisticItem
-              skillProps={skill}
+              skillProps={!skillItem ? null : skillItem}
               currentDate={currentDate}
               timeTotal={minutesTotalMonth}
             />
@@ -127,7 +105,7 @@ export default function SkillStatistic() {
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao início"
-          onRedirect={() => navigate('/home', { replace: true })}
+          onRedirect={() => navigate("/home", { replace: true })}
         />
       </div>
     </>

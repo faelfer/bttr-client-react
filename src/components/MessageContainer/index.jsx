@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import './styles.css';
+import "./styles.css";
 
-export default function MessageContainer({ type, message }) {
-  return (
-    <p className={`container--message container--message-${type}`}>
-      {message}
-    </p>
-  );
+export default function MessageContainer({ message }) {
+  return <p className="container--message text--message">{message}</p>;
 }

@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import './styles.css';
+import "./styles.css";
 
 export default function DescriptionForm({ description }) {
-  return (
-    <p className="text--description">
-      {description}
-    </p>
-  );
+  return <p className="text--description">{description}</p>;
 }

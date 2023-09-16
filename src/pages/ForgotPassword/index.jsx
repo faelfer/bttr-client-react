@@ -1,57 +1,50 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import Load from '../../components/Load';
-import HeaderForm from '../../components/HeaderForm';
-import DescriptionForm from '../../components/DescriptionForm';
-import MessageContainer from '../../components/MessageContainer';
-import InputOutlineForm from '../../components/InputOutlineForm';
-import LinkRedirect from '../../components/LinkRedirect';
-import ButtonContained from '../../components/ButtonContained';
+import isInvalidEmail from "../../utils/rules/isInvalidEmail";
+import showToast from "../../utils/showToast";
+import useRedirectAuth from "../../hooks/useRedirectAuth";
 
-import './styles.css';
+import Load from "../../components/Load";
+import HeaderForm from "../../components/HeaderForm";
+import DescriptionForm from "../../components/DescriptionForm";
+import InputOutlineForm from "../../components/InputOutlineForm";
+import LinkRedirect from "../../components/LinkRedirect";
+import ButtonContained from "../../components/ButtonContained";
 
-import { ForgotPasswordFetch } from '../../api/services/UserAPI';
+import "./styles.css";
+
+import { useForgotPasswordMutation } from "../../services/user/api";
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState('');
-  const [exceptMessage, setExceptionMessage] = useState('');
-  const [exceptType, setExceptionType] = useState('error');
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
 
+  useRedirectAuth();
   const navigate = useNavigate();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   function validateForgotPassword() {
-    let message = '';
+    let message = "";
 
     if (!email) {
-      message = 'Preencha o campo e-mail';
+      message = "Preencha o campo e-mail";
+    } else if (isInvalidEmail(email)) {
+      message = "Campo e-mail é inválido";
     }
-
     return { isInvalid: !!message, message };
   }
 
   async function sendForgotPassword() {
-    const responseValidateForgotPassword = await validateForgotPassword();
-    console.log('sendForgotPassword | responseValidateForgotPassword: ', responseValidateForgotPassword);
-
-    if (responseValidateForgotPassword.isInvalid) {
-      setExceptionMessage(responseValidateForgotPassword.message);
-      setExceptionType('warning');
-    } else {
-      try {
-        setIsLoading(true);
-        const resultForgotPassword = await ForgotPasswordFetch(email);
-        console.log('sendForgotPassword | resultForgotPassword: ', resultForgotPassword);
-        setExceptionMessage(resultForgotPassword.message);
-        setExceptionType(resultForgotPassword.isSuccess ? 'success' : 'error');
-        setIsLoading(false);
-      } catch (error) {
-        console.log('sendForgotPassword | error: ', error);
-        setExceptionMessage('No momento esse recurso está indisponível, tente novamente mais tarde.');
-        setExceptionType('error');
-        setIsLoading(false);
+    try {
+      const responseValidateForgotPassword = await validateForgotPassword();
+      if (responseValidateForgotPassword.isInvalid) {
+        showToast("Aviso", responseValidateForgotPassword.message, "warning");
+      } else {
+        const payload = await forgotPassword({ email }).unwrap();
+        showToast("Sucesso", payload.message, "success");
       }
+    } catch (err) {
+      showToast("Aviso", err.data.message, "error");
     }
   }
 
@@ -61,23 +54,18 @@ export default function ForgotPassword() {
       <div className="form">
         <HeaderForm title="Problemas para entrar?" />
         <DescriptionForm description="Insira o seu e-mail e enviaremos uma senha para você voltar a acessar a sua conta." />
-        {exceptMessage && <MessageContainer type={exceptType} message={exceptMessage} />}
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
           inputValue={email}
           onChangeInput={(textValue) => setEmail(textValue)}
         />
-        <ButtonContained
-          text="Enviar"
-          onAction={() => sendForgotPassword()}
-        />
+        <ButtonContained text="Enviar" onAction={() => sendForgotPassword()} />
       </div>
-
       <LinkRedirect
         description=" "
         descriptionUrl="Voltar ao login"
-        onRedirect={() => navigate('/sign-up', { replace: true })}
+        onRedirect={() => navigate("/sign-up", { replace: true })}
       />
     </div>
   );

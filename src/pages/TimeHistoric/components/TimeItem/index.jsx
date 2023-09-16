@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import ButtonOutlined from '../../../../components/ButtonContained';
+import ButtonOutlined from "../../../../components/ButtonContained";
 
-import './styles.css';
+import "./styles.css";
 
-import clockHourMinute from '../../../../utils/customs/clockHourMinute';
-import calendarDateHourMinutes from '../../../../utils/customs/calendarDateHourMinutes';
+import clockHourMinute from "../../../../utils/customs/clockHourMinute";
+import calendarDateHourMinutes from "../../../../utils/customs/calendarDateHourMinutes";
 
 export default function TimeItem({ timeProps, onUpdate }) {
   return (
@@ -13,16 +13,11 @@ export default function TimeItem({ timeProps, onUpdate }) {
       <p className="text--time-headline">
         {clockHourMinute(timeProps.minutes)}
       </p>
-      <p className="text--time-subhead">
-        {timeProps.skill.name}
-      </p>
+      <p className="text--time-subhead">{timeProps.skill.name}</p>
       <p className="text--time-supporting">
         {calendarDateHourMinutes(timeProps.created)}
       </p>
-      <ButtonOutlined
-        text="Editar"
-        onAction={() => onUpdate()}
-      />
+      <ButtonOutlined text="Editar" onAction={() => onUpdate()} />
     </div>
   );
 }

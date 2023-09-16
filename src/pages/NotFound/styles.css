@@ -1,5 +1,5 @@
 .not__found {
-    display: 'flex';
-    justify-content: 'center';
-    color: var(--on-primary-color);
+  display: "flex";
+  justify-content: "center";
+  color: var(--on-primary-color);
 }

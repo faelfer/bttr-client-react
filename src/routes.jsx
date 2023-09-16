@@ -1,31 +1,24 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import React from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { isAuthenticated } from './services/auth';
-
-import SignUp from './pages/SignUp';
-import SignIn from './pages/SignIn';
-import ForgotPassword from './pages/ForgotPassword';
-import Profile from './pages/Profile';
-import RedefinePassword from './pages/RedefinePassword';
-import Home from './pages/Home';
-import TimeHistoric from './pages/TimeHistoric';
-import TimeForm from './pages/TimeForm';
-import SkillForm from './pages/SkillForm';
-import SkillStatistic from './pages/SkillStatistic';
-import NotFound from './pages/NotFound';
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import ForgotPassword from "./pages/ForgotPassword";
+import Profile from "./pages/Profile";
+import RedefinePassword from "./pages/RedefinePassword";
+import Home from "./pages/Home";
+import TimeHistoric from "./pages/TimeHistoric";
+import TimeForm from "./pages/TimeForm";
+import SkillForm from "./pages/SkillForm";
+import SkillStatistic from "./pages/SkillStatistic";
+import NotFound from "./pages/NotFound";
 
 function RequireAuth({ children }) {
-  const isAuthUser = isAuthenticated();
-  // console.log('RequireAuth | token: ', token);
+  const { token } = useSelector((state) => state.user);
 
-  if (!isAuthUser) {
-    // console.log('RequireAuth | if | token: ', token);
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
+  if (token === null) {
     return <Navigate to="/" replace />;
   }
 
@@ -34,19 +27,19 @@ function RequireAuth({ children }) {
 
 const routes = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <SignIn />,
   },
   {
-    path: '/sign-up',
+    path: "/sign-up",
     element: <SignUp />,
   },
   {
-    path: '/forgot-password',
+    path: "/forgot-password",
     element: <ForgotPassword />,
   },
   {
-    path: '/profile',
+    path: "/profile",
     element: (
       <RequireAuth>
         <Profile />
@@ -54,7 +47,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: '/redefine-password',
+    path: "/redefine-password",
     element: (
       <RequireAuth>
         <RedefinePassword />
@@ -62,7 +55,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: '/home',
+    path: "/home",
     element: (
       <RequireAuth>
         <Home />
@@ -70,7 +63,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: '/skills/create',
+    path: "/skills/create",
     element: (
       <RequireAuth>
         <SkillForm />
@@ -78,7 +71,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: '/skills/:skillId/update',
+    path: "/skills/:skillId/update",
     element: (
       <RequireAuth>
         <SkillForm />
@@ -86,7 +79,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: '/skills/:skillId/statistic',
+    path: "/skills/:skillId/statistic",
     element: (
       <RequireAuth>
         <SkillStatistic />
@@ -94,7 +87,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: '/times',
+    path: "/times",
     element: (
       <RequireAuth>
         <TimeHistoric />
@@ -102,7 +95,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: '/times/create',
+    path: "/times/create",
     element: (
       <RequireAuth>
         <TimeForm />
@@ -110,7 +103,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: '/times/:timeId/update',
+    path: "/times/:timeId/update",
     element: (
       <RequireAuth>
         <TimeForm />
@@ -118,10 +111,8 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: '*',
-    element: (
-      <NotFound />
-    ),
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
