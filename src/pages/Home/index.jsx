@@ -14,7 +14,7 @@ import { useSkillsByPageQuery } from "../../services/skill/api";
 export default function Home() {
   const [page, setPage] = useState(1);
 
-  const { data: skills, isLoading } = useSkillsByPageQuery(page)
+  const { data: skills, isLoading } = useSkillsByPageQuery(page);
 
   const navigate = useNavigate();
   const amountItensByPage = 5;

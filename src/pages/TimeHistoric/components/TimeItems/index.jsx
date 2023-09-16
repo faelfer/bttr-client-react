@@ -2,27 +2,24 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import MessageContainer from "../../../../components/MessageContainer";
-import SkillItem from "../SkillItem";
+import TimeItem from "../TimeItem";
 
-export default function SkillItems({ 
+export default function TimeItems({ 
   messageNoItem,
   countItems,
-  itemsSkill,
+  itemsTime,
  }) {
   const navigate = useNavigate();
   return (
     countItems === 0 || countItems === undefined
       ? (
         <MessageContainer type="error" message={messageNoItem} />
-      ) : (itemsSkill.map(
-        (skillLoop) => (
-          <SkillItem
-            skillProps={skillLoop}
+      ) : (itemsTime.map(
+        (timeLoop) => (
+          <TimeItem
+            timeProps={timeLoop}
             onUpdate={() =>
-              navigate(`/skills/${skillLoop.id}/update`, { replace: true })
-            }
-            onStatistic={() =>
-              navigate(`/skills/${skillLoop.id}/statistic`, { replace: true })
+              navigate(`/times/${timeLoop.id}/update`, { replace: true })
             }
           />
         ),

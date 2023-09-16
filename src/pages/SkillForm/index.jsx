@@ -16,6 +16,7 @@ import "./styles.css";
 
 import {
   useSkillMutation,
+  useSkillCreateMutation,
   useSkillUpdateMutation,
   useSkillDeleteMutation,
 } from "../../services/skill/api";
@@ -27,6 +28,7 @@ export default function SkillForm() {
   const [timeDaily, setTimeDaily] = useState(1);
 
   const [skill, { isLoading }] = useSkillMutation();
+  const [skillCreate, { isLoading: isCreating }] = useSkillCreateMutation();
   const [skillUpdate, { isLoading: isUpdating }] = useSkillUpdateMutation();
   const [skillDelete, { isLoading: isDeleting }] = useSkillDeleteMutation();
 
@@ -72,11 +74,11 @@ export default function SkillForm() {
       if (responseValidateSkillCreate.isInvalid) {
         showToast("Aviso", responseValidateSkillCreate.message, "warning");
       } else {
-        const payloadProfileUpdate = await skillUpdate({
+        const payloadSkillCreate = await skillCreate({
           name,
           time_daily: timeDaily,
         }).unwrap();
-        showToast("Sucesso", payloadProfileUpdate.message, "success");
+        showToast("Sucesso", payloadSkillCreate.message, "success");
       }
     } catch {
       showToast(
@@ -127,7 +129,7 @@ export default function SkillForm() {
   return (
     <>
       <NavBar navigation={navigate} />
-      <Load isShow={isLoading || isUpdating || isDeleting} />
+      <Load isShow={isLoading || isCreating || isUpdating || isDeleting} />
       <div className="content--align">
         <div className="form">
           <HeaderForm title="Habilidade" />

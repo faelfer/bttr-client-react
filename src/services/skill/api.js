@@ -1,13 +1,13 @@
 import api from '../api'
 
-export const userApi = api.injectEndpoints({
+export const skillApi = api.injectEndpoints({
   endpoints: (build) => ({
     skills: build.query({
       query: () => ({ url: "/skills/skills_from_user" }),
-      providesTags: (result = []) => [
-        ...result.map(({ id }) => ({ type: "Skill", id })),
-        { type: "Skill", id: 'LIST' },
-      ],
+      transformResponse: (response) => response.skills.map((skillPhase) => ({
+        id: skillPhase.id,
+        value: skillPhase.name,
+      })),
     }),
     skillsByPage: build.query({
       query: (page = 1) => `/skills/skills_by_page?page=${page}`,
@@ -49,6 +49,7 @@ export const {
   useSkillsQuery,
   useSkillsByPageQuery,
   useSkillMutation,
+  useSkillCreateMutation,
   useSkillUpdateMutation,
   useSkillDeleteMutation,
- } = userApi;
+ } = skillApi;
