@@ -31,13 +31,15 @@ export default function Home() {
           />
           <SkillItems
             messageNoItem="Não há registros de habilidades relacionadas ao seu cadastro."
-            countItems={!skills?.results ? 0 : (skills.results).length}
+            countItems={!skills?.results ? 0 : skills.results.length}
             itemsSkill={!skills?.results ? [] : skills.results}
           />
           <ButtonPagination
             currentPage={page}
-            totalPages={!skills?.results ? 0 : (Math.ceil(skills.count / amountItensByPage))}
-            onChangeCurrentPage={(updatedCurrentPage) => setPage(updatedCurrentPage)}
+            totalPages={
+              !skills?.results ? 0 : Math.ceil(skills.count / amountItensByPage)
+            }
+            onChangeCurrentPage={(updatedPage) => setPage(updatedPage)}
           />
         </div>
       </div>

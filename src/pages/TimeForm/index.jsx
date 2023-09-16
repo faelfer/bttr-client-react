@@ -95,13 +95,10 @@ export default function TimeForm() {
       if (responseValidateTimeUpdate.isInvalid) {
         showToast("Aviso", responseValidateTimeUpdate.message, "warning");
       } else {
-        const payloadTimeUpdate = await timeUpdate(
-          timeId,
-          {
-            skill_id: skillSelected,
-            minutes: parseInt(minutes, 10),
-          },
-        ).unwrap();
+        const payloadTimeUpdate = await timeUpdate(timeId, {
+          skill_id: skillSelected,
+          minutes: parseInt(minutes, 10),
+        }).unwrap();
         showToast("Sucesso", payloadTimeUpdate.message, "success");
       }
     } catch {
@@ -129,7 +126,11 @@ export default function TimeForm() {
   return (
     <>
       <NavBar navigation={navigate} />
-      <Load isShow={isLoading || isGetting || isCreating || isUpdating || isDeleting} />
+      <Load
+        isShow={
+          isLoading || isGetting || isCreating || isUpdating || isDeleting
+        }
+      />
       <div className="content--align">
         <div className="form">
           <HeaderForm title="Tempo" />
@@ -144,7 +145,9 @@ export default function TimeForm() {
             selectPlaceholder="Selecione uma habilidade"
             options={!skills ? [] : skills}
             selectValue={skillSelected}
-            onChangeSelect={(optionSelected) => setSkillSelected(optionSelected)}
+            onChangeSelect={(optionSelected) =>
+              setSkillSelected(optionSelected)
+            }
           />
           <InputOutlineForm
             inputType="number"

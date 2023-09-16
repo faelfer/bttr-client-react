@@ -31,8 +31,7 @@ export default function SkillStatistic() {
     try {
       const payload = await skill(skillId).unwrap();
       setSkillItem(payload.skill);
-    } catch(err) {
-      console.log(err)
+    } catch {
       showToast(
         "Aviso",
         "No momento esse recurso está indisponível, tente novamente mais tarde.",

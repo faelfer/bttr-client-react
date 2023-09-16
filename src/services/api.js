@@ -9,7 +9,7 @@ const baseQuery = fetchBaseQuery({
     }
     return headers;
   },
-})
+});
 
 const tagTypes = ["User", "Skill", "Time"];
 

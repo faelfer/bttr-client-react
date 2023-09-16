@@ -1,13 +1,14 @@
-import api from '../api'
+import api from "../api";
 
 export const skillApi = api.injectEndpoints({
   endpoints: (build) => ({
     skills: build.query({
       query: () => ({ url: "/skills/skills_from_user" }),
-      transformResponse: (response) => response.skills.map((skillPhase) => ({
-        id: skillPhase.id,
-        value: skillPhase.name,
-      })),
+      transformResponse: (response) =>
+        response.skills.map((skillPhase) => ({
+          id: skillPhase.id,
+          value: skillPhase.name,
+        })),
     }),
     skillsByPage: build.query({
       query: (page = 1) => `/skills/skills_by_page?page=${page}`,
@@ -33,7 +34,7 @@ export const skillApi = api.injectEndpoints({
         method: "PUT",
         body,
       }),
-      invalidatesTags: (id) => [{ type: "Skill", id}],
+      invalidatesTags: (id) => [{ type: "Skill", id }],
     }),
     skillDelete: build.mutation({
       query: (id) => ({
@@ -45,11 +46,11 @@ export const skillApi = api.injectEndpoints({
   }),
 });
 
-export const { 
+export const {
   useSkillsQuery,
   useSkillsByPageQuery,
   useSkillMutation,
   useSkillCreateMutation,
   useSkillUpdateMutation,
   useSkillDeleteMutation,
- } = skillApi;
+} = skillApi;

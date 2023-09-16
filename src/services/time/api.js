@@ -1,4 +1,4 @@
-import api from '../api'
+import api from "../api";
 
 export const timeApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -32,7 +32,7 @@ export const timeApi = api.injectEndpoints({
         method: "PUT",
         body,
       }),
-      invalidatesTags: (id) => [{ type: "Time", id}],
+      invalidatesTags: (id) => [{ type: "Time", id }],
     }),
     timeDelete: build.mutation({
       query: (id) => ({
@@ -44,11 +44,11 @@ export const timeApi = api.injectEndpoints({
   }),
 });
 
-export const { 
+export const {
   useTimesByPageQuery,
   useTimesByDateMutation,
   useTimeMutation,
   useTimeCreateMutation,
   useTimeUpdateMutation,
   useTimeDeleteMutation,
- } = timeApi;
+} = timeApi;

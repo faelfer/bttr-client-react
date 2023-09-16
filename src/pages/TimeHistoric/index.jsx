@@ -31,13 +31,15 @@ export default function TimeHistoric() {
           />
           <TimeItems
             messageNoItem="Não há registros de habilidades relacionadas ao seu cadastro."
-            countItems={!times?.results ? 0 : (times.results).length}
+            countItems={!times?.results ? 0 : times.results.length}
             itemsTime={!times?.results ? [] : times.results}
           />
           <ButtonPagination
             currentPage={page}
-            totalPages={!times?.results ? 0 : (Math.ceil(times.count / amountItensByPage))}
-            onChangeCurrentPage={(updatedCurrentPage) => setPage(updatedCurrentPage)}
+            totalPages={
+              !times?.results ? 0 : Math.ceil(times.count / amountItensByPage)
+            }
+            onChangeCurrentPage={(updatedPage) => setPage(updatedPage)}
           />
         </div>
       </div>

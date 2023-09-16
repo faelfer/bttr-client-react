@@ -17,12 +17,6 @@ export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
   const [timeSuggestion, setTimeSuggestion] = useState("");
 
   useEffect(() => {
-    console.log(
-      "useEffect | skillProps, timeTotal, currentDate:",
-      skillProps,
-      timeTotal,
-      currentDate,
-    );
     async function fillSkillProgress() {
       const resultDatesFromCurrentDay = datesFromCurrentDay(currentDate);
       const businessDays = workingDays(
@@ -30,13 +24,11 @@ export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
         resultDatesFromCurrentDay.currentYear,
         resultDatesFromCurrentDay.currentMouth,
       );
-      console.log("calculateProgress | businessDays: ", businessDays);
       const businessDaysSoFar = workingDays(
         resultDatesFromCurrentDay.currentDay,
         resultDatesFromCurrentDay.currentYear,
         resultDatesFromCurrentDay.currentMouth,
       );
-      console.log("calculateProgress | businessDays: ", businessDays);
       const resultprogressFromCurrentDay = progressFromCurrentDay(
         skillProps.time_daily,
         timeTotal,
@@ -52,26 +44,14 @@ export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
       let timeToSuggestion = 0;
 
       if (timeTotal >= resultprogressFromCurrentDay.goalMonth) {
-        console.log(
-          "fillSkillProgress | if: Parabéns, você concluiu a meta estabelecida!",
-        );
         messageToProgress = "O acumulado do mês foi concluído!";
       } else if (timeTotal === resultprogressFromCurrentDay.idealSituation) {
-        console.log(
-          "fillSkillProgress | else if: Você está de acordo com a meta estabelecida.",
-        );
         messageToProgress = "O acumulado do dia foi concluido!";
       } else if (timeTotal > resultprogressFromCurrentDay.idealSituation) {
-        console.log(
-          "fillSkillProgress | else if: Você ultrapassou a meta estabelecida.",
-        );
         messageToProgress = "O acumulado do dia foi ultrapassado!";
         timeToLack = timeTotal - resultprogressFromCurrentDay.idealSituation;
         timeToSuggestion = resultprogressFromCurrentDay.goalRemaining;
       } else {
-        console.warn(
-          "fillSkillProgress | else: Você está abaixo da meta estabelecida.",
-        );
         timeToLack = resultprogressFromCurrentDay.idealSituation - timeTotal;
         timeToSuggestion =
           resultprogressFromCurrentDay.goalRemaining /
