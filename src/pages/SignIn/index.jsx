@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-import { login, isAuthenticated } from "../../services/auth";
+import showToast from "../../utils/showToast";
 
 import Load from "../../components/Load";
 import HeaderForm from "../../components/HeaderForm";
-import MessageContainer from "../../components/MessageContainer";
 import InputOutlineForm from "../../components/InputOutlineForm";
 import LinkRedirect from "../../components/LinkRedirect";
 import ButtonContained from "../../components/ButtonContained";
@@ -13,26 +13,27 @@ import ButtonTransparent from "../../components/ButtonTransparent";
 
 import "./styles.css";
 
-import { SignInFetch } from "../../api/services/UserAPI";
+import { useSignInMutation } from "../../services/user";
+import { setCredentials } from "../../services/user/reducer";
 
 export default function SignIn() {
+  const { token } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [exceptMessage, setExceptionMessage] = useState("");
-  const [exceptType, setExceptionType] = useState("error");
-  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const [signIn, { isLoading }] = useSignInMutation();
 
   useEffect(() => {
-    function redirectAppScreen() {
-      const authenticated = isAuthenticated();
-      if (authenticated) {
+    function redirectToAuthRoute() {
+      if (token !== null) {
         navigate("/home", { replace: true });
       }
     }
-    redirectAppScreen();
-  }, [navigate]);
+    redirectToAuthRoute();
+  }, [location]);
 
   function validateSignIn() {
     let message = "";
@@ -44,29 +45,18 @@ export default function SignIn() {
     return { isInvalid: !!message, message };
   }
 
-  function showException(message, type) {
-    setExceptionMessage(message);
-    setExceptionType(type);
-  }
-
   async function sendSignIn() {
     const responseValidateSignIn = await validateSignIn();
-    if (responseValidateSignIn.isInvalid) {
-      showException(responseValidateSignIn.message, "warning");
-    } else {
-      try {
-        const resultSignIn = await SignInFetch(email, password);
-        setIsLoading(false);
-        if (!resultSignIn.isSuccess) {
-          showException(resultSignIn.message, "error");
-        } else {
-          login(`Token ${resultSignIn.user.token}`);
-          navigate("/home", { replace: true });
-        }
-      } catch (error) {
-        showException("Ocorreu um erro, tente novamente mais tarde.");
-        setIsLoading(false);
+    try {
+      if (responseValidateSignIn.isInvalid) {
+        showToast("Aviso", responseValidateSignIn.message, "warning");
+      } else {
+        const payload = await signIn({ email, password }).unwrap();
+        dispatch(setCredentials(payload));
+        navigate("/home", { replace: true });
       }
+    } catch (err) {
+      showToast("Aviso", err.data.message, "error");
     }
   }
 
@@ -75,9 +65,6 @@ export default function SignIn() {
       <Load isShow={isLoading} />
       <div className="form">
         <HeaderForm title="Bttr" />
-        {exceptMessage && (
-          <MessageContainer type={exceptType} message={exceptMessage} />
-        )}
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Insira seu e-mail"

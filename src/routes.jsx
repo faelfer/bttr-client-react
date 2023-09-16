@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
-
-import { isAuthenticated } from "./services/auth";
+import { useSelector } from "react-redux";
 
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
@@ -17,15 +16,9 @@ import SkillStatistic from "./pages/SkillStatistic";
 import NotFound from "./pages/NotFound";
 
 function RequireAuth({ children }) {
-  const isAuthUser = isAuthenticated();
-  // console.log('RequireAuth | token: ', token);
+  const { token } = useSelector((state) => state.user);
 
-  if (!isAuthUser) {
-    // console.log('RequireAuth | if | token: ', token);
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
+  if (token === null) {
     return <Navigate to="/" replace />;
   }
 

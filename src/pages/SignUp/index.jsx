@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import isInvalidEmail from "../../utils/rules/isInvalidEmail";
 import isInvalidPassword from "../../utils/rules/isInvalidPassword";
@@ -17,12 +18,24 @@ import "./styles.css";
 import { useSignUpMutation } from "../../services/user";
 
 export default function SignUp() {
+  const { token } = useSelector((state) => state.user);
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
   const [signUp, { isLoading }] = useSignUpMutation();
+
+  useEffect(() => {
+    function redirectToAuthRoute() {
+      if (token !== null) {
+        navigate("/home", { replace: true });
+      }
+    }
+    redirectToAuthRoute();
+  }, [location]);
 
   function validateSignUp() {
     let message = "";
@@ -53,9 +66,10 @@ export default function SignUp() {
       if (responseValidateSignUp.isInvalid) {
         showToast("Aviso", responseValidateSignUp.message, "warning");
       } else {
-        await signUp({ username, email, password }).unwrap();
+        const payload = await signUp({ username, email, password }).unwrap();
+        showToast("Sucesso", payload.message, "success");
       }
-    } catch(err) { 
+    } catch (err) {
       showToast("Aviso", err.data.message, "error");
     }
   }
