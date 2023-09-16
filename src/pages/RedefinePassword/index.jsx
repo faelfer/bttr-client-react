@@ -13,7 +13,7 @@ import ButtonContained from "../../components/ButtonContained";
 
 import "./styles.css";
 
-import { useRedefinePasswordMutation } from "../../services/user";
+import { useRedefinePasswordMutation } from "../../services/user/api";
 
 export default function RedefinePasswordForm() {
   const [password, setPassword] = useState("");

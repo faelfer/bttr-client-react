@@ -14,7 +14,7 @@ import ButtonContained from "../../components/ButtonContained";
 
 import "./styles.css";
 
-import { useForgotPasswordMutation } from "../../services/user";
+import { useForgotPasswordMutation } from "../../services/user/api";
 
 export default function ForgotPassword() {
   const { token } = useSelector((state) => state.user);

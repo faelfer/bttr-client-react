@@ -15,7 +15,7 @@ import ButtonContained from "../../components/ButtonContained";
 
 import "./styles.css";
 
-import { useSignUpMutation } from "../../services/user";
+import { useSignUpMutation } from "../../services/user/api";
 
 export default function SignUp() {
   const { token } = useSelector((state) => state.user);

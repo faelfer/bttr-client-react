@@ -12,7 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 
-import { api } from "./user";
+import api from "./api";
 import userReducer from "./user/reducer";
 
 const persistConfig = {

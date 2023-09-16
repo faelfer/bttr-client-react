@@ -21,7 +21,7 @@ import {
   useProfileMutation,
   useProfileUpdateMutation,
   useProfileDeleteMutation,
-} from "../../services/user";
+} from "../../services/user/api";
 import { setCredentials } from "../../services/user/reducer";
 
 export default function ProfileForm() {

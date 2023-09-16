@@ -13,7 +13,7 @@ import ButtonTransparent from "../../components/ButtonTransparent";
 
 import "./styles.css";
 
-import { useSignInMutation } from "../../services/user";
+import { useSignInMutation } from "../../services/user/api";
 import { setCredentials } from "../../services/user/reducer";
 
 export default function SignIn() {

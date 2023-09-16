@@ -1,17 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import api from '../api'
 
-export const api = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API,
-    prepareHeaders: (headers, { getState }) => {
-      const { token } = getState().user;
-      if (token) {
-        headers.set("authorization", `Token ${token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ["User"],
+export const userApi = api.injectEndpoints({
   endpoints: (build) => ({
     forgotPassword: build.mutation({
       query: (body) => ({
@@ -70,7 +59,7 @@ export const api = createApi({
   }),
 });
 
-export const {
+export const { 
   useForgotPasswordMutation,
   useSignUpMutation,
   useSignInMutation,
@@ -78,4 +67,4 @@ export const {
   useProfileUpdateMutation,
   useProfileDeleteMutation,
   useRedefinePasswordMutation,
-} = api;
+ } = userApi;
