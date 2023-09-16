@@ -8,11 +8,11 @@ import MessageContainer from "../MessageContainer";
 afterEach(cleanup);
 
 it("MessageContainer deve exibir texto", () => {
-  const textMessage = "testheader";
+  const textMessage = "testmessage";
 
   const { getByText } = render(
-    <MessageContainer type="success" message={textMessage} />,
+    <MessageContainer message={textMessage} />,
   );
 
-  expect(getByText(/testheader/i)).toBeTruthy();
+  expect(getByText(/testmessage/i)).toBeTruthy();
 });
