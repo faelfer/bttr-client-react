@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import isInvalidEmail from "../../utils/rules/isInvalidEmail";
 import showToast from "../../utils/showToast";
+import useRedirectAuth from "../../hooks/useRedirectAuth";
 
 import Load from "../../components/Load";
 import HeaderForm from "../../components/HeaderForm";
@@ -17,21 +17,11 @@ import "./styles.css";
 import { useForgotPasswordMutation } from "../../services/user/api";
 
 export default function ForgotPassword() {
-  const { token } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
 
+  useRedirectAuth();
   const navigate = useNavigate();
-  const location = useLocation();
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
-
-  useEffect(() => {
-    function redirectToAuthRoute() {
-      if (token !== null) {
-        navigate("/home", { replace: true });
-      }
-    }
-    redirectToAuthRoute();
-  }, [location]);
 
   function validateForgotPassword() {
     let message = "";

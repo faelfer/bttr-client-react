@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import showToast from "../../utils/showToast";
+import useRedirectAuth from "../../hooks/useRedirectAuth";
 
 import Load from "../../components/Load";
 import HeaderForm from "../../components/HeaderForm";
@@ -17,23 +18,13 @@ import { useSignInMutation } from "../../services/user/api";
 import { setCredentials } from "../../services/user/reducer";
 
 export default function SignIn() {
-  const { token } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useRedirectAuth();
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
   const [signIn, { isLoading }] = useSignInMutation();
-
-  useEffect(() => {
-    function redirectToAuthRoute() {
-      if (token !== null) {
-        navigate("/home", { replace: true });
-      }
-    }
-    redirectToAuthRoute();
-  }, [location]);
 
   function validateSignIn() {
     let message = "";

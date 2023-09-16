@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import isInvalidEmail from "../../utils/rules/isInvalidEmail";
 import isInvalidPassword from "../../utils/rules/isInvalidPassword";
 import showToast from "../../utils/showToast";
+import useRedirectAuth from "../../hooks/useRedirectAuth";
 
 import Load from "../../components/Load";
 import HeaderForm from "../../components/HeaderForm";
@@ -18,24 +18,13 @@ import "./styles.css";
 import { useSignUpMutation } from "../../services/user/api";
 
 export default function SignUp() {
-  const { token } = useSelector((state) => state.user);
-
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useRedirectAuth();
   const navigate = useNavigate();
-  const location = useLocation();
   const [signUp, { isLoading }] = useSignUpMutation();
-
-  useEffect(() => {
-    function redirectToAuthRoute() {
-      if (token !== null) {
-        navigate("/home", { replace: true });
-      }
-    }
-    redirectToAuthRoute();
-  }, [location]);
 
   function validateSignUp() {
     let message = "";
