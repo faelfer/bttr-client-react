@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -15,6 +15,6 @@ const useRedirectAuth = () => {
     }
     redirectToAuthRoute();
   }, [location]);
-}
+};
 
 export default useRedirectAuth;
