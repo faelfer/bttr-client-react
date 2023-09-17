@@ -95,9 +95,12 @@ export default function TimeForm() {
       if (responseValidateTimeUpdate.isInvalid) {
         showToast("Aviso", responseValidateTimeUpdate.message, "warning");
       } else {
-        const payloadTimeUpdate = await timeUpdate(timeId, {
-          skill_id: skillSelected,
-          minutes: parseInt(minutes, 10),
+        const payloadTimeUpdate = await timeUpdate({
+          id: timeId,
+          time: {
+            skill_id: skillSelected,
+            minutes: parseInt(minutes, 10),
+          },
         }).unwrap();
         showToast("Sucesso", payloadTimeUpdate.message, "success");
       }

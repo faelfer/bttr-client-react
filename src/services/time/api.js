@@ -27,10 +27,10 @@ export const timeApi = api.injectEndpoints({
       invalidatesTags: (id) => [{ type: "Time", id }],
     }),
     timeUpdate: build.mutation({
-      query: (id, body) => ({
-        url: `/times/update_time_by_id/${id}`,
+      query: (data) => ({
+        url: `/times/update_time_by_id/${data.id}`,
         method: "PUT",
-        body,
+        body: data.time,
       }),
       invalidatesTags: (id) => [{ type: "Time", id }],
     }),

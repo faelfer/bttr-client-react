@@ -95,9 +95,12 @@ export default function SkillForm() {
       if (responseValidateSkillUpdate.isInvalid) {
         showToast("Aviso", responseValidateSkillUpdate.message, "warning");
       } else {
-        const payloadSkillUpdate = await skillUpdate(skillId, {
-          name,
-          time_daily: timeDaily,
+        const payloadSkillUpdate = await skillUpdate({
+          id: skillId,
+          skill: {
+            name,
+            time_daily: timeDaily,
+          },
         }).unwrap();
         showToast("Sucesso", payloadSkillUpdate.message, "success");
       }

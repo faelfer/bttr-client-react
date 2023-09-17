@@ -94,9 +94,9 @@ export default function SkillStatistic() {
             text="Criar tempo"
             onAction={() => navigate("/times/create", { replace: true })}
           />
-          {skillItem !== null ? (
+          {skillItem !== undefined && skillItem !== null ? (
             <StatisticItem
-              skillProps={!skillItem ? null : skillItem}
+              skillProps={skillItem}
               currentDate={currentDate}
               timeTotal={minutesTotalMonth}
             />

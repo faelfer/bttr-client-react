@@ -29,10 +29,10 @@ export const skillApi = api.injectEndpoints({
       invalidatesTags: (id) => [{ type: "Skill", id }],
     }),
     skillUpdate: build.mutation({
-      query: (id, body) => ({
-        url: `/skills/update_skill_by_id/${id}`,
+      query: (data) => ({
+        url: `/skills/update_skill_by_id/${data.id}`,
         method: "PUT",
-        body,
+        body: data.skill,
       }),
       invalidatesTags: (id) => [{ type: "Skill", id }],
     }),
