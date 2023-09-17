@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import isInvalidEmail from "../../utils/rules/isInvalidEmail";
-import isInvalidPassword from "../../utils/rules/isInvalidPassword";
+import validateSignUp from "../../utils/validations/validateSignUp";
 import showToast from "../../utils/showToast";
 import useRedirectAuth from "../../hooks/useRedirectAuth";
 
@@ -26,34 +25,15 @@ export default function SignUp() {
   const navigate = useNavigate();
   const [signUp, { isLoading }] = useSignUpMutation();
 
-  function validateSignUp() {
-    let message = "";
-    const nameWithoutTrimValidate = username.trim();
-    if (!nameWithoutTrimValidate) {
-      message = "Preencha o campo nome de usuário";
-    } else if (nameWithoutTrimValidate.length < 2) {
-      message = "Campo nome de usuário é inválido";
-    } else if (!email) {
-      message = "Preencha o campo e-mail";
-    } else if (isInvalidEmail(email)) {
-      message = "Campo e-mail é inválido";
-    } else if (!password) {
-      message = "Preencha o campo senha";
-    } else if (isInvalidPassword(password)) {
-      message =
-        "Campo senha deve conter número, símbolo, letra maiúscula e minúscula";
-    } else if (password.length < 4 || password.length > 8) {
-      message = "Campo senha deve conter de 4 à 8 caracteres";
-    }
-
-    return { isInvalid: !!message, message };
-  }
-
   async function sendSignUp() {
     try {
-      const responseValidateSignUp = await validateSignUp();
-      if (responseValidateSignUp.isInvalid) {
-        showToast("Aviso", responseValidateSignUp.message, "warning");
+      const resultValidate = await validateSignUp({
+        username,
+        email,
+        password,
+      });
+      if (resultValidate.isInvalid) {
+        showToast("Aviso", resultValidate.message, "warning");
       } else {
         const payload = await signUp({ username, email, password }).unwrap();
         showToast("Sucesso", payload.message, "success");
