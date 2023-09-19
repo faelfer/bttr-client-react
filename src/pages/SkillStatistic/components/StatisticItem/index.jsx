@@ -49,8 +49,6 @@ export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
         messageToProgress = "O acumulado do dia foi concluido!";
       } else if (timeTotal > resultprogressFromCurrentDay.idealSituation) {
         messageToProgress = "O acumulado do dia foi ultrapassado!";
-        timeToLack = timeTotal - resultprogressFromCurrentDay.idealSituation;
-        timeToSuggestion = resultprogressFromCurrentDay.goalRemaining;
       } else {
         timeToLack = resultprogressFromCurrentDay.idealSituation - timeTotal;
         timeToSuggestion =
