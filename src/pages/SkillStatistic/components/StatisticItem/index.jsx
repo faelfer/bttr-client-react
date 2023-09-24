@@ -30,7 +30,7 @@ export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
         resultDatesFromCurrentDay.currentMouth,
       );
       const resultprogressFromCurrentDay = progressFromCurrentDay(
-        skillProps.time_daily,
+        skillProps.daily,
         timeTotal,
         businessDays,
         businessDaysSoFar,
@@ -87,7 +87,7 @@ export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
           {skillProps.name.toUpperCase()}
         </p>
         <p className="text--statistic-subhead">
-          {`meta diária: ${clockHourMinute(skillProps.time_daily)}`}
+          {`meta diária: ${clockHourMinute(skillProps.daily)}`}
         </p>
         <p className="text--statistic-subhead">
           {`meta mês: ${clockHourMinute(timeGoalMonth)}`}

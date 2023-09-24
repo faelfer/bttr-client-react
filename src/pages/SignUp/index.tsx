@@ -16,7 +16,7 @@ import "./styles.css";
 
 import { useSignUpMutation } from "../../services/user/api";
 
-export default function SignUp() {
+const SignUp = (): JSX.Element => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,9 +25,9 @@ export default function SignUp() {
   const navigate = useNavigate();
   const [signUp, { isLoading }] = useSignUpMutation();
 
-  async function sendSignUp() {
+  const sendSignUp = async (): Promise<void> => {
     try {
-      const resultValidate = await validateSignUp({
+      const resultValidate = validateSignUp({
         username,
         email,
         password,
@@ -76,3 +76,6 @@ export default function SignUp() {
     </div>
   );
 }
+
+export default SignUp;
+

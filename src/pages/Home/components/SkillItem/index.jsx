@@ -12,7 +12,7 @@ export default function SkillItem({ skillProps, onUpdate, onStatistic }) {
     <div className="container--skill" key={skillProps.id}>
       <p className="text--skill-headline">{skillProps.name}</p>
       <p className="text--skill-subhead">
-        {`Tempo Diário: ${clockHourMinute(skillProps.time_daily)}`}
+        {`Tempo Diário: ${clockHourMinute(skillProps.daily)}`}
       </p>
       <ButtonContained text="Editar" onAction={() => onUpdate()} />
       <ButtonOutlined text="Estatística" onAction={() => onStatistic()} />

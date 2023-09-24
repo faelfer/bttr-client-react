@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from "react";
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import SignUp from "./pages/SignUp";
@@ -15,14 +14,20 @@ import SkillForm from "./pages/SkillForm";
 import SkillStatistic from "./pages/SkillStatistic";
 import NotFound from "./pages/NotFound";
 
-function RequireAuth({ children }) {
-  const { token } = useSelector((state) => state.user);
+import { selectToken } from './services/user/reducer';
+
+interface RequireAuthProps {
+  children: React.ReactNode;
+}
+
+function RequireAuth(props: RequireAuthProps): React.ReactNode {
+  const token = useSelector(selectToken);
 
   if (token === null) {
-    return <Navigate to="/" replace />;
+    return <SignIn />;
   }
 
-  return children;
+  return props.children;
 }
 
 const routes = createBrowserRouter([

@@ -25,7 +25,7 @@ export default function SkillForm() {
   const { skillId } = useParams();
 
   const [name, setName] = useState("");
-  const [timeDaily, setTimeDaily] = useState(1);
+  const [daily, setDaily] = useState(1);
 
   const [skill, { isLoading }] = useSkillMutation();
   const [skillCreate, { isLoading: isCreating }] = useSkillCreateMutation();
@@ -39,7 +39,7 @@ export default function SkillForm() {
     try {
       const payload = await skill(skillId).unwrap();
       setName(payload.skill.name);
-      setTimeDaily(payload.skill.time_daily);
+      setDaily(payload.skill.daily);
     } catch {
       showToast(
         "Aviso",
@@ -62,7 +62,7 @@ export default function SkillForm() {
       message = "Preencha o campo nome da habilidade";
     } else if (nameWithoutTrimValidate.length < 3) {
       message = "Campo nome da habilidade é inválido";
-    } else if (timeDaily <= 0) {
+    } else if (daily <= 0) {
       message = "Campo minutos diário é inválido";
     }
     return { isInvalid: !!message, message };
@@ -76,7 +76,7 @@ export default function SkillForm() {
       } else {
         const payloadSkillCreate = await skillCreate({
           name,
-          time_daily: timeDaily,
+          daily,
         }).unwrap();
         showToast("Sucesso", payloadSkillCreate.message, "success");
       }
@@ -99,7 +99,7 @@ export default function SkillForm() {
           id: skillId,
           skill: {
             name,
-            time_daily: timeDaily,
+            daily,
           },
         }).unwrap();
         showToast("Sucesso", payloadSkillUpdate.message, "success");
@@ -148,8 +148,8 @@ export default function SkillForm() {
           <InputOutlineForm
             inputType="number"
             inputPlaceholder="Digite os minutos diário"
-            inputValue={timeDaily}
-            onChangeInput={(textValue) => setTimeDaily(textValue)}
+            inputValue={daily}
+            onChangeInput={(textValue) => setDaily(textValue)}
           />
           <ButtonContained
             text={skillId ? "Editar" : "Criar"}
