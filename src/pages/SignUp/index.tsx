@@ -38,7 +38,7 @@ const SignUp = (): JSX.Element => {
         const payload = await signUp({ username, email, password }).unwrap();
         showToast("Sucesso", payload.message, "success");
       }
-    } catch (err) {
+    } catch (err: any) {
       showToast("Aviso", err.data.message, "error");
     }
   }
@@ -52,26 +52,26 @@ const SignUp = (): JSX.Element => {
         <InputOutlineForm
           inputPlaceholder="Digite seu nome de usuário"
           inputValue={username}
-          onChangeInput={(textValue) => setUsername(textValue)}
+          onChangeInput={(textValue) => { setUsername(textValue); }}
         />
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Digite seu e-mail"
           inputValue={email}
-          onChangeInput={(textValue) => setEmail(textValue)}
+          onChangeInput={(textValue) => { setEmail(textValue); }}
         />
         <InputOutlineForm
           inputType="password"
           inputPlaceholder="Digite sua senha"
           inputValue={password}
-          onChangeInput={(textValue) => setPassword(textValue)}
+          onChangeInput={(textValue) => { setPassword(textValue); }}
         />
-        <ButtonContained text="Cadastre-se" onAction={() => sendSignUp()} />
+        <ButtonContained text="Cadastre-se" onAction={async () => { await sendSignUp(); }} />
       </div>
       <LinkRedirect
         description="Tem uma conta? "
         descriptionUrl="Conecte-se"
-        onRedirect={() => navigate("/", { replace: true })}
+        onRedirect={() => { navigate("/", { replace: true }); }}
       />
     </div>
   );

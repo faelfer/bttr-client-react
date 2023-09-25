@@ -2,13 +2,20 @@ import React from "react";
 
 import "./styles.css";
 
-export default function InputOutlineForm({
+interface InputOutlineFormProp {
+  inputPlaceholder: string;
+  inputValue: string;
+  onChangeInput: (textValue: string) => void;
+  inputType?: string;
+}
+
+const InputOutlineForm = ({
   inputPlaceholder,
   inputValue,
   onChangeInput,
   inputType = "text",
-}) {
-  const onChangeValue = ({ currentTarget: { value } }) => {
+}: InputOutlineFormProp): JSX.Element => {
+  const onChangeValue = ({ currentTarget: { value } }: React.FormEvent<HTMLInputElement>): void => {
     onChangeInput(value);
   };
 
@@ -23,3 +30,5 @@ export default function InputOutlineForm({
     />
   );
 }
+
+export default InputOutlineForm;
