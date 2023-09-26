@@ -64,3 +64,8 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ vars.TEST_COVERAGE_ID }}
         with:
           coverageCommand: yarn test-unit-coverage
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
