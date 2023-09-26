@@ -1,18 +1,20 @@
 interface InputValuesFunction {
   email: string;
   password: string;
-};
+}
 
 interface ValidateSignInResult {
   isInvalid: boolean;
   message: string;
-};
+}
 
-export default function validateSignIn(inputValues: InputValuesFunction): ValidateSignInResult {
+export default function validateSignIn(
+  inputValues: InputValuesFunction,
+): ValidateSignInResult {
   let message = "";
-  if ((inputValues.email).length === 0) {
+  if (inputValues.email.length === 0) {
     message = "Preencha o campo e-mail";
-  } else if ((inputValues.password).length === 0) {
+  } else if (inputValues.password.length === 0) {
     message = "Preencha o campo senha";
   }
 

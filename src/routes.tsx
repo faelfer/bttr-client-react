@@ -14,7 +14,7 @@ import SkillForm from "./pages/SkillForm";
 import SkillStatistic from "./pages/SkillStatistic";
 import NotFound from "./pages/NotFound";
 
-import { selectToken } from './services/user/reducer';
+import { selectToken } from "./services/user/reducer";
 
 interface RequireAuthProps {
   children: React.ReactNode;

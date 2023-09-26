@@ -40,7 +40,7 @@ const SignIn = (): JSX.Element => {
     } catch (err: any) {
       showToast("Aviso", err.data.message, "error");
     }
-  }
+  };
 
   return (
     <div className="container">
@@ -51,27 +51,40 @@ const SignIn = (): JSX.Element => {
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
           inputValue={email}
-          onChangeInput={(textValue) => { setEmail(textValue); }}
+          onChangeInput={(textValue) => {
+            setEmail(textValue);
+          }}
         />
         <InputOutlineForm
           inputType="password"
           inputPlaceholder="Insira sua senha"
           inputValue={password}
-          onChangeInput={(textValue) => { setPassword(textValue); }}
+          onChangeInput={(textValue) => {
+            setPassword(textValue);
+          }}
         />
-        <ButtonContained text="Entrar" onAction={async () => { await sendSignIn(); }} />
+        <ButtonContained
+          text="Entrar"
+          onAction={async () => {
+            await sendSignIn();
+          }}
+        />
         <ButtonTransparent
           text="Esqueceu a senha?"
-          onAction={() => { navigate("/forgot-password", { replace: true }); }}
+          onAction={() => {
+            navigate("/forgot-password", { replace: true });
+          }}
         />
       </div>
       <LinkRedirect
         description="Não tem uma conta? "
         descriptionUrl="Cadastre-se"
-        onRedirect={() => { navigate("/sign-up", { replace: true }); }}
+        onRedirect={() => {
+          navigate("/sign-up", { replace: true });
+        }}
       />
     </div>
   );
-}
+};
 
 export default SignIn;

@@ -41,7 +41,7 @@ const SignUp = (): JSX.Element => {
     } catch (err: any) {
       showToast("Aviso", err.data.message, "error");
     }
-  }
+  };
 
   return (
     <div className="container">
@@ -52,30 +52,42 @@ const SignUp = (): JSX.Element => {
         <InputOutlineForm
           inputPlaceholder="Digite seu nome de usuário"
           inputValue={username}
-          onChangeInput={(textValue) => { setUsername(textValue); }}
+          onChangeInput={(textValue) => {
+            setUsername(textValue);
+          }}
         />
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Digite seu e-mail"
           inputValue={email}
-          onChangeInput={(textValue) => { setEmail(textValue); }}
+          onChangeInput={(textValue) => {
+            setEmail(textValue);
+          }}
         />
         <InputOutlineForm
           inputType="password"
           inputPlaceholder="Digite sua senha"
           inputValue={password}
-          onChangeInput={(textValue) => { setPassword(textValue); }}
+          onChangeInput={(textValue) => {
+            setPassword(textValue);
+          }}
         />
-        <ButtonContained text="Cadastre-se" onAction={async () => { await sendSignUp(); }} />
+        <ButtonContained
+          text="Cadastre-se"
+          onAction={async () => {
+            await sendSignUp();
+          }}
+        />
       </div>
       <LinkRedirect
         description="Tem uma conta? "
         descriptionUrl="Conecte-se"
-        onRedirect={() => { navigate("/", { replace: true }); }}
+        onRedirect={() => {
+          navigate("/", { replace: true });
+        }}
       />
     </div>
   );
-}
+};
 
 export default SignUp;
-

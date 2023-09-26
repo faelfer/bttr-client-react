@@ -35,7 +35,7 @@ const ForgotPassword = (): JSX.Element => {
     } catch (err: any) {
       showToast("Aviso", err.data.message, "error");
     }
-  }
+  };
 
   return (
     <div className="container">
@@ -47,17 +47,26 @@ const ForgotPassword = (): JSX.Element => {
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
           inputValue={email}
-          onChangeInput={(textValue) => { setEmail(textValue); }}
+          onChangeInput={(textValue) => {
+            setEmail(textValue);
+          }}
         />
-        <ButtonContained text="Enviar" onAction={async () => { await sendForgotPassword(); }} />
+        <ButtonContained
+          text="Enviar"
+          onAction={async () => {
+            await sendForgotPassword();
+          }}
+        />
       </div>
       <LinkRedirect
         description=" "
         descriptionUrl="Voltar ao login"
-        onRedirect={() => { navigate("/sign-up", { replace: true }); }}
+        onRedirect={() => {
+          navigate("/sign-up", { replace: true });
+        }}
       />
     </div>
   );
-}
+};
 
 export default ForgotPassword;

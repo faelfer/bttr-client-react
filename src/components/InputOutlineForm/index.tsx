@@ -15,7 +15,9 @@ const InputOutlineForm = ({
   onChangeInput,
   inputType = "text",
 }: InputOutlineFormProp): JSX.Element => {
-  const onChangeValue = ({ currentTarget: { value } }: React.FormEvent<HTMLInputElement>): void => {
+  const onChangeValue = ({
+    currentTarget: { value },
+  }: React.FormEvent<HTMLInputElement>): void => {
     onChangeInput(value);
   };
 
@@ -29,6 +31,6 @@ const InputOutlineForm = ({
       data-testid="outline-form-input"
     />
   );
-}
+};
 
 export default InputOutlineForm;
