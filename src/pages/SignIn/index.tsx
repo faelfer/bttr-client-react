@@ -65,8 +65,8 @@ const SignIn = (): JSX.Element => {
         />
         <ButtonContained
           text="Entrar"
-          onAction={async () => {
-            await sendSignIn();
+          onAction={() => {
+            void sendSignIn();
           }}
         />
         <ButtonTransparent

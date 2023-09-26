@@ -7,7 +7,7 @@ const useRedirectAuth = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  return useEffect(() => {
+  useEffect(() => {
     function redirectToAuthRoute() {
       if (token !== null) {
         navigate("/home", { replace: true });

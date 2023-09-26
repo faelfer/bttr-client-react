@@ -53,8 +53,8 @@ const ForgotPassword = (): JSX.Element => {
         />
         <ButtonContained
           text="Enviar"
-          onAction={async () => {
-            await sendForgotPassword();
+          onAction={() => {
+            void sendForgotPassword();
           }}
         />
       </div>

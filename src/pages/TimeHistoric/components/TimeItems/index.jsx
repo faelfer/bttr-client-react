@@ -13,7 +13,7 @@ export default function TimeItems({ messageNoItem, countItems, itemsTime }) {
       <TimeItem
         timeProps={timeLoop}
         onUpdate={() =>
-          navigate(`/times/${timeLoop.id}/update`, { replace: true })
+          { navigate(`/times/${timeLoop.id}/update`, { replace: true }); }
         }
       />
     ))

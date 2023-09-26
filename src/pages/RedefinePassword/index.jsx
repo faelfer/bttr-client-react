@@ -77,29 +77,29 @@ export default function RedefinePasswordForm() {
             inputType="password"
             inputPlaceholder="Digite sua senha atual"
             inputValue={password}
-            onChangeInput={(textValue) => setPassword(textValue)}
+            onChangeInput={(textValue) => { setPassword(textValue); }}
           />
           <InputOutlineForm
             inputType="password"
             inputPlaceholder="Digite sua nova senha"
             inputValue={passwordNew}
-            onChangeInput={(textValue) => setPasswordNew(textValue)}
+            onChangeInput={(textValue) => { setPasswordNew(textValue); }}
           />
           <InputOutlineForm
             inputType="password"
             inputPlaceholder="Digite sua confirmação de nova senha"
             inputValue={passwordNewConfirm}
-            onChangeInput={(textValue) => setPasswordNewConfirm(textValue)}
+            onChangeInput={(textValue) => { setPasswordNewConfirm(textValue); }}
           />
           <ButtonContained
             text="Salvar"
-            onAction={() => sendRedefinePassword()}
+            onAction={async () => { await sendRedefinePassword(); }}
           />
         </div>
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao perfil"
-          onRedirect={() => navigate("/profile", { replace: true })}
+          onRedirect={() => { navigate("/profile", { replace: true }); }}
         />
       </div>
     </>

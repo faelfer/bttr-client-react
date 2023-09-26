@@ -13,10 +13,10 @@ export default function SkillItems({ messageNoItem, countItems, itemsSkill }) {
       <SkillItem
         skillProps={skillLoop}
         onUpdate={() =>
-          navigate(`/skills/${skillLoop.id}/update`, { replace: true })
+          { navigate(`/skills/${skillLoop.id}/update`, { replace: true }); }
         }
         onStatistic={() =>
-          navigate(`/skills/${skillLoop.id}/statistic`, { replace: true })
+          { navigate(`/skills/${skillLoop.id}/statistic`, { replace: true }); }
         }
       />
     ))

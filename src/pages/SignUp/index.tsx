@@ -74,8 +74,8 @@ const SignUp = (): JSX.Element => {
         />
         <ButtonContained
           text="Cadastre-se"
-          onAction={async () => {
-            await sendSignUp();
+          onAction={() => {
+            void sendSignUp();
           }}
         />
       </div>

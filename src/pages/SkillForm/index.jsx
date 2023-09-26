@@ -143,31 +143,31 @@ export default function SkillForm() {
           <InputOutlineForm
             inputPlaceholder="Digite nome da habilidade"
             inputValue={name}
-            onChangeInput={(textValue) => setName(textValue)}
+            onChangeInput={(textValue) => { setName(textValue); }}
           />
           <InputOutlineForm
             inputType="number"
             inputPlaceholder="Digite os minutos diário"
             inputValue={daily}
-            onChangeInput={(textValue) => setDaily(textValue)}
+            onChangeInput={(textValue) => { setDaily(textValue); }}
           />
           <ButtonContained
             text={skillId ? "Editar" : "Criar"}
-            onAction={() =>
-              skillId ? sendSkillUpdate(skillId) : sendSkillCreate()
+            onAction={async () =>
+              { skillId ? await sendSkillUpdate(skillId) : await sendSkillCreate(); }
             }
           />
           {skillId ? (
             <ButtonOutlined
               text="Apagar"
-              onAction={() => sendSkillDelete(skillId)}
+              onAction={async () => { await sendSkillDelete(skillId); }}
             />
           ) : null}
         </div>
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao início"
-          onRedirect={() => navigate("/home", { replace: true })}
+          onRedirect={() => { navigate("/home", { replace: true }); }}
         />
       </div>
     </>

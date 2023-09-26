@@ -27,7 +27,7 @@ export default function TimeHistoric() {
         <div className="form">
           <ButtonContained
             text="Criar tempo"
-            onAction={() => navigate("/times/create", { replace: true })}
+            onAction={() => { navigate("/times/create", { replace: true }); }}
           />
           <TimeItems
             messageNoItem="Não há registros de habilidades relacionadas ao seu cadastro."
@@ -39,7 +39,7 @@ export default function TimeHistoric() {
             totalPages={
               !times?.results ? 0 : Math.ceil(times.count / amountItensByPage)
             }
-            onChangeCurrentPage={(updatedPage) => setPage(updatedPage)}
+            onChangeCurrentPage={(updatedPage) => { setPage(updatedPage); }}
           />
         </div>
       </div>

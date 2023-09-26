@@ -129,22 +129,22 @@ export default function ProfileForm() {
           <InputOutlineForm
             inputPlaceholder="Digite seu nome de usuário"
             inputValue={username}
-            onChangeInput={(textValue) => setUsername(textValue)}
+            onChangeInput={(textValue) => { setUsername(textValue); }}
           />
           <InputOutlineForm
             inputType="email"
             inputPlaceholder="Digite seu e-mail"
             inputValue={email}
-            onChangeInput={(textValue) => setEmail(textValue)}
+            onChangeInput={(textValue) => { setEmail(textValue); }}
           />
-          <ButtonContained text="Salvar" onAction={() => sendProfileUpdate()} />
-          <ButtonOutlined text="Apagar" onAction={() => sendProfileDelete()} />
-          <ButtonTransparent text="Sair" onAction={() => exit()} />
+          <ButtonContained text="Salvar" onAction={async () => { await sendProfileUpdate(); }} />
+          <ButtonOutlined text="Apagar" onAction={async () => { await sendProfileDelete(); }} />
+          <ButtonTransparent text="Sair" onAction={async () => { await exit(); }} />
         </div>
         <LinkRedirect
           description=""
           descriptionUrl="Redefinir a senha"
-          onRedirect={() => navigate("/redefine-password", { replace: true })}
+          onRedirect={() => { navigate("/redefine-password", { replace: true }); }}
         />
       </div>
     </>
