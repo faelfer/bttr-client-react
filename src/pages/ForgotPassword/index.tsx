@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import isInvalidEmail from "../../utils/rules/isInvalidEmail";
+import validateForgotPassword from "../../utils/validations/validateForgotPassword";
 import showToast from "../../utils/showToast";
 import useRedirectAuth from "../../hooks/useRedirectAuth";
 
@@ -16,34 +16,23 @@ import "./styles.css";
 
 import { useForgotPasswordMutation } from "../../services/user/api";
 
-export default function ForgotPassword() {
+const ForgotPassword = (): JSX.Element => {
   const [email, setEmail] = useState("");
 
   useRedirectAuth();
   const navigate = useNavigate();
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
-  function validateForgotPassword() {
-    let message = "";
-
-    if (!email) {
-      message = "Preencha o campo e-mail";
-    } else if (isInvalidEmail(email)) {
-      message = "Campo e-mail é inválido";
-    }
-    return { isInvalid: !!message, message };
-  }
-
-  async function sendForgotPassword() {
+  const sendForgotPassword = async (): Promise<void> => {
     try {
-      const responseValidateForgotPassword = await validateForgotPassword();
+      const responseValidateForgotPassword = validateForgotPassword({ email });
       if (responseValidateForgotPassword.isInvalid) {
         showToast("Aviso", responseValidateForgotPassword.message, "warning");
       } else {
         const payload = await forgotPassword({ email }).unwrap();
         showToast("Sucesso", payload.message, "success");
       }
-    } catch (err) {
+    } catch (err: any) {
       showToast("Aviso", err.data.message, "error");
     }
   }
@@ -58,15 +47,17 @@ export default function ForgotPassword() {
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
           inputValue={email}
-          onChangeInput={(textValue) => setEmail(textValue)}
+          onChangeInput={(textValue) => { setEmail(textValue); }}
         />
-        <ButtonContained text="Enviar" onAction={() => sendForgotPassword()} />
+        <ButtonContained text="Enviar" onAction={async () => { await sendForgotPassword(); }} />
       </div>
       <LinkRedirect
         description=" "
         descriptionUrl="Voltar ao login"
-        onRedirect={() => navigate("/sign-up", { replace: true })}
+        onRedirect={() => { navigate("/sign-up", { replace: true }); }}
       />
     </div>
   );
 }
+
+export default ForgotPassword;

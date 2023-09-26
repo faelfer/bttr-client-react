@@ -104,3 +104,16 @@ test("deve retornar valor verdadeiro para a quantia máxima de caracteres do cam
   }
   expect(validateSignUp(invalidatePasswordInputValues)).toMatchObject(desiredInvalidatePassword);
 });
+
+test("deve retornar valor falso para a validação", () => {
+  const validateInputValues = {
+    username: "testusername1",
+    email: "test@gmail.com",
+    password: "!Ab1234" 
+  }
+  const desiredValidate = {
+    isInvalid: false,
+    message: ""
+  }
+  expect(validateSignUp(validateInputValues)).toMatchObject(desiredValidate);
+});

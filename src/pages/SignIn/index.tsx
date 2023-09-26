@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import showToast from "../../utils/showToast";
+import validateSignIn from "../../utils/validations/validateSignIn";
 import useRedirectAuth from "../../hooks/useRedirectAuth";
 
 import Load from "../../components/Load";
@@ -17,7 +18,7 @@ import "./styles.css";
 import { useSignInMutation } from "../../services/user/api";
 import { setCredentials } from "../../services/user/reducer";
 
-export default function SignIn() {
+const SignIn = (): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,18 +27,8 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const [signIn, { isLoading }] = useSignInMutation();
 
-  function validateSignIn() {
-    let message = "";
-    if (!email) {
-      message = "Preencha o campo e-mail";
-    } else if (!password) {
-      message = "Preencha o campo senha";
-    }
-    return { isInvalid: !!message, message };
-  }
-
-  async function sendSignIn() {
-    const responseValidateSignIn = await validateSignIn();
+  const sendSignIn = async (): Promise<void> => {
+    const responseValidateSignIn = validateSignIn({ email, password });
     try {
       if (responseValidateSignIn.isInvalid) {
         showToast("Aviso", responseValidateSignIn.message, "warning");
@@ -46,7 +37,7 @@ export default function SignIn() {
         dispatch(setCredentials(payload));
         navigate("/home", { replace: true });
       }
-    } catch (err) {
+    } catch (err: any) {
       showToast("Aviso", err.data.message, "error");
     }
   }
@@ -60,25 +51,27 @@ export default function SignIn() {
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
           inputValue={email}
-          onChangeInput={(textValue) => setEmail(textValue)}
+          onChangeInput={(textValue) => { setEmail(textValue); }}
         />
         <InputOutlineForm
           inputType="password"
           inputPlaceholder="Insira sua senha"
           inputValue={password}
-          onChangeInput={(textValue) => setPassword(textValue)}
+          onChangeInput={(textValue) => { setPassword(textValue); }}
         />
-        <ButtonContained text="Entrar" onAction={() => sendSignIn()} />
+        <ButtonContained text="Entrar" onAction={async () => { await sendSignIn(); }} />
         <ButtonTransparent
           text="Esqueceu a senha?"
-          onAction={() => navigate("/forgot-password", { replace: true })}
+          onAction={() => { navigate("/forgot-password", { replace: true }); }}
         />
       </div>
       <LinkRedirect
         description="Não tem uma conta? "
         descriptionUrl="Cadastre-se"
-        onRedirect={() => navigate("/sign-up", { replace: true })}
+        onRedirect={() => { navigate("/sign-up", { replace: true }); }}
       />
     </div>
   );
 }
+
+export default SignIn;
