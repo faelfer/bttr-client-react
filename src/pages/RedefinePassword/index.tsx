@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import showToast from "../../utils/showToast";
-import isInvalidPassword from "../../utils/rules/isInvalidPassword";
+import validateRedefinePassword from "../../utils/validations/validateRedefinePassword";
 
 import NavBar from "../../components/NavBar";
 import Load from "../../components/Load";
@@ -15,7 +15,7 @@ import "./styles.css";
 
 import { useRedefinePasswordMutation } from "../../services/user/api";
 
-export default function RedefinePasswordForm() {
+const RedefinePassword = (): JSX.Element => {
   const [password, setPassword] = useState("");
   const [passwordNew, setPasswordNew] = useState("");
   const [passwordNewConfirm, setPasswordNewConfirm] = useState("");
@@ -24,34 +24,13 @@ export default function RedefinePasswordForm() {
 
   const navigate = useNavigate();
 
-  function validateRedefinePassword() {
-    let message = "";
-    if (!password) {
-      message = "Preencha o campo senha atual";
-    } else if (password.length < 4) {
-      message = "Campo senha atual é inválido";
-    } else if (!passwordNew) {
-      message = "Preencha o campo nova senha";
-    } else if (passwordNew.length < 4) {
-      message = "Campo nova senha deve conter no mínimo 4 caracteres";
-    } else if (isInvalidPassword(passwordNew)) {
-      message =
-        "Campo nova senha deve conter número, símbolo, letra maiúscula e minúscula";
-    } else if (password === passwordNew) {
-      message = "Campos senha atual e nova senha devem ser diferentes";
-    } else if (!passwordNewConfirm) {
-      message = "Preencha o campo confirmar nova senha";
-    } else if (passwordNewConfirm.length < 4) {
-      message = "Campo confirmar nova senha é inválido";
-    } else if (passwordNew !== passwordNewConfirm) {
-      message = "Os campos nova senha e confirmar nova senha devem ser iguais";
-    }
-    return { isInvalid: !!message, message };
-  }
-
-  async function sendRedefinePassword() {
+  const sendRedefinePassword = async (): Promise<void> => {
     try {
-      const responseValidateRedefinePassword = await validateRedefinePassword();
+      const responseValidateRedefinePassword = validateRedefinePassword({
+        password,
+        passwordNew,
+        passwordNewConfirm,
+      });
       if (responseValidateRedefinePassword.isInvalid) {
         showToast("Aviso", responseValidateRedefinePassword.message, "warning");
       } else {
@@ -61,14 +40,14 @@ export default function RedefinePasswordForm() {
         }).unwrap();
         showToast("Sucesso", payloadRedefinePassword.message, "success");
       }
-    } catch (err) {
+    } catch (err: any) {
       showToast("Aviso", err.data.message, "error");
     }
-  }
+  };
 
   return (
     <>
-      <NavBar navigation={navigate} />
+      <NavBar />
       <Load isShow={isLoading} />
       <div className="content--align">
         <div className="form">
@@ -77,31 +56,43 @@ export default function RedefinePasswordForm() {
             inputType="password"
             inputPlaceholder="Digite sua senha atual"
             inputValue={password}
-            onChangeInput={(textValue) => { setPassword(textValue); }}
+            onChangeInput={(textValue) => {
+              setPassword(textValue);
+            }}
           />
           <InputOutlineForm
             inputType="password"
             inputPlaceholder="Digite sua nova senha"
             inputValue={passwordNew}
-            onChangeInput={(textValue) => { setPasswordNew(textValue); }}
+            onChangeInput={(textValue) => {
+              setPasswordNew(textValue);
+            }}
           />
           <InputOutlineForm
             inputType="password"
             inputPlaceholder="Digite sua confirmação de nova senha"
             inputValue={passwordNewConfirm}
-            onChangeInput={(textValue) => { setPasswordNewConfirm(textValue); }}
+            onChangeInput={(textValue) => {
+              setPasswordNewConfirm(textValue);
+            }}
           />
           <ButtonContained
             text="Salvar"
-            onAction={async () => { await sendRedefinePassword(); }}
+            onAction={() => {
+              void sendRedefinePassword();
+            }}
           />
         </div>
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao perfil"
-          onRedirect={() => { navigate("/profile", { replace: true }); }}
+          onRedirect={() => {
+            navigate("/profile", { replace: true });
+          }}
         />
       </div>
     </>
   );
-}
+};
+
+export default RedefinePassword;

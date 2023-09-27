@@ -27,11 +27,10 @@ export const userApi = api.injectEndpoints({
       invalidatesTags: [{ type: "User", id: "LIST" }],
     }),
     profile: build.mutation({
-      query: () => ({
+      query: {
         url: "/users/profile",
         method: "GET",
-      }),
-      providesTags: [{ type: "User" }],
+      },
     }),
     profileUpdate: build.mutation({
       query: (body) => ({

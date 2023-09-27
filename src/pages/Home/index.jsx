@@ -27,7 +27,9 @@ export default function Home() {
         <div className="form">
           <ButtonContained
             text="Criar habilidade"
-            onAction={() => { navigate("/skills/create", { replace: true }); }}
+            onAction={() => {
+              navigate("/skills/create", { replace: true });
+            }}
           />
           <SkillItems
             messageNoItem="Não há registros de habilidades relacionadas ao seu cadastro."
@@ -39,7 +41,9 @@ export default function Home() {
             totalPages={
               !skills?.results ? 0 : Math.ceil(skills.count / amountItensByPage)
             }
-            onChangeCurrentPage={(updatedPage) => { setPage(updatedPage); }}
+            onChangeCurrentPage={(updatedPage) => {
+              setPage(updatedPage);
+            }}
           />
         </div>
       </div>

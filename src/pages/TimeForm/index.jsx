@@ -148,33 +148,39 @@ export default function TimeForm() {
             selectPlaceholder="Selecione uma habilidade"
             options={!skills ? [] : skills}
             selectValue={skillSelected}
-            onChangeSelect={(optionSelected) =>
-              { setSkillSelected(optionSelected); }
-            }
+            onChangeSelect={(optionSelected) => {
+              setSkillSelected(optionSelected);
+            }}
           />
           <InputOutlineForm
             inputType="number"
             inputPlaceholder="Digite os minutos"
             inputValue={minutes}
-            onChangeInput={(textValue) => { setMinutes(textValue); }}
+            onChangeInput={(textValue) => {
+              setMinutes(textValue);
+            }}
           />
           <ButtonContained
             text={timeId ? "Editar" : "Criar"}
-            onAction={async () =>
-              { timeId ? await sendTimeUpdate(timeId) : await sendTimeCreate(); }
-            }
+            onAction={async () => {
+              timeId ? await sendTimeUpdate(timeId) : await sendTimeCreate();
+            }}
           />
           {timeId ? (
             <ButtonOutlined
               text="Apagar"
-              onAction={async () => { await sendTimeDelete(timeId); }}
+              onAction={async () => {
+                await sendTimeDelete(timeId);
+              }}
             />
           ) : null}
         </div>
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao histórico"
-          onRedirect={() => { navigate("/times", { replace: true }); }}
+          onRedirect={() => {
+            navigate("/times", { replace: true });
+          }}
         />
       </div>
     </>

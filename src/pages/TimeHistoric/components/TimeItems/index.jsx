@@ -12,9 +12,9 @@ export default function TimeItems({ messageNoItem, countItems, itemsTime }) {
     itemsTime.map((timeLoop) => (
       <TimeItem
         timeProps={timeLoop}
-        onUpdate={() =>
-          { navigate(`/times/${timeLoop.id}/update`, { replace: true }); }
-        }
+        onUpdate={() => {
+          navigate(`/times/${timeLoop.id}/update`, { replace: true });
+        }}
       />
     ))
   );

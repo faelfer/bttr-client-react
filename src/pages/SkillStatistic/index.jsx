@@ -92,7 +92,9 @@ export default function SkillStatistic() {
         <div className="form">
           <ButtonContained
             text="Criar tempo"
-            onAction={() => { navigate("/times/create", { replace: true }); }}
+            onAction={() => {
+              navigate("/times/create", { replace: true });
+            }}
           />
           {skillItem !== undefined && skillItem !== null ? (
             <StatisticItem
@@ -105,7 +107,9 @@ export default function SkillStatistic() {
         <LinkRedirect
           description=""
           descriptionUrl="Voltar ao início"
-          onRedirect={() => { navigate("/home", { replace: true }); }}
+          onRedirect={() => {
+            navigate("/home", { replace: true });
+          }}
         />
       </div>
     </>

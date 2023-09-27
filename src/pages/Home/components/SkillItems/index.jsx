@@ -12,12 +12,12 @@ export default function SkillItems({ messageNoItem, countItems, itemsSkill }) {
     itemsSkill.map((skillLoop) => (
       <SkillItem
         skillProps={skillLoop}
-        onUpdate={() =>
-          { navigate(`/skills/${skillLoop.id}/update`, { replace: true }); }
-        }
-        onStatistic={() =>
-          { navigate(`/skills/${skillLoop.id}/statistic`, { replace: true }); }
-        }
+        onUpdate={() => {
+          navigate(`/skills/${skillLoop.id}/update`, { replace: true });
+        }}
+        onStatistic={() => {
+          navigate(`/skills/${skillLoop.id}/statistic`, { replace: true });
+        }}
       />
     ))
   );

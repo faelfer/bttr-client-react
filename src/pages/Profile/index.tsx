@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import showToast from "../../utils/showToast";
-import isInvalidEmail from "../../utils/rules/isInvalidEmail";
+import validateProfile from "../../utils/validations/validateProfile";
 
 import NavBar from "../../components/NavBar";
 import Load from "../../components/Load";
@@ -24,7 +24,7 @@ import {
 } from "../../services/user/api";
 import { setCredentials } from "../../services/user/reducer";
 
-export default function ProfileForm() {
+const Profile = (): JSX.Element => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
@@ -36,7 +36,7 @@ export default function ProfileForm() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  async function getProfile() {
+  const getProfile = async (): Promise<void> => {
     try {
       const payload = await profile().unwrap();
       setUsername(payload.user.username);
@@ -48,34 +48,22 @@ export default function ProfileForm() {
         "error",
       );
     }
-  }
+  };
 
   useEffect(() => {
-    getProfile();
+    void getProfile();
   }, [location]);
 
-  function logout() {
+  const logout = (): void => {
     dispatch(setCredentials({ token: null }));
-  }
+  };
 
-  function validateProfileUpdate() {
-    let message = "";
-    const nameWithoutTrimValidate = username.trim();
-    if (!nameWithoutTrimValidate) {
-      message = "Preencha o campo nome de usuário";
-    } else if (nameWithoutTrimValidate.length < 3) {
-      message = "Campo nome de usuário é inválido";
-    } else if (!email) {
-      message = "Preencha o campo e-mail";
-    } else if (isInvalidEmail(email)) {
-      message = "Campo e-mail é inválido";
-    }
-    return { isInvalid: !!message, message };
-  }
-
-  async function sendProfileUpdate() {
+  const sendProfileUpdate = async (): Promise<void> => {
     try {
-      const responseValidateProfileUpdate = await validateProfileUpdate();
+      const responseValidateProfileUpdate = validateProfile({
+        username,
+        email,
+      });
       if (responseValidateProfileUpdate.isInvalid) {
         showToast("Aviso", responseValidateProfileUpdate.message, "warning");
       } else {
@@ -85,12 +73,12 @@ export default function ProfileForm() {
         }).unwrap();
         showToast("Sucesso", payloadProfileUpdate.message, "success");
       }
-    } catch (err) {
+    } catch (err: any) {
       showToast("Aviso", err.data.message, "error");
     }
-  }
+  };
 
-  async function sendProfileDelete() {
+  const sendProfileDelete = async (): Promise<void> => {
     try {
       const payloadProfileDelete = await profileDelete().unwrap();
       showToast("Sucesso", payloadProfileDelete.message, "success");
@@ -103,9 +91,9 @@ export default function ProfileForm() {
         "error",
       );
     }
-  }
+  };
 
-  async function exit() {
+  const exit = (): void => {
     try {
       logout();
       navigate("/", { replace: true });
@@ -116,11 +104,11 @@ export default function ProfileForm() {
         "error",
       );
     }
-  }
+  };
 
   return (
     <>
-      <NavBar navigation={navigate} />
+      <NavBar />
       <Load isShow={isLoading || isUpdating || isDeleting} />
       <div className="content--align">
         <div className="form">
@@ -129,24 +117,47 @@ export default function ProfileForm() {
           <InputOutlineForm
             inputPlaceholder="Digite seu nome de usuário"
             inputValue={username}
-            onChangeInput={(textValue) => { setUsername(textValue); }}
+            onChangeInput={(textValue) => {
+              setUsername(textValue);
+            }}
           />
           <InputOutlineForm
             inputType="email"
             inputPlaceholder="Digite seu e-mail"
             inputValue={email}
-            onChangeInput={(textValue) => { setEmail(textValue); }}
+            onChangeInput={(textValue) => {
+              setEmail(textValue);
+            }}
           />
-          <ButtonContained text="Salvar" onAction={async () => { await sendProfileUpdate(); }} />
-          <ButtonOutlined text="Apagar" onAction={async () => { await sendProfileDelete(); }} />
-          <ButtonTransparent text="Sair" onAction={async () => { await exit(); }} />
+          <ButtonContained
+            text="Salvar"
+            onAction={() => {
+              void sendProfileUpdate();
+            }}
+          />
+          <ButtonOutlined
+            text="Apagar"
+            onAction={() => {
+              void sendProfileDelete();
+            }}
+          />
+          <ButtonTransparent
+            text="Sair"
+            onAction={() => {
+              exit();
+            }}
+          />
         </div>
         <LinkRedirect
           description=""
           descriptionUrl="Redefinir a senha"
-          onRedirect={() => { navigate("/redefine-password", { replace: true }); }}
+          onRedirect={() => {
+            navigate("/redefine-password", { replace: true });
+          }}
         />
       </div>
     </>
   );
-}
+};
+
+export default Profile;

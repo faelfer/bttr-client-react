@@ -23,7 +23,9 @@ export default function ButtonPagination({
         className="button--pagination text--pagination"
         disabled={currentPage === 1}
         type="button"
-        onClick={() => { onPagePrevious(); }}
+        onClick={() => {
+          onPagePrevious();
+        }}
         data-testid="button-pagination-prev"
       >
         Anterior
@@ -32,7 +34,9 @@ export default function ButtonPagination({
         className="button--pagination text--pagination"
         disabled={currentPage === totalPages}
         type="button"
-        onClick={() => { onPageNext(); }}
+        onClick={() => {
+          onPageNext();
+        }}
         data-testid="button-pagination-next"
       >
         Próximo
