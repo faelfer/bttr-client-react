@@ -7,6 +7,7 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0543d3fafe54ce417928/maintainability)](https://codeclimate.com/github/faelfer/bttr-client-react/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/0543d3fafe54ce417928/test_coverage)](https://codeclimate.com/github/faelfer/bttr-client-react/test_coverage)
+[![codecov](https://codecov.io/gh/faelfer/bttr-client-react/graph/badge.svg?token=NUBTDY3WWI)](https://codecov.io/gh/faelfer/bttr-client-react)
 ![Twitter Follow](https://img.shields.io/twitter/follow/fael_fer)
 
 Client of the bttr project with ReactJS.

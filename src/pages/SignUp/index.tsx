@@ -5,14 +5,11 @@ import validateSignUp from "../../utils/validations/validateSignUp";
 import showToast from "../../utils/showToast";
 import useRedirectAuth from "../../hooks/useRedirectAuth";
 
-import Load from "../../components/Load";
-import HeaderForm from "../../components/HeaderForm";
-import DescriptionForm from "../../components/DescriptionForm";
+import ContainerCenter from "../../components/ContainerCenter";
+import ContainerForm from "../../components/ContainerForm";
 import InputOutlineForm from "../../components/InputOutlineForm";
 import LinkRedirect from "../../components/LinkRedirect";
 import ButtonContained from "../../components/ButtonContained";
-
-import "./styles.css";
 
 import { useSignUpMutation } from "../../services/user/api";
 
@@ -44,11 +41,11 @@ const SignUp = (): JSX.Element => {
   };
 
   return (
-    <div className="container">
-      <Load isShow={isLoading} />
-      <div className="form">
-        <HeaderForm title="Bttr" />
-        <DescriptionForm description="Cadastre-se para evoluir suas habilidades." />
+    <ContainerCenter isRefreshing={isLoading}>
+      <ContainerForm
+        heading="Bttr"
+        subtitle="Cadastre-se para evoluir suas habilidades."
+      >
         <InputOutlineForm
           inputPlaceholder="Digite seu nome de usuário"
           inputValue={username}
@@ -78,7 +75,7 @@ const SignUp = (): JSX.Element => {
             void sendSignUp();
           }}
         />
-      </div>
+      </ContainerForm>
       <LinkRedirect
         description="Tem uma conta? "
         descriptionUrl="Conecte-se"
@@ -86,7 +83,7 @@ const SignUp = (): JSX.Element => {
           navigate("/", { replace: true });
         }}
       />
-    </div>
+    </ContainerCenter>
   );
 };
 

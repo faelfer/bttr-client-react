@@ -5,17 +5,13 @@ import { useDispatch } from "react-redux";
 import showToast from "../../utils/showToast";
 import validateProfile from "../../utils/validations/validateProfile";
 
-import NavBar from "../../components/NavBar";
-import Load from "../../components/Load";
-import HeaderForm from "../../components/HeaderForm";
-import DescriptionForm from "../../components/DescriptionForm";
+import ContainerUpper from "../../components/ContainerUpper";
+import ContainerForm from "../../components/ContainerForm";
 import InputOutlineForm from "../../components/InputOutlineForm";
 import ButtonContained from "../../components/ButtonContained";
 import ButtonOutlined from "../../components/ButtonOutlined";
 import ButtonTransparent from "../../components/ButtonTransparent";
 import LinkRedirect from "../../components/LinkRedirect";
-
-import "./styles.css";
 
 import {
   useProfileMutation,
@@ -38,7 +34,7 @@ const Profile = (): JSX.Element => {
 
   const getProfile = async (): Promise<void> => {
     try {
-      const payload = await profile().unwrap();
+      const payload = await profile(null).unwrap();
       setUsername(payload.user.username);
       setEmail(payload.user.email);
     } catch {
@@ -54,8 +50,9 @@ const Profile = (): JSX.Element => {
     void getProfile();
   }, [location]);
 
-  const logout = (): void => {
+  const goOut = (): void => {
     dispatch(setCredentials({ token: null }));
+    navigate("/", { replace: true });
   };
 
   const sendProfileUpdate = async (): Promise<void> => {
@@ -80,23 +77,9 @@ const Profile = (): JSX.Element => {
 
   const sendProfileDelete = async (): Promise<void> => {
     try {
-      const payloadProfileDelete = await profileDelete().unwrap();
+      const payloadProfileDelete = await profileDelete(null).unwrap();
       showToast("Sucesso", payloadProfileDelete.message, "success");
-      logout();
-      navigate("/", { replace: true });
-    } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
-    }
-  };
-
-  const exit = (): void => {
-    try {
-      logout();
-      navigate("/", { replace: true });
+      goOut();
     } catch {
       showToast(
         "Aviso",
@@ -107,56 +90,50 @@ const Profile = (): JSX.Element => {
   };
 
   return (
-    <>
-      <NavBar />
-      <Load isShow={isLoading || isUpdating || isDeleting} />
-      <div className="content--align">
-        <div className="form">
-          <HeaderForm title="Perfil" />
-          <DescriptionForm description="Edite suas informações." />
-          <InputOutlineForm
-            inputPlaceholder="Digite seu nome de usuário"
-            inputValue={username}
-            onChangeInput={(textValue) => {
-              setUsername(textValue);
-            }}
-          />
-          <InputOutlineForm
-            inputType="email"
-            inputPlaceholder="Digite seu e-mail"
-            inputValue={email}
-            onChangeInput={(textValue) => {
-              setEmail(textValue);
-            }}
-          />
-          <ButtonContained
-            text="Salvar"
-            onAction={() => {
-              void sendProfileUpdate();
-            }}
-          />
-          <ButtonOutlined
-            text="Apagar"
-            onAction={() => {
-              void sendProfileDelete();
-            }}
-          />
-          <ButtonTransparent
-            text="Sair"
-            onAction={() => {
-              exit();
-            }}
-          />
-        </div>
-        <LinkRedirect
-          description=""
-          descriptionUrl="Redefinir a senha"
-          onRedirect={() => {
-            navigate("/redefine-password", { replace: true });
+    <ContainerUpper isRefreshing={isLoading || isUpdating || isDeleting}>
+      <ContainerForm heading="Perfil" subtitle="Edite suas informações.">
+        <InputOutlineForm
+          inputPlaceholder="Digite seu nome de usuário"
+          inputValue={username}
+          onChangeInput={(textValue) => {
+            setUsername(textValue);
           }}
         />
-      </div>
-    </>
+        <InputOutlineForm
+          inputType="email"
+          inputPlaceholder="Digite seu e-mail"
+          inputValue={email}
+          onChangeInput={(textValue) => {
+            setEmail(textValue);
+          }}
+        />
+        <ButtonContained
+          text="Salvar"
+          onAction={() => {
+            void sendProfileUpdate();
+          }}
+        />
+        <ButtonOutlined
+          text="Apagar"
+          onAction={() => {
+            void sendProfileDelete();
+          }}
+        />
+        <ButtonTransparent
+          text="Sair"
+          onAction={() => {
+            goOut();
+          }}
+        />
+      </ContainerForm>
+      <LinkRedirect
+        description=""
+        descriptionUrl="Redefinir a senha"
+        onRedirect={() => {
+          navigate("/redefine-password", { replace: true });
+        }}
+      />
+    </ContainerUpper>
   );
 };
 

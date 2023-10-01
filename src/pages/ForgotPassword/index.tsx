@@ -5,14 +5,11 @@ import validateForgotPassword from "../../utils/validations/validateForgotPasswo
 import showToast from "../../utils/showToast";
 import useRedirectAuth from "../../hooks/useRedirectAuth";
 
-import Load from "../../components/Load";
-import HeaderForm from "../../components/HeaderForm";
-import DescriptionForm from "../../components/DescriptionForm";
+import ContainerCenter from "../../components/ContainerCenter";
+import ContainerForm from "../../components/ContainerForm";
 import InputOutlineForm from "../../components/InputOutlineForm";
 import LinkRedirect from "../../components/LinkRedirect";
 import ButtonContained from "../../components/ButtonContained";
-
-import "./styles.css";
 
 import { useForgotPasswordMutation } from "../../services/user/api";
 
@@ -38,11 +35,11 @@ const ForgotPassword = (): JSX.Element => {
   };
 
   return (
-    <div className="container">
-      <Load isShow={isLoading} />
-      <div className="form">
-        <HeaderForm title="Problemas para entrar?" />
-        <DescriptionForm description="Insira o seu e-mail e enviaremos uma senha para você voltar a acessar a sua conta." />
+    <ContainerCenter isRefreshing={isLoading}>
+      <ContainerForm
+        heading="Problemas para entrar?"
+        subtitle="Enviaremos uma senha temporária para seu e-mail"
+      >
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
@@ -57,7 +54,7 @@ const ForgotPassword = (): JSX.Element => {
             void sendForgotPassword();
           }}
         />
-      </div>
+      </ContainerForm>
       <LinkRedirect
         description=" "
         descriptionUrl="Voltar ao login"
@@ -65,7 +62,7 @@ const ForgotPassword = (): JSX.Element => {
           navigate("/sign-up", { replace: true });
         }}
       />
-    </div>
+    </ContainerCenter>
   );
 };
 

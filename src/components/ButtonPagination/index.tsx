@@ -2,20 +2,26 @@ import React from "react";
 
 import "./styles.css";
 
-export default function ButtonPagination({
+interface InputOutlineFormProp {
+  currentPage: number;
+  totalPages: number;
+  onUpdatePage: (updatedPage: number) => void;
+}
+
+const ButtonPagination = ({
   currentPage,
   totalPages,
-  onChangeCurrentPage,
-}) {
-  function onPagePrevious() {
-    const updateNumberCurrentPage = currentPage - 1;
-    onChangeCurrentPage(updateNumberCurrentPage);
-  }
+  onUpdatePage,
+}: InputOutlineFormProp): JSX.Element => {
+  const onPagePrevious = (): void => {
+    const updatePreviousPage = currentPage - 1;
+    onUpdatePage(updatePreviousPage);
+  };
 
-  function onPageNext() {
-    const updateNumberCurrentPage = currentPage + 1;
-    onChangeCurrentPage(updateNumberCurrentPage);
-  }
+  const onPageNext = (): void => {
+    const updateNextPage = currentPage + 1;
+    onUpdatePage(updateNextPage);
+  };
 
   return (
     <div className="container--pagination">
@@ -43,4 +49,6 @@ export default function ButtonPagination({
       </button>
     </div>
   );
-}
+};
+
+export default ButtonPagination;

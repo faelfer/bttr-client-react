@@ -6,14 +6,12 @@ import showToast from "../../utils/showToast";
 import validateSignIn from "../../utils/validations/validateSignIn";
 import useRedirectAuth from "../../hooks/useRedirectAuth";
 
-import Load from "../../components/Load";
-import HeaderForm from "../../components/HeaderForm";
+import ContainerCenter from "../../components/ContainerCenter";
+import ContainerForm from "../../components/ContainerForm";
 import InputOutlineForm from "../../components/InputOutlineForm";
 import LinkRedirect from "../../components/LinkRedirect";
 import ButtonContained from "../../components/ButtonContained";
 import ButtonTransparent from "../../components/ButtonTransparent";
-
-import "./styles.css";
 
 import { useSignInMutation } from "../../services/user/api";
 import { setCredentials } from "../../services/user/reducer";
@@ -43,10 +41,8 @@ const SignIn = (): JSX.Element => {
   };
 
   return (
-    <div className="container">
-      <Load isShow={isLoading} />
-      <div className="form">
-        <HeaderForm title="Bttr" />
+    <ContainerCenter isRefreshing={isLoading}>
+      <ContainerForm heading="Acesso" subtitle="preencha suas credencias">
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Insira seu e-mail"
@@ -75,7 +71,7 @@ const SignIn = (): JSX.Element => {
             navigate("/forgot-password", { replace: true });
           }}
         />
-      </div>
+      </ContainerForm>
       <LinkRedirect
         description="Não tem uma conta? "
         descriptionUrl="Cadastre-se"
@@ -83,7 +79,7 @@ const SignIn = (): JSX.Element => {
           navigate("/sign-up", { replace: true });
         }}
       />
-    </div>
+    </ContainerCenter>
   );
 };
 

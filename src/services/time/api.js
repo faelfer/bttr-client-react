@@ -4,6 +4,13 @@ export const timeApi = api.injectEndpoints({
   endpoints: (build) => ({
     timesByPage: build.query({
       query: (page = 1) => `/times/times_by_page?page=${page}`,
+      transformResponse: (response, meta, arg) => {
+        const countPages = Math.ceil(response.count / 5);
+        return {
+          ...response,
+          pages: countPages,
+        };
+      },
     }),
     timesByDate: build.mutation({
       query: (body) => ({

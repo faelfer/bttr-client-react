@@ -4,14 +4,11 @@ import { useNavigate } from "react-router-dom";
 import showToast from "../../utils/showToast";
 import validateRedefinePassword from "../../utils/validations/validateRedefinePassword";
 
-import NavBar from "../../components/NavBar";
-import Load from "../../components/Load";
-import HeaderForm from "../../components/HeaderForm";
+import ContainerUpper from "../../components/ContainerUpper";
+import ContainerForm from "../../components/ContainerForm";
 import InputOutlineForm from "../../components/InputOutlineForm";
 import LinkRedirect from "../../components/LinkRedirect";
 import ButtonContained from "../../components/ButtonContained";
-
-import "./styles.css";
 
 import { useRedefinePasswordMutation } from "../../services/user/api";
 
@@ -46,52 +43,47 @@ const RedefinePassword = (): JSX.Element => {
   };
 
   return (
-    <>
-      <NavBar />
-      <Load isShow={isLoading} />
-      <div className="content--align">
-        <div className="form">
-          <HeaderForm title="Redefinir senha" />
-          <InputOutlineForm
-            inputType="password"
-            inputPlaceholder="Digite sua senha atual"
-            inputValue={password}
-            onChangeInput={(textValue) => {
-              setPassword(textValue);
-            }}
-          />
-          <InputOutlineForm
-            inputType="password"
-            inputPlaceholder="Digite sua nova senha"
-            inputValue={passwordNew}
-            onChangeInput={(textValue) => {
-              setPasswordNew(textValue);
-            }}
-          />
-          <InputOutlineForm
-            inputType="password"
-            inputPlaceholder="Digite sua confirmação de nova senha"
-            inputValue={passwordNewConfirm}
-            onChangeInput={(textValue) => {
-              setPasswordNewConfirm(textValue);
-            }}
-          />
-          <ButtonContained
-            text="Salvar"
-            onAction={() => {
-              void sendRedefinePassword();
-            }}
-          />
-        </div>
-        <LinkRedirect
-          description=""
-          descriptionUrl="Voltar ao perfil"
-          onRedirect={() => {
-            navigate("/profile", { replace: true });
+    <ContainerUpper isRefreshing={isLoading}>
+      <ContainerForm heading="Redefinir senha" subtitle="altere sua credencial">
+        <InputOutlineForm
+          inputType="password"
+          inputPlaceholder="Digite sua senha atual"
+          inputValue={password}
+          onChangeInput={(textValue) => {
+            setPassword(textValue);
           }}
         />
-      </div>
-    </>
+        <InputOutlineForm
+          inputType="password"
+          inputPlaceholder="Digite sua nova senha"
+          inputValue={passwordNew}
+          onChangeInput={(textValue) => {
+            setPasswordNew(textValue);
+          }}
+        />
+        <InputOutlineForm
+          inputType="password"
+          inputPlaceholder="Digite sua confirmação de nova senha"
+          inputValue={passwordNewConfirm}
+          onChangeInput={(textValue) => {
+            setPasswordNewConfirm(textValue);
+          }}
+        />
+        <ButtonContained
+          text="Salvar"
+          onAction={() => {
+            void sendRedefinePassword();
+          }}
+        />
+      </ContainerForm>
+      <LinkRedirect
+        description=""
+        descriptionUrl="Voltar ao perfil"
+        onRedirect={() => {
+          navigate("/profile", { replace: true });
+        }}
+      />
+    </ContainerUpper>
   );
 };
 

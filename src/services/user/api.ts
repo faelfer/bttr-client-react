@@ -8,7 +8,6 @@ export const userApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: (error) => [{ type: "User", id: "LIST", error }],
     }),
     signUp: build.mutation({
       query: (body) => ({
@@ -16,7 +15,6 @@ export const userApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: (error) => [{ type: "User", id: "LIST", error }],
     }),
     signIn: build.mutation({
       query: (credentials) => ({
@@ -24,13 +22,12 @@ export const userApi = api.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
-      invalidatesTags: [{ type: "User", id: "LIST" }],
     }),
     profile: build.mutation({
-      query: {
+      query: () => ({
         url: "/users/profile",
         method: "GET",
-      },
+      }),
     }),
     profileUpdate: build.mutation({
       query: (body) => ({
@@ -38,14 +35,12 @@ export const userApi = api.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: (error) => [{ type: "User", id: "LIST", error }],
     }),
     profileDelete: build.mutation({
       query: () => ({
         url: "/users/profile",
         method: "DELETE",
       }),
-      providesTags: [{ type: "User" }],
     }),
     redefinePassword: build.mutation({
       query: (body) => ({
@@ -53,7 +48,6 @@ export const userApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: (error) => [{ type: "User", id: "LIST", error }],
     }),
   }),
 });
