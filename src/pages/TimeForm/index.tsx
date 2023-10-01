@@ -2,18 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 import showToast from "../../utils/showToast";
+import validateTime from "../../utils/validations/validateTime";
 
-import NavBar from "../../components/NavBar";
-import Load from "../../components/Load";
-import HeaderForm from "../../components/HeaderForm";
-import DescriptionForm from "../../components/DescriptionForm";
+import ContainerUpper from "../../components/ContainerUpper";
+import ContainerForm from "../../components/ContainerForm";
 import SelectOutlineForm from "../../components/SelectOutlineForm";
 import InputOutlineForm from "../../components/InputOutlineForm";
 import ButtonContained from "../../components/ButtonContained";
 import ButtonOutlined from "../../components/ButtonOutlined";
 import LinkRedirect from "../../components/LinkRedirect";
-
-import "./styles.css";
 
 import {
   useTimeMutation,
@@ -23,13 +20,13 @@ import {
 } from "../../services/time/api";
 import { useSkillsQuery } from "../../services/skill/api";
 
-export default function TimeForm() {
+const TimeForm = (): JSX.Element => {
   const { timeId } = useParams();
 
   const [skillSelected, setSkillSelected] = useState("");
-  const [minutes, setMinutes] = useState(1);
+  const [minutes, setMinutes] = useState("");
 
-  const { data: skills, isLoading } = useSkillsQuery();
+  const { data: skills, isLoading } = useSkillsQuery(null);
   const [time, { isLoading: isGetting }] = useTimeMutation();
   const [timeCreate, { isLoading: isCreating }] = useTimeCreateMutation();
   const [timeUpdate, { isLoading: isUpdating }] = useTimeUpdateMutation();
@@ -38,7 +35,7 @@ export default function TimeForm() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  async function getTimeById() {
+  const getTimeById = async (): Promise<void> => {
     try {
       const payload = await time(timeId).unwrap();
       setMinutes(payload.time.minutes);
@@ -50,33 +47,26 @@ export default function TimeForm() {
         "error",
       );
     }
-  }
+  };
 
   useEffect(() => {
-    if (timeId) {
-      getTimeById(timeId);
+    if (timeId !== undefined) {
+      void getTimeById();
     }
   }, [location]);
 
-  function validateTime() {
-    let message = "";
-    if (skillSelected === "") {
-      message = "Campo habilidade é inválido";
-    } else if (minutes <= 0) {
-      message = "Campo minutos é inválido";
-    }
-    return { isInvalid: !!message, message };
-  }
-
-  async function sendTimeCreate() {
+  const sendTimeCreate = async (): Promise<void> => {
     try {
-      const responseValidateTimeCreate = await validateTime();
+      const responseValidateTimeCreate = validateTime({
+        skillSelected,
+        minutes,
+      });
       if (responseValidateTimeCreate.isInvalid) {
         showToast("Aviso", responseValidateTimeCreate.message, "warning");
       } else {
         const payloadTimeCreate = await timeCreate({
           skill_id: skillSelected,
-          minutes: parseInt(minutes, 10),
+          minutes,
         }).unwrap();
         showToast("Sucesso", payloadTimeCreate.message, "success");
       }
@@ -87,11 +77,14 @@ export default function TimeForm() {
         "error",
       );
     }
-  }
+  };
 
-  async function sendTimeUpdate() {
+  const sendTimeUpdate = async (): Promise<void> => {
     try {
-      const responseValidateTimeUpdate = await validateTime();
+      const responseValidateTimeUpdate = validateTime({
+        skillSelected,
+        minutes,
+      });
       if (responseValidateTimeUpdate.isInvalid) {
         showToast("Aviso", responseValidateTimeUpdate.message, "warning");
       } else {
@@ -99,7 +92,7 @@ export default function TimeForm() {
           id: timeId,
           time: {
             skill_id: skillSelected,
-            minutes: parseInt(minutes, 10),
+            minutes,
           },
         }).unwrap();
         showToast("Sucesso", payloadTimeUpdate.message, "success");
@@ -111,9 +104,9 @@ export default function TimeForm() {
         "error",
       );
     }
-  }
+  };
 
-  async function sendTimeDelete() {
+  const sendTimeDelete = async (): Promise<void> => {
     try {
       const payloadTimeDelete = await timeDelete(timeId).unwrap();
       showToast("Sucesso", payloadTimeDelete.message, "success");
@@ -124,65 +117,61 @@ export default function TimeForm() {
         "error",
       );
     }
-  }
+  };
 
   return (
-    <>
-      <NavBar navigation={navigate} />
-      <Load
-        isShow={
-          isLoading || isGetting || isCreating || isUpdating || isDeleting
+    <ContainerUpper
+      isRefreshing={
+        isLoading || isGetting || isCreating || isUpdating || isDeleting
+      }
+    >
+      <ContainerForm
+        heading="Tempo"
+        subtitle={
+          timeId !== undefined
+            ? "Edite suas informações."
+            : "Crie um novo registro de tempo para demonstrar o quanto você se dedicou."
         }
-      />
-      <div className="content--align">
-        <div className="form">
-          <HeaderForm title="Tempo" />
-          <DescriptionForm
-            description={
-              timeId
-                ? "Edite suas informações."
-                : "Crie um novo registro de tempo para demonstrar o quanto você se dedicou."
-            }
-          />
-          <SelectOutlineForm
-            selectPlaceholder="Selecione uma habilidade"
-            options={!skills ? [] : skills}
-            selectValue={skillSelected}
-            onChangeSelect={(optionSelected) => {
-              setSkillSelected(optionSelected);
-            }}
-          />
-          <InputOutlineForm
-            inputType="number"
-            inputPlaceholder="Digite os minutos"
-            inputValue={minutes}
-            onChangeInput={(textValue) => {
-              setMinutes(textValue);
-            }}
-          />
-          <ButtonContained
-            text={timeId ? "Editar" : "Criar"}
-            onAction={async () => {
-              timeId ? await sendTimeUpdate(timeId) : await sendTimeCreate();
-            }}
-          />
-          {timeId ? (
-            <ButtonOutlined
-              text="Apagar"
-              onAction={async () => {
-                await sendTimeDelete(timeId);
-              }}
-            />
-          ) : null}
-        </div>
-        <LinkRedirect
-          description=""
-          descriptionUrl="Voltar ao histórico"
-          onRedirect={() => {
-            navigate("/times", { replace: true });
+      >
+        <SelectOutlineForm
+          selectPlaceholder="Selecione uma habilidade"
+          options={skills === undefined ? [] : skills}
+          selectValue={skillSelected}
+          onChangeSelect={(optionSelected) => {
+            setSkillSelected(optionSelected);
           }}
         />
-      </div>
-    </>
+        <InputOutlineForm
+          inputPlaceholder="Digite os minutos"
+          inputValue={minutes}
+          onChangeInput={(textValue) => {
+            setMinutes(textValue);
+          }}
+        />
+        <ButtonContained
+          text={timeId !== undefined ? "Editar" : "Criar"}
+          onAction={() => {
+            void (timeId !== undefined ? sendTimeUpdate() : sendTimeCreate());
+          }}
+        />
+        {timeId !== undefined ? (
+          <ButtonOutlined
+            text="Apagar"
+            onAction={() => {
+              void sendTimeDelete();
+            }}
+          />
+        ) : null}
+      </ContainerForm>
+      <LinkRedirect
+        description=""
+        descriptionUrl="Voltar ao histórico"
+        onRedirect={() => {
+          navigate("/times", { replace: true });
+        }}
+      />
+    </ContainerUpper>
   );
-}
+};
+
+export default TimeForm;

@@ -2,13 +2,29 @@ import React from "react";
 
 import "./styles.css";
 
-export default function SelectOutlineForm({
+interface IOption {
+  id: number;
+  value: string;
+}
+
+interface SelectOutlineFormProp {
+  selectPlaceholder: string;
+  options: IOption[];
+  selectValue: string;
+  onChangeSelect: (textValue: string) => void;
+}
+
+const SelectOutlineForm = ({
   selectPlaceholder,
   options,
   selectValue,
   onChangeSelect,
-}) {
-  const onChangeValue = ({ currentTarget: { value } }) => onChangeSelect(value);
+}: SelectOutlineFormProp): JSX.Element => {
+  const onChangeValue = ({
+    currentTarget: { value },
+  }: React.ChangeEvent<HTMLSelectElement>): void => {
+    onChangeSelect(value);
+  };
 
   return (
     <select
@@ -27,4 +43,6 @@ export default function SelectOutlineForm({
       ))}
     </select>
   );
-}
+};
+
+export default SelectOutlineForm;

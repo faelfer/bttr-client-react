@@ -3,9 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 import TimeItem from "../TimeItem";
 
+interface ISkill {
+  name: string;
+}
+
 interface ITime {
   id: number;
   minutes: number;
+  created: string;
+  skill: ISkill;
 }
 
 interface TimeItemsProp {
@@ -17,7 +23,7 @@ const TimeItems = ({ itemsTime }: TimeItemsProp): JSX.Element[] => {
   return itemsTime.map((timeLoop) => (
     <TimeItem
       key={timeLoop.id}
-      timeProps={timeLoop}
+      itemTime={timeLoop}
       onUpdate={() => {
         navigate(`/times/${timeLoop.id}/update`, { replace: true });
       }}

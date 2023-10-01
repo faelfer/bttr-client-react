@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import NavBar from "../../components/NavBar";
-import Load from "../../components/Load";
+import ContainerUpper from "../../components/ContainerUpper";
+import ContainerForm from "../../components/ContainerForm";
 import MessageContainer from "../../components/MessageContainer";
 import TimeItems from "./components/TimeItems";
 import ButtonContained from "../../components/ButtonContained";
 import ButtonPagination from "../../components/ButtonPagination";
-
-import "./styles.css";
 
 import { useTimesByPageQuery } from "../../services/time/api";
 
@@ -20,33 +18,27 @@ const TimeHistoric = (): JSX.Element => {
   const navigate = useNavigate();
 
   return (
-    <>
-      <NavBar />
-      <Load isShow={isLoading} />
-      <div className="content--align">
-        <div className="form">
-          <ButtonContained
-            text="Criar tempo"
-            onAction={() => {
-              navigate("/times/create", { replace: true });
-            }}
-          />
-
-          {!times?.results ? (
-            <MessageContainer message="Não há registros de habilidades relacionadas ao seu cadastro." />
-          ) : null}
-
-          <TimeItems itemsTime={!times?.results ? [] : times.results} />
-          <ButtonPagination
-            currentPage={page}
-            totalPages={!times?.results ? 0 : times.pages}
-            onUpdatePage={(updatedPage) => {
-              setPage(updatedPage);
-            }}
-          />
-        </div>
-      </div>
-    </>
+    <ContainerUpper isRefreshing={isLoading}>
+      <ContainerForm heading="" subtitle="">
+        <ButtonContained
+          text="Criar tempo"
+          onAction={() => {
+            navigate("/times/create", { replace: true });
+          }}
+        />
+        {times === undefined || times.lengh === 0 ? (
+          <MessageContainer message="Não há registros de habilidades" />
+        ) : null}
+        <TimeItems itemsTime={times === undefined ? [] : times.results} />
+        <ButtonPagination
+          currentPage={page}
+          totalPages={times === undefined ? 0 : times.pages}
+          onUpdatePage={(updatedPage) => {
+            setPage(updatedPage);
+          }}
+        />
+      </ContainerForm>
+    </ContainerUpper>
   );
 };
 

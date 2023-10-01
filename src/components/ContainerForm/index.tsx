@@ -18,8 +18,9 @@ const ContainerForm = ({
 }: ContainerFormProps): JSX.Element => {
   return (
     <div className="container-form">
-      <HeaderForm title={heading} />
-      <DescriptionForm description={subtitle} />
+      {heading !== "" ? <HeaderForm title={heading} /> : null}
+      {subtitle !== "" ? <DescriptionForm description={subtitle} /> : null}
+
       {children}
     </div>
   );
