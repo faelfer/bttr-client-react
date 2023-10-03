@@ -8,16 +8,32 @@ import colorFromPercentage from "../../../../utils/customs/colorFromPercentage";
 
 import "./styles.css";
 
-export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
+interface ISkill {
+  id: number;
+  name: string;
+  daily: number;
+}
+
+interface StatisticItemProp {
+  skillProps: ISkill;
+  currentDate: Date;
+  timeTotal: number;
+}
+
+const StatisticItem = ({
+  skillProps,
+  currentDate,
+  timeTotal,
+}: StatisticItemProp): JSX.Element => {
   const [messageProgress, setMessageProgress] = useState("");
   const [percentage, setPercentage] = useState(0);
   const [percentageColor, setPercentageColor] = useState("");
-  const [timeGoalMonth, setTimeGoalMonth] = useState("");
-  const [timeLack, setTimeLack] = useState("");
-  const [timeSuggestion, setTimeSuggestion] = useState("");
+  const [timeGoalMonth, setTimeGoalMonth] = useState(0);
+  const [timeLack, setTimeLack] = useState(0);
+  const [timeSuggestion, setTimeSuggestion] = useState(0);
 
   useEffect(() => {
-    async function fillSkillProgress() {
+    const fillSkillProgress = (): void => {
       const resultDatesFromCurrentDay = datesFromCurrentDay(currentDate);
       const businessDays = workingDays(
         resultDatesFromCurrentDay.lastDayMonth,
@@ -64,7 +80,7 @@ export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
       setTimeGoalMonth(resultprogressFromCurrentDay.goalMonth);
       setPercentage(resultprogressFromCurrentDay.currentPercentage);
       setPercentageColor(colorFromProgressPercentage);
-    }
+    };
 
     fillSkillProgress();
   }, [skillProps, timeTotal, currentDate]);
@@ -99,7 +115,7 @@ export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
             {`${clockHourMinute(timeTotal)} é o acumulado`}
           </p>
         ) : null}
-        {messageProgress ? (
+        {messageProgress !== "" ? (
           <p className="text--statistic-supporting">{messageProgress}</p>
         ) : null}
         {timeLack > 0 ? (
@@ -115,4 +131,6 @@ export default function StatisticItem({ skillProps, currentDate, timeTotal }) {
       </div>
     </>
   );
-}
+};
+
+export default StatisticItem;

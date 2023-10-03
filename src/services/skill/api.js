@@ -12,6 +12,13 @@ export const skillApi = api.injectEndpoints({
     }),
     skillsByPage: build.query({
       query: (page = 1) => `/skills/skills_by_page?page=${page}`,
+      transformResponse: (response, meta, arg) => {
+        const countPages = Math.ceil(response.count / 5);
+        return {
+          ...response,
+          pages: countPages,
+        };
+      },
     }),
     skill: build.mutation({
       query: (id) => ({

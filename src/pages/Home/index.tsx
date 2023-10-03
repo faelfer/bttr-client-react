@@ -4,16 +4,16 @@ import { useNavigate } from "react-router-dom";
 import ContainerUpper from "../../components/ContainerUpper";
 import ContainerForm from "../../components/ContainerForm";
 import MessageContainer from "../../components/MessageContainer";
-import TimeItems from "./components/TimeItems";
+import SkillItems from "./components/SkillItems";
 import ButtonContained from "../../components/ButtonContained";
 import ButtonPagination from "../../components/ButtonPagination";
 
-import { useTimesByPageQuery } from "../../services/time/api";
+import { useSkillsByPageQuery } from "../../services/skill/api";
 
-const TimeHistoric = (): JSX.Element => {
+const Home = (): JSX.Element => {
   const [page, setPage] = useState(1);
 
-  const { data: times, isLoading } = useTimesByPageQuery(page);
+  const { data: skills, isLoading } = useSkillsByPageQuery(page);
 
   const navigate = useNavigate();
 
@@ -21,18 +21,18 @@ const TimeHistoric = (): JSX.Element => {
     <ContainerUpper isRefreshing={isLoading}>
       <ContainerForm heading="" subtitle="">
         <ButtonContained
-          text="Criar tempo"
+          text="Criar habilidade"
           onAction={() => {
-            navigate("/times/create", { replace: true });
+            navigate("/skills/create", { replace: true });
           }}
         />
-        {times === undefined || times.lengh === 0 ? (
-          <MessageContainer message="Não há registros de tempos" />
+        {skills === undefined || skills.lengh === 0 ? (
+          <MessageContainer message="Não há registros de habilidades" />
         ) : null}
-        <TimeItems itemsTime={times === undefined ? [] : times.results} />
+        <SkillItems itemsSkill={skills === undefined ? [] : skills.results} />
         <ButtonPagination
           currentPage={page}
-          totalPages={times === undefined ? 0 : times.pages}
+          totalPages={skills === undefined ? 0 : skills.pages}
           onUpdatePage={(updatedPage) => {
             setPage(updatedPage);
           }}
@@ -42,4 +42,4 @@ const TimeHistoric = (): JSX.Element => {
   );
 };
 
-export default TimeHistoric;
+export default Home;

@@ -26,16 +26,19 @@ interface TimeItemProp {
 const TimeItem = ({ itemTime, onUpdate }: TimeItemProp): JSX.Element => {
   return (
     <div className="container--time" key={itemTime.id}>
-      <p className="text--time-headline">
-        {clockHourMinute(itemTime.minutes)}
-      </p>
+      <p className="text--time-headline">{clockHourMinute(itemTime.minutes)}</p>
       <p className="text--time-subhead">{itemTime.skill.name}</p>
       <p className="text--time-supporting">
         {calendarDateHourMinutes(itemTime.created)}
       </p>
-      <ButtonOutlined text="Editar" onAction={() => { onUpdate(); }} />
+      <ButtonOutlined
+        text="Editar"
+        onAction={() => {
+          onUpdate();
+        }}
+      />
     </div>
   );
-}
+};
 
 export default TimeItem;
