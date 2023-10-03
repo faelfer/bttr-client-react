@@ -2,17 +2,19 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const useRedirectAuth = () => {
-  const { token } = useSelector((state) => state.user);
+import { type RootState } from "../services/createStore";
+
+const useRedirectAuth = (): void => {
+  const { token } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    function redirectToAuthRoute() {
+    const redirectToAuthRoute = (): void => {
       if (token !== null) {
         navigate("/home", { replace: true });
       }
-    }
+    };
     redirectToAuthRoute();
   }, [location]);
 };

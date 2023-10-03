@@ -4,7 +4,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_API,
   prepareHeaders: (headers, { getState }) => {
     const { token } = getState().user;
-    if (token) {
+    if (token !== undefined) {
       headers.set("authorization", `Token ${token}`);
     }
     return headers;

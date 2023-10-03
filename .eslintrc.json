@@ -10,8 +10,10 @@
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "extraFileExtensions": [".css"]
   },
   "plugins": ["react"],
+  "ignorePatterns": ["index.css"],
   "rules": {}
 }

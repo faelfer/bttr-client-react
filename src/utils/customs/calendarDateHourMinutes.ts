@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 
-export default function calendarDateHourMinutes(dateString) {
+export default function calendarDateHourMinutes(dateString: string): string {
   // console.log('calendarDateHourMinutes | dateString: ', dateString);
 
   const dateTimeFromISO = DateTime.fromISO(dateString, {

@@ -41,8 +41,8 @@
     "test-e2e-codegen": "playwright codegen http://localhost:3000/",
     "prettify": "yarn prettier . --write",
     "prettify-check": "prettier . --check",
-    "lint": "eslint --ext tsx,.jsx,.js src/**",
-    "lint-fix": "eslint --ext tsx,.jsx,.js src/** --fix",
+    "lint": "eslint --ext .tsx,.ts,.jsx,.js src/**",
+    "lint-fix": "eslint --ext .tsx,.ts,.jsx,.js src/** --fix",
     "package-clean": "rm -rf node_modules yarn.lock && yarn install",
     "commit-version": "git add CHANGELOG.md package.json && git commit -m 'update CHANGELOG and number version'"
   },
@@ -71,6 +71,7 @@
     "@babel/preset-typescript": "^7.22.15",
     "@faker-js/faker": "^8.0.2",
     "@playwright/test": "^1.35.1",
+    "@types/luxon": "^3.3.2",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "babel-jest": "^29.5.0",
     "eslint": "^8.0.1",

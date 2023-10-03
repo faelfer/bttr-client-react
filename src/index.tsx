@@ -11,8 +11,8 @@ import "./index.css";
 
 import routes from "./routes";
 import { store, persistor } from "./services/createStore";
-import reportWebVitals from "./reportWebVitals";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version } = require("../package.json");
 
 const { ToastContainer } = createStandaloneToast();
@@ -41,8 +41,3 @@ root.render(
     </Provider>
   </React.StrictMode>,
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

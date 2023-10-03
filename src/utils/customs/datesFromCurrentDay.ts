@@ -1,4 +1,13 @@
-export default function datesFromCurrentDay(currentDatetime) {
+interface DatesFromCurrentDayResult {
+  currentYear: number;
+  currentMouth: number;
+  currentDay: number;
+  lastDayMonth: number;
+}
+
+export default function datesFromCurrentDay(
+  currentDatetime: Date,
+): DatesFromCurrentDayResult {
   // console.log('datesFromCurrentDay | currentDatetime: ', currentDatetime);
   const currentYear = currentDatetime.getFullYear();
   // console.log('datesFromCurrentDay | currentYear: ', currentYear);

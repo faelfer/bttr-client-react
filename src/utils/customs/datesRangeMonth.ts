@@ -1,4 +1,11 @@
-export default function datesRangeMonth(currentDate) {
+interface DatesRangeMonthResult {
+  firstDayDatetimeIso: string;
+  lastDayDatetimeIso: string;
+}
+
+export default function datesRangeMonth(
+  currentDate: Date,
+): DatesRangeMonthResult {
   const firstDayDatetime = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),

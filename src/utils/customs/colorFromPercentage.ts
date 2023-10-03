@@ -1,6 +1,8 @@
-const progressColors = require("../resources/colors_progress.json");
+import progressColors from "../resources/colors_progress.json";
 
-export default function colorFromPercentage(progressPercentage) {
+export default function colorFromPercentage(
+  progressPercentage: number,
+): string {
   // console.log('colorFromPercentage | progressPercentage: ', progressPercentage);
   if (progressPercentage >= 25 && progressPercentage < 50) {
     return progressColors[1];

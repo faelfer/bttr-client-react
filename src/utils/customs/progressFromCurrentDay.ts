@@ -1,9 +1,17 @@
+interface ProgressFromCurrentDayResult {
+  goalMonth: number;
+  idealSituation: number;
+  currentPercentage: number;
+  goalRemaining: number;
+  daysRemaining: number;
+}
+
 export default function progressFromCurrentDay(
-  goalPerDay,
-  goalDone,
-  businessDays,
-  businessDaysSoFar,
-) {
+  goalPerDay: number,
+  goalDone: number,
+  businessDays: number,
+  businessDaysSoFar: number,
+): ProgressFromCurrentDayResult {
   // console.log(
   //   'progressFromCurrentDay | goalPerDay, goalDone, businessDays, businessDaysSoFar:',
   //   goalPerDay,
@@ -25,7 +33,7 @@ export default function progressFromCurrentDay(
   return {
     goalMonth,
     idealSituation,
-    currentPercentage: parseInt(currentPercentage, 10),
+    currentPercentage: Math.trunc(currentPercentage),
     goalRemaining,
     daysRemaining,
   };

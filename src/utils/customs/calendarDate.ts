@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 
-export default function calendarDate(dateString) {
+export default function calendarDate(dateString: string): string {
   // console.log('calendarDate | dateString: ', dateString);
 
   const dateTimeFromISO = DateTime.fromISO(dateString).setLocale("pt-BR");

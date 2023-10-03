@@ -1,4 +1,8 @@
-export default function workingDays(dayToCalcule, currentYear, currentMouth) {
+export default function workingDays(
+  dayToCalcule: number,
+  currentYear: number,
+  currentMouth: number,
+): number {
   // console.log(
   //   'workingDay | dayToCalcule, currentYear, currentMouth: ',
   //   dayToCalcule,
