@@ -45,41 +45,40 @@ const StatisticItem = ({
         resultDatesFromCurrentDay.currentYear,
         resultDatesFromCurrentDay.currentMouth,
       );
-      const resultprogressFromCurrentDay = progressFromCurrentDay(
+      const progressToDate = progressFromCurrentDay(
         skillProps.daily,
         timeTotal,
         businessDays,
         businessDaysSoFar,
       );
-
-      const colorFromProgressPercentage = colorFromPercentage(
-        resultprogressFromCurrentDay.currentPercentage,
+      const colorPercentage = colorFromPercentage(
+        progressToDate.currentPercentage,
       );
       let messageToProgress = "";
       let timeToLack = 0;
       let timeToSuggestion = 0;
 
-      if (timeTotal >= resultprogressFromCurrentDay.goalMonth) {
+      if (timeTotal >= progressToDate.goalMonth) {
         messageToProgress = "O acumulado do mês foi concluído!";
-      } else if (timeTotal === resultprogressFromCurrentDay.idealSituation) {
+      } else if (timeTotal === progressToDate.idealSituation) {
         messageToProgress = "O acumulado do dia foi concluido!";
-      } else if (timeTotal > resultprogressFromCurrentDay.idealSituation) {
+      } else if (timeTotal > progressToDate.idealSituation) {
         messageToProgress = "O acumulado do dia foi ultrapassado!";
       } else {
-        timeToLack = resultprogressFromCurrentDay.idealSituation - timeTotal;
-        timeToSuggestion =
-          resultprogressFromCurrentDay.goalRemaining /
-          (resultprogressFromCurrentDay.daysRemaining === 0
-            ? 1
-            : resultprogressFromCurrentDay.daysRemaining);
+        timeToLack = progressToDate.idealSituation - timeTotal;
+        const daysRemainingToCalc =
+          progressToDate.daysRemaining === 0 ? 1 : progressToDate.daysRemaining;
+        timeToSuggestion = Math.trunc(
+          progressToDate.goalRemaining / daysRemainingToCalc,
+        );
       }
 
       setMessageProgress(messageToProgress);
       setTimeLack(timeToLack);
       setTimeSuggestion(timeToSuggestion);
-      setTimeGoalMonth(resultprogressFromCurrentDay.goalMonth);
-      setPercentage(resultprogressFromCurrentDay.currentPercentage);
-      setPercentageColor(colorFromProgressPercentage);
+      setTimeGoalMonth(progressToDate.goalMonth);
+      setPercentage(progressToDate.currentPercentage);
+      setPercentageColor(colorPercentage);
     };
 
     fillSkillProgress();
