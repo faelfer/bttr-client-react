@@ -35,7 +35,7 @@
     "eject": "react-scripts eject",
     "test-unit": "jest",
     "test-unit-coverage": "jest --coverage",
-    "test-e2e": "playwright test --headed",
+    "test-e2e": "playwright test",
     "test-e2e-report": "playwright show-report",
     "test-e2e-debug": "playwright test --debug",
     "test-e2e-codegen": "playwright codegen http://localhost:3000/",
