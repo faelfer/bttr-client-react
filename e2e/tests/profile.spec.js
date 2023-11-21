@@ -1,18 +1,29 @@
 import signUpScenario from "../support/signUpScenario";
 import signInScenario from "../support/signInScenario";
 import profileScenario from "../support/profileScenario";
+import {
+  signUpSucessMock,
+  signInSucessMock,
+  profileSucessMock,
+  profileUpdateSucessMock,
+  profileUpdateAlreadyExistUsernameMock,
+  profileUpdateAlreadyExistEmailMock,
+  profileDeleteSucessMock,
+} from "../mock/user";
 
 const { test, expect } = require("@playwright/test");
 
 const userFactory = require("../factories/userFactory");
 
-test("deve alterar os dados do usuário login com sucesso", async ({ page }) => {
+test("deve alterar os dados do usuário com sucesso", async ({ page }) => {
   // Go to http://localhost:3000/
   await page.goto("http://localhost:3000/");
 
   const user = await userFactory();
 
   await page.getByText("Cadastre-se").click();
+
+  await signUpSucessMock(page);
 
   await signUpScenario(page, user);
 
@@ -27,9 +38,15 @@ test("deve alterar os dados do usuário login com sucesso", async ({ page }) => 
 
   const userUpdate = await userFactory();
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
 
+  await profileSucessMock(page, user);
+
   await page.getByRole("link", { name: "Perfil" }).click();
+
+  await profileUpdateSucessMock(page);
 
   await profileScenario(page, userUpdate);
 
@@ -49,6 +66,8 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   const user = await userFactory();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -60,7 +79,11 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
   user.username = "";
@@ -83,6 +106,8 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   const user = await userFactory();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -94,10 +119,14 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
 
+  await profileSucessMock(page, user);
+
   await page.getByRole("link", { name: "Perfil" }).click();
-  user.username = "ab";
+  user.username = "a";
 
   await profileScenario(page, user);
 
@@ -117,6 +146,8 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, userAlreadyExisting);
 
   const hasSignUpSuccess1 = await page.getByText(
@@ -129,6 +160,8 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   const user = await userFactory();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess2 = await page.getByText(
@@ -140,10 +173,16 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo no
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
   user.username = userAlreadyExisting.username;
+
+  await profileUpdateAlreadyExistUsernameMock(page);
 
   await profileScenario(page, user);
 
@@ -163,6 +202,8 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo e-
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, userAlreadyExisting);
 
   const hasSignUpSuccess1 = await page.getByText(
@@ -175,6 +216,8 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo e-
 
   const user = await userFactory();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess2 = await page.getByText(
@@ -186,15 +229,21 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo e-
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
   user.email = userAlreadyExisting.email;
 
+  await profileUpdateAlreadyExistEmailMock(page);
+
   await profileScenario(page, user);
 
   const hasProfileSuccess = await page.getByText(
-    "usuário com e-mail já existente",
+    "usuário com e-mail já existente.",
   );
   await expect(hasProfileSuccess).toBeVisible();
 });
@@ -209,6 +258,8 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo em
 
   const user = await userFactory();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -220,7 +271,11 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo em
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
   user.email = "";
@@ -241,6 +296,8 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo em
 
   const user = await userFactory();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -252,7 +309,11 @@ test("deve mostrar mensagem de erro ao tentar alterar um usuário com o campo em
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
   user.email = "abc";
@@ -271,6 +332,8 @@ test("deve realizar logout do usuário com sucesso", async ({ page }) => {
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -282,7 +345,11 @@ test("deve realizar logout do usuário com sucesso", async ({ page }) => {
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
@@ -301,6 +368,8 @@ test("deve apagar o usuário com sucesso", async ({ page }) => {
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -312,11 +381,17 @@ test("deve apagar o usuário com sucesso", async ({ page }) => {
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
   await expect(page).toHaveURL("http://localhost:3000/profile");
+
+  await profileDeleteSucessMock(page);
 
   await page.getByText("Apagar").click();
 

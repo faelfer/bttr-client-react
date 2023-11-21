@@ -1,5 +1,11 @@
 import signUpScenario from "../support/signUpScenario";
 import signInScenario from "../support/signInScenario";
+import {
+  signInSucessMock,
+  signInPasswordWrongMock,
+  signInNotFoundMock,
+  signUpSucessMock,
+} from "../mock/user";
 
 const { test, expect } = require("@playwright/test");
 
@@ -15,12 +21,7 @@ test("deve inserir os dados do novo usuário e realizar login com sucesso", asyn
 
   await page.getByText("Cadastre-se").click();
 
-  await page.route('*/**/api/users/sign_up', async route => {
-    const json = {
-      "message": "usuário foi criado com sucesso."
-    };
-    await route.fulfill({ json });
-  });
+  await signUpSucessMock(page);
 
   await signUpScenario(page, user);
 
@@ -33,19 +34,7 @@ test("deve inserir os dados do novo usuário e realizar login com sucesso", asyn
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
-  await page.route('*/**/api/users/sign_in', async route => {
-    const json = {
-      "token": "60729b93-a13e-427b-a474-b1d59ea944ac",
-      "user": {
-        "id": 871182111,
-        "token": "Token 60729b93-a13e-427b-a474-b1d59ea944ac",
-        "created": "2023-05-28T18:02:45.619Z",
-        ...user,
-      },
-      "message": "autenticação realizada com sucesso."
-    };
-    await route.fulfill({ json });
-  });
+  await signInSucessMock(page, user);
 
   await signInScenario(page, user);
 
@@ -53,44 +42,51 @@ test("deve inserir os dados do novo usuário e realizar login com sucesso", asyn
   await page.getByTestId("button-transparent").click();
 });
 
-// test("deve mostrar mensagem de erro ao tentar realizar login com o campo e-mail não existente", async ({
-//   page,
-// }) => {
-//   // Go to http://localhost:3000/
-//   await page.goto("http://localhost:3000/");
+test("deve mostrar mensagem de erro ao tentar realizar login com o campo e-mail não existente", async ({
+  page,
+}) => {
+  // Go to http://localhost:3000/
+  await page.goto("http://localhost:3000/");
 
-//   const user = await userFactory();
+  const user = await userFactory();
 
-//   await signInScenario(page, user);
+  await signInNotFoundMock(page);
 
-//   const hasSignInNotFound = await page.getByText("usuário não foi encontrado.");
-//   await expect(hasSignInNotFound).toBeVisible();
-// });
+  await signInScenario(page, user);
 
-// test("deve mostrar mensagem de erro ao tentar realizar login com o campo senha incorreta", async ({
-//   page,
-// }) => {
-//   // Go to http://localhost:3000/
-//   await page.goto("http://localhost:3000/");
+  const hasSignInNotFound = await page.getByText("usuário não foi encontrado.");
+  await expect(hasSignInNotFound).toBeVisible();
+});
 
-//   const user = await userFactory();
+test("deve mostrar mensagem de erro ao tentar realizar login com o campo senha incorreta", async ({
+  page,
+}) => {
+  // Go to http://localhost:3000/
+  await page.goto("http://localhost:3000/");
 
-//   await page.getByText("Cadastre-se").click();
+  const user = await userFactory();
 
-//   await signUpScenario(page, user);
+  await page.getByText("Cadastre-se").click();
 
-//   const hasSignUpSuccess = await page.getByText(
-//     "usuário foi criado com sucesso.",
-//   );
-//   await expect(hasSignUpSuccess).toBeVisible();
+  await signUpSucessMock(page);
 
-//   await page.getByText("Conecte-se").click();
+  await signUpScenario(page, user);
 
-//   await expect(page).toHaveURL("http://localhost:3000/");
+  const hasSignUpSuccess = await page.getByText(
+    "usuário foi criado com sucesso.",
+  );
+  await expect(hasSignUpSuccess).toBeVisible();
 
-//   user.password = "654789";
-//   await signInScenario(page, user);
+  await page.getByText("Conecte-se").click();
 
-//   const hasSignInPasswordWrong = await page.getByText("senha incorreta.");
-//   await expect(hasSignInPasswordWrong).toBeVisible();
-// });
+  await expect(page).toHaveURL("http://localhost:3000/");
+
+  user.password = "654789";
+
+  await signInPasswordWrongMock(page);
+
+  await signInScenario(page, user);
+
+  const hasSignInPasswordWrong = await page.getByText("senha incorreta.");
+  await expect(hasSignInPasswordWrong).toBeVisible();
+});
