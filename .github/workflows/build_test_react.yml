@@ -70,8 +70,6 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   playwright:
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.40.0-jammy
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -85,5 +83,9 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run Playwright tests
         run: yarn test-e2e forgotPassword signUp signIn profile redefinePassword
-        env:
-          HOME: /root
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
