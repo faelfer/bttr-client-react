@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ContainerUpper from "../../components/ContainerUpper";
@@ -13,9 +13,13 @@ import { useSkillsByPageQuery } from "../../services/skill/api";
 const Home = (): JSX.Element => {
   const [page, setPage] = useState(1);
 
-  const { data: skills, isLoading } = useSkillsByPageQuery(page);
+  const { data: skills, isLoading, refetch } = useSkillsByPageQuery(page);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    void refetch();
+  }, [navigate]);
 
   return (
     <ContainerUpper isRefreshing={isLoading}>
