@@ -3,8 +3,18 @@ import signInScenario from "../support/signInScenario";
 import skillScenario from "../support/skillScenario";
 import timeScenario from "../support/timeScenario";
 import { signUpSucessMock, signInSucessMock } from "../mock/user";
-import { skillsByPageSucessMock, createSkillSucessMock, skillsFromUserSucessMock } from "../mock/skill";
-import { createTimeSucessMock, timeByIdSucessMock, timesByPageSucessMock, updateTimeByIdSucessMock, deleteTimeByIdSucessMock } from "../mock/time";
+import {
+  skillsByPageSucessMock,
+  createSkillSucessMock,
+  skillsFromUserSucessMock,
+} from "../mock/skill";
+import {
+  createTimeSucessMock,
+  timeByIdSucessMock,
+  timesByPageSucessMock,
+  updateTimeByIdSucessMock,
+  deleteTimeByIdSucessMock,
+} from "../mock/time";
 
 const { test, expect } = require("@playwright/test");
 
@@ -53,7 +63,7 @@ test("deve inserir os dados do novo tempo com sucesso", async ({ page }) => {
   );
   await expect(hasSkillSuccess).toBeVisible();
 
-  await skillsByPageSucessMock(page, [skill])
+  await skillsByPageSucessMock(page, [skill]);
 
   await page.getByText("Voltar ao início").click();
 
@@ -120,7 +130,7 @@ test("deve alterar os dados do tempo com sucesso", async ({ page }) => {
   );
   await expect(hasSkillSuccess).toBeVisible();
 
-  await skillsByPageSucessMock(page, [skill])
+  await skillsByPageSucessMock(page, [skill]);
 
   await page.getByText("Voltar ao início").click();
 
@@ -167,7 +177,6 @@ test("deve alterar os dados do tempo com sucesso", async ({ page }) => {
   await expect(hasTimeUpdateSuccess).toBeVisible();
 });
 
-
 test("deve excluir um tempo com sucesso", async ({ page }) => {
   // Go to http://localhost:3000/
   await page.goto("http://localhost:3000/");
@@ -209,7 +218,7 @@ test("deve excluir um tempo com sucesso", async ({ page }) => {
   );
   await expect(hasSkillSuccess).toBeVisible();
 
-  await skillsByPageSucessMock(page, [skill])
+  await skillsByPageSucessMock(page, [skill]);
 
   await page.getByText("Voltar ao início").click();
 
@@ -336,7 +345,7 @@ test("deve mostrar mensagem de erro ao tentar alterar um tempo com o campo habil
   );
   await expect(hasSkillSuccess).toBeVisible();
 
-  await skillsByPageSucessMock(page, [skill])
+  await skillsByPageSucessMock(page, [skill]);
 
   await page.getByText("Voltar ao início").click();
 
@@ -424,7 +433,7 @@ test("deve mostrar mensagem de erro ao tentar alterar um tempo com o campo minut
   );
   await expect(hasSkillSuccess).toBeVisible();
 
-  await skillsByPageSucessMock(page, [skill])
+  await skillsByPageSucessMock(page, [skill]);
 
   await page.getByText("Voltar ao início").click();
 
@@ -463,8 +472,6 @@ test("deve mostrar mensagem de erro ao tentar alterar um tempo com o campo minut
 
   await page.getByText("Editar").click();
 
-  const hasTimeUpdateWrong = await page.getByText(
-    "Preencha o campo minutos",
-  );
+  const hasTimeUpdateWrong = await page.getByText("Preencha o campo minutos");
   await expect(hasTimeUpdateWrong).toBeVisible();
 });

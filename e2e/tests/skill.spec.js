@@ -2,7 +2,13 @@ import signUpScenario from "../support/signUpScenario";
 import signInScenario from "../support/signInScenario";
 import skillScenario from "../support/skillScenario";
 import { signUpSucessMock, signInSucessMock } from "../mock/user";
-import { skillsByPageSucessMock, createSkillSucessMock, skillByIdSucessMock, updateSkillByIdSucessMock, deleteSkillByIdSucessMock } from "../mock/skill";
+import {
+  skillsByPageSucessMock,
+  createSkillSucessMock,
+  skillByIdSucessMock,
+  updateSkillByIdSucessMock,
+  deleteSkillByIdSucessMock,
+} from "../mock/skill";
 
 const { test, expect } = require("@playwright/test");
 
@@ -50,7 +56,7 @@ test("deve criar uma habilidade com sucesso", async ({ page }) => {
   );
   await expect(hasSkillCreateSuccess).toBeVisible();
 
-  await skillsByPageSucessMock(page, [skill])
+  await skillsByPageSucessMock(page, [skill]);
 
   await page.getByText("Voltar ao início").click();
 });

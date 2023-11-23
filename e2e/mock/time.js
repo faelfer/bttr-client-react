@@ -6,21 +6,27 @@ module.exports = {
     });
   },
   async timesByPageSucessMock(manipulePage, timesFake) {
-    await manipulePage.route("*/**/api/times/times_by_page?page=1", async (route) => {
-      const json = {
-        count: timesFake.length,
-        next: "http://localhost:8000/api/times/times_by_page?page=2",
-        previous: null,
-        results: timesFake,
-      };
-      await route.fulfill({ json });
-    });
+    await manipulePage.route(
+      "*/**/api/times/times_by_page?page=1",
+      async (route) => {
+        const json = {
+          count: timesFake.length,
+          next: "http://localhost:8000/api/times/times_by_page?page=2",
+          previous: null,
+          results: timesFake,
+        };
+        await route.fulfill({ json });
+      },
+    );
   },
   async timeByIdSucessMock(manipulePage, timeFake) {
-    await manipulePage.route(`*/**/api/times/time_by_id/${timeFake.id}`, async (route) => {
-      const json = { time: timeFake };
-      await route.fulfill({ json });
-    });
+    await manipulePage.route(
+      `*/**/api/times/time_by_id/${timeFake.id}`,
+      async (route) => {
+        const json = { time: timeFake };
+        await route.fulfill({ json });
+      },
+    );
   },
   async createTimeSucessMock(manipulePage) {
     await manipulePage.route("*/**/api/times/create_time", async (route) => {
@@ -31,19 +37,25 @@ module.exports = {
     });
   },
   async updateTimeByIdSucessMock(manipulePage, timeIdFake) {
-    await manipulePage.route(`*/**/api/times/update_time_by_id/${timeIdFake}`, async (route) => {
-      const json = {
-        message: "tempo alterado com sucesso.",
-      };
-      await route.fulfill({ json });
-    });
+    await manipulePage.route(
+      `*/**/api/times/update_time_by_id/${timeIdFake}`,
+      async (route) => {
+        const json = {
+          message: "tempo alterado com sucesso.",
+        };
+        await route.fulfill({ json });
+      },
+    );
   },
   async deleteTimeByIdSucessMock(manipulePage, timeIdFake) {
-    await manipulePage.route(`*/**/api/times/delete_time_by_id/${timeIdFake}`, async (route) => {
-      const json = {
-        message: "tempo excluido com sucesso.",
-      };
-      await route.fulfill({ json });
-    });
+    await manipulePage.route(
+      `*/**/api/times/delete_time_by_id/${timeIdFake}`,
+      async (route) => {
+        const json = {
+          message: "tempo excluido com sucesso.",
+        };
+        await route.fulfill({ json });
+      },
+    );
   },
-}
+};
