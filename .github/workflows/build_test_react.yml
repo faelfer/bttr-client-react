@@ -79,6 +79,13 @@ jobs:
           node-version: 18.x
       - name: Install dependencies
         run: yarn
+      - name: Create env file
+        run: |
+          touch .env
+          echo REACT_APP_NAME_ENV=${{ secrets.REACT_APP_NAME_ENV }} >> .env
+          echo REACT_APP_API=${{ secrets.REACT_APP_API }} >> .env
+          echo REACT_APP_SENTRY=${{ secrets.REACT_APP_SENTRY }} >> .env
+          cat .env
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
