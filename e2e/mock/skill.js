@@ -1,7 +1,7 @@
 module.exports = {
   async skillsFromUserSucessMock(manipulePage, skillsFake) {
     await manipulePage.route(
-      "*/**/api/skills/skills_from_user",
+      "*/**/skills/skills_from_user",
       async (route) => {
         const json = { skills: skillsFake };
         await route.fulfill({ json });
@@ -10,11 +10,11 @@ module.exports = {
   },
   async skillsByPageSucessMock(manipulePage, skillsFake) {
     await manipulePage.route(
-      "*/**/api/skills/skills_by_page?page=1",
+      "*/**/skills/skills_by_page?page=1",
       async (route) => {
         const json = {
           count: skillsFake.length,
-          next: "http://localhost:8000/api/skills/skills_by_page?page=2",
+          next: "http://localhost:8000/skills/skills_by_page?page=2",
           previous: null,
           results: skillsFake,
         };
@@ -24,7 +24,7 @@ module.exports = {
   },
   async skillByIdSucessMock(manipulePage, skillFake) {
     await manipulePage.route(
-      `*/**/api/skills/skill_by_id/${skillFake.id}`,
+      `*/**/skills/skill_by_id/${skillFake.id}`,
       async (route) => {
         const json = { skill: skillFake };
         await route.fulfill({ json });
@@ -32,7 +32,7 @@ module.exports = {
     );
   },
   async createSkillSucessMock(manipulePage) {
-    await manipulePage.route("*/**/api/skills/create_skill", async (route) => {
+    await manipulePage.route("*/**/skills/create_skill", async (route) => {
       const json = {
         message: "habilidade foi criada com sucesso.",
       };
@@ -40,7 +40,7 @@ module.exports = {
     });
   },
   async createSkillAlreadyExistNameMock(manipulePage) {
-    await manipulePage.route("*/**/api/skills/create_skill", async (route) => {
+    await manipulePage.route("*/**/skills/create_skill", async (route) => {
       const json = {
         message: "nome de habilidade já existente.",
       };
@@ -49,7 +49,7 @@ module.exports = {
   },
   async updateSkillByIdSucessMock(manipulePage, skillIdFake) {
     await manipulePage.route(
-      `*/**/api/skills/update_skill_by_id/${skillIdFake}`,
+      `*/**/skills/update_skill_by_id/${skillIdFake}`,
       async (route) => {
         const json = {
           message: "habilidade alterada com sucesso.",
@@ -60,7 +60,7 @@ module.exports = {
   },
   async deleteSkillByIdSucessMock(manipulePage, skillIdFake) {
     await manipulePage.route(
-      `*/**/api/skills/delete_skill_by_id/${skillIdFake}`,
+      `*/**/skills/delete_skill_by_id/${skillIdFake}`,
       async (route) => {
         const json = {
           message: "habilidade excluida com sucesso.",
