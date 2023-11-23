@@ -1,6 +1,6 @@
 module.exports = {
   async signUpSucessMock(manipulePage) {
-    await manipulePage.route("*/**/api/users/sign_up", async (route) => {
+    await manipulePage.route("*/**/users/sign_up", async (route) => {
       const json = {
         message: "usuário foi criado com sucesso.",
       };
@@ -8,7 +8,7 @@ module.exports = {
     });
   },
   async signUpAlreadyExistUsernameMock(manipulePage) {
-    await manipulePage.route("*/**/api/users/sign_up", async (route) => {
+    await manipulePage.route("*/**/users/sign_up", async (route) => {
       const json = {
         message: "nome de usuário já existente.",
       };
@@ -16,7 +16,7 @@ module.exports = {
     });
   },
   async signUpAlreadyExistEmailMock(manipulePage) {
-    await manipulePage.route("*/**/api/users/sign_up", async (route) => {
+    await manipulePage.route("*/**/users/sign_up", async (route) => {
       const json = {
         message: "usuário com e-mail já existente.",
       };
@@ -24,7 +24,7 @@ module.exports = {
     });
   },
   async signInSucessMock(manipulePage, userFake) {
-    await manipulePage.route("*/**/api/users/sign_in", async (route) => {
+    await manipulePage.route("*/**/users/sign_in", async (route) => {
       const json = {
         token: "60729b93-a13e-427b-a474-b1d59ea944ac",
         user: userFake,
@@ -34,7 +34,7 @@ module.exports = {
     });
   },
   async signInPasswordWrongMock(manipulePage) {
-    await manipulePage.route("*/**/api/users/sign_in", async (route) => {
+    await manipulePage.route("*/**/users/sign_in", async (route) => {
       const json = {
         message: "senha incorreta.",
       };
@@ -42,14 +42,14 @@ module.exports = {
     });
   },
   async signInNotFoundMock(manipulePage) {
-    await manipulePage.route("*/**/api/users/sign_in", async (route) => {
+    await manipulePage.route("*/**/users/sign_in", async (route) => {
       const json = {
         message: "usuário não foi encontrado.",
       };
       await route.fulfill({ status: 404, json });
     });
   },
-  async forgotPasswordSucessMock(manipulePage, userFake) {
+  async forgotPasswordSucessMock(manipulePage) {
     await manipulePage.route("*/**/users/forgot_password", async (route) => {
       const json = {
         message: "senha temporária enviada.",
