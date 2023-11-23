@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ContainerUpper from "../../components/ContainerUpper";
@@ -13,9 +13,13 @@ import { useTimesByPageQuery } from "../../services/time/api";
 const TimeHistoric = (): JSX.Element => {
   const [page, setPage] = useState(1);
 
-  const { data: times, isLoading } = useTimesByPageQuery(page);
+  const { data: times, isLoading, refetch } = useTimesByPageQuery(page);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    void refetch();
+  }, [navigate]);
 
   return (
     <ContainerUpper isRefreshing={isLoading}>

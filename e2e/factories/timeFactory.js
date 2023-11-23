@@ -1,25 +1,25 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { faker } = require("@faker-js/faker");
 
-const skillDefault = require("../../src/utils/resources/skill_default.json");
+const timeDefault = require("../../src/utils/resources/time_default.json");
 
-module.exports = function skillFactory(isGenerateSkillNew = true) {
+module.exports = function timeFactory(isGenerateTimeNew, skillId) {
   const singleKey = faker.number.int({
     min: 10,
     max: 100,
   });
-  const skillNew = {
+  const timeNew = {
     id: faker.number.int({
       min: 100000,
       max: 1000000,
     }),
-    name: `${faker.commerce.department()}${singleKey}`,
+    skill: `${skillId}`,
     minutes: `${singleKey}`,
     created: faker.datatype.datetime(),
   };
 
-  if (isGenerateSkillNew) {
-    return skillNew;
+  if (isGenerateTimeNew) {
+    return timeNew;
   }
-  return skillDefault;
+  return timeDefault;
 };
