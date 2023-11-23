@@ -1,12 +1,9 @@
 module.exports = {
   async skillsFromUserSucessMock(manipulePage, skillsFake) {
-    await manipulePage.route(
-      "*/**/skills/skills_from_user",
-      async (route) => {
-        const json = { skills: skillsFake };
-        await route.fulfill({ json });
-      },
-    );
+    await manipulePage.route("*/**/skills/skills_from_user", async (route) => {
+      const json = { skills: skillsFake };
+      await route.fulfill({ json });
+    });
   },
   async skillsByPageSucessMock(manipulePage, skillsFake) {
     await manipulePage.route(
