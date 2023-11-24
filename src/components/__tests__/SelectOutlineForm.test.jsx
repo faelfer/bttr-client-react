@@ -21,7 +21,7 @@ it("SelectOutlineForm deve chamar o manipulador onChangeSelect com o novo valor 
 
   const select = screen.getByTestId("outline-form-select");
 
-  await userEvent.selectOptions(select, [selectOptions[0].value]);
+  userEvent.selectOptions(select, [selectOptions[0].value]);
 
   expect(onChangeSelectSpy).toHaveBeenCalledWith(selectOptions[0].id);
 });

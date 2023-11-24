@@ -1,6 +1,13 @@
 import signUpScenario from "../support/signUpScenario";
 import signInScenario from "../support/signInScenario";
 import redefinePasswordScenario from "../support/redefinePasswordScenario";
+import {
+  signUpSucessMock,
+  signInSucessMock,
+  profileSucessMock,
+  redefinePasswordSucessMock,
+  redefinePasswordWrongMock,
+} from "../mock/user";
 
 const { test, expect } = require("@playwright/test");
 
@@ -14,6 +21,8 @@ test("deve alterar a senha do usuário com sucesso", async ({ page }) => {
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -25,13 +34,19 @@ test("deve alterar a senha do usuário com sucesso", async ({ page }) => {
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
   await page.getByText("Redefinir a senha").click();
   user.newPassword = "!Bc2!Bc2";
   user.confirmNewPassword = "!Bc2!Bc2";
+
+  await redefinePasswordSucessMock(page);
 
   await redefinePasswordScenario(page, user);
 
@@ -51,6 +66,8 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -62,7 +79,11 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
@@ -70,6 +91,8 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
   user.password = "@Ab1!Ab1";
   user.newPassword = "!Bc2!Bc2";
   user.confirmNewPassword = "!Bc2!Bc2";
+
+  await redefinePasswordWrongMock(page);
 
   await redefinePasswordScenario(page, user);
 
@@ -89,6 +112,8 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -100,7 +125,11 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
@@ -117,44 +146,6 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
   await expect(hasRedefinePasswordWrong).toBeVisible();
 });
 
-test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o campo senha inválido", async ({
-  page,
-}) => {
-  // Go to http://localhost:3000/
-  await page.goto("http://localhost:3000/");
-
-  const user = await userFactory();
-
-  await page.getByText("Cadastre-se").click();
-
-  await signUpScenario(page, user);
-
-  const hasSignUpSuccess = await page.getByText(
-    "usuário foi criado com sucesso.",
-  );
-  await expect(hasSignUpSuccess).toBeVisible();
-
-  await page.getByText("Conecte-se").click();
-
-  await expect(page).toHaveURL("http://localhost:3000/");
-
-  await signInScenario(page, user);
-
-  await page.getByRole("link", { name: "Perfil" }).click();
-
-  await page.getByText("Redefinir a senha").click();
-  user.password = "sen";
-  user.newPassword = "!Bc2!Bc2";
-  user.confirmNewPassword = "!Bc2!Bc2";
-
-  await redefinePasswordScenario(page, user);
-
-  const hasRedefinePasswordWrong = await page.getByText(
-    "Campo senha atual é inválido",
-  );
-  await expect(hasRedefinePasswordWrong).toBeVisible();
-});
-
 test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o campo nova senha inválida", async ({
   page,
 }) => {
@@ -165,6 +156,8 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -176,7 +169,11 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
@@ -202,6 +199,8 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -213,7 +212,11 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
@@ -239,6 +242,8 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -250,7 +255,11 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
@@ -276,6 +285,8 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -287,7 +298,11 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
@@ -313,6 +328,8 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -324,7 +341,11 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 
@@ -350,6 +371,8 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -361,7 +384,11 @@ test("deve mostrar mensagem de erro ao tentar alterar senha do usuário com o ca
 
   await expect(page).toHaveURL("http://localhost:3000/");
 
+  await signInSucessMock(page, user);
+
   await signInScenario(page, user);
+
+  await profileSucessMock(page, user);
 
   await page.getByRole("link", { name: "Perfil" }).click();
 

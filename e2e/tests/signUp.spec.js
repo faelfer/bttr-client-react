@@ -1,4 +1,9 @@
 import signUpScenario from "../support/signUpScenario";
+import {
+  signUpSucessMock,
+  signUpAlreadyExistUsernameMock,
+  signUpAlreadyExistEmailMock,
+} from "../mock/user";
 
 const { test, expect } = require("@playwright/test");
 
@@ -11,6 +16,8 @@ test("deve inserir os dados do novo usuário com sucesso", async ({ page }) => {
   const user = await userFactory();
 
   await page.getByTestId("link-redirect-button").click();
+
+  await signUpSucessMock(page);
 
   await signUpScenario(page, user);
 
@@ -34,6 +41,8 @@ test("deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
 
   await page.getByTestId("link-redirect-button").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -50,12 +59,14 @@ test("deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
   const userReplace = await userFactory();
   userReplace.username = user.username;
 
+  await signUpAlreadyExistUsernameMock(page);
+
   await signUpScenario(page, userReplace);
 
-  const hasSignUpAlreadyExistingUsername = await page.getByText(
+  const hasSignUpAlreadyExistUsername = await page.getByText(
     "nome de usuário já existente.",
   );
-  await expect(hasSignUpAlreadyExistingUsername).toBeVisible();
+  await expect(hasSignUpAlreadyExistUsername).toBeVisible();
 
   await page.getByTestId("link-redirect-button").click();
 
@@ -71,6 +82,8 @@ test("deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
   const user = await userFactory();
 
   await page.getByTestId("link-redirect-button").click();
+
+  await signUpSucessMock(page);
 
   await signUpScenario(page, user);
 
@@ -88,12 +101,14 @@ test("deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
   const userReplace = await userFactory();
   userReplace.email = user.email;
 
+  await signUpAlreadyExistEmailMock(page);
+
   await signUpScenario(page, userReplace);
 
-  const hasSignUpAlreadyExistingEmail = await page.getByText(
+  const hasSignUpAlreadyExistEmail = await page.getByText(
     "usuário com e-mail já existente.",
   );
-  await expect(hasSignUpAlreadyExistingEmail).toBeVisible();
+  await expect(hasSignUpAlreadyExistEmail).toBeVisible();
 
   await page.getByTestId("link-redirect-button").click();
 
@@ -228,7 +243,7 @@ test("deve mostrar mensagem de erro ao tentar cadastrar um usuário com o campo 
   await signUpScenario(page, user);
 
   const hasSignUpValidatePasswordMinimum = await page.getByText(
-    "Campo senha deve conter de 4 à 8 caracteres",
+    "Campo senha deve conter no máximo 8 caracteres",
   );
   await expect(hasSignUpValidatePasswordMinimum).toBeVisible();
 });

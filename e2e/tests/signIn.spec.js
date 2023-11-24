@@ -1,5 +1,11 @@
 import signUpScenario from "../support/signUpScenario";
 import signInScenario from "../support/signInScenario";
+import {
+  signInSucessMock,
+  signInPasswordWrongMock,
+  signInNotFoundMock,
+  signUpSucessMock,
+} from "../mock/user";
 
 const { test, expect } = require("@playwright/test");
 
@@ -15,6 +21,8 @@ test("deve inserir os dados do novo usuário e realizar login com sucesso", asyn
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -25,6 +33,8 @@ test("deve inserir os dados do novo usuário e realizar login com sucesso", asyn
   await page.getByText("Conecte-se").click();
 
   await expect(page).toHaveURL("http://localhost:3000/");
+
+  await signInSucessMock(page, user);
 
   await signInScenario(page, user);
 
@@ -39,6 +49,8 @@ test("deve mostrar mensagem de erro ao tentar realizar login com o campo e-mail 
   await page.goto("http://localhost:3000/");
 
   const user = await userFactory();
+
+  await signInNotFoundMock(page);
 
   await signInScenario(page, user);
 
@@ -56,6 +68,8 @@ test("deve mostrar mensagem de erro ao tentar realizar login com o campo senha i
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -68,6 +82,9 @@ test("deve mostrar mensagem de erro ao tentar realizar login com o campo senha i
   await expect(page).toHaveURL("http://localhost:3000/");
 
   user.password = "654789";
+
+  await signInPasswordWrongMock(page);
+
   await signInScenario(page, user);
 
   const hasSignInPasswordWrong = await page.getByText("senha incorreta.");

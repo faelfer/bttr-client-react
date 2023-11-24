@@ -1,5 +1,10 @@
 import signUpScenario from "../support/signUpScenario";
 import forgotPasswordScenario from "../support/forgotPasswordScenario";
+import {
+  signUpSucessMock,
+  forgotPasswordSucessMock,
+  forgotPasswordNotFoundMock,
+} from "../mock/user";
 
 const { test, expect } = require("@playwright/test");
 
@@ -15,6 +20,8 @@ test("deve inserir os dados do novo usuário e realizar o esqueci minha senha co
 
   await page.getByText("Cadastre-se").click();
 
+  await signUpSucessMock(page);
+
   await signUpScenario(page, user);
 
   const hasSignUpSuccess = await page.getByText(
@@ -28,10 +35,12 @@ test("deve inserir os dados do novo usuário e realizar o esqueci minha senha co
 
   await page.getByText("Esqueceu a senha?").click();
 
+  await forgotPasswordSucessMock(page);
+
   await forgotPasswordScenario(page, user);
 
   const hasForgotPasswordSuccess = await page.getByText(
-    "senha temporária enviada",
+    "senha temporária enviada.",
   );
   await expect(hasForgotPasswordSuccess).toBeVisible();
 });
@@ -45,6 +54,8 @@ test("deve mostrar mensagem de erro ao tentar realizar esqueci minha senha com o
   const user = await userFactory();
 
   await page.getByText("Esqueceu a senha?").click();
+
+  await forgotPasswordNotFoundMock(page);
 
   await forgotPasswordScenario(page, user);
 

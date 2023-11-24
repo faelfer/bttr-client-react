@@ -4,6 +4,13 @@ export const timeApi = api.injectEndpoints({
   endpoints: (build) => ({
     timesByPage: build.query({
       query: (page = 1) => `/times/times_by_page?page=${page}`,
+      transformResponse: (response, meta, arg) => {
+        const countPages = Math.ceil(response.count / 5);
+        return {
+          ...response,
+          pages: countPages,
+        };
+      },
     }),
     timesByDate: build.mutation({
       query: (body) => ({
@@ -27,10 +34,10 @@ export const timeApi = api.injectEndpoints({
       invalidatesTags: (id) => [{ type: "Time", id }],
     }),
     timeUpdate: build.mutation({
-      query: (id, body) => ({
-        url: `/times/update_time_by_id/${id}`,
+      query: (data) => ({
+        url: `/times/update_time_by_id/${data.id}`,
         method: "PUT",
-        body,
+        body: data.time,
       }),
       invalidatesTags: (id) => [{ type: "Time", id }],
     }),
