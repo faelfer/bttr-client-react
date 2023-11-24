@@ -12,7 +12,7 @@
 
 Client of the bttr project with ReactJS.
 
-## Installation
+## Run
 
 Use the package manager [yarn](https://yarnpkg.com/en/) to install the necessary libs and run the project.
 
@@ -22,6 +22,66 @@ yarn package-clean
 
 ```bash
 yarn start
+```
+
+## Check ESLint
+
+Use the [ESLint](https://eslint.org/) to find and fix problems in JavaScript code.
+
+```bash
+yarn lint
+```
+
+```bash
+yarn lint-fix
+```
+
+## Check Prettier
+
+Use the [Prettier](https://prettier.io/) to find and fix problems in code formatter.
+
+```bash
+yarn prettify-check
+```
+
+```bash
+yarn prettify
+```
+
+## Testing with Jest
+
+Use the [Jest](https://jestjs.io/) to run unit tests and generate coverage report.
+
+```bash
+yarn test-unit
+```
+
+```bash
+yarn test-unit-coverage
+```
+
+## Testing with Playwright
+
+Use the [Playwright](https://playwright.dev/) to run, debug and generate code from end-to-end tests.
+
+```bash
+yarn test-e2e
+```
+
+```bash
+yarn test-e2e-debug
+```
+
+```bash
+yarn test-e2e-codegen
+```
+
+## Run GitHub Actions locally with act
+
+Use the [act](https://nektosact.com/beginner/index.html) to run GitHub Actions locally.
+
+```bash
+act
 ```
 
 ## Contributing
