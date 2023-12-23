@@ -18,7 +18,7 @@ export default function showToast({
     title: head,
     description: body,
     status: type,
-    duration: 800,
+    duration: 500,
     isClosable: false,
   });
 }
