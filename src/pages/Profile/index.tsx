@@ -20,6 +20,12 @@ import {
 } from "../../services/user/api";
 import { setCredentials } from "../../services/user/reducer";
 
+import {
+  toastErrorDefault,
+  toastWarningDefault,
+  toastSuccessDefault,
+} from "../../utils/resources/toast_options_default";
+
 const Profile = (): JSX.Element => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -34,15 +40,11 @@ const Profile = (): JSX.Element => {
 
   const getProfile = async (): Promise<void> => {
     try {
-      const payload = await profile(null).unwrap();
-      setUsername(payload.user.username);
-      setEmail(payload.user.email);
+      const bulkProfile = await profile(null).unwrap();
+      setUsername(bulkProfile.user.username);
+      setEmail(bulkProfile.user.email);
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
@@ -57,35 +59,27 @@ const Profile = (): JSX.Element => {
 
   const sendProfileUpdate = async (): Promise<void> => {
     try {
-      const responseValidateProfileUpdate = validateProfile({
-        username,
-        email,
-      });
-      if (responseValidateProfileUpdate.isInvalid) {
-        showToast("Aviso", responseValidateProfileUpdate.message, "warning");
+      const dataProfileUpdate = { username, email };
+      const ruleProfileUpdate = validateProfile(dataProfileUpdate);
+      if (ruleProfileUpdate.isInvalid) {
+        showToast({ ...toastWarningDefault, body: ruleProfileUpdate.message });
       } else {
-        const payloadProfileUpdate = await profileUpdate({
-          username,
-          email,
-        }).unwrap();
-        showToast("Sucesso", payloadProfileUpdate.message, "success");
+        const bulkProfileUpdate =
+          await profileUpdate(dataProfileUpdate).unwrap();
+        showToast({ ...toastSuccessDefault, body: bulkProfileUpdate.message });
       }
     } catch (err: any) {
-      showToast("Aviso", err.data.message, "error");
+      showToast({ ...toastErrorDefault, body: err.data.message });
     }
   };
 
   const sendProfileDelete = async (): Promise<void> => {
     try {
-      const payloadProfileDelete = await profileDelete(null).unwrap();
-      showToast("Sucesso", payloadProfileDelete.message, "success");
+      const bulkProfileDelete = await profileDelete(null).unwrap();
+      showToast({ ...toastSuccessDefault, body: bulkProfileDelete.message });
       goOut();
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
@@ -127,7 +121,6 @@ const Profile = (): JSX.Element => {
         />
       </ContainerForm>
       <LinkRedirect
-        description=""
         descriptionUrl="Redefinir a senha"
         onRedirect={() => {
           navigate("/redefine-password", { replace: true });

@@ -3,7 +3,7 @@ import isInvalidPassword from "../rules/isInvalidPassword";
 interface InputValuesFunction {
   password: string;
   passwordNew: string;
-  passwordNewConfirm: string;
+  passwordConfirm: string;
 }
 
 interface ValidateRedefinePasswordResult {
@@ -18,7 +18,7 @@ export default function validateRedefinePassword(
 
   const passwordLength = inputValues.password.length;
   const passwordNewLength = inputValues.passwordNew.length;
-  const passwordNewConfirmLength = inputValues.passwordNewConfirm.length;
+  const passwordNewConfirmLength = inputValues.passwordConfirm.length;
   if (passwordLength === 0) {
     message = "Preencha o campo senha atual";
   } else if (passwordNewLength === 0) {
@@ -34,7 +34,7 @@ export default function validateRedefinePassword(
     message = "Preencha o campo confirmar nova senha";
   } else if (passwordNewConfirmLength < 4) {
     message = "Campo confirmar nova senha é inválido";
-  } else if (inputValues.passwordNew !== inputValues.passwordNewConfirm) {
+  } else if (inputValues.passwordNew !== inputValues.passwordConfirm) {
     message = "Os campos nova senha e confirmar nova senha devem ser iguais";
   }
 

@@ -23,7 +23,7 @@ const Home = (): JSX.Element => {
 
   return (
     <ContainerUpper isRefreshing={isLoading}>
-      <ContainerForm heading="" subtitle="">
+      <ContainerForm>
         <ButtonContained
           text="Criar habilidade"
           onAction={() => {

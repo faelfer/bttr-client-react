@@ -13,6 +13,12 @@ import ButtonContained from "../../components/ButtonContained";
 
 import { useForgotPasswordMutation } from "../../services/user/api";
 
+import {
+  toastErrorDefault,
+  toastWarningDefault,
+  toastSuccessDefault,
+} from "../../utils/resources/toast_options_default";
+
 const ForgotPassword = (): JSX.Element => {
   const [email, setEmail] = useState("");
 
@@ -22,15 +28,15 @@ const ForgotPassword = (): JSX.Element => {
 
   const sendForgotPassword = async (): Promise<void> => {
     try {
-      const responseValidateForgotPassword = validateForgotPassword({ email });
-      if (responseValidateForgotPassword.isInvalid) {
-        showToast("Aviso", responseValidateForgotPassword.message, "warning");
+      const ruleForgot = validateForgotPassword({ email });
+      if (ruleForgot.isInvalid) {
+        showToast({ ...toastWarningDefault, body: ruleForgot.message });
       } else {
-        const payload = await forgotPassword({ email }).unwrap();
-        showToast("Sucesso", payload.message, "success");
+        const bulkForgot = await forgotPassword({ email }).unwrap();
+        showToast({ ...toastSuccessDefault, body: bulkForgot.message });
       }
     } catch (err: any) {
-      showToast("Aviso", err.data.message, "error");
+      showToast({ ...toastErrorDefault, body: err.data.message });
     }
   };
 
@@ -56,7 +62,6 @@ const ForgotPassword = (): JSX.Element => {
         />
       </ContainerForm>
       <LinkRedirect
-        description=" "
         descriptionUrl="Voltar ao login"
         onRedirect={() => {
           navigate("/sign-up", { replace: true });

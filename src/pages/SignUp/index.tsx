@@ -13,30 +13,32 @@ import ButtonContained from "../../components/ButtonContained";
 
 import { useSignUpMutation } from "../../services/user/api";
 
+import {
+  toastErrorDefault,
+  toastWarningDefault,
+  toastSuccessDefault,
+} from "../../utils/resources/toast_options_default";
+
 const SignUp = (): JSX.Element => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useRedirectAuth();
   const navigate = useNavigate();
+  useRedirectAuth();
   const [signUp, { isLoading }] = useSignUpMutation();
 
   const sendSignUp = async (): Promise<void> => {
     try {
-      const resultValidate = validateSignUp({
-        username,
-        email,
-        password,
-      });
-      if (resultValidate.isInvalid) {
-        showToast("Aviso", resultValidate.message, "warning");
+      const ruleSignUp = validateSignUp({ username, email, password });
+      if (ruleSignUp.isInvalid) {
+        showToast({ ...toastWarningDefault, body: ruleSignUp.message });
       } else {
-        const payload = await signUp({ username, email, password }).unwrap();
-        showToast("Sucesso", payload.message, "success");
+        const bulkSignUp = await signUp({ username, email, password }).unwrap();
+        showToast({ ...toastSuccessDefault, body: bulkSignUp.message });
       }
     } catch (err: any) {
-      showToast("Aviso", err.data.message, "error");
+      showToast({ ...toastErrorDefault, body: err.data.message });
     }
   };
 
@@ -49,24 +51,24 @@ const SignUp = (): JSX.Element => {
         <InputOutlineForm
           inputPlaceholder="Digite seu nome de usuário"
           inputValue={username}
-          onChangeInput={(textValue) => {
-            setUsername(textValue);
+          onChangeInput={(newText) => {
+            setUsername(newText);
           }}
         />
         <InputOutlineForm
           inputType="email"
           inputPlaceholder="Digite seu e-mail"
           inputValue={email}
-          onChangeInput={(textValue) => {
-            setEmail(textValue);
+          onChangeInput={(newText) => {
+            setEmail(newText);
           }}
         />
         <InputOutlineForm
           inputType="password"
           inputPlaceholder="Digite sua senha"
           inputValue={password}
-          onChangeInput={(textValue) => {
-            setPassword(textValue);
+          onChangeInput={(newText) => {
+            setPassword(newText);
           }}
         />
         <ButtonContained

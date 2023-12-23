@@ -12,10 +12,16 @@ import ButtonContained from "../../components/ButtonContained";
 
 import { useRedefinePasswordMutation } from "../../services/user/api";
 
+import {
+  toastErrorDefault,
+  toastWarningDefault,
+  toastSuccessDefault,
+} from "../../utils/resources/toast_options_default";
+
 const RedefinePassword = (): JSX.Element => {
   const [password, setPassword] = useState("");
   const [passwordNew, setPasswordNew] = useState("");
-  const [passwordNewConfirm, setPasswordNewConfirm] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const [redefinePassword, { isLoading }] = useRedefinePasswordMutation();
 
@@ -23,22 +29,17 @@ const RedefinePassword = (): JSX.Element => {
 
   const sendRedefinePassword = async (): Promise<void> => {
     try {
-      const responseValidateRedefinePassword = validateRedefinePassword({
-        password,
-        passwordNew,
-        passwordNewConfirm,
-      });
-      if (responseValidateRedefinePassword.isInvalid) {
-        showToast("Aviso", responseValidateRedefinePassword.message, "warning");
+      const inputsRedefine = { password, passwordNew, passwordConfirm };
+      const ruleRedefine = validateRedefinePassword(inputsRedefine);
+      if (ruleRedefine.isInvalid) {
+        showToast({ ...toastWarningDefault, body: ruleRedefine.message });
       } else {
-        const payloadRedefinePassword = await redefinePassword({
-          password,
-          new_password: passwordNew,
-        }).unwrap();
-        showToast("Sucesso", payloadRedefinePassword.message, "success");
+        const dataRedefine = { password, new_password: passwordNew };
+        const bulkRedefine = await redefinePassword(dataRedefine).unwrap();
+        showToast({ ...toastSuccessDefault, body: bulkRedefine.message });
       }
     } catch (err: any) {
-      showToast("Aviso", err.data.message, "error");
+      showToast({ ...toastErrorDefault, body: err.data.message });
     }
   };
 
@@ -64,9 +65,9 @@ const RedefinePassword = (): JSX.Element => {
         <InputOutlineForm
           inputType="password"
           inputPlaceholder="Digite sua confirmação de nova senha"
-          inputValue={passwordNewConfirm}
+          inputValue={passwordConfirm}
           onChangeInput={(textValue) => {
-            setPasswordNewConfirm(textValue);
+            setPasswordConfirm(textValue);
           }}
         />
         <ButtonContained
@@ -77,7 +78,6 @@ const RedefinePassword = (): JSX.Element => {
         />
       </ContainerForm>
       <LinkRedirect
-        description=""
         descriptionUrl="Voltar ao perfil"
         onRedirect={() => {
           navigate("/profile", { replace: true });

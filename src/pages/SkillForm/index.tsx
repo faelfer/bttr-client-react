@@ -18,6 +18,12 @@ import {
   useSkillDeleteMutation,
 } from "../../services/skill/api";
 
+import {
+  toastErrorDefault,
+  toastWarningDefault,
+  toastSuccessDefault,
+} from "../../utils/resources/toast_options_default";
+
 const SkillForm = (): JSX.Element => {
   const { skillId } = useParams();
 
@@ -38,11 +44,7 @@ const SkillForm = (): JSX.Element => {
       setName(payload.skill.name);
       setDaily(payload.skill.daily);
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
@@ -54,65 +56,39 @@ const SkillForm = (): JSX.Element => {
 
   const sendSkillCreate = async (): Promise<void> => {
     try {
-      const responseValidateSkillCreate = validateSkill({
-        name,
-        daily,
-      });
-      if (responseValidateSkillCreate.isInvalid) {
-        showToast("Aviso", responseValidateSkillCreate.message, "warning");
+      const ruleSkillCreate = validateSkill({ name, daily });
+      if (ruleSkillCreate.isInvalid) {
+        showToast({ ...toastWarningDefault, body: ruleSkillCreate.message });
       } else {
-        const payloadSkillCreate = await skillCreate({
-          name,
-          daily,
-        }).unwrap();
-        showToast("Sucesso", payloadSkillCreate.message, "success");
+        const bulkSkillCreate = await skillCreate({ name, daily }).unwrap();
+        showToast({ ...toastSuccessDefault, body: bulkSkillCreate.message });
       }
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
   const sendSkillUpdate = async (): Promise<void> => {
     try {
-      const responseValidateSkillUpdate = validateSkill({
-        name,
-        daily,
-      });
-      if (responseValidateSkillUpdate.isInvalid) {
-        showToast("Aviso", responseValidateSkillUpdate.message, "warning");
+      const ruleSkillUpdate = validateSkill({ name, daily });
+      if (ruleSkillUpdate.isInvalid) {
+        showToast({ ...toastWarningDefault, body: ruleSkillUpdate.message });
       } else {
-        const payloadSkillUpdate = await skillUpdate({
-          id: skillId,
-          skill: {
-            name,
-            daily,
-          },
-        }).unwrap();
-        showToast("Sucesso", payloadSkillUpdate.message, "success");
+        const dataSkillUpdate = { id: skillId, skill: { name, daily } };
+        const bulkSkillUpdate = await skillUpdate(dataSkillUpdate).unwrap();
+        showToast({ ...toastSuccessDefault, body: bulkSkillUpdate.message });
       }
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
   const sendSkillDelete = async (): Promise<void> => {
     try {
-      const payloadSkillDelete = await skillDelete(skillId).unwrap();
-      showToast("Sucesso", payloadSkillDelete.message, "success");
+      const bulkSkillDelete = await skillDelete(skillId).unwrap();
+      showToast({ ...toastSuccessDefault, body: bulkSkillDelete.message });
     } catch (error) {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
@@ -160,7 +136,6 @@ const SkillForm = (): JSX.Element => {
         ) : null}
       </ContainerForm>
       <LinkRedirect
-        description=""
         descriptionUrl="Voltar ao início"
         onRedirect={() => {
           navigate("/home", { replace: true });

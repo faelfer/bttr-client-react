@@ -20,6 +20,12 @@ import {
 } from "../../services/time/api";
 import { useSkillsQuery } from "../../services/skill/api";
 
+import {
+  toastErrorDefault,
+  toastWarningDefault,
+  toastSuccessDefault,
+} from "../../utils/resources/toast_options_default";
+
 const TimeForm = (): JSX.Element => {
   const { timeId } = useParams();
 
@@ -41,11 +47,7 @@ const TimeForm = (): JSX.Element => {
       setMinutes(payload.time.minutes);
       setSkillSelected(payload.time.skill.id);
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
@@ -57,65 +59,43 @@ const TimeForm = (): JSX.Element => {
 
   const sendTimeCreate = async (): Promise<void> => {
     try {
-      const responseValidateTimeCreate = validateTime({
-        skillSelected,
-        minutes,
-      });
-      if (responseValidateTimeCreate.isInvalid) {
-        showToast("Aviso", responseValidateTimeCreate.message, "warning");
+      const ruleTimeCreate = validateTime({ skillSelected, minutes });
+      if (ruleTimeCreate.isInvalid) {
+        showToast({ ...toastWarningDefault, body: ruleTimeCreate.message });
       } else {
-        const payloadTimeCreate = await timeCreate({
-          skill_id: skillSelected,
-          minutes,
-        }).unwrap();
-        showToast("Sucesso", payloadTimeCreate.message, "success");
+        const dataTimeCreate = { skill_id: skillSelected, minutes };
+        const bulkTimeCreate = await timeCreate(dataTimeCreate).unwrap();
+        showToast({ ...toastSuccessDefault, body: bulkTimeCreate.message });
       }
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
   const sendTimeUpdate = async (): Promise<void> => {
     try {
-      const responseValidateTimeUpdate = validateTime({
-        skillSelected,
-        minutes,
-      });
-      if (responseValidateTimeUpdate.isInvalid) {
-        showToast("Aviso", responseValidateTimeUpdate.message, "warning");
+      const ruleTimeUpdate = validateTime({ skillSelected, minutes });
+      if (ruleTimeUpdate.isInvalid) {
+        showToast({ ...toastWarningDefault, body: ruleTimeUpdate.message });
       } else {
-        const payloadTimeUpdate = await timeUpdate({
+        const dataProfileUpdate = {
           id: timeId,
-          time: {
-            skill_id: skillSelected,
-            minutes,
-          },
-        }).unwrap();
-        showToast("Sucesso", payloadTimeUpdate.message, "success");
+          time: { skill_id: skillSelected, minutes },
+        };
+        const bulkTimeUpdate = await timeUpdate(dataProfileUpdate).unwrap();
+        showToast({ ...toastSuccessDefault, body: bulkTimeUpdate.message });
       }
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
   const sendTimeDelete = async (): Promise<void> => {
     try {
-      const payloadTimeDelete = await timeDelete(timeId).unwrap();
-      showToast("Sucesso", payloadTimeDelete.message, "success");
+      const bulkTimeDelete = await timeDelete(timeId).unwrap();
+      showToast({ ...toastSuccessDefault, body: bulkTimeDelete.message });
     } catch (error) {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
@@ -164,7 +144,6 @@ const TimeForm = (): JSX.Element => {
         ) : null}
       </ContainerForm>
       <LinkRedirect
-        description=""
         descriptionUrl="Voltar ao histórico"
         onRedirect={() => {
           navigate("/times", { replace: true });
