@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import SkillItem from "../SkillItem";
 
-interface ISkill {
-  id: number;
-  name: string;
-  daily: number;
-}
+import { type ISkill } from "../../../../types/Skill";
 
 interface SkillItemsProp {
   itemsSkill: ISkill[];

@@ -6,13 +6,9 @@ import datesFromCurrentDay from "../../../../utils/customs/datesFromCurrentDay";
 import progressFromCurrentDay from "../../../../utils/customs/progressFromCurrentDay";
 import colorFromPercentage from "../../../../utils/customs/colorFromPercentage";
 
-import "./styles.css";
+import { type ISkill } from "../../../../types/Skill";
 
-interface ISkill {
-  id: number;
-  name: string;
-  daily: number;
-}
+import "./styles.css";
 
 interface StatisticItemProp {
   skillProps: ISkill;

@@ -3,16 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import TimeItem from "../TimeItem";
 
-interface ISkill {
-  name: string;
-}
-
-interface ITime {
-  id: number;
-  minutes: number;
-  created: string;
-  skill: ISkill;
-}
+import { type ITime } from "../../../../types/Time";
 
 interface TimeItemsProp {
   itemsTime: ITime[];

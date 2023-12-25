@@ -15,11 +15,7 @@ import { useTimesByDateMutation } from "../../services/time/api";
 
 import { toastErrorDefault } from "../../utils/resources/toast_options_default";
 
-interface ITime {
-  id: number;
-  minutes: number;
-  created: string;
-}
+import { type ITime } from "../../types/Time";
 
 const SkillStatistic = (): JSX.Element => {
   const { skillId } = useParams();
