@@ -7,16 +7,7 @@ import "./styles.css";
 import clockHourMinute from "../../../../utils/customs/clockHourMinute";
 import calendarDateHourMinutes from "../../../../utils/customs/calendarDateHourMinutes";
 
-interface ISkill {
-  name: string;
-}
-
-interface ITime {
-  id: number;
-  minutes: number;
-  created: string;
-  skill: ISkill;
-}
+import { type ITime } from "../../../../types/Time";
 
 interface TimeItemProp {
   itemTime: ITime;

@@ -7,11 +7,7 @@ import "./styles.css";
 
 import clockHourMinute from "../../../../utils/customs/clockHourMinute";
 
-interface ISkill {
-  id: number;
-  name: string;
-  daily: number;
-}
+import { type ISkill } from "../../../../types/Skill";
 
 interface SkillItemProp {
   skillProps: ISkill;

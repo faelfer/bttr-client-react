@@ -26,17 +26,17 @@ const SignIn = (): JSX.Element => {
   const [signIn, { isLoading }] = useSignInMutation();
 
   const sendSignIn = async (): Promise<void> => {
-    const responseValidateSignIn = validateSignIn({ email, password });
+    const ruleSignIn = validateSignIn({ email, password });
     try {
-      if (responseValidateSignIn.isInvalid) {
-        showToast("Aviso", responseValidateSignIn.message, "warning");
+      if (ruleSignIn.isInvalid) {
+        showToast({ head: "Aviso", body: ruleSignIn.message, type: "warning" });
       } else {
-        const payload = await signIn({ email, password }).unwrap();
-        dispatch(setCredentials(payload));
+        const bulkSignIn = await signIn({ email, password }).unwrap();
+        dispatch(setCredentials(bulkSignIn));
         navigate("/home", { replace: true });
       }
     } catch (err: any) {
-      showToast("Aviso", err.data.message, "error");
+      showToast({ head: "Aviso", body: err.data.message, type: "error" });
     }
   };
 

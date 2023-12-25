@@ -2,17 +2,23 @@ import { createStandaloneToast } from "@chakra-ui/react";
 
 const { toast } = createStandaloneToast();
 
-export default function showToast(
-  title: string,
-  description: string,
-  status: "info" | "warning" | "success" | "error" | "loading",
-): void {
+interface ToastOptionsProps {
+  head: string;
+  body?: string;
+  type: "info" | "warning" | "success" | "error" | "loading";
+}
+
+export default function showToast({
+  head,
+  body,
+  type,
+}: ToastOptionsProps): void {
   toast({
     position: "top",
-    title,
-    description,
-    status,
-    duration: 800,
+    title: head,
+    description: body,
+    status: type,
+    duration: 500,
     isClosable: false,
   });
 }

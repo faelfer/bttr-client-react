@@ -5,7 +5,7 @@ test("deve retornar valor verdadeiro para o valor vazio do campo senha", () => {
   const emptyPasswordInputValues = {
     password: "",
     passwordNew: "",
-    passwordNewConfirm: "",
+    passwordConfirm: "",
   };
   const desiredInvalidatePassword = {
     isInvalid: true,
@@ -20,7 +20,7 @@ test("deve retornar valor verdadeiro para o valor vazio do campo senha nova", ()
   const emptyPasswordNewInputValues = {
     password: "12345",
     passwordNew: "",
-    passwordNewConfirm: "",
+    passwordConfirm: "",
   };
   const desiredInvalidatePassword = {
     isInvalid: true,
@@ -35,7 +35,7 @@ test("deve retornar valor verdadeiro para a quantia mínima de caracteres do cam
   const minimumPasswordInputValues = {
     password: "12345",
     passwordNew: "123",
-    passwordNewConfirm: "",
+    passwordConfirm: "",
   };
   const desiredMinimumPasswordNew = {
     isInvalid: true,
@@ -50,7 +50,7 @@ test("deve retornar valor verdadeiro para a validação do campo senha nova", ()
   const invalidatePasswordInputValues = {
     password: "12345",
     passwordNew: "12345",
-    passwordNewConfirm: "",
+    passwordConfirm: "",
   };
   const desiredInvalidatePasswordNew = {
     isInvalid: true,
@@ -66,7 +66,7 @@ test("deve retornar valor verdadeiro para a quantia mínima de caracteres do cam
   const samePasswordInputValues = {
     password: "!Ab1!Ab1",
     passwordNew: "!Ab1!Ab1",
-    passwordNewConfirm: "",
+    passwordConfirm: "",
   };
   const desiredSamePasswordNew = {
     isInvalid: true,
@@ -81,7 +81,7 @@ test("deve retornar valor verdadeiro para o valor vazio do campo confirmar nova 
   const emptyPasswordNewConfirmInputValues = {
     password: "!Ab1!Ab1",
     passwordNew: "!Bc2!Bc2",
-    passwordNewConfirm: "",
+    passwordConfirm: "",
   };
   const desiredEmptyPasswordNewConfirm = {
     isInvalid: true,
@@ -96,7 +96,7 @@ test("deve retornar valor verdadeiro para a quantia mínima de caracteres do cam
   const minimumPasswordNewConfirmInputValues = {
     password: "!Ab1!Ab1",
     passwordNew: "!Bc2!Bc2",
-    passwordNewConfirm: "123",
+    passwordConfirm: "123",
   };
   const desiredMinimumPasswordNewConfirm = {
     isInvalid: true,
@@ -111,7 +111,7 @@ test("deve retornar valor verdadeiro para valor diferente do campo confirmar nov
   const samePasswordNewConfirmInputValues = {
     password: "!Ab1!Ab1",
     passwordNew: "!Bc2!Bc2",
-    passwordNewConfirm: "@Cd3@Cd3",
+    passwordConfirm: "@Cd3@Cd3",
   };
   const desiredSamePasswordNewConfirm = {
     isInvalid: true,
@@ -126,7 +126,7 @@ test("deve retornar valor falso para a validação", () => {
   const validateInputValues = {
     password: "!Ab1!Ab1",
     passwordNew: "!Bc2!Bc2",
-    passwordNewConfirm: "!Bc2!Bc2",
+    passwordConfirm: "!Bc2!Bc2",
   };
   const desiredValidate = {
     isInvalid: false,

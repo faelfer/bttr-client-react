@@ -13,11 +13,9 @@ import LinkRedirect from "../../components/LinkRedirect";
 import { useSkillMutation } from "../../services/skill/api";
 import { useTimesByDateMutation } from "../../services/time/api";
 
-interface ITime {
-  id: number;
-  minutes: number;
-  created: string;
-}
+import { toastErrorDefault } from "../../utils/resources/toast_options_default";
+
+import { type ITime } from "../../types/Time";
 
 const SkillStatistic = (): JSX.Element => {
   const { skillId } = useParams();
@@ -34,14 +32,10 @@ const SkillStatistic = (): JSX.Element => {
 
   const getSkillById = async (): Promise<void> => {
     try {
-      const payload = await skill(skillId).unwrap();
-      setSkillItem(payload.skill);
+      const bulkSkill = await skill(skillId).unwrap();
+      setSkillItem(bulkSkill.skill);
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
@@ -52,24 +46,18 @@ const SkillStatistic = (): JSX.Element => {
     try {
       const { firstDayDatetimeIso, lastDayDatetimeIso } =
         datesRangeMonth(currentDateToFilter);
-      const payloadTimesByDate = await timesByDate({
+      const bulkTimesByDate = await timesByDate({
         id: skillIdToFilter,
         firstDay: firstDayDatetimeIso,
         lastDay: lastDayDatetimeIso,
       }).unwrap();
-      const initialValue = 0;
-      const sumTotalTimes = payloadTimesByDate.times.reduce(
-        (accumulator: number, currentValue: ITime) =>
-          accumulator + currentValue.minutes,
-        initialValue,
+      const totalTimes = bulkTimesByDate.times.reduce(
+        (total: number, timeLoop: ITime) => total + timeLoop.minutes,
+        0,
       );
-      setMinutesTotalMonth(sumTotalTimes);
+      setMinutesTotalMonth(totalTimes);
     } catch {
-      showToast(
-        "Aviso",
-        "No momento esse recurso está indisponível, tente novamente mais tarde.",
-        "error",
-      );
+      showToast(toastErrorDefault);
     }
   };
 
@@ -82,7 +70,7 @@ const SkillStatistic = (): JSX.Element => {
 
   return (
     <ContainerUpper isRefreshing={isLoading || isGetting}>
-      <ContainerForm heading="" subtitle="">
+      <ContainerForm>
         <ButtonContained
           text="Criar tempo"
           onAction={() => {
@@ -98,7 +86,6 @@ const SkillStatistic = (): JSX.Element => {
         ) : null}
       </ContainerForm>
       <LinkRedirect
-        description=""
         descriptionUrl="Voltar ao início"
         onRedirect={() => {
           navigate("/home", { replace: true });

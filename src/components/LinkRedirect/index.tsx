@@ -3,13 +3,13 @@ import React from "react";
 import "./styles.css";
 
 interface LinkRedirectProp {
-  description: string;
+  description?: string;
   descriptionUrl: string;
   onRedirect: () => void;
 }
 
 const LinkRedirect = ({
-  description,
+  description = "",
   descriptionUrl,
   onRedirect,
 }: LinkRedirectProp): JSX.Element => {
